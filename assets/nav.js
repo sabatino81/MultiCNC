@@ -30,18 +30,18 @@
 
       ${group('02 · Base Precision',[
         ['Overview','/base/index.html'],
-        ['Funzionalità','/base/functions.html','NEXT'],
-        ['Architettura meccanica','/base/mechanics.html','NEXT'],
-        ['Cinematica XYZ','/base/xyz.html','NEXT'],
-        ['Gantry Lift','/base/gantry-lift.html','NEXT'],
+        ['Funzionalità','/base/functions.html'],
+        ['Architettura meccanica','/base/mechanics.html'],
+        ['Cinematica XYZ','/base/xyz.html'],
+        ['Gantry Lift','/base/gantry-lift.html'],
         ['ToolDock','/mechanics/tooldock.html'],
-        ['Elettronica & controllo','/base/control.html','NEXT'],
-        ['Sicurezza','/base/safety.html','NEXT'],
-        ['Interfacce moduli','/base/interfaces.html','NEXT'],
-        ['Target prestazionali','/base/performance.html','NEXT'],
-        ['Vincoli','/base/constraints.html','NEXT'],
+        ['Elettronica & controllo','/base/control.html'],
+        ['Sicurezza','/base/safety.html'],
+        ['Interfacce moduli','/base/interfaces.html'],
+        ['Target prestazionali','/base/performance.html'],
+        ['Vincoli','/base/constraints.html'],
         ['BOM','/bom/base.html'],
-        ['Test & validazione','/base/validation.html','NEXT']
+        ['Test & validazione','/base/validation.html']
       ],['/base/','/bom/base','/mechanics/tooldock'])}
 
       ${group('03 · PCB Kit',[
