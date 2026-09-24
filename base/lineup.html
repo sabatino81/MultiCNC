@@ -19,7 +19,7 @@
 <tr><td>Motori</td><td>NEMA17 closed-loop</td><td>NEMA23 closed-loop ~2 Nm</td><td>NEMA23 closed-loop 3 Nm</td></tr>
 <tr><td>Spindle di serie</td><td>300–500 W aria</td><td>0.5–0.8 kW aria</td><td>1.5 kW acqua</td></tr>
 <tr><td>Clearance</td><td>Rialzi manuali</td><td>Rialzi manuali spinati</td><td>Gantry Lift motorizzato 0–150 mm</td></tr>
-<tr><td>Precisione indicativa</td><td>~±50 µm</td><td>~±20–30 µm</td><td>~±10–15 µm</td></tr>
+<tr><td>Precisione indicativa</td><td>~±50 µm</td><td>~±20–30 µm, con error map</td><td>~±10–15 µm, con error map + C5 o encoder lineari da valutare</td></tr>
 <tr><td>Carico ToolDock (testa completa)</td><td>2 kg</td><td>4 kg</td><td>7 kg</td></tr>
 <tr><td>BOM</td><td><a href="../bom/base-light.html" style="color:var(--accent-2)">BOM Light</a></td><td><a href="../bom/base.html" style="color:var(--accent-2)">BOM Standard</a></td><td><a href="../bom/base-pro.html" style="color:var(--accent-2)">BOM Pro</a></td></tr>
 </table></div>
@@ -47,8 +47,8 @@
 <tr><td>Knife</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Forze basse</td></tr>
 <tr><td>Dispenser</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Pneumatica dal kit</td></tr>
 <tr><td>Vision</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Camera e calibrazione</td></tr>
-<tr><td>Thermoforming</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Nessuna forza di taglio</td></tr>
-<tr><td>Fiber MOPA</td><td class="status-target">SE ≤ 2 kg</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Testa galvo + protezioni</td></tr>
+<tr><td>Thermoforming</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td>Calore, vuoto, telaio, heater e distanze termiche</td></tr>
+<tr><td>Fiber MOPA</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td>Fibra e raggio di curvatura, galvo, enclosure Class 1, sorgente esterna: testa ToolDock o stazione dedicata da decidere</td></tr>
 <tr><td>Aluminium Light</td><td class="status-critical">NO</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Passate leggere, MQL</td></tr>
 <tr><td>Aluminium Pro + ATC ISO20</td><td class="status-critical">NO</td><td class="status-critical">NO</td><td class="status-ok">OK</td><td>Richiede massa e 7 kg di carico</td></tr>
 </table></div></section>

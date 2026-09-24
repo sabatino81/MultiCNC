@@ -45,4 +45,4 @@ I file dei produttori non vanno copiati nel repository: le loro condizioni d'uso
 
 ## Cosa non fa
 
-Aggiorna solo tabella, i 4 KPI e la riga "Stima BOM prototipo attuale". Testi, callout, target e pannelli restano nell'HTML: se un cambio di dati li rende falsi (per esempio una massa citata nel callout), vanno corretti a mano insieme alle altre pagine che citano quei numeri.
+Aggiorna solo tabella, i 4 KPI e la riga "Stima ingegneristica attuale". Testi, callout, target e pannelli restano nell'HTML: se un cambio di dati li rende falsi (per esempio una massa citata nel callout), vanno corretti a mano insieme alle altre pagine che citano quei numeri.

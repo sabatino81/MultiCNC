@@ -4,15 +4,16 @@
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una ICD v2. La v2 deve accettare le teste e i pallet v1, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
+<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail da riferire alla struttura del ponte (deve salire con rialzi e lift), bus dati ed encoder differenziali nel connettore, potenza realmente disponibile per base (48 V × 5 A = 240 W non sta in un LRS-350 insieme ai motori), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
 <section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
 <tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
 <tr><td>Accoppiamento</td><td>Cinematico a 3 punti: 3 sfere Ø10 mm sulla receiver contro 3 coppie di rulli sulla master, su cerchio Ø80 mm a 120°</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Ingombro piastre</td><td>Master e receiver 110 × 110 mm; piano di accoppiamento come riferimento Z della testa</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Clamp</td><td>Pull-stud centrale, precarico a molla ≥ 1500 N, normalmente chiuso (fail-safe se manca energia)</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Sgancio</td><td>Passivo: una camma sulla stazione del dock rail apre il clamp quando il carrello entra in posizione. Nessuna aria e nessun attuatore sul carrello Z</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Clamp</td><td>Pull-stud centrale, precarico a molla ≥ 1500 N, normalmente chiuso (fail-safe se manca energia) <small style="color:var(--violet)">· forza da ricavare dal momento di taglio worst-case sui 6 contatti (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
+<tr><td>Sgancio</td><td>Passivo: una camma sulla stazione del dock rail apre il clamp quando il carrello entra in posizione. Nessuna aria e nessun attuatore sul carrello Z <small style="color:var(--violet)">· la Light non spinge 1500 N: camma con vantaggio meccanico ~3–4:1 da verificare (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
 <tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg. Il clamp è unico, dimensionato per la classe P</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Conferma aggancio</td><td>2 sensori sulla master: clamp chiuso + modulo presente</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Conferma aggancio</td><td>2 sensori sulla master: clamp chiuso + modulo presente <small style="color:var(--violet)">· manca la conferma di cattura della receiver nel rack prima dello sgancio (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
 <tr><td>Ripetibilità di riaggancio</td><td>≤ 10 µm</td><td class="status-target">TARGET</td></tr>
 <tr><td>Tempo di cambio</td><td>≤ 30 s deposito + prelievo</td><td class="status-target">TARGET</td></tr>
 </table></div></section>
@@ -31,7 +32,7 @@
 <tr><td>Aria</td><td>1 passaggio Ø6 mm</td><td>≤ 7 bar</td><td>Predisposto e tappato; usato solo dai kit che portano l'aria</td></tr>
 <tr><td>Fluido</td><td>2 porte Ø4 mm</td><td>—</td><td>Predisposte e tappate (raffreddamento, MQL)</td></tr>
 </table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">Potenza su contatti a lama, segnali su pogo pin. Regola safety FROZEN: P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile.</p></section>
+<p style="color:var(--violet);font-size:13px;margin-top:12px"><b>IN REVISIONE (D017):</b> manca un bus dati vero (vision, moduli intelligenti); S4–S6 vanno dichiarati single-ended o differenziali (A±/B±/Z± = 6 conduttori); i rating P4–P7 sono del connettore, la potenza fornibile per base va definita.</p><p style="color:var(--dim);font-size:13px;margin-top:4px">Potenza su contatti a lama, segnali su pogo pin. Regola safety FROZEN: P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">3 · Module ID</span><h2>Cosa dichiara ogni testa.</h2><div class="spec-list">
@@ -45,8 +46,9 @@
   <div class="panel"><span class="kicker">4 · Tavola e pallet</span><h2>Stesso pattern ovunque.</h2><div class="spec-list">
     <div class="spec-row"><b>Area utile</b><p>450 × 350 mm su tutte le basi.</p></div>
     <div class="spec-row"><b>Griglia</b><p>Fori M6 a passo 50 mm, 9 × 7 = 63 fori, il primo a 25 mm da ogni bordo.</p></div>
-    <div class="spec-row"><b>Riferimenti</b><p>2 boccole Ø8 H7: R1 tonda a (25, 25), R2 asola in X a (425, 25). Origine pallet = R1.</p></div>
+    <div class="spec-row"><b>Riferimenti</b><p>2 boccole Ø8 H7: R1 tonda a (25, 25), R2 asola in X a (425, 25). Origine pallet = R1. <span style="color:var(--violet)">IN REVISIONE (D018): coincidono con due fori M6 della griglia; vanno spostate fuori griglia o devono sostituire quei fori.</span></p></div>
     <div class="spec-row"><b>Fissaggio</b><p>Ogni pallet usa R1 + R2 e almeno 4 viti M6 della griglia.</p></div>
+    <div class="spec-row"><b>Spessore tavola</b><p><span style="color:var(--violet)">IN REVISIONE (D018):</span> Standard 8 mm e Light 5 mm con tasche danno poco filetto M6; valutare inserti in acciaio o boss pieni e verificare la planarità sotto carico.</p></div>
     <div class="spec-row"><b>Datum Z</b><p>Faccia superiore della tavola; lo spessore del pallet sta nella sua definizione software.</p></div>
     <div class="spec-row"><b>Massa max</b><p>Pallet + pezzo: L 5 · S 10 · P 20 kg (la tavola si muove in Y).</p></div>
   </div></div>
@@ -57,6 +59,7 @@
     <div class="spec-row"><b>Spalla–basamento</b><p>Per spalla: 2 spine Ø10 H7 a interasse 100 mm + 4 viti M8 su rettangolo 120 × 60 mm.</p></div>
     <div class="spec-row"><b>Rialzi</b><p>Stesso pattern sopra e sotto, così si impilano. Altezze standard +50 mm (Light) e +75 mm (Standard).</p></div>
     <div class="spec-row"><b>Pro</b><p>Il Gantry Lift si monta sul basamento con lo stesso pattern.</p></div>
+    <div class="spec-row"><b>Dock rail</b><p><span style="color:var(--violet)">IN REVISIONE (D016):</span> va riferito alla struttura che porta l'asse X, così sale con rialzi e lift e resta alla quota del carrello Z.</p></div>
   </div></div>
   <div class="panel"><span class="kicker">6 · Macchina–quadro</span><h2>Un quadro, tre basi.</h2><div class="spec-list">
     <div class="spec-row"><b>Tensioni</b><p>Motion 48 V DC · logica 24 V DC · spindle da VFD o driver BLDC.</p></div>

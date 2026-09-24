@@ -2,7 +2,7 @@
 """Rigenera le tabelle BOM delle tre basi a partire da tools/bom/data_*.py.
 
 Per ogni pagina aggiorna: righe della tabella (con la colonna CAD / STEP da
-cad_sources.py), KPI (righe, costo, massa macchina, massa esterna) e riga "Stima BOM prototipo attuale". Il resto della pagina
+cad_sources.py), KPI (righe, costo, massa macchina, massa esterna) e riga "Stima ingegneristica attuale". Il resto della pagina
 (testi, callout, pannelli) non viene toccato.
 
 Uso (dalla radice del repository):
@@ -76,7 +76,7 @@ def render(html, d):
         html,
     )
     if count != 1:
-        raise SystemExit("riga 'Stima BOM prototipo attuale' non trovata")
+        raise SystemExit("riga 'Stima ingegneristica attuale' non trovata")
     return html
 
 
