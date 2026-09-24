@@ -11,15 +11,17 @@ EXTERNAL_LABEL = "quadro"
 G=[
 ("A · Struttura e riferimenti",[
 ("MC-BAS-001","Structure","Basamento lavorato","1",1,"Custom Al 6061 nervato, ottimizzato","Nervature ottimizzate (D008), sedi guide Y lavorate; lunghezza ~corsa Y + tavola",200,3.5,"M","design","TO DESIGN"),
-("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al ~80×100","Ponte fisso (D006), sezione scatolata",130,2.5,"M","design","TO DESIGN"),
+("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al ~80×140","Ponte fisso (D006), sezione scatolata alta per interasse guide X ≥ 110 mm (D015)",150,3.1,"M","design","TO DESIGN"),
 ("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm alleggerito","Spinate al basamento; sede rialzi (D007)",45,1.0,"M","design","TO DESIGN"),
 ("MC-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 12–15 mm","Guide Z + ToolDock master",60,0.6,"M","design","TO DESIGN"),
 ("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 8 mm con tasche","Tavola mobile Y (D006), tasche sul retro (D008), 450×350 utile; reference pattern comune alle tre basi",100,2.5,"M","design","TO DESIGN"),
 ("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
-("MC-LIN-151","XY","Guide lineari MGN15","4 rails",4,"HIWIN MGN15 class","2 rail Y nel basamento + 2 rail X sulla trave, ~600 mm (D008)",30,0.6,"M","source","TO SOURCE"),
-("MC-LIN-152","XY","Pattini MGN15H","8",8,"HIWIN MGN15H class","2 pattini per rail, versione lunga; preload TBC",12,0.15,"M","source","TO SOURCE"),
+("MC-LIN-151","X","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","Sulla trave, ~600 mm, interasse ≥ 110 mm (D015)",35,0.87,"M","source","TO SOURCE"),
+("MC-LIN-152","X","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","2 pattini per rail; preload TBC (D015)",15,0.18,"M","source","TO SOURCE"),
+("MC-LIN-155","Y","Guide lineari MGN15","2 rails",2,"HIWIN MGN15 class","Nel basamento sotto la tavola, ~600 mm, interasse ~300 mm (D008, D015)",30,0.6,"M","source","TO SOURCE"),
+("MC-LIN-156","Y","Pattini MGN15H","4",4,"HIWIN MGN15H class","2 pattini per rail, versione lunga; 0,09 kg da scheda HIWIN",12,0.09,"M","source","TO SOURCE"),
 ("MC-LIN-153","Z","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","~250 mm, corsa Z 120–140 mm",20,0.36,"M","source","TO SOURCE"),
 ("MC-LIN-154","Z","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","4 pattini complessivi",15,0.18,"M","source","TO SOURCE"),
 ("MC-BS-1605X","X","Ball screw X","1",1,"SFU1605 C7","~600 mm; precarico/errore passo da qualificare",55,1.3,"M","validate","TO VALIDATE"),

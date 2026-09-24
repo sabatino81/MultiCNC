@@ -22,7 +22,7 @@ VENDOR = {
 BY_ID = {
     # guide e pattini (tutte le basi, incluso il Gantry Lift della Pro)
     **{i: "hiwin_lg" for i in [
-        "MC-LIN-151", "MC-LIN-152", "MC-LIN-153", "MC-LIN-154",
+        "MC-LIN-151", "MC-LIN-152", "MC-LIN-153", "MC-LIN-154", "MC-LIN-155", "MC-LIN-156",
         "ML-LIN-151", "ML-LIN-152", "ML-LIN-153", "ML-LIN-154",
         "MP-LIN-201", "MP-LIN-202", "MP-LIN-151", "MP-LIN-152",
         "MP-GL-LIN1", "MP-GL-LIN2"]},
