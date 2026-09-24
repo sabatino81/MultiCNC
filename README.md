@@ -5,7 +5,7 @@ MultiCNC is a modular, high-precision desktop CNC platform.
 This repository is the engineering source of truth for the project: architecture, BOMs, modules, interfaces, decisions and technical documentation.
 
 ## Documentation
-Open `docs/index.html` for the navigable engineering dashboard.
+Open `index.html` for the navigable engineering dashboard (works from disk, any web root or GitHub Pages subpath).
 
 ## Current design principles
 - Precision-first base machine.
@@ -17,4 +17,4 @@ Open `docs/index.html` for the navigable engineering dashboard.
 - Specifications marked **TARGET** are engineering goals until validated on hardware.
 
 ## Status
-Architecture reset / V0.1 documentation bootstrap — 24 Sep 2026.
+V0.4 — Base Precision documentation + detailed BOM — 24 Sep 2026.
