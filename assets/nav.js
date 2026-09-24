@@ -141,6 +141,6 @@
   const set=(open)=>{document.body.classList.toggle('tree-open',open);btn.setAttribute('aria-expanded',open?'true':'false')};
   btn.addEventListener('click',()=>set(!document.body.classList.contains('tree-open')));
   ov.addEventListener('click',()=>set(false));
-  side.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=820)set(false)}));
+  side.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{const badge=a.querySelector('em');if(badge&&(badge.textContent==='PLANNED'||badge.textContent==='NEXT')){e.preventDefault();return;}if(innerWidth<=820)set(false)}));
   addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
 })();
