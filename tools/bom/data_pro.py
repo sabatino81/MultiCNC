@@ -14,8 +14,9 @@ G=[
 ("MP-GAN-001","Structure","Trave gantry","1",1,"Custom box / ribbed Al","Ponte fisso (D006), sezione scatolata, predisposta Gantry Lift",160,5.0,"M","design","TO DESIGN"),
 ("MP-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 20 mm","Coppia simmetrica spinata al basamento; porta guide e viti lift",60,3.5,"M","design","TO DESIGN"),
 ("MP-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 15–20 mm","Guide Z + ToolDock master",80,1.2,"M","design","TO DESIGN"),
-("MP-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 12 mm","Tavola mobile Y (D006), 450×350 utile; reference pattern comune alle tre basi",120,5.1,"M","design","TO DESIGN"),
+("MP-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 12 mm","Tavola mobile Y (D006), 450×350 utile; spessore pieno, inserti M6 per usura (D018)",120,5.1,"M","design","TO DESIGN"),
 ("MP-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, rondelle, inserti",50,1.0,"M","source","TO SOURCE"),
+("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v2, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
 ("MP-LIN-201","XY","Guide lineari HGR20","4 rails",4,"HIWIN HGR20 class","2 rail Y nel basamento + 2 rail X sulla trave, ~600 mm",55,1.33,"M","source","TO SOURCE"),

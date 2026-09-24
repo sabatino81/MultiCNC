@@ -4,7 +4,7 @@
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una ICD v2. La v2 deve accettare le teste e i pallet v1, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
-<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), <s>bus dati, encoder differenziali, potenza disponibile per base</s> (chiusi da D017, ICD v2), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
+<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci erano state congelate troppo presto e sono state riviste con le decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), <s>bus dati, encoder differenziali, potenza disponibile per base</s> (chiusi da D017, ICD v2), <s>R1/R2 sulla griglia, spessore tavola e filetto utile</s> (chiusi da D018). Resta aperta solo la zona dock (D016). Il resto resta FROZEN.</div></section>
 <section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
 <tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
 <tr><td>Accoppiamento</td><td>Cinematico a 3 punti: 3 sfere Ø10 mm sulla receiver contro 3 coppie di rulli sulla master, su cerchio Ø80 mm a 120°</td><td class="status-frozen">FROZEN</td></tr>
@@ -61,9 +61,9 @@
   <div class="panel"><span class="kicker">4 · Tavola e pallet</span><h2>Stesso pattern ovunque.</h2><div class="spec-list">
     <div class="spec-row"><b>Area utile</b><p>450 × 350 mm su tutte le basi.</p></div>
     <div class="spec-row"><b>Griglia</b><p>Fori M6 a passo 50 mm, 9 × 7 = 63 fori, il primo a 25 mm da ogni bordo.</p></div>
-    <div class="spec-row"><b>Riferimenti</b><p>2 boccole Ø8 H7: R1 tonda a (25, 25), R2 asola in X a (425, 25). Origine pallet = R1. <span style="color:var(--violet)">IN REVISIONE (D018): coincidono con due fori M6 della griglia; vanno spostate fuori griglia o devono sostituire quei fori.</span></p></div>
+    <div class="spec-row"><b>Riferimenti</b><p>2 boccole Ø8 H7 fuori griglia, a metà tra i fori M6: <b>R1 tonda a (50, 50)</b>, <b>R2 asola in X a (400, 50)</b>, interasse 350 mm, ~35 mm dal foro più vicino. Origine pallet = R1 (D018).</p></div>
     <div class="spec-row"><b>Fissaggio</b><p>Ogni pallet usa R1 + R2 e almeno 4 viti M6 della griglia.</p></div>
-    <div class="spec-row"><b>Spessore tavola</b><p><span style="color:var(--violet)">IN REVISIONE (D018):</span> Standard 8 mm e Light 5 mm con tasche danno poco filetto M6; valutare inserti in acciaio o boss pieni e verificare la planarità sotto carico.</p></div>
+    <div class="spec-row"><b>Filetti e boss</b><p>Ogni foro M6 ha un inserto filettato in acciaio con filetto utile 9 mm (≈ 1,5 d) in un boss pieno Ø16; le boccole R1/R2 stanno in boss pieni di almeno 10 mm. Le tasche della tavola restano tra i boss: Light pelle 4 mm, Standard 6 mm, Pro piena 12 mm (D018). Planarità sotto carico da verificare in FEA.</p></div>
     <div class="spec-row"><b>Datum Z</b><p>Faccia superiore della tavola; lo spessore del pallet sta nella sua definizione software.</p></div>
     <div class="spec-row"><b>Massa max</b><p>Pallet + pezzo: L 5 · S 10 · P 20 kg (la tavola si muove in Y).</p></div>
   </div></div>

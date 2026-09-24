@@ -14,8 +14,9 @@ G=[
 ("ML-GAN-001","Structure","Trave gantry","1",1,"Profilo Al 40×80 lavorato","Ponte fisso (D006), faccia guide X lavorata, pareti ridotte (D010)",70,1.1,"M","design","TO DESIGN"),
 ("ML-GAN-002","Structure","Spalle gantry","2",2,"Al 5083 8 mm alleggerito","Spinate al telaio; sede rialzi (D007)",30,0.5,"M","design","TO DESIGN"),
 ("ML-Z-001","Structure","Piastra asse Z","1",1,"Al 5083 8 mm","Guide Z + ToolDock master",40,0.3,"M","design","TO DESIGN"),
-("ML-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al 5 mm con tasche","Tavola mobile Y (D006), 450×350 utile (D010); reference pattern comune alle tre basi",80,1.4,"M","design","TO DESIGN"),
+("ML-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al 9 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 4 mm, boss Ø16 × 9 mm attorno ai fori M6 e ai riferimenti (D018)",80,2.0,"M","design","TO DESIGN"),
 ("ML-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO","Viteria, spine, inserti",30,0.4,"M","source","TO SOURCE"),
+("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v2, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
 ("ML-LIN-151","XY","Guide lineari MGN12","4 rails",4,"HIWIN MGN12 class","2 rail Y + 2 rail X, ~600 mm (D010)",22,0.39,"M","source","TO SOURCE"),

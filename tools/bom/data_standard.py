@@ -14,8 +14,9 @@ G=[
 ("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al ~80×140","Ponte fisso (D006), sezione scatolata alta per interasse guide X ≥ 110 mm (D015)",150,3.1,"M","design","TO DESIGN"),
 ("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm alleggerito","Spinate al basamento; sede rialzi (D007)",45,1.0,"M","design","TO DESIGN"),
 ("MC-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 12–15 mm","Guide Z + ToolDock master",60,0.6,"M","design","TO DESIGN"),
-("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 8 mm con tasche","Tavola mobile Y (D006), tasche sul retro (D008), 450×350 utile; reference pattern comune alle tre basi",100,2.5,"M","design","TO DESIGN"),
+("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018)",100,2.9,"M","design","TO DESIGN"),
 ("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
+("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v2, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
 ("MC-LIN-151","X","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","Sulla trave, ~600 mm, interasse ≥ 110 mm (D015)",35,0.87,"M","source","TO SOURCE"),

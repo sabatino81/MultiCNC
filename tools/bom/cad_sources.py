@@ -35,7 +35,7 @@ BY_ID = {
 }
 
 # parti progettate da noi: lo STEP uscirà dal CAD parametrico MultiCNC
-CUSTOM = re.compile(r"-(BAS|GAN|Z|TBL|RS)-|-TD-00[1236]$|-SP-003$|-GL-LOCK$")
+CUSTOM = re.compile(r"-(BAS|GAN|Z|RS)-|-TBL-001$|-TD-00[1236]$|-SP-003$|-GL-LOCK$")
 
 
 def cell(part_id):
