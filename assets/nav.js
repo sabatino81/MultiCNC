@@ -31,6 +31,7 @@
     ['02','Basi · Standard',[
       ['Overview','base/index.html'],
       ['Tre basi','base/lineup.html'],
+      ['Interfacce comuni · ICD','base/icd.html'],
       ['Funzionalità','base/functions.html'],
       ['Architettura meccanica','base/mechanics.html'],
       ['Cinematica XYZ','base/xyz.html'],

@@ -1,0 +1,67 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Interfacce comuni · ICD v1</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+<a class="back" href="lineup.html">← Tre basi</a>
+<div class="pagehead"><div class="eyebrow">02 · Interface Control Document · D012</div><h1>Interfacce<br>comuni · ICD v1.</h1><p class="lead">Le interfacce che Light, Standard e Pro devono avere identiche: ToolDock, connettore, identificazione modulo, tavola e pallet, spalle e rialzi, collegamento al quadro. Geometrie, pin-out e regole sono <b>congelati</b>; le prestazioni restano TARGET finché non sono misurate.</p><div class="badges"><span class="badge ok">ICD v1 · FROZEN</span><span class="badge">D012</span><span class="badge">Vale per le tre basi</span></div></div>
+
+<section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una ICD v2. La v2 deve accettare le teste e i pallet v1, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
+
+<section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
+<tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
+<tr><td>Accoppiamento</td><td>Cinematico a 3 punti: 3 sfere Ø10 mm sulla receiver contro 3 coppie di rulli sulla master, su cerchio Ø80 mm a 120°</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Ingombro piastre</td><td>Master e receiver 110 × 110 mm; piano di accoppiamento come riferimento Z della testa</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Clamp</td><td>Pull-stud centrale, precarico a molla ≥ 1500 N, normalmente chiuso (fail-safe se manca energia)</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Sgancio</td><td>Passivo: una camma sulla stazione del dock rail apre il clamp quando il carrello entra in posizione. Nessuna aria e nessun attuatore sul carrello Z</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg. Il clamp è unico, dimensionato per la classe P</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Conferma aggancio</td><td>2 sensori sulla master: clamp chiuso + modulo presente</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Ripetibilità di riaggancio</td><td>≤ 10 µm</td><td class="status-target">TARGET</td></tr>
+<tr><td>Tempo di cambio</td><td>≤ 30 s deposito + prelievo</td><td class="status-target">TARGET</td></tr>
+</table></div></section>
+
+<section class="section"><h2>2 · Connettore ibrido</h2><div class="table-wrap"><table>
+<tr><th>Contatto</th><th>Funzione</th><th>Rating</th><th>Note</th></tr>
+<tr><td>PE</td><td>Terra di protezione</td><td>10 A</td><td>Primo a connettersi, ultimo a scollegarsi</td></tr>
+<tr><td>P1 · P2 · P3</td><td>Fasi motore spindle</td><td>300 V AC · 10 A</td><td>Da VFD (Standard, Pro) o driver BLDC (Light)</td></tr>
+<tr><td>P4 · P5</td><td>48 V DC ausiliario</td><td>5 A</td><td>Teste con elettronica di potenza propria (laser, knife tangenziale)</td></tr>
+<tr><td>P6 · P7</td><td>24 V DC logica</td><td>2 A</td><td>Sensori, valvole, camera</td></tr>
+<tr><td>S1</td><td>Module ID (1-Wire)</td><td>—</td><td>Vedi sezione 3</td></tr>
+<tr><td>S2 · S3</td><td>Ingressi sensore testa</td><td>24 V</td><td>Es. temperatura, fine corsa interno</td></tr>
+<tr><td>S4 · S5 · S6</td><td>Encoder / Hall A · B · Z</td><td>5 V</td><td>Per spindle o assi interni alla testa</td></tr>
+<tr><td>S7</td><td>Interlock di processo</td><td>24 V</td><td>Catena safety del modulo (laser, termoformatura)</td></tr>
+<tr><td>S8 · GND</td><td>Riserva · massa segnale</td><td>—</td><td>Non assegnare in v1</td></tr>
+<tr><td>Aria</td><td>1 passaggio Ø6 mm</td><td>≤ 7 bar</td><td>Predisposto e tappato; usato solo dai kit che portano l'aria</td></tr>
+<tr><td>Fluido</td><td>2 porte Ø4 mm</td><td>—</td><td>Predisposte e tappate (raffreddamento, MQL)</td></tr>
+</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Potenza su contatti a lama, segnali su pogo pin. Regola safety FROZEN: P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile.</p></section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">3 · Module ID</span><h2>Cosa dichiara ogni testa.</h2><div class="spec-list">
+    <div class="spec-row"><b>Supporto</b><p>EEPROM 1-Wire ≥ 1 kbit sulla receiver.</p></div>
+    <div class="spec-row"><b>Identità</b><p>Tipo modulo, numero di serie, versione ICD.</p></div>
+    <div class="spec-row"><b>Meccanica</b><p>Classe di carico (L/S/P), massa, offset utensile XYZ.</p></div>
+    <div class="spec-row"><b>Capability</b><p>Processo, potenza, utilities richieste (aria, fluido, 48 V).</p></div>
+    <div class="spec-row"><b>Safety</b><p>Prerequisiti: enclosure, estrazione, interlock laser.</p></div>
+    <div class="spec-row"><b>Controllo</b><p>Il module manager rifiuta una testa con classe di carico superiore alla base o versione ICD non supportata.</p></div>
+  </div></div>
+  <div class="panel"><span class="kicker">4 · Tavola e pallet</span><h2>Stesso pattern ovunque.</h2><div class="spec-list">
+    <div class="spec-row"><b>Area utile</b><p>450 × 350 mm su tutte le basi.</p></div>
+    <div class="spec-row"><b>Griglia</b><p>Fori M6 a passo 50 mm, 9 × 7 = 63 fori, il primo a 25 mm da ogni bordo.</p></div>
+    <div class="spec-row"><b>Riferimenti</b><p>2 boccole Ø8 H7: R1 tonda a (25, 25), R2 asola in X a (425, 25). Origine pallet = R1.</p></div>
+    <div class="spec-row"><b>Fissaggio</b><p>Ogni pallet usa R1 + R2 e almeno 4 viti M6 della griglia.</p></div>
+    <div class="spec-row"><b>Datum Z</b><p>Faccia superiore della tavola; lo spessore del pallet sta nella sua definizione software.</p></div>
+    <div class="spec-row"><b>Massa max</b><p>Pallet + pezzo: L 5 · S 10 · P 20 kg (la tavola si muove in Y).</p></div>
+  </div></div>
+</section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">5 · Spalle e rialzi</span><h2>Clearance senza perdere la geometria.</h2><div class="spec-list">
+    <div class="spec-row"><b>Spalla–basamento</b><p>Per spalla: 2 spine Ø10 H7 a interasse 100 mm + 4 viti M8 su rettangolo 120 × 60 mm.</p></div>
+    <div class="spec-row"><b>Rialzi</b><p>Stesso pattern sopra e sotto, così si impilano. Altezze standard +50 mm (Light) e +75 mm (Standard).</p></div>
+    <div class="spec-row"><b>Pro</b><p>Il Gantry Lift si monta sul basamento con lo stesso pattern.</p></div>
+  </div></div>
+  <div class="panel"><span class="kicker">6 · Macchina–quadro</span><h2>Un quadro, tre basi.</h2><div class="spec-list">
+    <div class="spec-row"><b>Tensioni</b><p>Motion 48 V DC · logica 24 V DC · spindle da VFD o driver BLDC.</p></div>
+    <div class="spec-row"><b>Connettori</b><p>Uno per asse (motore + encoder), uno spindle, uno ToolDock, uno sensori, uno E-stop separato. La Pro aggiunge l'asse G del lift.</p></div>
+    <div class="spec-row"><b>Controller</b><p>Mesa 7i96S + LinuxCNC; cambiano solo i driver e la taglia degli alimentatori.</p></div>
+  </div></div>
+</section>
+</main><script src="../assets/nav.js"></script></body></html>
