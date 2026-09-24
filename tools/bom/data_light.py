@@ -20,9 +20,9 @@ G=[
 ]),
 ("B · Cinematica XYZ",[
 ("ML-LIN-151","XY","Guide lineari MGN12","4 rails",4,"HIWIN MGN12 class","2 rail Y + 2 rail X, ~600 mm (D010)",22,0.39,"M","source","TO SOURCE"),
-("ML-LIN-152","XY","Pattini MGN12H","8",8,"HIWIN MGN12H class","2 pattini per rail, versione lunga",9,0.08,"M","source","TO SOURCE"),
+("ML-LIN-152","XY","Pattini MGN12H","8",8,"HIWIN MGN12H class","2 pattini per rail, versione lunga",9,0.05,"M","source","TO SOURCE"),
 ("ML-LIN-153","Z","Guide lineari MGN12","2 rails",2,"HIWIN MGN12 class","~250 mm",14,0.16,"M","source","TO SOURCE"),
-("ML-LIN-154","Z","Pattini MGN12H","4",4,"HIWIN MGN12H class","4 pattini complessivi",9,0.08,"M","source","TO SOURCE"),
+("ML-LIN-154","Z","Pattini MGN12H","4",4,"HIWIN MGN12H class","4 pattini complessivi",9,0.05,"M","source","TO SOURCE"),
 ("ML-BS-1204X","X","Ball screw X","1",1,"SFU1204 C7","~600 mm",40,0.75,"M","validate","TO VALIDATE"),
 ("ML-BS-1204Y","Y","Ball screw Y","1",1,"SFU1204 C7","Vite singola centrale sotto la tavola (D006), ~550 mm",40,0.7,"M","validate","TO VALIDATE"),
 ("ML-BS-1204Z","Z","Ball screw Z","1",1,"SFU1204 C7","Stessa vite Z della Standard",35,0.45,"M","validate","TO VALIDATE"),

@@ -295,3 +295,5 @@ span.tree-link{cursor:not-allowed;opacity:.5}
 .cad-generic{color:var(--muted);font:500 12px/1.3 var(--mono)}
 .cad-note{color:var(--muted);font-size:13px;margin:0 0 14px;max-width:90ch}
 .cad-note b{color:var(--text)}
+.cad-own{display:block;color:var(--ok);font:600 12px/1.3 var(--mono);margin-bottom:6px}
+.cad-own:hover{text-decoration:underline}

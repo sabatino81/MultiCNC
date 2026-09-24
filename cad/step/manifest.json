@@ -1,0 +1,146 @@
+{
+  "mgn12_rail_600_2xMGN12H": {
+    "file": "mgn12_rail_600_2xMGN12H.step",
+    "bytes": 222462,
+    "bbox_mm": [
+      600.0,
+      27.0,
+      13.0
+    ]
+  },
+  "mgn12_rail_250_2xMGN12H": {
+    "file": "mgn12_rail_250_2xMGN12H.step",
+    "bytes": 158926,
+    "bbox_mm": [
+      250.0,
+      27.0,
+      13.0
+    ]
+  },
+  "mgn15_rail_600_2xMGN15H": {
+    "file": "mgn15_rail_600_2xMGN15H.step",
+    "bytes": 193929,
+    "bbox_mm": [
+      600.0,
+      32.0,
+      16.0
+    ]
+  },
+  "hgr15_rail_600_2xHGH15CA": {
+    "file": "hgr15_rail_600_2xHGH15CA.step",
+    "bytes": 159002,
+    "bbox_mm": [
+      600.0,
+      34.0,
+      28.0
+    ]
+  },
+  "hgr15_rail_300_2xHGH15CA": {
+    "file": "hgr15_rail_300_2xHGH15CA.step",
+    "bytes": 148421,
+    "bbox_mm": [
+      300.0,
+      34.0,
+      28.0
+    ]
+  },
+  "hgr15_rail_350_2xHGH15CA": {
+    "file": "hgr15_rail_350_2xHGH15CA.step",
+    "bytes": 140770,
+    "bbox_mm": [
+      350.0,
+      34.0,
+      28.0
+    ]
+  },
+  "hgr20_rail_600_2xHGH20CA": {
+    "file": "hgr20_rail_600_2xHGH20CA.step",
+    "bytes": 159292,
+    "bbox_mm": [
+      600.0,
+      44.0,
+      30.0
+    ]
+  },
+  "sfu1204_300": {
+    "file": "sfu1204_300.step",
+    "bytes": 50163,
+    "bbox_mm": [
+      327.0,
+      42.0,
+      42.0
+    ]
+  },
+  "sfu1204_550": {
+    "file": "sfu1204_550.step",
+    "bytes": 50163,
+    "bbox_mm": [
+      577.0,
+      42.0,
+      42.0
+    ]
+  },
+  "sfu1204_600": {
+    "file": "sfu1204_600.step",
+    "bytes": 50165,
+    "bbox_mm": [
+      627.0,
+      42.0,
+      42.0
+    ]
+  },
+  "sfu1605_350": {
+    "file": "sfu1605_350.step",
+    "bytes": 50121,
+    "bbox_mm": [
+      377.0,
+      48.0,
+      48.0
+    ]
+  },
+  "sfu1605_550": {
+    "file": "sfu1605_550.step",
+    "bytes": 50121,
+    "bbox_mm": [
+      577.0,
+      48.0,
+      48.0
+    ]
+  },
+  "sfu1605_600": {
+    "file": "sfu1605_600.step",
+    "bytes": 50121,
+    "bbox_mm": [
+      627.0,
+      48.0,
+      48.0
+    ]
+  },
+  "nema17_closed_loop": {
+    "file": "nema17_closed_loop.step",
+    "bytes": 68150,
+    "bbox_mm": [
+      42.3,
+      42.3,
+      95.0
+    ]
+  },
+  "nema23_closed_loop_2nm": {
+    "file": "nema23_closed_loop_2nm.step",
+    "bytes": 68101,
+    "bbox_mm": [
+      56.4,
+      56.4,
+      119.6
+    ]
+  },
+  "nema23_closed_loop_3nm": {
+    "file": "nema23_closed_loop_3nm.step",
+    "bytes": 68151,
+    "bbox_mm": [
+      56.4,
+      56.4,
+      155.6
+    ]
+  }
+}

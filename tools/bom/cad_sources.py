@@ -34,15 +34,39 @@ BY_ID = {
     "MC-CTRL-001": "mesa",
 }
 
+# STEP MultiCNC (cad/step/, generati da tools/cad/build_step.py): id -> file
+OWN = {
+    "MC-LIN-151": "hgr15_rail_600_2xHGH15CA", "MC-LIN-152": "hgr15_rail_600_2xHGH15CA",
+    "MC-LIN-153": "hgr15_rail_300_2xHGH15CA", "MC-LIN-154": "hgr15_rail_300_2xHGH15CA",
+    "MC-LIN-155": "mgn15_rail_600_2xMGN15H", "MC-LIN-156": "mgn15_rail_600_2xMGN15H",
+    "MC-BS-1605X": "sfu1605_600", "MC-BS-1605Y": "sfu1605_550", "MC-BS-1204Z": "sfu1204_300",
+    "MC-MOT-001": "nema23_closed_loop_2nm",
+    "ML-LIN-151": "mgn12_rail_600_2xMGN12H", "ML-LIN-152": "mgn12_rail_600_2xMGN12H",
+    "ML-LIN-153": "mgn12_rail_250_2xMGN12H", "ML-LIN-154": "mgn12_rail_250_2xMGN12H",
+    "ML-BS-1204X": "sfu1204_600", "ML-BS-1204Y": "sfu1204_550", "ML-BS-1204Z": "sfu1204_300",
+    "ML-MOT-001": "nema17_closed_loop",
+    "MP-LIN-201": "hgr20_rail_600_2xHGH20CA", "MP-LIN-202": "hgr20_rail_600_2xHGH20CA",
+    "MP-LIN-151": "hgr15_rail_300_2xHGH15CA", "MP-LIN-152": "hgr15_rail_300_2xHGH15CA",
+    "MP-GL-LIN1": "hgr15_rail_350_2xHGH15CA", "MP-GL-LIN2": "hgr15_rail_350_2xHGH15CA",
+    "MP-BS-1605X": "sfu1605_600", "MP-BS-1605Y": "sfu1605_550", "MP-BS-1204Z": "sfu1204_300",
+    "MP-GL-BS": "sfu1605_350", "MP-MOT-001": "nema23_closed_loop_3nm", "MP-GL-MOT": "nema23_closed_loop_2nm",
+}
+
 # parti progettate da noi: lo STEP uscirà dal CAD parametrico MultiCNC
 CUSTOM = re.compile(r"-(BAS|GAN|Z|RS)-|-TBL-001$|-TD-00[1236]$|-SP-003$|-GL-LOCK$")
 
 
 def cell(part_id):
+    mine = ""
+    if part_id in OWN:
+        mine = (f'<a class="cad-own" href="../cad/step/{OWN[part_id]}.step" download>STEP MultiCNC ↓</a>'
+                f'<small>modello a quote reali</small>')
     if part_id in BY_ID:
         url, vendor, note = VENDOR[BY_ID[part_id]]
-        return (f'<a class="cad-link" href="{url}" target="_blank" rel="noopener">{vendor} ↗</a>'
-                f'<small>{note}</small>')
+        return mine + (f'<a class="cad-link" href="{url}" target="_blank" rel="noopener">{vendor} ↗</a>'
+                       f'<small>{note}</small>')
     if CUSTOM.search(part_id):
         return '<span class="cad-custom">MultiCNC CAD</span><small>in arrivo</small>'
+    if mine:
+        return mine
     return '<span class="cad-generic">Generico</span><small>STEP dal fornitore scelto</small>'

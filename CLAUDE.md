@@ -15,3 +15,5 @@
 - Le decisioni architetturali si registrano in `docs/decisions.html` (D001…) e vanno riflesse in tutte le pagine e nella BOM che toccano.
 - Basi (D007): Light / Standard / Pro; la Standard è in sviluppo. `bom/base.html` = BOM Standard, `bom/base-light.html` = BOM Light, `bom/base-pro.html` = BOM Pro (non in sviluppo attivo).
 - BOM: le tabelle delle tre BOM si generano da `tools/bom/data_*.py` con `python3 tools/bom/build.py` (vedi `tools/bom/README.md`). Non modificare a mano righe, KPI o totali nell'HTML. Prima del push esegui `python3 tools/bom/build.py --check`; se cambiano costi o masse, aggiorna anche i testi e le altre pagine che li citano.
+- STEP MultiCNC: si generano da `tools/cad/parts.py` con `tools/cad/build_step.py` (CadQuery, vedi `tools/cad/README.md`) in `cad/step/`; non modificare a mano. I file STEP dei produttori si linkano, non si ripubblicano.
+- Calcoli di progetto in `tools/calc/` (D015 guide, D016 ToolDock, D017 potenza): se cambiano gli input, rilancia lo script e aggiorna la pagina che ne riporta i risultati.
