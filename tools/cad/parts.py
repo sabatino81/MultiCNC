@@ -7,6 +7,7 @@ Fonti quote:
 - pattini MGN12H, MGN15H, HGH15CA, HGH20CA: schede HIWIN su hiwin.de (2026-09-24);
 - rotaie MGN/HGR: quote tipiche catalogo HIWIN (larghezza, altezza, passo fori), da verificare;
 - viti SFU e chiocciole: quote tipiche SFU, da verificare con il fornitore scelto;
+  la lunghezza di una vite è sempre quella TOTALE, estremità lavorate comprese (D019);
 - motori NEMA17/23 closed-loop: flangia standard NEMA, lunghezze tipiche con encoder.
 """
 import cadquery as cq
@@ -70,17 +71,23 @@ SCREWS = {
 }
 
 
+ENDS = {"SFU1204": (45.0, 10.0), "SFU1605": (55.0, 10.0)}   # lato BK, lato BF (tipiche)
+
+
 def ballscrew(name, length):
+    """length = lunghezza TOTALE della vite, estremità lavorate comprese (D019)."""
     s = SCREWS[name]
-    shaft = cq.Workplane("YZ").circle(s["d"] / 2).extrude(length)
-    ends = (cq.Workplane("YZ").circle(s["d"] / 2 - 2).extrude(-15)
-            .union(cq.Workplane("YZ").workplane(offset=length).circle(s["d"] / 2 - 2).extrude(12)))
-    x0 = length / 2 - s["L"] / 2
+    bk, bf = ENDS[name]
+    thread = length - bk - bf
+    shaft = cq.Workplane("YZ").workplane(offset=bf).circle(s["d"] / 2).extrude(thread)
+    bf_end = cq.Workplane("YZ").circle(s["d"] / 2 - 2).extrude(bf)
+    bk_end = cq.Workplane("YZ").workplane(offset=bf + thread).circle(s["d"] / 2 - 2).extrude(bk)
+    x0 = bf + thread / 2 - s["L"] / 2
     nut = cq.Workplane("YZ").workplane(offset=x0).circle(s["D"] / 2).extrude(s["L"])
     flange = (cq.Workplane("YZ").workplane(offset=x0).circle(s["A"] / 2).extrude(s["B"])
               .faces("<X").workplane().polarArray(s["pcd"] / 2, 0, 360, s["holes"])
               .hole(s["hole"]))
-    return shaft.union(ends).union(nut).union(flange)
+    return shaft.union(bf_end).union(bk_end).union(nut).union(flange)
 
 
 # ---------------------------------------------------------------- motori NEMA

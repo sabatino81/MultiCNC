@@ -27,15 +27,25 @@
 <section class="section split">
   <div class="panel"><span class="kicker">Sequenza rack</span><h2>Mai sganciare nel vuoto.</h2><div class="spec-list">
     <div class="spec-row"><b>Deposito</b><p>1 · la testa entra nella forcella del posto libero lungo X · 2 · sensore del posto <b>RACK_CAPTURED</b> = vero · 3 · solo allora Z preme la camma e il clamp si apre · 4 · Z risale: <b>MODULE_PRESENT</b> sulla master = falso.</p></div>
+    <div class="spec-row"><b>Spindle</b><p>Prima di ogni sgancio: VFD disabilitato → velocità zero confermata → attesa di scarica → contattore uscita spindle aperto (P1–P3 senza tensione) → solo allora camma e sgancio. Il connettore non separa mai l'uscita del VFD sotto carico.</p></div>
     <div class="spec-row"><b>Prelievo</b><p>1 · la master scende sulla receiver catturata · 2 · Z si allontana dalla camma e il clamp si chiude · 3 · <b>CLAMP_CLOSED</b> + <b>MODULE_PRESENT</b> + ID letto e compatibile · 4 · solo allora la testa esce dalla forcella lungo X.</p></div>
     <div class="spec-row"><b>Sensori</b><p>Master: clamp chiuso, modulo presente. Rack: un sensore di cattura per posto. Con 2 posti sono 2 ingressi in più, coperti dall'espansione I/O (D013).</p></div>
   </div></div>
   <div class="panel"><span class="kicker">Dock e inviluppo</span><h2>Il rack sale con il ponte.</h2><div class="spec-list">
     <div class="spec-row"><b>Riferimento</b><p>Il dock rail è montato sulla struttura che porta l'asse X, non sul basamento: rialzi (Light, Standard) e lift (Pro) lo spostano insieme al carrello Z.</p></div>
-    <div class="spec-row"><b>Inviluppo testa</b><p>Larghezza in X ≤ 110 mm, profondità in Y ≤ 140 mm, lunghezza sotto il coupling ≤ 220 mm; baricentro come ICD v1.</p></div>
+    <div class="spec-row"><b>Inviluppo testa</b><p>Larghezza in X ≤ 110 mm, profondità in Y ≤ 140 mm, lunghezza sotto il coupling ≤ 220 mm per le classi L e S; <span style="color:var(--crit)">classe P in revisione</span> (vedi ISO20 ATC).</p></div>
     <div class="spec-row"><b>Passo posti</b><p>~130 mm lungo X (testa 110 mm + gioco forcella).</p></div>
   </div></div>
 </section>
 
-<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Conseguenza aperta · zona dock:</b> con ponte fisso e tavola Y (D006) il carrello si muove solo in X e Z, quindi i posti del rack stanno lungo X sulla trave, fuori dall'area di lavoro. Due posti (spindle base + un modulo) richiedono circa <b>+260 mm di corsa X</b>: trave, guide X e vite X più lunghe, stimati +2–3,5 kg sulla Standard e più ingombro in X. Alternative da confrontare nel CAD: zona dock a sbalzo oltre una spalla (non allarga il basamento) oppure rack sulla tavola con rialzo pari a quello del ponte (toglie area utile e aggiunge massa mobile in Y). Le masse in BOM non includono ancora questa estensione.</div></section>
+<section class="section split">
+  <div class="panel"><span class="kicker">Da verificare prima del CAD di dettaglio</span><h2>La forza non basta.</h2><div class="spec-list">
+    <div class="spec-row"><b>Camma</b><p>Corsa, profilo e attrito reale: con ~30% di attrito lo Z spinge ~0,22 / 0,70 / 1,66 kN (carico di servizio D014).</p></div>
+    <div class="spec-row"><b>Contatti</b><p>Pressione di Hertz sfera Ø10–rullo (~900 N per contatto sulla Pro), tempra, usura e deriva della ripetibilità nel tempo.</p></div>
+    <div class="spec-row"><b>Molle</b><p>Vita a fatica del pacco molle per ≥ 20.000 cicli di apertura.</p></div>
+  </div></div>
+  <div class="panel" style="border-color:rgba(255,84,112,.35)"><span class="kicker">Aperto · inviluppo classe P</span><h2>L'ISO20 ATC non ci sta.</h2><p>Spindle ISO20 ATC reali: 1,5 kW Ø80 × 353 mm, 8 kg; 2,2 kW Ø80 × 286,5 mm, 10 kg (schede commerciali consultate il 2026-09-24). Superano già i 220 mm e i 7 kg della classe P, prima di receiver, attuatore pneumatico, raccordi e cablaggi. Le strade: alzare la classe P (≈ 12 kg, ≈ 380 mm, con un nuovo calcolo del clamp) oppure montare lo spindle ATC della Pro in modo fisso e lasciare al ToolDock le altre teste. Decisione da prendere prima di congelare l'inviluppo P.</p></div>
+</section>
+
+<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Conseguenza aperta · zona dock:</b> con ponte fisso e tavola Y (D006) il carrello si muove solo in X e Z, quindi i posti del rack stanno lungo X sulla trave, fuori dall'area di lavoro. Due posti (spindle base + un modulo) richiedono circa <b>+260 mm di corsa X</b>: trave, guide X e vite X più lunghe, stimati +2–3,5 kg sulla Standard e più ingombro in X. Allungare X peggiora proprio la macchina appena irrigidita (trave, guide e vite più lunghe, frequenza propria più bassa). Alternative: <b>A</b> zona dock a sbalzo oltre una spalla; <b>B</b> rack sulla tavola con rialzo pari a quello del ponte; <b>C</b> magazzino indicizzato sul ponte (carosello o slitta corta a 2–4 posti) che presenta la testa sempre alla stessa coordinata X, così la CNC fa il docking in un solo punto e la corsa aggiuntiva si riduce a un posto. C è la più promettente e va confrontata nel CAD. Le masse in BOM non includono ancora nessuna delle tre.</div></section>
 </main><script src="../assets/nav.js"></script></body></html>

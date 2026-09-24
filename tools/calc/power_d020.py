@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+"""D020 · Potenza garantita ai moduli con linea 48 V MODULE AUX dedicata (ICD v3).
+
+La linea moduli non dipende più dal profilo motion: 48 V aux garantito =
+80% del PSU dedicato, limitato dal rating del connettore (240 W).
+24 V: PSU HDR-100-24 comune; garantito = 80% − carico logica macchina, limitato
+dal connettore (48 W). Picchi dei motori non toccano più la linea moduli.
+"""
+CONNECTOR_48V, CONNECTOR_24V = 240, 48
+BASES = {"Light": (150, 30), "Standard": (150, 30), "Pro": (350, 34)}  # PSU aux 48 V W, logica 24 V W
+PSU24 = 100
+
+if __name__ == "__main__":
+    for n, (aux48, logic) in BASES.items():
+        g48 = min(aux48 * 0.8, CONNECTOR_48V)
+        g24 = min(PSU24 * 0.8 - logic, CONNECTOR_24V)
+        print(f"{n:9} 48 V MODULE AUX {aux48} W -> garantito {g48:.0f} W · 24 V -> garantito {g24:.0f} W")

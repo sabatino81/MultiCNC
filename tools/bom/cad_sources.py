@@ -15,6 +15,8 @@ VENDOR = {
     "mw_lrs350": ("https://www.meanwell.com/webapp/product/search.aspx?prod=LRS-350", "Mean Well", "LRS-350"),
     "mw_lrs600": ("https://www.meanwell.com/webapp/product/search.aspx?prod=LRS-600", "Mean Well", "LRS-600"),
     "mw_hdr60": ("https://www.meanwell.com/webapp/product/search.aspx?prod=HDR-60", "Mean Well", "HDR-60"),
+    "mw_hdr100": ("https://www.meanwell.com/webapp/product/search.aspx?prod=HDR-100", "Mean Well", "HDR-100"),
+    "mw_lrs150": ("https://www.meanwell.com/webapp/product/search.aspx?prod=LRS-150", "Mean Well", "LRS-150"),
     "mesa": ("http://www.mesanet.com/", "Mesa", "nessuno STEP ufficiale"),
 }
 
@@ -30,25 +32,25 @@ BY_ID = {
     "ML-MOT-001": "so_kit", "MC-DRV-001": "so_kit", "ML-DRV-001": "so_kit",
     "MP-DRV-001": "so_kit", "MP-GL-DRV": "so_kit",
     "ML-PWR-001": "mw_lrs200", "MC-PWR-001": "mw_lrs350", "MP-PWR-001": "mw_lrs600",
-    "MC-PWR-002": "mw_hdr60",
+    "MC-PWR-002": "mw_hdr100", "MC-PWR-003": "mw_lrs150", "MP-PWR-003": "mw_lrs350",
     "MC-CTRL-001": "mesa",
 }
 
 # STEP MultiCNC (cad/step/, generati da tools/cad/build_step.py): id -> file
 OWN = {
-    "MC-LIN-151": "hgr15_rail_600_2xHGH15CA", "MC-LIN-152": "hgr15_rail_600_2xHGH15CA",
-    "MC-LIN-153": "hgr15_rail_300_2xHGH15CA", "MC-LIN-154": "hgr15_rail_300_2xHGH15CA",
-    "MC-LIN-155": "mgn15_rail_600_2xMGN15H", "MC-LIN-156": "mgn15_rail_600_2xMGN15H",
-    "MC-BS-1605X": "sfu1605_600", "MC-BS-1605Y": "sfu1605_550", "MC-BS-1204Z": "sfu1204_300",
+    "MC-LIN-151": "hgr15_rail_640_2xHGH15CA", "MC-LIN-152": "hgr15_rail_640_2xHGH15CA",
+    "MC-LIN-153": "hgr15_rail_310_2xHGH15CA", "MC-LIN-154": "hgr15_rail_310_2xHGH15CA",
+    "MC-LIN-155": "mgn15_rail_630_2xMGN15H", "MC-LIN-156": "mgn15_rail_630_2xMGN15H",
+    "MC-BS-1605X": "sfu1605_590", "MC-BS-1605Y": "sfu1605_490", "MC-BS-1204Z": "sfu1204_260",
     "MC-MOT-001": "nema23_closed_loop_2nm",
-    "ML-LIN-151": "mgn12_rail_600_2xMGN12H", "ML-LIN-152": "mgn12_rail_600_2xMGN12H",
-    "ML-LIN-153": "mgn12_rail_250_2xMGN12H", "ML-LIN-154": "mgn12_rail_250_2xMGN12H",
-    "ML-BS-1204X": "sfu1204_600", "ML-BS-1204Y": "sfu1204_550", "ML-BS-1204Z": "sfu1204_300",
+    "ML-LIN-151": "mgn12_rail_620_2xMGN12H", "ML-LIN-152": "mgn12_rail_620_2xMGN12H",
+    "ML-LIN-153": "mgn12_rail_280_2xMGN12H", "ML-LIN-154": "mgn12_rail_280_2xMGN12H",
+    "ML-BS-1204X": "sfu1204_570", "ML-BS-1204Y": "sfu1204_470", "ML-BS-1204Z": "sfu1204_260",
     "ML-MOT-001": "nema17_closed_loop",
-    "MP-LIN-201": "hgr20_rail_600_2xHGH20CA", "MP-LIN-202": "hgr20_rail_600_2xHGH20CA",
-    "MP-LIN-151": "hgr15_rail_300_2xHGH15CA", "MP-LIN-152": "hgr15_rail_300_2xHGH15CA",
+    "MP-LIN-201": "hgr20_rail_650_2xHGH20CA", "MP-LIN-202": "hgr20_rail_650_2xHGH20CA",
+    "MP-LIN-151": "hgr15_rail_320_2xHGH15CA", "MP-LIN-152": "hgr15_rail_320_2xHGH15CA",
     "MP-GL-LIN1": "hgr15_rail_350_2xHGH15CA", "MP-GL-LIN2": "hgr15_rail_350_2xHGH15CA",
-    "MP-BS-1605X": "sfu1605_600", "MP-BS-1605Y": "sfu1605_550", "MP-BS-1204Z": "sfu1204_300",
+    "MP-BS-1605X": "sfu1605_590", "MP-BS-1605Y": "sfu1605_490", "MP-BS-1204Z": "sfu1204_260",
     "MP-GL-BS": "sfu1605_350", "MP-MOT-001": "nema23_closed_loop_3nm", "MP-GL-MOT": "nema23_closed_loop_2nm",
 }
 

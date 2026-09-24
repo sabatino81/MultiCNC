@@ -13,6 +13,8 @@
 <tr><td>Rapidi</td><td>8 m/min</td><td>10 m/min</td><td>8 m/min</td></tr>
 <tr><td>Feed nominale</td><td>1–2 m/min (legno, PCB)</td><td>2–3 m/min legno · 0,5–1 Al</td><td>1–2 m/min Al</td></tr>
 <tr><td>Crash load (spinta di stallo asse)</td><td>~850 N</td><td>~2.300 N</td><td>~3.400 N</td></tr>
+<tr><td>Crash dinamico (energia a fine corsa)</td><td>~0,07 J · Y 7,5 kg a 8 m/min</td><td>~0,19 J · Y 13,5 kg a 10 m/min</td><td>~0,23 J · Y 26 kg a 8 m/min</td></tr>
+<tr><td>Carico di servizio ToolDock (Z allo sgancio)</td><td>~0,22 kN</td><td>~0,70 kN</td><td>~1,66 kN</td></tr>
 <tr><td>Duty cycle spindle</td><td>30 min al 50%</td><td>60 min al 60%</td><td>continuo al 100%</td></tr>
 <tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-target">≥ 10 N/µm</td><td class="status-target">≥ 25 N/µm</td></tr>
 </table></div></section>
@@ -20,8 +22,10 @@
 <section class="section split">
   <div class="panel"><span class="kicker">Regole</span><h2>Come si usano.</h2><div class="spec-list">
     <div class="spec-row"><b>Carico di progetto</b><p>Nessuna perdita di precisione misurabile oltre il target della base; margini statici sui pattini secondo HIWIN.</p></div>
-    <div class="spec-row"><b>Crash</b><p>Alla spinta di stallo dell'asse nessuna deformazione permanente. Il ToolDock può sganciarsi, ma non deve danneggiarsi.</p></div>
-    <div class="spec-row"><b>Momento ToolDock</b><p>Forza di taglio × distanza punta–coupling, più peso e inerzia della testa al baricentro (≤ 80 mm, ICD v2).</p></div>
+    <div class="spec-row"><b>Stallo / inceppamento</b><p>Alla spinta di stallo dell'asse nessuna deformazione permanente. Il ToolDock può sganciarsi, ma non deve danneggiarsi.</p></div>
+    <div class="spec-row"><b>Crash dinamico</b><p>Energia ½·m·v² della massa mobile ai rapidi. Ogni asse ha hard stop con bumper elastomerico, corsa di arresto ≥ 2 mm: forza media ≤ ~120 N. Senza bumper, con 0,05 mm di deformazione, si arriva a ~4 kN.</p></div>
+    <div class="spec-row"><b>Servizio ToolDock</b><p>A ogni cambio lo Z spinge la camma 3:1 contro il pacco molle: preload ÷ 3 + ~30% di attrito. Trave, rack e Z lo vedono a ogni cambio: si verifica a fatica per ≥ 20.000 cambi.</p></div>
+    <div class="spec-row"><b>Momento ToolDock</b><p>Forza di taglio × distanza punta–coupling, più peso e inerzia della testa al baricentro (≤ 80 mm, ICD v3).</p></div>
     <div class="spec-row"><b>Rigidezza</b><p>Somma delle cedevolezze di guide, strutture, ToolDock e testa. Ogni sottosistema riceve una quota di budget.</p></div>
   </div></div>
   <div class="panel"><span class="kicker">Origine dei numeri</span><h2>Da dove vengono.</h2><div class="spec-list">

@@ -1,45 +1,54 @@
 {
-  "mgn12_rail_600_2xMGN12H": {
-    "file": "mgn12_rail_600_2xMGN12H.step",
-    "bytes": 222462,
+  "mgn12_rail_620_2xMGN12H": {
+    "file": "mgn12_rail_620_2xMGN12H.step",
+    "bytes": 238967,
     "bbox_mm": [
-      600.0,
+      620.0,
       27.0,
       13.0
     ]
   },
-  "mgn12_rail_250_2xMGN12H": {
-    "file": "mgn12_rail_250_2xMGN12H.step",
-    "bytes": 158926,
+  "mgn12_rail_280_2xMGN12H": {
+    "file": "mgn12_rail_280_2xMGN12H.step",
+    "bytes": 175516,
     "bbox_mm": [
-      250.0,
+      280.0,
       27.0,
       13.0
     ]
   },
-  "mgn15_rail_600_2xMGN15H": {
-    "file": "mgn15_rail_600_2xMGN15H.step",
-    "bytes": 193929,
+  "mgn15_rail_630_2xMGN15H": {
+    "file": "mgn15_rail_630_2xMGN15H.step",
+    "bytes": 186315,
     "bbox_mm": [
-      600.0,
+      630.0,
       32.0,
       16.0
     ]
   },
-  "hgr15_rail_600_2xHGH15CA": {
-    "file": "hgr15_rail_600_2xHGH15CA.step",
-    "bytes": 159002,
+  "hgr15_rail_640_2xHGH15CA": {
+    "file": "hgr15_rail_640_2xHGH15CA.step",
+    "bytes": 175751,
     "bbox_mm": [
-      600.0,
+      640.0,
       34.0,
       28.0
     ]
   },
-  "hgr15_rail_300_2xHGH15CA": {
-    "file": "hgr15_rail_300_2xHGH15CA.step",
-    "bytes": 148421,
+  "hgr15_rail_310_2xHGH15CA": {
+    "file": "hgr15_rail_310_2xHGH15CA.step",
+    "bytes": 148435,
     "bbox_mm": [
-      300.0,
+      310.0,
+      34.0,
+      28.0
+    ]
+  },
+  "hgr15_rail_320_2xHGH15CA": {
+    "file": "hgr15_rail_320_2xHGH15CA.step",
+    "bytes": 140770,
+    "bbox_mm": [
+      320.0,
       34.0,
       28.0
     ]
@@ -53,65 +62,65 @@
       28.0
     ]
   },
-  "hgr20_rail_600_2xHGH20CA": {
-    "file": "hgr20_rail_600_2xHGH20CA.step",
-    "bytes": 159292,
+  "hgr20_rail_650_2xHGH20CA": {
+    "file": "hgr20_rail_650_2xHGH20CA.step",
+    "bytes": 176018,
     "bbox_mm": [
-      600.0,
+      650.0,
       44.0,
       30.0
     ]
   },
-  "sfu1204_300": {
-    "file": "sfu1204_300.step",
-    "bytes": 50163,
+  "sfu1204_260": {
+    "file": "sfu1204_260.step",
+    "bytes": 50078,
     "bbox_mm": [
-      327.0,
+      260.0,
       42.0,
       42.0
     ]
   },
-  "sfu1204_550": {
-    "file": "sfu1204_550.step",
-    "bytes": 50163,
+  "sfu1204_470": {
+    "file": "sfu1204_470.step",
+    "bytes": 50117,
     "bbox_mm": [
-      577.0,
+      470.0,
       42.0,
       42.0
     ]
   },
-  "sfu1204_600": {
-    "file": "sfu1204_600.step",
-    "bytes": 50165,
+  "sfu1204_570": {
+    "file": "sfu1204_570.step",
+    "bytes": 50117,
     "bbox_mm": [
-      627.0,
+      570.0,
       42.0,
       42.0
     ]
   },
   "sfu1605_350": {
     "file": "sfu1605_350.step",
-    "bytes": 50121,
+    "bytes": 50189,
     "bbox_mm": [
-      377.0,
+      350.0,
       48.0,
       48.0
     ]
   },
-  "sfu1605_550": {
-    "file": "sfu1605_550.step",
-    "bytes": 50121,
+  "sfu1605_490": {
+    "file": "sfu1605_490.step",
+    "bytes": 50189,
     "bbox_mm": [
-      577.0,
+      490.0,
       48.0,
       48.0
     ]
   },
-  "sfu1605_600": {
-    "file": "sfu1605_600.step",
-    "bytes": 50121,
+  "sfu1605_590": {
+    "file": "sfu1605_590.step",
+    "bytes": 50189,
     "bbox_mm": [
-      627.0,
+      590.0,
       48.0,
       48.0
     ]

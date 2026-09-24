@@ -6,8 +6,8 @@
   <div class="panel"><span class="kicker">Dati pattini · HIWIN</span><h2>Schede ufficiali.</h2><div class="table-wrap"><table>
     <tr><th>Pattino</th><th>C</th><th>C0</th><th>M0X · M0Y · M0Z</th><th>Massa</th></tr>
     <tr><td>MGN15H</td><td>6,37 kN</td><td>9,11 kN</td><td>73,5 · 57,8 · 57,8 Nm</td><td>0,09 kg</td></tr>
-    <tr><td>HGH15CA</td><td>14,7 kN</td><td>23,47 kN</td><td>120 · 140 · 140 Nm</td><td>0,18 kg</td></tr>
-  </table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Fonte: schede HIWIN MGN15HZ0HM e HGH15CAZ0H su hiwin.de, consultate il 2026-09-24. Le schede non riportano la rigidezza del pattino.</p></div>
+    <tr><td>HGH15CA</td><td>14,7 kN</td><td>23,47 kN</td><td>120 · 140 · 140 Nm<br><small style="color:var(--dim)">catalogo precedente: 120 · 100 · 100 Nm → si usa 100</small></td><td>0,18 kg</td></tr>
+  </table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Fonte: schede HIWIN MGN15HZ0HM e HGH15CAZ0H su hiwin.de, consultate il 2026-09-24. Le schede non riportano la rigidezza del pattino. Per HGH15CA la scheda attuale e il catalogo tecnico precedente danno momenti diversi: per il progetto vale il più basso. Il calcolo D015 non usa i momenti.</p></div>
   <div class="panel"><span class="kicker">Modello</span><h2>Carrello X a corpo rigido.</h2><div class="spec-list">
     <div class="spec-row"><b>Geometria</b><p>2 guide sulla faccia della trave a interasse verticale h, 2 pattini per guida a passo s = 100 mm. Punta utensile a b = 180 mm sotto il centro delle guide (Z tutto giù) e a = 80 mm dalla faccia.</p></div>
     <div class="spec-row"><b>Carichi D014</b><p>Radiale 150 N, assiale 200 N, crash 2.300 N alla punta.</p></div>
@@ -26,7 +26,7 @@
 <p style="color:var(--dim);font-size:13px;margin-top:12px">fs = C0 / carico sul pattino più caricato. Al carico di progetto fs ≥ 36 per MGN15H in tutti i casi: la capacità statica non è il problema. HIWIN indica fs 3–5 con urti e vibrazioni.</p></section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">Asse Y · tavola mobile</span><h2>MGN15H basta.</h2><p>Guide Y a ~300 mm di interasse sotto la tavola e pezzo alto fino a 100 mm: fattore 0,44, rigidezza minima ~13 N/µm per pattino. Il braccio è corto rispetto all'interasse, quindi il pattino miniatura ha ampio margine.</p></div>
+  <div class="panel"><span class="kicker">Asse Y · tavola mobile</span><h2>MGN15H plausibile, non congelata.</h2><p>Centro tavola: guide Y a ~300 mm, pezzo alto fino a 100 mm, fattore 0,44, rigidezza minima ~13 N/µm per pattino. <b>Caso angolo</b> (utensile a 225 mm dal centro, forza 150 N in Y): momento di imbardata 33,75 Nm ripreso dalle forze laterali dei pattini a interasse 200 mm → 84 N per pattino (fs 108), ma rigidezza laterale minima <b>~44 N/µm</b> per pattino. La capacità non è un problema; la rigidezza laterale MGN15H va verificata prima del CAD freeze.</p></div>
   <div class="panel"><span class="kicker">Cosa manca</span><h2>La rigidezza vera.</h2><p>Le rigidezze per pattino e precarico vanno lette nelle tabelle del catalogo HIWIN completo o misurate al banco. La domanda da chiudere: MGN15H raggiunge ~90 N/µm con h = 110 mm? HGH15CA ha C0 circa 2,6 volte più alto ed è atteso sensibilmente più rigido a parità di precarico.</p></div>
 </section>
 

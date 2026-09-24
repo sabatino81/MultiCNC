@@ -17,21 +17,22 @@ import parts  # noqa: E402
 OUT = ROOT / "cad" / "step"
 
 MODELS = {
-    # guide: rotaia con 2 pattini, lunghezze di riferimento delle BOM
-    "mgn12_rail_600_2xMGN12H": lambda: parts.rail_with_blocks("MGN12", "MGN12H", 600),
-    "mgn12_rail_250_2xMGN12H": lambda: parts.rail_with_blocks("MGN12", "MGN12H", 250, spacing=70),
-    "mgn15_rail_600_2xMGN15H": lambda: parts.rail_with_blocks("MGN15", "MGN15H", 600),
-    "hgr15_rail_600_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 600),
-    "hgr15_rail_300_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 300, spacing=90),
+    # guide: rotaia con 2 pattini, lunghezze D019
+    "mgn12_rail_620_2xMGN12H": lambda: parts.rail_with_blocks("MGN12", "MGN12H", 620, spacing=100),
+    "mgn12_rail_280_2xMGN12H": lambda: parts.rail_with_blocks("MGN12", "MGN12H", 280, spacing=70),
+    "mgn15_rail_630_2xMGN15H": lambda: parts.rail_with_blocks("MGN15", "MGN15H", 630, spacing=200),
+    "hgr15_rail_640_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 640, spacing=100),
+    "hgr15_rail_310_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 310, spacing=80),
+    "hgr15_rail_320_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 320, spacing=90),
     "hgr15_rail_350_2xHGH15CA": lambda: parts.rail_with_blocks("HGR15", "HGH15CA", 350, spacing=110),
-    "hgr20_rail_600_2xHGH20CA": lambda: parts.rail_with_blocks("HGR20", "HGH20CA", 600),
-    # viti con chiocciola a flangia
-    "sfu1204_300": lambda: parts.ballscrew("SFU1204", 300),
-    "sfu1204_550": lambda: parts.ballscrew("SFU1204", 550),
-    "sfu1204_600": lambda: parts.ballscrew("SFU1204", 600),
+    "hgr20_rail_650_2xHGH20CA": lambda: parts.rail_with_blocks("HGR20", "HGH20CA", 650, spacing=100),
+    # viti con chiocciola a flangia, lunghezza totale D019
+    "sfu1204_260": lambda: parts.ballscrew("SFU1204", 260),
+    "sfu1204_470": lambda: parts.ballscrew("SFU1204", 470),
+    "sfu1204_570": lambda: parts.ballscrew("SFU1204", 570),
     "sfu1605_350": lambda: parts.ballscrew("SFU1605", 350),
-    "sfu1605_550": lambda: parts.ballscrew("SFU1605", 550),
-    "sfu1605_600": lambda: parts.ballscrew("SFU1605", 600),
+    "sfu1605_490": lambda: parts.ballscrew("SFU1605", 490),
+    "sfu1605_590": lambda: parts.ballscrew("SFU1605", 590),
     # motori closed-loop
     "nema17_closed_loop": lambda: parts.motor("NEMA17_CL"),
     "nema23_closed_loop_2nm": lambda: parts.motor("NEMA23_CL_2NM"),
@@ -41,6 +42,8 @@ MODELS = {
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    for old in OUT.glob("*.step"):
+        old.unlink()
     manifest = {}
     for name, make in MODELS.items():
         shape = make()

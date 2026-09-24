@@ -47,8 +47,23 @@ def k_required_y():
     return (K_TIP_TARGET / RAIL_SHARE) * (0.25 + (b_y / h_y) ** 2)
 
 
+# Caso angolo (review 2): utensile a x = 225 mm dal centro tavola, forza in Y.
+# L'imbardata è ripresa solo dalle forze laterali dei 4 pattini (interasse lungo Y s_y):
+# θ = M / (k s_y²), spostamento all'utensile = F x² / (k s_y²); si somma il ribaltamento b_y/h_y.
+x_corner, s_y = 225.0, 200.0
+
+
+def k_required_y_corner():
+    factor = (x_corner / s_y) ** 2 + (b_y / h_y) ** 2
+    return (K_TIP_TARGET / RAIL_SHARE) * factor, factor, F_RAD * x_corner / 1000
+
+
 if __name__ == "__main__":
     print(f"Asse Y: fattore {0.25 + (b_y / h_y) ** 2:.2f}  k minimo per pattino: {k_required_y():.0f} N/µm")
+    kc, fc, myaw = k_required_y_corner()
+    lat = myaw * 1000 / (2 * s_y)
+    print(f"Asse Y angolo: momento di imbardata {myaw:.2f} Nm, forza laterale per pattino {lat:.0f} N, "
+          f"fattore {fc:.2f}, k laterale minimo per pattino {kc:.0f} N/µm, fs MGN15H {BLOCKS['MGN15H']['C0']/lat:.0f}")
     for h in (70.0, 90.0, 110.0, 130.0):
         L = block_loads(h)
         pmax = max(L["fy"], L["fx"], L["fz"])
