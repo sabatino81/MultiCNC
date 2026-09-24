@@ -1,6 +1,6 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Interfacce comuni · ICD v3</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
 <a class="back" href="lineup.html">← Tre basi</a>
-<div class="pagehead"><div class="eyebrow">02 · Interface Control Document · D012 · v3 D020</div><h1>Interfacce<br>comuni · ICD v3.</h1><p class="lead">Le interfacce che Light, Standard e Pro devono avere identiche: ToolDock, connettore, identificazione modulo, tavola e pallet, spalle e rialzi, collegamento al quadro. Geometrie, pin-out e regole sono <b>congelati</b>; le prestazioni restano TARGET finché non sono misurate.</p><div class="badges"><span class="badge ok">ICD v3 · FROZEN</span><span class="badge">D012 · D016 · D017 · D018 · D020</span><span class="badge">Vale per le tre basi</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Interface Control Document · D012 · v3 D020</div><h1>Interfacce<br>comuni · ICD v3.</h1><p class="lead">Le interfacce che Light, Standard e Pro devono avere identiche: ToolDock, connettore, identificazione modulo, tavola e pallet, spalle e rialzi, collegamento al quadro. Geometrie, pin-out e regole sono <b>congelati</b>; le prestazioni restano TARGET finché non sono misurate.</p><div class="badges"><span class="badge ok">ICD v3 · FROZEN</span><span class="badge">D012 · D016 · D017 · D018 · D020 · D021 · D022</span><span class="badge">Vale per le tre basi</span></div></div>
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una nuova revisione della ICD (la prossima è v4). Ogni revisione deve accettare le teste e i pallet della precedente, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
@@ -14,12 +14,12 @@
 <tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg; il pacco molle del clamp segue la classe della base (D016)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Conferma aggancio</td><td>Master: clamp chiuso + modulo presente. Rack: sensore di cattura per ogni posto. Sgancio solo con cattura confermata; uscita dal rack solo con clamp chiuso e ID valido (D016)</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Inviluppo testa</td><td>Classi L e S: X ≤ 110 mm · Y ≤ 140 mm · lunghezza sotto il coupling ≤ 220 mm; passo posti rack ~130 mm (D016). <small style="color:var(--crit)">Classe P in revisione: gli spindle ISO20 ATC reali misurano Ø80 × 290–350 mm e 8–10 kg.</small></td><td class="status-validate">L · S FROZEN · P IN REVISIONE</td></tr>
+<tr><td>Inviluppo testa</td><td>Classi L e S: X ≤ 110 mm · Y ≤ 140 mm · lunghezza sotto il coupling ≤ 220 mm; passo posti rack ~130 mm (D016). <small style="color:var(--crit)">Classe P in revisione: i candidati ISO20 ATC esaminati sono Ø80, circa 287–353 mm e 8–10 kg.</small></td><td class="status-validate">L · S FROZEN · P IN REVISIONE</td></tr>
 <tr><td>Ripetibilità di riaggancio</td><td>≤ 10 µm</td><td class="status-target">TARGET</td></tr>
 <tr><td>Tempo di cambio</td><td>≤ 30 s deposito + prelievo</td><td class="status-target">TARGET</td></tr>
 </table></div></section>
 
-<section class="section"><h2>2 · Connettori ToolDock · ICD v3 (D017, D020)</h2><p style="color:var(--muted);max-width:80ch">Due connettori a innesto cieco sulla stessa piastra: <b>potenza e I/O</b> (contatti a lama + pogo pin) e <b>dati</b> (contatti a molla schermati). Separare i dati dalla potenza riduce i disturbi sull'Ethernet e sugli encoder.</p>
+<section class="section"><h2>2 · Connettori ToolDock · ICD v3 (D017, D020, D022)</h2><p style="color:var(--muted);max-width:80ch">Due connettori a innesto cieco sulla stessa piastra: <b>potenza e I/O</b> (contatti a lama + pogo pin) e <b>dati</b> (contatti a molla schermati). Separare i dati dalla potenza riduce i disturbi sull'Ethernet e sugli encoder.</p>
 <h3 style="margin-top:22px">2a · Potenza e I/O</h3><div class="table-wrap"><table>
 <tr><th>Contatto</th><th>Funzione</th><th>Rating connettore</th><th>Note</th></tr>
 <tr><td>PE</td><td>Terra di protezione</td><td>10 A</td><td>Primo a connettersi, ultimo a scollegarsi</td></tr>
@@ -33,19 +33,20 @@
 <tr><td>S8 · GND</td><td>Riserva · massa segnale</td><td>—</td><td>Non assegnare</td></tr>
 <tr><td>Aria · fluido</td><td>1 passaggio Ø6 mm · 2 porte Ø4 mm</td><td>≤ 7 bar</td><td>Predisposti e tappati; usati solo dai kit che li portano</td></tr>
 </table></div>
-<h3 style="margin-top:22px">2b · Dati</h3><div class="table-wrap"><table>
+<h3 style="margin-top:22px">2b · Dati · 18 contatti + schermo</h3><div class="table-wrap"><table>
 <tr><th>Contatti</th><th>Funzione</th><th>Standard</th><th>Note</th></tr>
-<tr><td>D1–D8</td><td>Ethernet 1000BASE-T</td><td>4 coppie twistate, schermate</td><td>Camere, vision, moduli intelligenti; seconda porta Ethernet del PC, separata dal link Mesa. Gigabit scelto ora (D020): una camera 5 MP a 10 fps supera già i 100 Mbit/s</td></tr>
-<tr><td>D5 · D6</td><td>CAN FD</td><td>1 Mbit/s nominale, 5 Mbit/s dati</td><td>Comandi e telemetria dei moduli (temperature, valvole, stato)</td></tr>
-<tr><td>E1–E6</td><td>Encoder A± · B± · Z±</td><td>Differenziale RS-422</td><td>6 conduttori; ingresso encoder spindle della Mesa 7i96S</td></tr>
-<tr><td>E7 · E8</td><td>+5 V encoder · GND</td><td>≤ 200 mA</td><td>Alimentazione encoder della testa</td></tr>
-<tr><td>SH</td><td>Schermo</td><td>—</td><td>Collegato al telaio lato macchina</td></tr>
+<tr><td>ETH1–ETH8</td><td>Ethernet 1000BASE-T</td><td>4 coppie differenziali 100 Ω</td><td>Camere, vision, moduli intelligenti; seconda porta Ethernet del PC, separata dal link Mesa. Gigabit scelto ora (D020): una camera 5 MP a 10 fps supera già i 100 Mbit/s</td></tr>
+<tr><td>CAN-H · CAN-L</td><td>CAN FD</td><td>1 Mbit/s nominale, 5 Mbit/s dati</td><td>Comandi e telemetria dei moduli (temperature, valvole, stato); massa di riferimento su GND</td></tr>
+<tr><td>ENC-A+ · A− · B+ · B− · Z+ · Z−</td><td>Encoder</td><td>Differenziale RS-422</td><td>6 conduttori; ingresso encoder spindle della Mesa 7i96S</td></tr>
+<tr><td>+5V · GND</td><td>Alimentazione encoder · massa segnale</td><td>≤ 200 mA</td><td>Alimentazione encoder della testa</td></tr>
+<tr><td>SH</td><td>Schermo</td><td>Contatto dedicato</td><td>Collegato al telaio lato macchina</td></tr>
 </table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px"><b>Qualifica FROZEN:</b> il connettore blind-mate reale va qualificato per 100 Ω di impedenza differenziale e integrità di segnale di classe Cat5e sulle 4 coppie Ethernet; "contatti a molla schermati" non basta (D022).</p>
 <h3 style="margin-top:22px">2c · Potenza garantita per base</h3><div class="table-wrap"><table>
-<tr><th>Base</th><th>48 V MODULE AUX dedicato</th><th>48 V aux garantito</th><th>24 V (HDR-100-24) aux garantito</th></tr>
-<tr><td>Light</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">48 W</td></tr>
-<tr><td>Standard</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">48 W</td></tr>
-<tr><td>Pro</td><td>LRS-350-48</td><td class="status-target">240 W</td><td class="status-target">46 W</td></tr>
+<tr><th>Base</th><th>48 V MODULE AUX dedicato</th><th>48 V aux garantito</th><th>24 V (HDR-100-24, ~92 W) aux garantito</th></tr>
+<tr><td>Light</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">40 W</td></tr>
+<tr><td>Standard</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">40 W</td></tr>
+<tr><td>Pro</td><td>LRS-350-48</td><td class="status-target">240 W</td><td class="status-target">40 W</td></tr>
 </table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">Calcolo in <code>tools/calc/power_d020.py</code>. D020 separa fisicamente <b>48 V MOTION</b> e <b>48 V MODULE AUX</b>: accelerazioni e rumore dei driver non toccano più il modulo, e la potenza è davvero garantita (80% del PSU dedicato, entro il rating del connettore). <b>Regola FROZEN:</b> un modulo che chiede più della potenza garantita porta nel suo kit un alimentatore ausiliario da installare nel quadro, fino al rating del connettore (240 W a 48 V). Il Module ID dichiara la potenza richiesta e il module manager rifiuta i moduli che la base non può alimentare. P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile. <b>Sequenza spindle FROZEN:</b> VFD disabilitato → velocità zero → attesa di scarica → contattore uscita spindle aperto → solo allora sgancio; il blind-mate non interrompe mai l'uscita del VFD sotto carico. Il connettore reale va qualificato anche sui fronti dv/dt del VFD, non solo su 300 V / 10 A.</p></section>
 
@@ -74,7 +75,7 @@
     <div class="spec-row"><b>Spalla–basamento</b><p>Per spalla: 2 spine Ø10 H7 a interasse 100 mm + 4 viti M8 su rettangolo 120 × 60 mm.</p></div>
     <div class="spec-row"><b>Rialzi</b><p>Stesso pattern sopra e sotto, così si impilano. Altezze standard +50 mm (Light) e +75 mm (Standard).</p></div>
     <div class="spec-row"><b>Pro</b><p>Il Gantry Lift si monta sul basamento con lo stesso pattern.</p></div>
-    <div class="spec-row"><b>Dock rail</b><p>Montato sulla struttura che porta l'asse X, così sale con rialzi e lift e resta alla quota del carrello Z (D016). <span style="color:var(--violet)">Aperto: zona dock ~+260 mm di corsa X per 2 posti, da risolvere nel CAD.</span></p></div>
+    <div class="spec-row"><b>Magazine</b><p>Magazine indicizzato montato sulla struttura del ponte, che sale con rialzi e lift; presenta la testa richiesta in un'unica posizione di docking (D021).</p></div>
   </div></div>
   <div class="panel"><span class="kicker">6 · Macchina–quadro</span><h2>Un quadro, tre basi.</h2><div class="spec-list">
     <div class="spec-row"><b>Tensioni</b><p>Motion 48 V DC · logica 24 V DC · spindle da VFD o driver BLDC.</p></div>

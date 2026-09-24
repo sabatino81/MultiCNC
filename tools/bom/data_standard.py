@@ -20,9 +20,9 @@ G=[
 ]),
 ("B · Cinematica XYZ",[
 ("MC-LIN-151","X","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","Sulla trave, 640 mm (D019), interasse ≥ 110 mm (D015)",37,0.93,"M","source","TO SOURCE"),
-("MC-LIN-152","X","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","2 pattini per rail; preload TBC (D015)",15,0.18,"M","source","TO SOURCE"),
+("MC-LIN-152","X","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","2 pattini per rail; precarico ZA, 365 N/µm (D015, D022)",15,0.18,"M","source","TO SOURCE"),
 ("MC-LIN-155","Y","Guide lineari MGN15","2 rails",2,"HIWIN MGN15 class","Nel basamento sotto la tavola, 630 mm (D019), interasse ~300 mm (D008, D015)",32,0.63,"M","source","TO SOURCE"),
-("MC-LIN-156","Y","Pattini MGN15H","4",4,"HIWIN MGN15H class","2 pattini per rail, versione lunga; 0,09 kg da scheda HIWIN",12,0.09,"M","source","TO SOURCE"),
+("MC-LIN-156","Y","Pattini MGN15H","4",4,"HIWIN MGN15H class","2 pattini per rail, versione lunga, precarico Z1 (202 N/µm, D022); 0,09 kg da scheda HIWIN",12,0.09,"M","source","TO SOURCE"),
 ("MC-LIN-153","Z","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","310 mm (D019), corsa Z 120–140 mm",25,0.45,"M","source","TO SOURCE"),
 ("MC-LIN-154","Z","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","4 pattini complessivi",15,0.18,"M","source","TO SOURCE"),
 ("MC-BS-1605X","X","Ball screw X","1",1,"SFU1605 C7","590 mm totali, estremità BK/BF comprese (D019); precarico/errore passo da qualificare",55,1.28,"M","validate","TO VALIDATE"),
@@ -54,7 +54,7 @@ G=[
 ("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v3, D020)",40,0.05,"C","source","TO SOURCE"),
 ("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC, 2 porte Ethernet","Porta 1 dedicata alla Mesa, porta 2 per il bus dati ToolDock (D017)",150,0.8,"C","source","TO SOURCE"),
 ("MC-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-350-48","Motion supply",60,0.9,"C","source","TO SOURCE"),
-("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","I/O, sensori, relè, logica ToolDock e 24 V moduli (ICD v3, D020)",45,0.35,"C","source","TO SOURCE"),
+("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v3, D022)",45,0.35,"C","source","TO SOURCE"),
 ("MC-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-150-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v3, D020)",40,0.6,"C","source","TO SOURCE"),
 ("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process secondo safety design finale",80,0.5,"C","design","TO DESIGN"),
 ("MC-IO-001","I/O","Relays / terminal blocks / protection","1 set",1,"DIN rail industrial","Fusibili, interruttori, relè, morsetti",80,0.7,"C","source","TO SOURCE"),
@@ -69,6 +69,6 @@ G=[
 ]),
 ("G · Accessori (non inclusi nei totali)",[
 ("MC-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +75 mm","Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)",60,1.4,"A","design","TO DESIGN"),
-("MC-TD-006","ToolDock","Dock rail","1",1,"2-position rail","2 posti con forcella e sensore di cattura, camma di sgancio 3:1; montato sulla struttura del ponte (D016)",80,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]

@@ -20,7 +20,7 @@ G=[
 ]),
 ("B · Cinematica XYZ",[
 ("ML-LIN-151","XY","Guide lineari MGN12","4 rails",4,"HIWIN MGN12 class","2 rail Y + 2 rail X, 620 mm (D019: corsa + margini + inviluppo pattini)",31,0.4,"M","source","TO SOURCE"),
-("ML-LIN-152","XY","Pattini MGN12H","8",8,"HIWIN MGN12H class","2 pattini per rail, versione lunga",9,0.05,"M","source","TO SOURCE"),
+("ML-LIN-152","XY","Pattini MGN12H","8",8,"HIWIN MGN12H class","2 pattini per rail, versione lunga, precarico Z1 (175 N/µm, D022)",9,0.05,"M","source","TO SOURCE"),
 ("ML-LIN-153","Z","Guide lineari MGN12","2 rails",2,"HIWIN MGN12 class","280 mm (D019)",16,0.18,"M","source","TO SOURCE"),
 ("ML-LIN-154","Z","Pattini MGN12H","4",4,"HIWIN MGN12H class","4 pattini complessivi",9,0.05,"M","source","TO SOURCE"),
 ("ML-BS-1204X","X","Ball screw X","1",1,"SFU1204 C7","570 mm totali, estremità BK/BF comprese (D019)",40,0.71,"M","validate","TO VALIDATE"),
@@ -52,7 +52,7 @@ G=[
 ("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v3, D020)",40,0.05,"C","source","TO SOURCE"),
 ("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC, 2 porte Ethernet","Porta 1 dedicata alla Mesa, porta 2 per il bus dati ToolDock (D017)",150,0.8,"C","source","TO SOURCE"),
 ("ML-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-200-48","Motion supply NEMA17",45,0.6,"C","source","TO SOURCE"),
-("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","I/O, sensori, relè, logica ToolDock e 24 V moduli (ICD v3, D020)",45,0.35,"C","source","TO SOURCE"),
+("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v3, D022)",45,0.35,"C","source","TO SOURCE"),
 ("MC-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-150-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v3, D020)",40,0.6,"C","source","TO SOURCE"),
 ("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process",70,0.5,"C","design","TO DESIGN"),
 ("ML-IO-001","I/O","Relays / terminals / protection","1 set",1,"DIN rail","Fusibili, relè, morsetti",60,0.5,"C","source","TO SOURCE"),
@@ -67,6 +67,6 @@ G=[
 ]),
 ("G · Accessori (non inclusi nei totali)",[
 ("ML-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +50 mm","Clearance manuale riferita da spine",45,0.8,"A","design","TO DESIGN"),
-("MC-TD-006","ToolDock","Dock rail","1",1,"Stessa parte della Standard","2 posti con forcella e sensore di cattura, camma di sgancio 3:1; montato sulla struttura del ponte (D016)",80,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]

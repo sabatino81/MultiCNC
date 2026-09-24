@@ -16,6 +16,13 @@
   </div></div>
 </section>
 
+<section class="section"><h2>Rigidezze HIWIN (D022)</h2><div class="table-wrap"><table>
+<tr><th>Pattino</th><th>Z0</th><th>Z1 / ZA</th><th>ZB</th><th>Requisito D015</th><th>Esito</th></tr>
+<tr><td>HGH15CA (HG15C)</td><td>196 N/µm</td><td>365 N/µm</td><td>483 N/µm</td><td>X: ≥ 88 N/µm</td><td class="status-ok">OK · ZA margine ×4,1</td></tr>
+<tr><td>MGN15H</td><td>89 N/µm</td><td>202 N/µm (Z1)</td><td>—</td><td>Y angolo: ≥ 44 N/µm</td><td class="status-ok">OK · Z1 margine ×4,6</td></tr>
+<tr><td>MGN12H</td><td>70 N/µm</td><td>175 N/µm (Z1)</td><td>—</td><td>Light</td><td>riferimento</td></tr>
+</table></div><p style="color:var(--dim);font-size:13px;margin-top:12px">Fonte: HIWIN Linear Guideway Technical Information G99TE23-2203, tabelle 2-1-13 (HG) e 2-4-7 (MG), rigidezza radiale. La rigidezza laterale non è tabellata: per serie a carico uguale nelle quattro direzioni è dello stesso ordine; anche a metà del valore radiale il margine su Y resta ~×2,3.</p></section>
+
 <section class="section"><h2>Risultati asse X</h2><div class="table-wrap"><table>
 <tr><th>Interasse guide X · h</th><th>Fattore 1/4 + (b/h)²</th><th>k minimo per pattino</th><th>Carico max pattino (design · crash)</th><th>fs crash MGN15H</th><th>fs crash HGH15CA</th></tr>
 <tr><td>70 mm (trave attuale ~80×100)</td><td>6,86</td><td class="status-critical">206 N/µm</td><td>253 · 2.957 N</td><td class="status-target">3,1</td><td class="status-ok">7,9</td></tr>
@@ -26,8 +33,8 @@
 <p style="color:var(--dim);font-size:13px;margin-top:12px">fs = C0 / carico sul pattino più caricato. Al carico di progetto fs ≥ 36 per MGN15H in tutti i casi: la capacità statica non è il problema. HIWIN indica fs 3–5 con urti e vibrazioni.</p></section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">Asse Y · tavola mobile</span><h2>MGN15H plausibile, non congelata.</h2><p>Centro tavola: guide Y a ~300 mm, pezzo alto fino a 100 mm, fattore 0,44, rigidezza minima ~13 N/µm per pattino. <b>Caso angolo</b> (utensile a 225 mm dal centro, forza 150 N in Y): momento di imbardata 33,75 Nm ripreso dalle forze laterali dei pattini a interasse 200 mm → 84 N per pattino (fs 108), ma rigidezza laterale minima <b>~44 N/µm</b> per pattino. La capacità non è un problema; la rigidezza laterale MGN15H va verificata prima del CAD freeze.</p></div>
-  <div class="panel"><span class="kicker">Cosa manca</span><h2>La rigidezza vera.</h2><p>Le rigidezze per pattino e precarico vanno lette nelle tabelle del catalogo HIWIN completo o misurate al banco. La domanda da chiudere: MGN15H raggiunge ~90 N/µm con h = 110 mm? HGH15CA ha C0 circa 2,6 volte più alto ed è atteso sensibilmente più rigido a parità di precarico.</p></div>
+  <div class="panel"><span class="kicker">Asse Y · tavola mobile</span><h2>MGN15H confermata (Z1).</h2><p>Centro tavola: guide Y a ~300 mm, pezzo alto fino a 100 mm, fattore 0,44, rigidezza minima ~13 N/µm per pattino. <b>Caso angolo</b> (utensile a 225 mm dal centro, forza 150 N in Y): momento di imbardata 33,75 Nm ripreso dalle forze laterali dei pattini a interasse 200 mm → 84 N per pattino (fs 108), ma rigidezza laterale minima <b>~44 N/µm</b> per pattino. La capacità non è un problema; con il dato HIWIN (202 N/µm in Z1) anche la rigidezza ha margine ×4,6 (D022).</p></div>
+  <div class="panel"><span class="kicker">Cosa manca</span><h2>La rigidezza vera · chiusa.</h2><p>Chiuso con D022: le tabelle del catalogo HIWIN completo danno HGH15CA 196 / 365 / 483 N/µm e MGN15H 89 / 202 N/µm. Resta da misurare al banco la rigidezza laterale e quella dell'assieme montato.</p></div>
 </section>
 
 <section class="section"><div class="callout"><b>Decisione D015 (approvata):</b> asse X con <b>HGR15 / HGH15CA</b> e interasse guide sulla trave <b>≥ 110 mm</b> (trave più alta); asse Y resta <b>MGN15H</b>. Costo stimato: circa +0,9 kg e +€22 in BOM per guide e pattini X, più la massa della trave più alta, da stimare. Se le tabelle HIWIN mostrano che MGN15H supera ~90 N/µm, si può tornare a MGN15H anche su X, tenendo comunque h ≥ 110 mm.</div></section>

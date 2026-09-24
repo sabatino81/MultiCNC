@@ -63,7 +63,7 @@ G=[
 ("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v3, D020)",40,0.05,"C","source","TO SOURCE"),
 ("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC, 2 porte Ethernet","Porta 1 dedicata alla Mesa, porta 2 per il bus dati ToolDock (D017)",150,0.8,"C","source","TO SOURCE"),
 ("MP-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-600-48","Motion supply, 4 assi",70,1.3,"C","source","TO SOURCE"),
-("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","I/O, sensori, relè, logica ToolDock e 24 V moduli (ICD v3, D020)",45,0.35,"C","source","TO SOURCE"),
+("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v3, D022)",45,0.35,"C","source","TO SOURCE"),
 ("MP-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-350-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v3, D020)",60,0.8,"C","source","TO SOURCE"),
 ("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process",80,0.5,"C","design","TO DESIGN"),
 ("MP-IO-001","I/O","Relays / terminal blocks / protection","1 set",1,"DIN rail industrial","Fusibili, interruttori, relè, morsetti",90,0.8,"C","source","TO SOURCE"),
@@ -77,6 +77,6 @@ G=[
 ("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
 ]),
 ("H · Accessori (non inclusi nei totali)",[
-("MC-TD-006","ToolDock","Dock rail","1",1,"Stessa parte della Standard","2 posti con forcella e sensore di cattura, camma di sgancio 3:1; montato sulla struttura del ponte (D016)",80,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]
