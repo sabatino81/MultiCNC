@@ -1,10 +1,10 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Interfacce comuni · ICD v1</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Interfacce comuni · ICD v2</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
 <a class="back" href="lineup.html">← Tre basi</a>
-<div class="pagehead"><div class="eyebrow">02 · Interface Control Document · D012</div><h1>Interfacce<br>comuni · ICD v1.</h1><p class="lead">Le interfacce che Light, Standard e Pro devono avere identiche: ToolDock, connettore, identificazione modulo, tavola e pallet, spalle e rialzi, collegamento al quadro. Geometrie, pin-out e regole sono <b>congelati</b>; le prestazioni restano TARGET finché non sono misurate.</p><div class="badges"><span class="badge ok">ICD v1 · FROZEN</span><span class="badge">D012</span><span class="badge">Vale per le tre basi</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Interface Control Document · D012 · v2 D017</div><h1>Interfacce<br>comuni · ICD v2.</h1><p class="lead">Le interfacce che Light, Standard e Pro devono avere identiche: ToolDock, connettore, identificazione modulo, tavola e pallet, spalle e rialzi, collegamento al quadro. Geometrie, pin-out e regole sono <b>congelati</b>; le prestazioni restano TARGET finché non sono misurate.</p><div class="badges"><span class="badge ok">ICD v2 · FROZEN</span><span class="badge">D012 · D016 · D017</span><span class="badge">Vale per le tre basi</span></div></div>
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una ICD v2. La v2 deve accettare le teste e i pallet v1, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
-<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), bus dati ed encoder differenziali nel connettore, potenza realmente disponibile per base (48 V × 5 A = 240 W non sta in un LRS-350 insieme ai motori), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
+<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), <s>bus dati, encoder differenziali, potenza disponibile per base</s> (chiusi da D017, ICD v2), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
 <section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
 <tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
 <tr><td>Accoppiamento</td><td>Cinematico a 3 punti: 3 sfere Ø10 mm sulla receiver contro 3 coppie di rulli sulla master, su cerchio Ø80 mm a 120°</td><td class="status-frozen">FROZEN</td></tr>
@@ -19,28 +19,42 @@
 <tr><td>Tempo di cambio</td><td>≤ 30 s deposito + prelievo</td><td class="status-target">TARGET</td></tr>
 </table></div></section>
 
-<section class="section"><h2>2 · Connettore ibrido</h2><div class="table-wrap"><table>
-<tr><th>Contatto</th><th>Funzione</th><th>Rating</th><th>Note</th></tr>
+<section class="section"><h2>2 · Connettori ToolDock · ICD v2 (D017)</h2><p style="color:var(--muted);max-width:80ch">Due connettori a innesto cieco sulla stessa piastra: <b>potenza e I/O</b> (contatti a lama + pogo pin) e <b>dati</b> (contatti a molla schermati). Separare i dati dalla potenza riduce i disturbi sull'Ethernet e sugli encoder.</p>
+<h3 style="margin-top:22px">2a · Potenza e I/O</h3><div class="table-wrap"><table>
+<tr><th>Contatto</th><th>Funzione</th><th>Rating connettore</th><th>Note</th></tr>
 <tr><td>PE</td><td>Terra di protezione</td><td>10 A</td><td>Primo a connettersi, ultimo a scollegarsi</td></tr>
 <tr><td>P1 · P2 · P3</td><td>Fasi motore spindle</td><td>300 V AC · 10 A</td><td>Da VFD (Standard, Pro) o driver BLDC (Light)</td></tr>
-<tr><td>P4 · P5</td><td>48 V DC ausiliario</td><td>5 A</td><td>Teste con elettronica di potenza propria (laser, knife tangenziale)</td></tr>
-<tr><td>P6 · P7</td><td>24 V DC logica</td><td>2 A</td><td>Sensori, valvole, camera</td></tr>
+<tr><td>P4 · P5</td><td>48 V DC ausiliario</td><td>5 A (240 W)</td><td>Potenza garantita per base nella tabella 2c</td></tr>
+<tr><td>P6 · P7</td><td>24 V DC logica</td><td>2 A (48 W)</td><td>Potenza garantita per base nella tabella 2c</td></tr>
 <tr><td>S1</td><td>Module ID (1-Wire)</td><td>—</td><td>Vedi sezione 3</td></tr>
 <tr><td>S2 · S3</td><td>Ingressi sensore testa</td><td>24 V</td><td>Es. temperatura, fine corsa interno</td></tr>
-<tr><td>S4 · S5 · S6</td><td>Encoder / Hall A · B · Z</td><td>5 V</td><td>Per spindle o assi interni alla testa</td></tr>
+<tr><td>S4 · S5 · S6</td><td>Riserva</td><td>24 V</td><td>Gli encoder passano sul connettore dati (2b)</td></tr>
 <tr><td>S7</td><td>Interlock di processo</td><td>24 V</td><td>Catena safety del modulo (laser, termoformatura)</td></tr>
-<tr><td>S8 · GND</td><td>Riserva · massa segnale</td><td>—</td><td>Non assegnare in v1</td></tr>
-<tr><td>Aria</td><td>1 passaggio Ø6 mm</td><td>≤ 7 bar</td><td>Predisposto e tappato; usato solo dai kit che portano l'aria</td></tr>
-<tr><td>Fluido</td><td>2 porte Ø4 mm</td><td>—</td><td>Predisposte e tappate (raffreddamento, MQL)</td></tr>
+<tr><td>S8 · GND</td><td>Riserva · massa segnale</td><td>—</td><td>Non assegnare</td></tr>
+<tr><td>Aria · fluido</td><td>1 passaggio Ø6 mm · 2 porte Ø4 mm</td><td>≤ 7 bar</td><td>Predisposti e tappati; usati solo dai kit che li portano</td></tr>
 </table></div>
-<p style="color:var(--violet);font-size:13px;margin-top:12px"><b>IN REVISIONE (D017):</b> manca un bus dati vero (vision, moduli intelligenti); S4–S6 vanno dichiarati single-ended o differenziali (A±/B±/Z± = 6 conduttori); i rating P4–P7 sono del connettore, la potenza fornibile per base va definita.</p><p style="color:var(--dim);font-size:13px;margin-top:4px">Potenza su contatti a lama, segnali su pogo pin. Regola safety FROZEN: P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile.</p></section>
+<h3 style="margin-top:22px">2b · Dati</h3><div class="table-wrap"><table>
+<tr><th>Contatti</th><th>Funzione</th><th>Standard</th><th>Note</th></tr>
+<tr><td>D1–D4</td><td>Ethernet 100BASE-TX</td><td>2 coppie twistate, schermate</td><td>Camere, vision, moduli intelligenti; su una seconda porta Ethernet del PC, separata dal link Mesa</td></tr>
+<tr><td>D5 · D6</td><td>CAN FD</td><td>1 Mbit/s nominale, 5 Mbit/s dati</td><td>Comandi e telemetria dei moduli (temperature, valvole, stato)</td></tr>
+<tr><td>E1–E6</td><td>Encoder A± · B± · Z±</td><td>Differenziale RS-422</td><td>6 conduttori; ingresso encoder spindle della Mesa 7i96S</td></tr>
+<tr><td>E7 · E8</td><td>+5 V encoder · GND</td><td>≤ 200 mA</td><td>Alimentazione encoder della testa</td></tr>
+<tr><td>SH</td><td>Schermo</td><td>—</td><td>Collegato al telaio lato macchina</td></tr>
+</table></div>
+<h3 style="margin-top:22px">2c · Potenza garantita per base</h3><div class="table-wrap"><table>
+<tr><th>Base</th><th>PSU 48 V · motori in lavorazione</th><th>48 V aux garantito</th><th>24 V aux garantito</th></tr>
+<tr><td>Light</td><td>LRS-200-48 · ~90 W</td><td class="status-target">70 W</td><td class="status-target">15 W</td></tr>
+<tr><td>Standard</td><td>LRS-350-48 · ~210 W</td><td class="status-target">70 W</td><td class="status-target">15 W</td></tr>
+<tr><td>Pro</td><td>LRS-600-48 · ~270 W</td><td class="status-target">200 W</td><td class="status-target">12 W</td></tr>
+</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Calcolo in <code>tools/calc/power_d017.py</code>: PSU − motori − 20% di margine; assorbimenti dei motori da misurare al banco. <b>Regola FROZEN:</b> un modulo che chiede più della potenza garantita porta nel suo kit un alimentatore ausiliario da installare nel quadro, fino al rating del connettore (240 W a 48 V). Il Module ID dichiara la potenza richiesta e il module manager rifiuta i moduli che la base non può alimentare. P1–P7 si alimentano solo con clamp chiuso, modulo presente e ID letto e compatibile.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">3 · Module ID</span><h2>Cosa dichiara ogni testa.</h2><div class="spec-list">
     <div class="spec-row"><b>Supporto</b><p>EEPROM 1-Wire ≥ 1 kbit sulla receiver.</p></div>
-    <div class="spec-row"><b>Identità</b><p>Tipo modulo, numero di serie, versione ICD.</p></div>
+    <div class="spec-row"><b>Identità</b><p>Tipo modulo, numero di serie, versione ICD (v2).</p></div>
     <div class="spec-row"><b>Meccanica</b><p>Classe di carico (L/S/P), massa, offset utensile XYZ.</p></div>
-    <div class="spec-row"><b>Capability</b><p>Processo, potenza, utilities richieste (aria, fluido, 48 V).</p></div>
+    <div class="spec-row"><b>Capability</b><p>Processo, potenza richiesta a 48 V e 24 V, utilities (aria, fluido), uso di Ethernet / CAN FD / encoder.</p></div>
     <div class="spec-row"><b>Safety</b><p>Prerequisiti: enclosure, estrazione, interlock laser.</p></div>
     <div class="spec-row"><b>Controllo</b><p>Il module manager rifiuta una testa con classe di carico superiore alla base o versione ICD non supportata.</p></div>
   </div></div>
@@ -64,7 +78,7 @@
   </div></div>
   <div class="panel"><span class="kicker">6 · Macchina–quadro</span><h2>Un quadro, tre basi.</h2><div class="spec-list">
     <div class="spec-row"><b>Tensioni</b><p>Motion 48 V DC · logica 24 V DC · spindle da VFD o driver BLDC.</p></div>
-    <div class="spec-row"><b>Connettori</b><p>Uno per asse (motore + encoder), uno spindle, uno ToolDock, uno sensori, uno E-stop separato. La Pro aggiunge l'asse G del lift.</p></div>
+    <div class="spec-row"><b>Connettori</b><p>Uno per asse (motore + encoder), uno spindle, due ToolDock (potenza/I-O e dati), uno sensori, uno E-stop separato. La Pro aggiunge l'asse G del lift.</p></div>
     <div class="spec-row"><b>Controller</b><p>Mesa 7i96S + LinuxCNC con scheda di espansione I/O comune (MC-CTRL-003, ≥ +16 ingressi / +8 uscite): i circa 12–14 ingressi della ICD superano gli 11 della 7i96S. Cambiano solo i driver e la taglia degli alimentatori.</p></div>
   </div></div>
 </section>
