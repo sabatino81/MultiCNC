@@ -1,0 +1,11 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070b11"><title>MultiCNC — Base Precision · Sicurezza</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+<a class="back" href="index.html">← Base Precision</a>
+<div class="pagehead"><div class="eyebrow">Safety architecture</div><h1>Sicurezza.</h1><p class="lead">La safety deve nascere insieme all'architettura, non essere aggiunta a progetto finito.</p></div>
+<section class="section"><div class="spec-list">
+<div class="spec-row"><b>Emergency stop</b><p>Catena di arresto dedicata e chiaramente separata dalla normale logica software.</p></div>
+<div class="spec-row"><b>Interlock</b><p>Predisposizione enclosure/door interlock, indispensabile per i moduli che lo richiederanno.</p></div>
+<div class="spec-row"><b>Spindle enable</b><p>Consenso hardware + software coerente con lo stato macchina.</p></div>
+<div class="spec-row"><b>ToolDock safety</b><p>Il cambio modulo deve essere possibile solo in condizioni sicure e con conferma di aggancio.</p></div>
+<div class="spec-row"><b>Gantry lift</b><p>Movimento consentito solo fuori lavorazione; locking verificato prima di abilitare il ciclo CNC.</p></div>
+<div class="spec-row"><b>Module-dependent safety</b><p>Laser, termoformatura, pneumatica e altri kit estendono la safety architecture della base.</p></div>
+</div></section></main><script src="../assets/nav.js"></script></body></html>
