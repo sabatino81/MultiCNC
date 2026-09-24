@@ -3,10 +3,10 @@
 <div class="pagehead"><div class="eyebrow">02 · Base Standard / BOM</div><h1>Bill of Materials.</h1><p class="lead">Distinta tecnica della <b>Base Standard</b>, la prima delle tre basi da sviluppare (D007). Ogni riga ha prezzo target e massa stimata: i valori sono PROVISIONAL fino a CAD e sourcing. Esiste anche la <a href="base-light.html" style="color:var(--accent-2)">BOM Light</a>; la distinta precedente, più pesante, è ora il <a href="base-pro.html" style="color:var(--accent-2)">riferimento della Base Pro</a>.</p></div>
 
 <section class="bom-summary">
-<div class="bom-kpi"><strong>38</strong><span>linee BOM attuali (accessori esclusi)</span></div>
-<div class="bom-kpi"><strong>€3.014</strong><span>prototipo, somma subtotali</span></div>
+<div class="bom-kpi"><strong>39</strong><span>linee BOM attuali (accessori esclusi)</span></div>
+<div class="bom-kpi"><strong>€3.104</strong><span>prototipo, somma subtotali</span></div>
 <div class="bom-kpi"><strong>31,0 kg</strong><span>meccanica stimata · target ~31 kg (D009)</span></div>
-<div class="bom-kpi"><strong>7,8 kg</strong><span>quadro esterno stimato (non sulla macchina)</span></div>
+<div class="bom-kpi"><strong>8,0 kg</strong><span>quadro esterno stimato (non sulla macchina)</span></div>
 </section>
 
 <div class="callout"><b>Leve di massa applicate (D008):</b> guide X/Y MGN15, basamento ottimizzato, tavola 8 mm con tasche, spindle 0.5–0.8 kW, rialzi e dock rail come accessori. La stima scende da 37,8 a 31,0 kg, accettati come target della Standard (D009).</div>
@@ -45,6 +45,7 @@
 <tr><td>MC-TD-005</td><td>ToolDock</td><td>Module ID</td><td class="qty">1</td><td>EEPROM / coded ID</td><td>Identificazione automatica del modulo</td><td class="money">€30</td><td class="money">€30</td><td class="money">0.0 <small>macchina</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr class="group-row"><td colspan="10">F · Controllo (quadro esterno)</td></tr>
 <tr><td>MC-CTRL-001</td><td>Control</td><td>Motion controller</td><td class="qty">1</td><td>Mesa 7i96S</td><td>Ethernet LinuxCNC motion/I-O baseline, comune alle tre basi</td><td class="money">€160</td><td class="money">€160</td><td class="money">0.2 <small>quadro</small></td><td class="status-validate">I/O REVIEW</td></tr>
+<tr><td>MC-CTRL-003</td><td>Control</td><td>Espansione I/O</td><td class="qty">1</td><td>Scheda Mesa su porta di espansione 7i96S (modello da confermare)</td><td>≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v1)</td><td class="money">€90</td><td class="money">€90</td><td class="money">0.2 <small>quadro</small></td><td class="status-validate">I/O REVIEW</td></tr>
 <tr><td>MC-CTRL-002</td><td>Compute</td><td>Fanless mini PC</td><td class="qty">1</td><td>x86 LinuxCNC compatible</td><td>Ethernet dedicata alla Mesa</td><td class="money">€120</td><td class="money">€120</td><td class="money">0.8 <small>quadro</small></td><td class="status-source">TO SOURCE</td></tr>
 <tr><td>MC-PWR-001</td><td>Power</td><td>48 V PSU</td><td class="qty">1</td><td>Mean Well 350 W class</td><td>Motion supply</td><td class="money">€60</td><td class="money">€60</td><td class="money">0.9 <small>quadro</small></td><td class="status-source">TO SOURCE</td></tr>
 <tr><td>MC-PWR-002</td><td>Power</td><td>24 V PSU</td><td class="qty">1</td><td>Mean Well DIN class</td><td>I/O, sensori, relè, logica ToolDock</td><td class="money">€35</td><td class="money">€35</td><td class="money">0.3 <small>quadro</small></td><td class="status-source">TO SOURCE</td></tr>
@@ -57,11 +58,11 @@
 <tr><td>MC-SNS-001</td><td>Sensing</td><td>Home/limit sensors</td><td class="qty">4</td><td>Inductive industrial class</td><td>XYZ home + limite</td><td class="money">€8</td><td class="money">€32</td><td class="money">0.2 <small>macchina</small></td><td class="status-source">TO SOURCE</td></tr>
 <tr><td>MC-PROBE-001</td><td>Metrology</td><td>XYZ touch probe</td><td class="qty">1</td><td>Wired probe class</td><td>Work offset / edge finding</td><td class="money">€45</td><td class="money">€45</td><td class="money">0.2 <small>macchina</small></td><td class="status-design">TO QUALIFY</td></tr>
 <tr><td>MC-TOOL-001</td><td>Metrology</td><td>Tool length setter</td><td class="qty">1</td><td>Wired setter class</td><td>Tool length reference</td><td class="money">€55</td><td class="money">€55</td><td class="money">0.3 <small>macchina</small></td><td class="status-design">TO QUALIFY</td></tr>
-<tr class="group-row"><td colspan="10">H · Accessori (non inclusi nei totali)</td></tr>
+<tr class="group-row"><td colspan="10">X · Accessori (non inclusi nei totali)</td></tr>
 <tr><td>MC-RS-001</td><td>Clearance</td><td>Rialzi spalle spinati</td><td class="qty">1 set</td><td>Custom Al blocks +75 mm</td><td>Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)</td><td class="money">€60</td><td class="money">€60</td><td class="money">1.4 <small>accessorio</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr><td>MC-TD-006</td><td>ToolDock</td><td>Dock rail</td><td class="qty">1</td><td>2-position rail</td><td>Parcheggio moduli; arriva con il primo kit ToolDock (D008); include la camma di sgancio del clamp (ICD v1)</td><td class="money">€80</td><td class="money">€80</td><td class="money">0.8 <small>accessorio</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr class="group-row"><td colspan="10">I · Totali provvisori</td></tr>
-<tr><td colspan="6"><b>Stima BOM prototipo attuale</b></td><td></td><td class="money"><b>€3,014</b></td><td class="money"><b>31.0 + 7.8</b></td><td class="status-target">PROVISIONAL</td></tr>
+<tr><td colspan="6"><b>Stima BOM prototipo attuale</b></td><td></td><td class="money"><b>€3,104</b></td><td class="money"><b>31.0 + 8.0</b></td><td class="status-target">PROVISIONAL</td></tr>
 <tr><td colspan="6"><b>Target industrializzato Base Standard</b></td><td></td><td class="money"><b>da definire</b></td><td class="money"><b>~31</b></td><td class="status-ok">ACCEPTED</td></tr>
 </table></div></section>
 

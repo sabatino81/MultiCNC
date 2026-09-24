@@ -3,10 +3,10 @@
 <div class="pagehead"><div class="eyebrow">02 · Base Pro / BOM</div><h1>Bill of Materials.</h1><p class="lead">Distinta della <b>Base Pro</b>, ricostruita dalla BOM V0.4 con massa per riga: HGR20 su X/Y, viti SFU1605 precaricate, NEMA23 3 Nm, spindle 1.5 kW ad acqua, Gantry Lift motorizzato. ToolDock, tavola 450×350, controller e safety sono le parti comuni alle tre basi (codici MC-); le righe MP- sono specifiche della Pro. Non è in sviluppo attivo: valori PROVISIONAL fino a CAD e sourcing.</p></div>
 
 <section class="bom-summary">
-<div class="bom-kpi"><strong>47</strong><span>linee BOM attuali (accessori esclusi)</span></div>
-<div class="bom-kpi"><strong>€4.028</strong><span>prototipo, somma subtotali</span></div>
+<div class="bom-kpi"><strong>48</strong><span>linee BOM attuali (accessori esclusi)</span></div>
+<div class="bom-kpi"><strong>€4.118</strong><span>prototipo, somma subtotali</span></div>
 <div class="bom-kpi"><strong>70,6 kg</strong><span>meccanica stimata · target ~70 kg (D011)</span></div>
-<div class="bom-kpi"><strong>12,3 kg</strong><span>esterno stimato: quadro, VFD, raffreddamento</span></div>
+<div class="bom-kpi"><strong>12,5 kg</strong><span>esterno stimato: quadro, VFD, raffreddamento</span></div>
 </section>
 
 <div class="callout"><b>Target fissato a ~70 kg (D011).</b> Struttura 33,3 · cinematica 18,9 · Gantry Lift 8,5 · spindle 5,6 · cablaggi 2,6 · ToolDock 1,6 kg. Sulla Pro la massa è in parte una funzione, perché smorza le vibrazioni sull'alluminio. Condizione: basamento, gantry con lift e tavola spedibili come sottogruppi separati. Le leve (basamento a nervature ≈ −3 kg, spalle con tasche ≈ −2 kg, tavola 10 mm ≈ −1,5 kg) si rivalutano al CAD della Pro.</div>
@@ -55,6 +55,7 @@
 <tr><td>MC-TD-005</td><td>ToolDock</td><td>Module ID</td><td class="qty">1</td><td>Stessa parte della Standard</td><td>Identificazione automatica</td><td class="money">€30</td><td class="money">€30</td><td class="money">0.0 <small>macchina</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr class="group-row"><td colspan="10">F · Controllo (quadro esterno)</td></tr>
 <tr><td>MC-CTRL-001</td><td>Control</td><td>Motion controller</td><td class="qty">1</td><td>Mesa 7i96S</td><td>Comune alle tre basi; I/O da verificare con il lift</td><td class="money">€160</td><td class="money">€160</td><td class="money">0.2 <small>esterno</small></td><td class="status-validate">I/O REVIEW</td></tr>
+<tr><td>MC-CTRL-003</td><td>Control</td><td>Espansione I/O</td><td class="qty">1</td><td>Scheda Mesa su porta di espansione 7i96S (modello da confermare)</td><td>≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v1)</td><td class="money">€90</td><td class="money">€90</td><td class="money">0.2 <small>esterno</small></td><td class="status-validate">I/O REVIEW</td></tr>
 <tr><td>MC-CTRL-002</td><td>Compute</td><td>Fanless mini PC</td><td class="qty">1</td><td>x86 LinuxCNC compatible</td><td>Ethernet dedicata alla Mesa</td><td class="money">€120</td><td class="money">€120</td><td class="money">0.8 <small>esterno</small></td><td class="status-source">TO SOURCE</td></tr>
 <tr><td>MP-PWR-001</td><td>Power</td><td>48 V PSU</td><td class="qty">1</td><td>Mean Well 500 W class</td><td>Motion supply, 4 assi</td><td class="money">€70</td><td class="money">€70</td><td class="money">1.3 <small>esterno</small></td><td class="status-source">TO SOURCE</td></tr>
 <tr><td>MC-PWR-002</td><td>Power</td><td>24 V PSU</td><td class="qty">1</td><td>Mean Well DIN class</td><td>I/O, sensori, relè, logica ToolDock</td><td class="money">€35</td><td class="money">€35</td><td class="money">0.3 <small>esterno</small></td><td class="status-source">TO SOURCE</td></tr>
@@ -70,9 +71,9 @@
 <tr class="group-row"><td colspan="10">H · Accessori (non inclusi nei totali)</td></tr>
 <tr><td>MC-TD-006</td><td>ToolDock</td><td>Dock rail</td><td class="qty">1</td><td>Stessa parte della Standard</td><td>Arriva con il primo kit ToolDock (come su Light e Standard); include la camma di sgancio del clamp (ICD v1)</td><td class="money">€80</td><td class="money">€80</td><td class="money">0.8 <small>accessorio</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr class="group-row"><td colspan="10">I · Totali provvisori</td></tr>
-<tr><td colspan="6"><b>Stima BOM prototipo attuale</b></td><td></td><td class="money"><b>€4,028</b></td><td class="money"><b>70.6 + 12.3</b></td><td class="status-target">PROVISIONAL</td></tr>
+<tr><td colspan="6"><b>Stima BOM prototipo attuale</b></td><td></td><td class="money"><b>€4,118</b></td><td class="money"><b>70.6 + 12.5</b></td><td class="status-target">PROVISIONAL</td></tr>
 <tr><td colspan="6"><b>Target Base Pro</b></td><td></td><td class="money"><b>da definire</b></td><td class="money"><b>~70</b></td><td class="status-ok">ACCEPTED</td></tr>
 </table></div></section>
 
-<section class="section split"><div class="panel"><h2>Differenze rispetto alla V0.4</h2><p>Stessi componenti e prezzi; kit motore separati tra motore (macchina) e driver (quadro); dock rail spostato negli accessori come su Light e Standard, quindi il prototipo passa da €4.108 a €4.028 e da 46 a 47 righe.</p></div><div class="panel"><h2>Da verificare</h2><p>Clamp ToolDock comune con testa da 7 kg, I/O Mesa con il quinto asse (lift), locking del lift, runout spindle 1.5 kW, massa dei sottogruppi per la spedizione.</p></div></section>
+<section class="section split"><div class="panel"><h2>Differenze rispetto alla V0.4</h2><p>Stessi componenti e prezzi; kit motore separati tra motore (macchina) e driver (quadro); dock rail spostato negli accessori come su Light e Standard, quindi il prototipo passa da €4.108 a €4.028 e da 46 a 47 righe; con l'espansione I/O della ICD v1 diventa €4.118 e 48 righe.</p></div><div class="panel"><h2>Da verificare</h2><p>Clamp ToolDock comune con testa da 7 kg, I/O Mesa con il quinto asse (lift), locking del lift, runout spindle 1.5 kW, massa dei sottogruppi per la spedizione.</p></div></section>
 </main><script src="../assets/nav.js"></script></body></html>
