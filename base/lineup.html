@@ -1,0 +1,55 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Tre basi</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+<a class="back" href="index.html">← Base Standard</a>
+<div class="pagehead"><div class="eyebrow">02 · Line-up · D007</div><h1>Tre basi.<br>Un sistema di kit.</h1><p class="lead">Light, Standard e Pro condividono area di lavoro, ToolDock, pallet, elettronica e software. Cambiano struttura, guide, motori, spindle di serie e massa: chi non lavora alluminio non paga né trasporta la massa che serve all'alluminio.</p><div class="badges"><span class="badge ok">Standard in sviluppo</span><span class="badge">Light · derivata</span><span class="badge">Pro · riferimento</span></div></div>
+
+<section class="grid">
+  <div class="card"><span class="kicker">Light</span><h2>10–15 kg</h2><p>MGN15, SFU1204, NEMA17 closed-loop, spindle 300–500 W ad aria. Legno, plastiche, PCB, laser, knife, dispenser, vision. Carico ToolDock 2 kg.</p></div>
+  <a class="card" href="index.html" style="border-color:rgba(255,106,43,.45)"><span class="kicker">Standard · prima da sviluppare</span><h2>25–30 kg</h2><p>HGR15, SFU1605, NEMA23 closed-loop ~2 Nm, spindle 0.8–1 kW. Aggiunge alluminio leggero e Fiber MOPA. Carico ToolDock 4 kg.</p></a>
+  <a class="card" href="../bom/base-pro.html"><span class="kicker">Pro</span><h2>50–60 kg</h2><p>HGR20, SFU1605 precaricate, NEMA23 3 Nm, spindle 1.5 kW ad acqua, Gantry Lift motorizzato. Alluminio vero e ATC ISO20. Carico ToolDock 7 kg.</p></a>
+</section>
+
+<section class="section"><h2>Confronto</h2><div class="table-wrap"><table>
+<tr><th>Parametro</th><th>Light</th><th>Standard</th><th>Pro</th></tr>
+<tr><td>Area XY</td><td colspan="3"><span class="status-target">TARGET 450 × 350 mm</span> su tutte e tre</td></tr>
+<tr><td>Corsa Z</td><td colspan="3"><span class="status-target">TARGET 120–140 mm</span></td></tr>
+<tr><td>Massa meccanica</td><td>10–15 kg</td><td>25–30 kg · stima BOM 37,8 kg</td><td>50–60 kg</td></tr>
+<tr><td>Struttura</td><td>Piastra lavorata leggera + profilati, sedi guide lavorate</td><td>Piastra Al nervata</td><td>Al spesso o epoxy-granite</td></tr>
+<tr><td>Guide</td><td>MGN15</td><td>HGR15</td><td>HGR20</td></tr>
+<tr><td>Viti</td><td>SFU1204</td><td>SFU1605</td><td>SFU1605 precaricata</td></tr>
+<tr><td>Motori</td><td>NEMA17 closed-loop</td><td>NEMA23 closed-loop ~2 Nm</td><td>NEMA23 closed-loop 3 Nm</td></tr>
+<tr><td>Spindle di serie</td><td>300–500 W aria</td><td>0.8–1 kW</td><td>1.5 kW acqua</td></tr>
+<tr><td>Clearance</td><td>Rialzi manuali</td><td>Rialzi manuali spinati</td><td>Gantry Lift motorizzato 0–150 mm</td></tr>
+<tr><td>Precisione indicativa</td><td>~±50 µm</td><td>~±20–30 µm</td><td>~±10–15 µm</td></tr>
+<tr><td>Carico ToolDock (testa completa)</td><td>2 kg</td><td>4 kg</td><td>7 kg</td></tr>
+<tr><td>BOM</td><td><span class="status-design">DA CREARE</span></td><td><a href="../bom/base.html" style="color:var(--accent-2)">BOM Standard</a></td><td><a href="../bom/base-pro.html" style="color:var(--accent-2)">BOM Pro (riferimento)</a></td></tr>
+</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Precisione e masse sono ordini di grandezza TARGET, da validare sul prototipo di ogni base.</p></section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">Piattaforma comune</span><h2>Cosa non cambia mai.</h2><div class="spec-list">
+    <div class="spec-row"><b>ToolDock</b><p>Stessa piastra master, clamp, connettori e identificazione. Cambia solo il carico ammesso.</p></div>
+    <div class="spec-row"><b>Area e pallet</b><p>450 × 350 mm e stesso reference pattern: pallet e fixture passano da una base all'altra.</p></div>
+    <div class="spec-row"><b>Cinematica</b><p>Ponte fisso + tavola mobile Y (D006) su tutte e tre.</p></div>
+    <div class="spec-row"><b>Elettronica</b><p>Stesso quadro esterno Mesa + LinuxCNC e stesso module manager; cambiano i driver.</p></div>
+  </div></div>
+  <div class="panel"><span class="kicker">Sviluppo</span><h2>Ordine e rischio.</h2><div class="spec-list">
+    <div class="spec-row"><b>1 · Standard</b><p>Prima base da progettare e validare: copre quasi tutti i kit.</p></div>
+    <div class="spec-row"><b>2 · Light</b><p>Derivata togliendo: condivide geometria di spalle e tavola dove possibile.</p></div>
+    <div class="spec-row"><b>3 · Pro</b><p>Derivata aggiungendo: parte dalla BOM di riferimento V0.4.</p></div>
+    <div class="spec-row"><b>Rischio</b><p>Tre basi sono tre validazioni meccaniche: le interfacce comuni vanno congelate prima di iniziare la seconda.</p></div>
+  </div></div>
+</section>
+
+<section class="section"><h2>Compatibilità kit</h2><div class="table-wrap"><table>
+<tr><th>Kit</th><th>Light</th><th>Standard</th><th>Pro</th><th>Note</th></tr>
+<tr><td>PCB Precision</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Micro-spindle leggero</td></tr>
+<tr><td>Diode Laser</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Safety ed estrazione dal kit</td></tr>
+<tr><td>Knife</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Forze basse</td></tr>
+<tr><td>Dispenser</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Pneumatica dal kit</td></tr>
+<tr><td>Vision</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Camera e calibrazione</td></tr>
+<tr><td>Thermoforming</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Nessuna forza di taglio</td></tr>
+<tr><td>Fiber MOPA</td><td class="status-target">SE ≤ 2 kg</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Testa galvo + protezioni</td></tr>
+<tr><td>Aluminium Light</td><td class="status-critical">NO</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Passate leggere, MQL</td></tr>
+<tr><td>Aluminium Pro + ATC ISO20</td><td class="status-critical">NO</td><td class="status-critical">NO</td><td class="status-ok">OK</td><td>Richiede massa e 7 kg di carico</td></tr>
+</table></div></section>
+</main><script src="../assets/nav.js"></script></body></html>

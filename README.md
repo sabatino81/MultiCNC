@@ -8,13 +8,13 @@ This repository is the engineering source of truth for the project: architecture
 Open `index.html` for the navigable engineering dashboard (works from disk, any web root or GitHub Pages subpath).
 
 ## Current design principles
-- Precision-first base machine.
+- Three bases (Light 10–15 kg, Standard 25–30 kg, Pro 50–60 kg) sharing work area, ToolDock, pallets and electronics.
 - Modular expansion rather than a fully-loaded base.
-- Motorized gantry height adjustment with mechanical locking.
+- Manual pinned risers on Light/Standard; motorized gantry lift with mechanical locking on Pro only.
 - One universal automatic ToolDock for complete head/module changes.
 - ATC is separate from ToolDock: ATC changes cutters inside an ATC spindle; ToolDock changes the complete process module.
 - PCB, aluminium, thermoforming, diode laser, fiber MOPA, knife, dispenser and vision are modular capabilities.
 - Specifications marked **TARGET** are engineering goals until validated on hardware.
 
 ## Status
-V0.4 — Base Precision documentation + detailed BOM — 24 Sep 2026.
+V0.5 — Three bases (Light / Standard / Pro), Standard in development — 24 Sep 2026.

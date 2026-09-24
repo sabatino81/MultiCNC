@@ -4,17 +4,17 @@
   <div>
     <div class="eyebrow">Modular precision manufacturing platform</div>
     <h1>One base.<br><em>Any process.</em></h1>
-    <p class="lead">La fonte di verità ingegneristica di MultiCNC. La macchina base nasce precisa e completa; i moduli aggiungono processi via ToolDock senza alterare l'architettura fondamentale.</p>
+    <p class="lead">La fonte di verità ingegneristica di MultiCNC. Tre basi — Light, Standard e Pro — con la stessa area, lo stesso ToolDock e gli stessi pallet: si sceglie la massa che serve, i kit aggiungono i processi.</p>
     <div class="hero-cta">
       <a class="btn primary" href="docs/master-spec.html">Master Spec →</a>
-      <a class="btn" href="bom/base.html">Base BOM</a>
-      <a class="btn" href="base/index.html">Base Precision</a>
+      <a class="btn" href="bom/base.html">BOM Standard</a>
+      <a class="btn" href="base/lineup.html">Tre basi</a>
     </div>
-    <div class="badges"><span class="badge ok">V0.4 · Base Precision</span><span class="badge">Architecture reset</span><span class="badge">24 Sep 2026</span></div>
+    <div class="badges"><span class="badge ok">V0.5 · Tre basi</span><span class="badge">Architecture reset</span><span class="badge">24 Sep 2026</span></div>
   </div>
 
   <div class="hero-visual" aria-label="Schema della macchina base: basamento, gantry con lift e carrello Z">
-    <div class="hud top"><span>Base Precision · 3/4 view</span><span><b>X</b> 450 · <b>Y</b> 350 · <b>Z</b> 140</span></div>
+    <div class="hud top"><span>Base Standard · 3/4 view</span><span><b>X</b> 450 · <b>Y</b> 350 · <b>Z</b> 140</span></div>
     <svg viewBox="0 0 460 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <g transform="translate(0,6)">
         <!-- base plate -->
@@ -54,7 +54,7 @@
         <path class="bp-dim" d="M342 308 L422 252 M339 304 L345 312 M419 248 L425 256"/>
         <text class="bp-text" x="398" y="296" transform="rotate(-35 398 296)">Y 350 mm</text>
         <path class="bp-dim" d="M60 255 L60 105 M55 255 L65 255 M55 105 L65 105"/>
-        <text class="bp-text" x="44" y="180" transform="rotate(-90 44 180)" text-anchor="middle">G-LIFT 0–150</text>
+        <text class="bp-text" x="44" y="180" transform="rotate(-90 44 180)" text-anchor="middle">CLEARANCE · RIALZI</text>
         <text class="bp-label" x="112" y="52">GANTRY · BOX SECTION AL</text>
         <text class="bp-label" x="134" y="218">TOOLING PLATE · 450×350</text>
       </g>
@@ -66,16 +66,16 @@
 <section class="metric-grid kpi-strip">
   <div class="metric"><strong>450×350</strong><span>mm · area XY target</span></div>
   <div class="metric"><strong>120–140</strong><span>mm · corsa Z CNC target</span></div>
-  <div class="metric"><strong>+150</strong><span>mm · Gantry Lift motorizzato</span></div>
-  <div class="metric"><strong>~€4.1k</strong><span>prototipo · 46 righe BOM · target OEM €2.6–3.0k</span></div>
+  <div class="metric"><strong>10 · 30 · 60</strong><span>kg · Light / Standard / Pro</span></div>
+  <div class="metric"><strong>~€3.2k</strong><span>prototipo Standard · 40 righe · stima 37,8 kg</span></div>
 </section>
 
 <section class="section"><h2>Documentazione</h2>
 <div class="grid">
   <a class="card" href="docs/master-spec.html"><span class="kicker">01 / Source of truth</span><h2>Master Spec</h2><p>Target dimensionali, regole architetturali e vincoli che ogni variante deve rispettare.</p></a>
   <a class="card" href="docs/architecture.html"><span class="kicker">02 / System</span><h2>Architecture</h2><p>XYZ precision motion, Gantry Lift, ToolDock automatico e pallet intercambiabili.</p></a>
-  <a class="card" href="base/index.html"><span class="kicker">03 / Machine</span><h2>Base Precision</h2><p>Dieci capitoli: meccanica, cinematica, lift, controllo, sicurezza, interfacce e validazione.</p></a>
-  <a class="card" href="bom/base.html"><span class="kicker">04 / Hardware</span><h2>Base BOM</h2><p>46 righe tecniche con part candidate, prezzi target e stato di sourcing.</p></a>
+  <a class="card" href="base/lineup.html"><span class="kicker">03 / Machines</span><h2>Tre basi</h2><p>Light, Standard e Pro: confronto, piattaforma comune e compatibilità dei kit.</p></a>
+  <a class="card" href="bom/base.html"><span class="kicker">04 / Hardware</span><h2>BOM Standard</h2><p>40 righe con prezzo target e massa stimata per riga; la BOM V0.4 resta come riferimento Pro.</p></a>
   <a class="card" href="mechanics/tooldock.html"><span class="kicker">05 / Interface</span><h2>ToolDock</h2><p>Interfaccia universale automatica che cambia l'intera testa di processo.</p></a>
   <a class="card" href="pcb/index.html"><span class="kicker">06 / Module</span><h2>PCB Precision Kit</h2><p>Micro-spindle, vacuum pallet, fiducial vision, probing e aspirazione fine.</p></a>
 </div></section>
@@ -86,7 +86,7 @@
 <section class="section split">
   <div class="panel"><span class="kicker">Principi</span><h2>Regole che non si toccano.</h2>
     <div class="spec-list">
-      <div class="spec-row"><b>Precision-first</b><p>La precisione appartiene alla base; i kit aggiungono processi, non correggono la meccanica.</p></div>
+      <div class="spec-row"><b>Tre basi</b><p>Si sceglie la massa per il processo; ogni base è corretta senza kit.</p></div>
       <div class="spec-row"><b>Un solo ToolDock</b><p>Un master automatico cambia la testa completa: niente teste fisse duplicate.</p></div>
       <div class="spec-row"><b>ToolDock ≠ ATC</b><p>ToolDock cambia il modulo; l'ATC ISO20 cambia la fresa dentro il modulo.</p></div>
       <div class="spec-row"><b>TARGET ≠ spec</b><p>Nessun valore µm è commerciale finché non è misurato sul prototipo.</p></div>
@@ -94,8 +94,8 @@
   </div>
   <div class="panel"><span class="kicker">Decision log</span><h2>Ultime decisioni.</h2>
     <div class="timeline">
+      <div class="tl"><small>2026-09-24 · D007</small><strong>Tre basi, un sistema di kit</strong><p>Light 10–15, Standard 25–30, Pro 50–60 kg. Si parte dalla Standard.</p></div>
       <div class="tl"><small>2026-09-24 · D006</small><strong>Ponte fisso, tavola mobile in Y</strong><p>Una vite Y centrale sotto la tavola; Gantry Lift stazionario.</p></div>
-      <div class="tl"><small>2026-09-24 · D005</small><strong>ToolDock e ATC sono separati</strong><p>L'ATC di uno spindle ISO20 cambia l'utensile dentro quel modulo.</p></div>
       <div class="tl"><small>2026-09-24 · D004</small><strong>ToolDock universale automatico</strong><p>Un solo sistema cambia le teste complete.</p></div>
           </div>
     <a class="btn" href="docs/decisions.html">Tutte le decisioni →</a>

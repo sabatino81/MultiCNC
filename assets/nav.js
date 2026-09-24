@@ -1,5 +1,5 @@
 (()=> {
-  const VERSION='V0.4';
+  const VERSION='V0.5';
 
   // Root of the docs site, derived from this script's own URL (assets/nav.js → ../).
   // Works from disk (file://), at a domain root and under a GitHub Pages subpath.
@@ -28,19 +28,21 @@
       ['System architecture','docs/architecture.html'],
       ['Decision log','docs/decisions.html']
     ],['general/','docs/']],
-    ['02','Base Precision',[
+    ['02','Basi · Standard',[
       ['Overview','base/index.html'],
+      ['Tre basi','base/lineup.html'],
       ['Funzionalità','base/functions.html'],
       ['Architettura meccanica','base/mechanics.html'],
       ['Cinematica XYZ','base/xyz.html'],
-      ['Gantry Lift','base/gantry-lift.html'],
+      ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
       ['Elettronica & controllo','base/control.html'],
       ['Sicurezza','base/safety.html'],
       ['Interfacce moduli','base/interfaces.html'],
       ['Target prestazionali','base/performance.html'],
       ['Vincoli','base/constraints.html'],
-      ['BOM','bom/base.html'],
+      ['BOM Standard','bom/base.html'],
+      ['BOM Pro (riferimento)','bom/base-pro.html'],
       ['Test & validazione','base/validation.html']
     ],['base/','bom/base','mechanics/']],
     ['03','PCB Kit',[
