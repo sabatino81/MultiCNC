@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Rigenera le tabelle BOM delle tre basi a partire da tools/bom/data_*.py.
 
-Per ogni pagina aggiorna: righe della tabella, KPI (righe, costo, massa macchina,
-massa esterna) e riga "Stima BOM prototipo attuale". Il resto della pagina
+Per ogni pagina aggiorna: righe della tabella (con la colonna CAD / STEP da
+cad_sources.py), KPI (righe, costo, massa macchina, massa esterna) e riga "Stima BOM prototipo attuale". Il resto della pagina
 (testi, callout, pannelli) non viene toccato.
 
 Uso (dalla radice del repository):
@@ -16,6 +16,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from cad_sources import cell  # noqa: E402
 BASES = ["light", "standard", "pro"]
 WHERE = {"M": "macchina", "A": "accessorio"}
 
@@ -30,7 +32,7 @@ def load(name):
 def compute(mod):
     rows, n, eur, km, kc, groups = [], 0, 0, 0.0, 0.0, {}
     for group, items in mod.G:
-        rows.append(f'<tr class="group-row"><td colspan="10">{group}</td></tr>')
+        rows.append(f'<tr class="group-row"><td colspan="11">{group}</td></tr>')
         for (i, gr, c, ql, qn, cand, spec, e, k, w, sc, st) in items:
             sub, kg = e * qn, k * qn
             if w != "A":
@@ -46,7 +48,7 @@ def compute(mod):
                 f'<tr><td>{i}</td><td>{gr}</td><td>{c}</td><td class="qty">{ql}</td>'
                 f'<td>{cand}</td><td>{spec}</td><td class="money">€{e}</td>'
                 f'<td class="money">€{sub:,}</td><td class="money">{kg:.1f} <small>{where}</small></td>'
-                f'<td class="status-{sc}">{st}</td></tr>'
+                f'<td class="status-{sc}">{st}</td><td class="cad">{cell(i)}</td></tr>'
             )
     return {"rows": "\n".join(rows), "n": n, "eur": eur, "km": round(km, 1), "kc": round(kc, 1), "groups": groups}
 
@@ -57,8 +59,8 @@ def it(x):
 
 
 def render(html, d):
-    start = html.index('<tr class="group-row"><td colspan="10">A ·')
-    end = re.search(r'<tr class="group-row"><td colspan="10">[A-Z] · Totali', html).start()
+    start = html.index('<tr class="group-row"><td colspan="11">A ·')
+    end = re.search(r'<tr class="group-row"><td colspan="11">[A-Z] · Totali', html).start()
     html = html[:start] + d["rows"] + "\n" + html[end:]
 
     kpis = [str(d["n"]), "€" + it(d["eur"]), it(d["km"]) + " kg", it(d["kc"]) + " kg"]

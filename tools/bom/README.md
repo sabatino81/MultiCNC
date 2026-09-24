@@ -33,6 +33,16 @@ id · gruppo · componente · quantità (etichetta) · quantità (numero) · can
 - **classe stato**: `design`, `source`, `validate`, `critical`, `ok` (colore della pillola).
 - **Codici**: `MC-` parti comuni alle tre basi, `ML-` solo Light, `MP-` solo Pro; le parti della sola Standard usano ancora `MC-`.
 
+## Colonna CAD / STEP
+
+`cad_sources.py` decide cosa mostrare per ogni id:
+
+- `BY_ID` → link alla pagina ufficiale del produttore (`VENDOR`), verificato a mano;
+- id di parti custom (`CUSTOM`) → "MultiCNC CAD · in arrivo";
+- tutto il resto → "Generico · STEP dal fornitore scelto".
+
+I file dei produttori non vanno copiati nel repository: le loro condizioni d'uso di solito ne vietano la ripubblicazione.
+
 ## Cosa non fa
 
 Aggiorna solo tabella, i 4 KPI e la riga "Stima BOM prototipo attuale". Testi, callout, target e pannelli restano nell'HTML: se un cambio di dati li rende falsi (per esempio una massa citata nel callout), vanno corretti a mano insieme alle altre pagine che citano quei numeri.
