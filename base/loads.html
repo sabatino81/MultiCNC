@@ -1,0 +1,33 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Load case · D014</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+<a class="back" href="lineup.html">← Tre basi</a>
+<div class="pagehead"><div class="eyebrow">02 · Design load cases · D014</div><h1>Load case<br>di progetto.</h1><p class="lead">Quanto deve resistere ogni base. Guide, strutture, ToolDock e clamp si dimensionano da questi numeri, non dalla massa o dal costo. Sono carichi di progetto, volutamente sopra quelli delle lavorazioni nominali.</p><div class="badges"><span class="badge ok">D014 · approvato</span><span class="badge">Input per D015 · D016 · D017</span></div></div>
+
+<section class="section"><div class="table-wrap"><table>
+<tr><th>Parametro</th><th>Light</th><th>Standard</th><th>Pro</th></tr>
+<tr><td>Forza di taglio radiale di progetto</td><td>50 N</td><td>150 N</td><td>300 N</td></tr>
+<tr><td>Forza assiale (foratura)</td><td>80 N</td><td>200 N</td><td>400 N</td></tr>
+<tr><td>Distanza punta utensile dal coupling</td><td>≤ 100 mm</td><td>≤ 120 mm</td><td>≤ 150 mm</td></tr>
+<tr><td>Momento di taglio sul ToolDock</td><td>~5 Nm</td><td>~18 Nm</td><td>~45 Nm</td></tr>
+<tr><td>Massa testa · pallet + pezzo</td><td>2 · 5 kg</td><td>4 · 10 kg</td><td>7 · 20 kg</td></tr>
+<tr><td>Accelerazione X/Y</td><td>3 m/s²</td><td>2 m/s²</td><td>1,5 m/s²</td></tr>
+<tr><td>Rapidi</td><td>8 m/min</td><td>10 m/min</td><td>8 m/min</td></tr>
+<tr><td>Feed nominale</td><td>1–2 m/min (legno, PCB)</td><td>2–3 m/min legno · 0,5–1 Al</td><td>1–2 m/min Al</td></tr>
+<tr><td>Crash load (spinta di stallo asse)</td><td>~850 N</td><td>~2.300 N</td><td>~3.400 N</td></tr>
+<tr><td>Duty cycle spindle</td><td>30 min al 50%</td><td>60 min al 60%</td><td>continuo al 100%</td></tr>
+<tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-target">≥ 10 N/µm</td><td class="status-target">≥ 25 N/µm</td></tr>
+</table></div></section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">Regole</span><h2>Come si usano.</h2><div class="spec-list">
+    <div class="spec-row"><b>Carico di progetto</b><p>Nessuna perdita di precisione misurabile oltre il target della base; margini statici sui pattini secondo HIWIN.</p></div>
+    <div class="spec-row"><b>Crash</b><p>Alla spinta di stallo dell'asse nessuna deformazione permanente. Il ToolDock può sganciarsi, ma non deve danneggiarsi.</p></div>
+    <div class="spec-row"><b>Momento ToolDock</b><p>Forza di taglio × distanza punta–coupling, più peso e inerzia della testa al baricentro (≤ 80 mm, ICD v1).</p></div>
+    <div class="spec-row"><b>Rigidezza</b><p>Somma delle cedevolezze di guide, strutture, ToolDock e testa. Ogni sottosistema riceve una quota di budget.</p></div>
+  </div></div>
+  <div class="panel"><span class="kicker">Origine dei numeri</span><h2>Da dove vengono.</h2><div class="spec-list">
+    <div class="spec-row"><b>Crash load</b><p>Coppia motore × 2π × rendimento ÷ passo vite: NEMA17 0,6 Nm su SFU1204, NEMA23 2 Nm e 3 Nm su SFU1605.</p></div>
+    <div class="spec-row"><b>Forze di taglio</b><p>Sopra le stime nominali (decine di N sull'alluminio leggero della Standard) per coprire utensile usurato, picchi e ingresso nel materiale.</p></div>
+    <div class="spec-row"><b>Stato</b><p>Valori TARGET di progetto: si rivedono dopo le prime misure di forza sul prototipo.</p></div>
+  </div></div>
+</section>
+</main><script src="../assets/nav.js"></script></body></html>
