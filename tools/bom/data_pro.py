@@ -50,7 +50,7 @@ G=[
 ("E · ToolDock (identico sulle tre basi)",[
 ("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Stessa parte della Standard","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Stessa parte della Standard","Receiver del modulo spindle base",80,0.3,"M","design","TO DESIGN"),
-("MC-TD-003","ToolDock","Automatic clamp","1",1,"Stessa parte della Standard","Clamp a molla ≥ 1500 N, sgancio passivo dal dock (ICD v1)",100,0.4,"M","critical","CRITICAL DESIGN"),
+("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v1)","Pacco molle ≥ 3,8 kN (classe P), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Stessa parte della Standard","Power + signal + ID",120,0.3,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-005","ToolDock","Module ID","1",1,"Stessa parte della Standard","Identificazione automatica",30,0.02,"M","design","TO DESIGN"),
 ]),
@@ -72,6 +72,6 @@ G=[
 ("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
 ]),
 ("H · Accessori (non inclusi nei totali)",[
-("MC-TD-006","ToolDock","Dock rail","1",1,"Stessa parte della Standard","Arriva con il primo kit ToolDock (come su Light e Standard); include la camma di sgancio del clamp (ICD v1)",80,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Dock rail","1",1,"Stessa parte della Standard","2 posti con forcella e sensore di cattura, camma di sgancio 3:1; montato sulla struttura del ponte (D016)",80,0.8,"A","design","TO DESIGN"),
 ]),
 ]

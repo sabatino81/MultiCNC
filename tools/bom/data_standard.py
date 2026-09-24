@@ -41,7 +41,7 @@ G=[
 ("D · ToolDock (identico sulle tre basi)",[
 ("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Custom receiver plate","Receiver dedicata al modulo spindle base",80,0.3,"M","design","TO DESIGN"),
-("MC-TD-003","ToolDock","Automatic clamp","1",1,"Clamp a molla ≥ 1500 N, pull-stud (ICD v1)","Normalmente chiuso; sgancio passivo dal dock",100,0.4,"M","critical","CRITICAL DESIGN"),
+("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v1)","Pacco molle ≥ 1,6 kN (classe S), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Power + signal + ID","Quick-connect; pneumatica/fluidi predisposti",120,0.3,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-005","ToolDock","Module ID","1",1,"EEPROM / coded ID","Identificazione automatica del modulo",30,0.02,"M","design","TO DESIGN"),
 ]),
@@ -64,6 +64,6 @@ G=[
 ]),
 ("G · Accessori (non inclusi nei totali)",[
 ("MC-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +75 mm","Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)",60,1.4,"A","design","TO DESIGN"),
-("MC-TD-006","ToolDock","Dock rail","1",1,"2-position rail","Parcheggio moduli; arriva con il primo kit ToolDock (D008); include la camma di sgancio del clamp (ICD v1)",80,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Dock rail","1",1,"2-position rail","2 posti con forcella e sensore di cattura, camma di sgancio 3:1; montato sulla struttura del ponte (D016)",80,0.8,"A","design","TO DESIGN"),
 ]),
 ]

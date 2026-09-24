@@ -4,16 +4,17 @@
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una ICD v2. La v2 deve accettare le teste e i pallet v1, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
-<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail da riferire alla struttura del ponte (deve salire con rialzi e lift), bus dati ed encoder differenziali nel connettore, potenza realmente disponibile per base (48 V × 5 A = 240 W non sta in un LRS-350 insieme ai motori), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
+<section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci sono state congelate troppo presto e tornano <b>IN REVISIONE</b> fino alle decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), bus dati ed encoder differenziali nel connettore, potenza realmente disponibile per base (48 V × 5 A = 240 W non sta in un LRS-350 insieme ai motori), R1/R2 che coincidono con fori della griglia M6, spessore tavola e filetto utile. Il resto resta FROZEN.</div></section>
 <section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
 <tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
 <tr><td>Accoppiamento</td><td>Cinematico a 3 punti: 3 sfere Ø10 mm sulla receiver contro 3 coppie di rulli sulla master, su cerchio Ø80 mm a 120°</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Ingombro piastre</td><td>Master e receiver 110 × 110 mm; piano di accoppiamento come riferimento Z della testa</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Clamp</td><td>Pull-stud centrale, precarico a molla ≥ 1500 N, normalmente chiuso (fail-safe se manca energia) <small style="color:var(--violet)">· forza da ricavare dal momento di taglio worst-case sui 6 contatti (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
-<tr><td>Sgancio</td><td>Passivo: una camma sulla stazione del dock rail apre il clamp quando il carrello entra in posizione. Nessuna aria e nessun attuatore sul carrello Z <small style="color:var(--violet)">· la Light non spinge 1500 N: camma con vantaggio meccanico ~3–4:1 da verificare (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
-<tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg. Il clamp è unico, dimensionato per la classe P</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Clamp</td><td>Pull-stud centrale, normalmente chiuso (fail-safe). Stessa geometria su tutte le basi, pacco molle per classe: <b>L ≥ 0,5 kN · S ≥ 1,6 kN · P ≥ 3,8 kN</b> (D016, distacco con S = 1,5)</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Sgancio</td><td>Passivo: camma comune <b>3:1</b> sulla stazione del dock rail, azionata dal movimento Z. Nessuna aria e nessun attuatore sul carrello (D016)</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg; il pacco molle del clamp segue la classe della base (D016)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Conferma aggancio</td><td>2 sensori sulla master: clamp chiuso + modulo presente <small style="color:var(--violet)">· manca la conferma di cattura della receiver nel rack prima dello sgancio (D016)</small></td><td class="status-validate">IN REVISIONE</td></tr>
+<tr><td>Conferma aggancio</td><td>Master: clamp chiuso + modulo presente. Rack: sensore di cattura per ogni posto. Sgancio solo con cattura confermata; uscita dal rack solo con clamp chiuso e ID valido (D016)</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Inviluppo testa</td><td>X ≤ 110 mm · Y ≤ 140 mm · lunghezza sotto il coupling ≤ 220 mm; passo posti rack ~130 mm (D016)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Ripetibilità di riaggancio</td><td>≤ 10 µm</td><td class="status-target">TARGET</td></tr>
 <tr><td>Tempo di cambio</td><td>≤ 30 s deposito + prelievo</td><td class="status-target">TARGET</td></tr>
 </table></div></section>
@@ -59,7 +60,7 @@
     <div class="spec-row"><b>Spalla–basamento</b><p>Per spalla: 2 spine Ø10 H7 a interasse 100 mm + 4 viti M8 su rettangolo 120 × 60 mm.</p></div>
     <div class="spec-row"><b>Rialzi</b><p>Stesso pattern sopra e sotto, così si impilano. Altezze standard +50 mm (Light) e +75 mm (Standard).</p></div>
     <div class="spec-row"><b>Pro</b><p>Il Gantry Lift si monta sul basamento con lo stesso pattern.</p></div>
-    <div class="spec-row"><b>Dock rail</b><p><span style="color:var(--violet)">IN REVISIONE (D016):</span> va riferito alla struttura che porta l'asse X, così sale con rialzi e lift e resta alla quota del carrello Z.</p></div>
+    <div class="spec-row"><b>Dock rail</b><p>Montato sulla struttura che porta l'asse X, così sale con rialzi e lift e resta alla quota del carrello Z (D016). <span style="color:var(--violet)">Aperto: zona dock ~+260 mm di corsa X per 2 posti, da risolvere nel CAD.</span></p></div>
   </div></div>
   <div class="panel"><span class="kicker">6 · Macchina–quadro</span><h2>Un quadro, tre basi.</h2><div class="spec-list">
     <div class="spec-row"><b>Tensioni</b><p>Motion 48 V DC · logica 24 V DC · spindle da VFD o driver BLDC.</p></div>

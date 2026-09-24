@@ -39,6 +39,7 @@
       ['Guide Standard · D015','base/rails.html'],
       ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
+      ['ToolDock meccanico · D016','base/tooldock-d016.html'],
       ['Elettronica & controllo','base/control.html'],
       ['Sicurezza','base/safety.html'],
       ['Interfacce moduli','base/interfaces.html'],
