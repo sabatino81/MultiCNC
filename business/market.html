@@ -1,0 +1,118 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Mercato & competitor</title><link rel="stylesheet" href="../assets/styles.css"><style>
+.pm text{pointer-events:none}.pm:hover line:first-of-type,.pm:focus line:first-of-type{stroke-width:11}.pm:hover circle,.pm:focus circle{r:8}.pm{outline:none;cursor:default}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 0;font:500 12px var(--mono);color:var(--muted)}.legend i{display:inline-block;width:18px;height:6px;border-radius:3px;margin-right:8px;vertical-align:middle}
+.chart-box{padding:20px 20px 10px;border:1px solid var(--line-2);border-radius:var(--r);background:rgba(10,14,21,.75)}
+.sources a{color:var(--accent-2)}.sources li{margin:4px 0;color:var(--muted);font-size:13px}
+</style></head><body><main class="shell page">
+<a class="back" href="index.html">← Business</a>
+<div class="pagehead"><div class="eyebrow">00 · Business · Mercato</div><h1>Mercato &amp;<br>competitor.</h1><p class="lead">Dove si colloca MultiCNC tra le CNC desktop e i sistemi multi-processo: chi c'è, a che prezzo, cosa fa, e dove restano spazi liberi. Prezzi di listino pubblici consultati il 2026-09-24: cambiano spesso tra promozioni e versioni, vanno riverificati prima di ogni decisione di prezzo.</p><div class="badges"><span class="badge ok">V1 · analisi iniziale</span><span class="badge">Fonti in fondo alla pagina</span></div></div>
+
+<section class="metric-grid">
+  <div class="metric"><strong>$0,5–2,6 mld</strong><span>mercato CNC desktop 2025 · stime molto diverse tra gli istituti</span></div>
+  <div class="metric"><strong>~8–9%</strong><span>crescita annua attesa (CAGR) fino al 2035</span></div>
+  <div class="metric"><strong>$479 → $28k</strong><span>forbice di prezzo, dal router hobby al plotter PCB professionale</span></div>
+  <div class="metric"><strong>0</strong><span>competitor con base precisa + cambio testa completo multi-processo sotto i $5k</span></div>
+</section>
+
+<section class="section"><h2>Segmenti</h2><div class="table-wrap"><table>
+<tr><th>Segmento</th><th>Fascia di prezzo</th><th>Chi compra</th><th>Cosa conta</th><th>Riferimenti</th></tr>
+<tr><td>Hobby entry</td><td>&lt; $1.000</td><td>Maker, principianti</td><td>Prezzo, community, facilità</td><td>Genmitsu 3018 / 4040</td></tr>
+<tr><td>Prosumer / piccola impresa</td><td>$1.500–4.500</td><td>Laboratori artigiani, Etsy, makerspace</td><td>Area di lavoro, affidabilità, software</td><td>LongMill, Onefinity, Shapeoko, AltMill</td></tr>
+<tr><td>Desktop "smart" chiuso</td><td>$2.200–6.000</td><td>Prototipazione, design, scuole</td><td>Automazione (ATC, probing), cabina, esperienza "come una stampante 3D"</td><td>Carvera Air, Carvera, Snapmaker Artisan</td></tr>
+<tr><td>Multi-tool modulare</td><td>su preventivo</td><td>Aziende, formazione tecnica</td><td>Catalogo di teste, precisione, servizio</td><td>Stepcraft (12+ utensili, ATC opzionale)</td></tr>
+<tr><td>PCB prototyping</td><td>$2.500–28.000</td><td>R&amp;D elettronica, università</td><td>Isolamento fine, fiducial, via, ripetibilità</td><td>Bantam Tools, LPKF ProtoMat</td></tr>
+</table></div></section>
+
+<section class="section"><h2>Competitor principali</h2><div class="table-wrap"><table>
+<tr><th>Macchina</th><th>Prezzo (listino)</th><th>Area di lavoro</th><th>Processi</th><th>Punti di forza</th><th>Limiti per il nostro target</th></tr>
+<tr><td>Genmitsu 4040-PRO / PRO MAX</td><td>$479–849</td><td>~400 × 400 mm</td><td>CNC, laser accessorio</td><td>Prezzo imbattibile, ecosistema di accessori</td><td>Rigidezza e precisione da hobby, nessun cambio testa</td></tr>
+<tr><td>AnoleX RX6040</td><td>$949 base · ~$1.799 bundle (closed-loop, morsa, laser 10 W)</td><td>600 × 400 × 130 mm</td><td>CNC, laser (bundle)</td><td>Guide HGH15 doppie su tutti gli assi, viti 1204, spindle 1,5 kW ER11, controller 32 bit con web UI: specifiche da macchina "seria" a prezzo hobby</td><td>Nessun cambio testa, ecosistema limitato; ripetibilità dichiarata ±0,005 mm da verificare. <b>Unità in arrivo in laboratorio: benchmark e teardown</b></td></tr>
+<tr><td>Sienci LongMill MK2</td><td>$1.499–1.799 al lancio</td><td>fino a 48"</td><td>CNC, laser</td><td>Community, open source</td><td>Solo legno/plastica, precisione limitata</td></tr>
+<tr><td>Onefinity Elite</td><td>$2.195–3.586</td><td>fino a 48 × 32"</td><td>CNC</td><td>Closed-loop, controller Masso</td><td>Monoprocesso, grande ingombro</td></tr>
+<tr><td>Carbide 3D Shapeoko 5.1 Pro</td><td>$2.980–4.150</td><td>2×2 – 4×4 ft</td><td>CNC (+ accessori)</td><td>Marchio, software integrato</td><td>Router per legno, non desktop di precisione</td></tr>
+<tr><td>Sienci AltMill MK2</td><td>$4.290</td><td>4×4 ft</td><td>CNC</td><td>Rigidezza di fascia alta per l'hobby</td><td>Grande formato, monoprocesso</td></tr>
+<tr><td>Snapmaker Artisan</td><td>$2.599–2.999</td><td>400 × 400 × 400 mm</td><td>Stampa 3D, laser 10/40 W, CNC 200 W</td><td>Vero multi-processo con cambio modulo, cabina</td><td>CNC leggera (200 W), struttura da stampante</td></tr>
+<tr><td>Makera Carvera Air</td><td>$2.199–3.146</td><td>300 × 200 × 130 mm</td><td>CNC, laser, PCB, 4° asse</td><td>Esperienza guidata, software, cambio utensile rapido</td><td>Area piccola, spindle 200 W, ecosistema chiuso</td></tr>
+<tr><td>Makera Carvera</td><td>$5.199–5.799</td><td>desktop, chiusa</td><td>CNC con ATC, laser, PCB, 4° asse</td><td>ATC e probing automatici, "facile come una stampante 3D"</td><td>Prezzo, ecosistema chiuso, un solo mandrino</td></tr>
+<tr><td>Stepcraft (Q.204 e serie D)</td><td>su preventivo; ATC 2,2 kW ~$3.500</td><td>fino a 2×4 ft</td><td>12+ utensili: fresa, laser, coltello tangenziale, filo caldo…</td><td>Il catalogo di teste più ampio</td><td>Cambio testa manuale, prezzo totale alto</td></tr>
+<tr><td>Bantam Tools Desktop PCB</td><td>$2.499–3.299</td><td>piccola</td><td>PCB, fresatura leggera</td><td>Flusso PCB semplice, software dedicato</td><td>Monoprocesso, disponibilità incerta</td></tr>
+<tr><td>LPKF ProtoMat</td><td>$9.800–27.800</td><td>A4 circa</td><td>PCB professionale, dispensazione</td><td>Standard di laboratorio, 60.000 rpm, 100 µm</td><td>Prezzo da industria</td></tr>
+</table></div></section>
+
+<section class="section"><h2>Mappa di posizionamento</h2><div class="chart-box"><svg viewBox="0 0 1000 470" role="img" aria-label="Mappa di posizionamento: prezzo contro famiglie di processi" style="width:100%;height:auto;font-family:var(--mono)">
+<line x1="116.8" y1="24" x2="116.8" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="116.8" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$500</text>
+<line x1="262.3" y1="24" x2="262.3" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="262.3" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$1k</text>
+<line x1="407.7" y1="24" x2="407.7" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="407.7" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$2k</text>
+<line x1="600.0" y1="24" x2="600.0" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="600.0" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$5k</text>
+<line x1="745.5" y1="24" x2="745.5" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="745.5" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$10k</text>
+<line x1="890.9" y1="24" x2="890.9" y2="412" stroke="rgba(150,172,204,.12)"/>
+<text x="890.9" y="432" fill="#8d9bb0" font-size="11" text-anchor="middle">$20k</text>
+<line x1="70" y1="384.3" x2="976" y2="384.3" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="388.3" fill="#8d9bb0" font-size="11" text-anchor="end">1</text>
+<line x1="70" y1="328.9" x2="976" y2="328.9" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="332.9" fill="#8d9bb0" font-size="11" text-anchor="end">2</text>
+<line x1="70" y1="273.4" x2="976" y2="273.4" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="277.4" fill="#8d9bb0" font-size="11" text-anchor="end">3</text>
+<line x1="70" y1="218.0" x2="976" y2="218.0" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="222.0" fill="#8d9bb0" font-size="11" text-anchor="end">4</text>
+<line x1="70" y1="162.6" x2="976" y2="162.6" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="166.6" fill="#8d9bb0" font-size="11" text-anchor="end">5</text>
+<line x1="70" y1="107.1" x2="976" y2="107.1" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="111.1" fill="#8d9bb0" font-size="11" text-anchor="end">6</text>
+<line x1="70" y1="51.7" x2="976" y2="51.7" stroke="rgba(150,172,204,.07)"/>
+<text x="58" y="55.7" fill="#8d9bb0" font-size="11" text-anchor="end">7</text>
+<text x="523.0" y="458" fill="#8d9bb0" font-size="11" text-anchor="middle">Prezzo di listino (scala logaritmica, USD ≈ EUR)</text>
+<text x="16" y="218.0" fill="#8d9bb0" font-size="11" text-anchor="middle" transform="rotate(-90 16 218.0)">Famiglie di processi supportate</text>
+<rect x="525.2" y="35.1" width="113.1" height="149.7" rx="10" fill="rgba(61,220,151,.07)" stroke="rgba(61,220,151,.45)" stroke-dasharray="4 4"/>
+<text x="581.7" y="51.1" fill="#3ddc97" font-size="11" text-anchor="middle">spazio libero</text>
+<g class="pm" tabindex="0"><title>Bantam PCB — PCB · $2.499–3.299</title><line x1="454.5" y1="384.3" x2="512.8" y2="384.3" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="448.5" y1="384.3" x2="518.8" y2="384.3" stroke="transparent" stroke-width="22"/><text x="522.8" y="388.3" fill="#e9eff7" font-size="12" text-anchor="start">Bantam PCB</text></g>
+<g class="pm" tabindex="0"><title>LPKF ProtoMat — PCB professionale · $9.800–27.800</title><line x1="741.2" y1="345.5" x2="960.0" y2="345.5" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="735.2" y1="345.5" x2="966.0" y2="345.5" stroke="transparent" stroke-width="22"/><text x="731.2" y="349.5" fill="#e9eff7" font-size="12" text-anchor="end">LPKF ProtoMat</text></g>
+<g class="pm" tabindex="0"><title>Genmitsu 4040-PRO — CNC (+ laser accessorio) · $479–849</title><line x1="107.8" y1="328.9" x2="227.9" y2="328.9" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="101.8" y1="328.9" x2="233.9" y2="328.9" stroke="transparent" stroke-width="22"/><text x="237.9" y="332.9" fill="#e9eff7" font-size="12" text-anchor="start">Genmitsu 4040-PRO</text></g>
+<g class="pm" tabindex="0"><title>AnoleX RX6040 — CNC 600 × 400 mm, HGH15 + 1204, 1,5 kW; bundle con closed-loop e laser · $949–1.799</title><line x1="251.3" y1="353.8" x2="385.5" y2="353.8" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="245.3" y1="353.8" x2="391.5" y2="353.8" stroke="transparent" stroke-width="22"/><text x="395.5" y="357.8" fill="#e9eff7" font-size="12" text-anchor="start">AnoleX RX6040</text></g>
+<g class="pm" tabindex="0"><title>LongMill MK2 — CNC (+ laser) · $1.499–1.799 al lancio</title><line x1="347.2" y1="309.5" x2="385.5" y2="309.5" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="341.2" y1="309.5" x2="391.5" y2="309.5" stroke="transparent" stroke-width="22"/><text x="395.5" y="313.5" fill="#e9eff7" font-size="12" text-anchor="start">LongMill MK2</text></g>
+<g class="pm" tabindex="0"><title>Onefinity Elite — CNC · $2.195–3.586</title><line x1="427.3" y1="328.9" x2="530.3" y2="328.9" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="421.3" y1="328.9" x2="536.3" y2="328.9" stroke="transparent" stroke-width="22"/><text x="540.3" y="332.9" fill="#e9eff7" font-size="12" text-anchor="start">Onefinity Elite</text></g>
+<g class="pm" tabindex="0"><title>Shapeoko 5 Pro — CNC grande formato · $2.980–4.150</title><line x1="491.4" y1="306.7" x2="560.9" y2="306.7" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="485.4" y1="306.7" x2="566.9" y2="306.7" stroke="transparent" stroke-width="22"/><text x="570.9" y="310.7" fill="#e9eff7" font-size="12" text-anchor="start">Shapeoko 5 Pro</text></g>
+<g class="pm" tabindex="0"><title>AltMill MK2 — CNC · $4.290</title><circle cx="567.9" cy="328.9" r="6" fill="#3f8fe0"/><line x1="561.9" y1="328.9" x2="573.9" y2="328.9" stroke="transparent" stroke-width="22"/><text x="577.9" y="332.9" fill="#e9eff7" font-size="12" text-anchor="start">AltMill MK2</text></g>
+<g class="pm" tabindex="0"><title>Snapmaker Artisan — 3D print + laser + CNC 200 W · $2.599–2.999</title><line x1="462.7" y1="273.4" x2="492.7" y2="273.4" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="456.7" y1="273.4" x2="498.7" y2="273.4" stroke="transparent" stroke-width="22"/><text x="502.7" y="277.4" fill="#e9eff7" font-size="12" text-anchor="start">Snapmaker Artisan</text></g>
+<g class="pm" tabindex="0"><title>Carvera Air — CNC + laser + PCB + 4° asse · $2.199–3.146</title><line x1="427.6" y1="218.0" x2="502.8" y2="218.0" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="421.6" y1="218.0" x2="508.8" y2="218.0" stroke="transparent" stroke-width="22"/><text x="512.8" y="222.0" fill="#e9eff7" font-size="12" text-anchor="start">Carvera Air</text></g>
+<g class="pm" tabindex="0"><title>Carvera — CNC con ATC + laser + PCB + 4° asse · $5.199–5.799</title><line x1="608.2" y1="218.0" x2="631.1" y2="218.0" stroke="#3f8fe0" stroke-width="8" stroke-linecap="round"/><line x1="602.2" y1="218.0" x2="637.1" y2="218.0" stroke="transparent" stroke-width="22"/><text x="641.1" y="222.0" fill="#e9eff7" font-size="12" text-anchor="start">Carvera</text></g>
+<g class="pm" tabindex="0"><title>MultiCNC Light Core — Proiezione: BOM ~€1.300 × 2–2,5</title><line x1="462.8" y1="162.6" x2="509.6" y2="162.6" stroke="#e8601f" stroke-width="8" stroke-linecap="round"/><line x1="456.8" y1="162.6" x2="515.6" y2="162.6" stroke="transparent" stroke-width="22"/><text x="519.6" y="166.6" fill="#e9eff7" font-size="12" text-anchor="start">MultiCNC Light Core</text></g>
+<g class="pm" tabindex="0"><title>MultiCNC Standard — Proiezione: BOM €3.394 × 2–2,5</title><line x1="664.5" y1="107.1" x2="711.4" y2="107.1" stroke="#e8601f" stroke-width="8" stroke-linecap="round"/><line x1="658.5" y1="107.1" x2="717.4" y2="107.1" stroke="transparent" stroke-width="22"/><text x="721.4" y="111.1" fill="#e9eff7" font-size="12" text-anchor="start">MultiCNC Standard</text></g>
+<g class="pm" tabindex="0"><title>MultiCNC Pro — Proiezione: BOM €4.392 × 2–2,5</title><line x1="718.6" y1="51.7" x2="765.5" y2="51.7" stroke="#e8601f" stroke-width="8" stroke-linecap="round"/><line x1="712.6" y1="51.7" x2="771.5" y2="51.7" stroke="transparent" stroke-width="22"/><text x="775.5" y="55.7" fill="#e9eff7" font-size="12" text-anchor="start">MultiCNC Pro</text></g>
+</svg>
+
+<div class="legend"><span><i style="background:#3f8fe0"></i>Competitor (listino)</span><span><i style="background:#e8601f"></i>MultiCNC (proiezione di prezzo)</span><span><i style="background:rgba(61,220,151,.5)"></i>Spazio libero</span></div></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Asse verticale: famiglie di processi ufficialmente supportate (CNC, laser, PCB, stampa 3D, coltello, dispensazione, vision, 4° asse, alluminio). Per MultiCNC il prezzo è una proiezione: BOM × 2–2,5, rapporto tipico per hardware venduto direttamente, da validare con il modello di costo. Passa il mouse su una barra per il dettaglio; i dati completi sono nella tabella sopra.</p></section>
+
+<section class="section"><h2>Spazi di inserimento</h2><div class="grid">
+  <div class="card"><span class="kicker">Spazio 1 · il principale</span><h2>Modulare vero a prezzo medio</h2><p>Nessuno offre sotto i ~$5k una base rigida con cambio automatico dell'intera testa di processo. Snapmaker è multi-processo ma leggera; Carvera è automatica ma piccola e chiusa; Stepcraft ha le teste ma cambio manuale e prezzo alto. È lo spazio naturale di ToolDock.</p></div>
+  <div class="card"><span class="kicker">Spazio 2</span><h2>PCB prosumer serio</h2><p>Tra Bantam/Carvera (~$2,2–5,8k) e LPKF (~$10–28k) manca una macchina con area 450 × 350, vacuum pallet, fiducial vision e probing di superficie a una frazione del prezzo LPKF.</p></div>
+  <div class="card"><span class="kicker">Spazio 3</span><h2>Compri piccolo, cresci</h2><p>I competitor vendono macchine finite con accessori. Nessuno offre un percorso di upgrade della base stessa (Light Core → Pacchetto Platform) con le stesse teste e gli stessi pallet delle basi superiori.</p></div>
+  <div class="card"><span class="kicker">Spazio 4</span><h2>Piattaforma aperta</h2><p>Makera Studio, Snapmaker Luban e Carbide Motion sono ecosistemi chiusi. LinuxCNC, ICD pubblica, STEP dei componenti e BOM trasparente parlano a scuole, università, makerspace e integratori.</p></div>
+  <div class="card"><span class="kicker">Spazio 5 · da verificare</span><h2>Prodotto e supporto europeo</h2><p>I riferimenti sono quasi tutti USA o Cina, con l'eccezione di Stepcraft. Assistenza, ricambi e documentazione in Europa sono un vantaggio possibile, da validare con interviste ai clienti.</p></div>
+  <div class="card"><span class="kicker">Minacce</span><h2>Cosa ci può battere</h2><p>Pressione sul prezzo dal basso (Genmitsu da $479); software e onboarding di Makera; marchio e campagne Kickstarter di Snapmaker; e il nostro rischio interno: tre basi e ToolDock sono complessi da industrializzare.</p></div>
+</div></section>
+
+<section class="section split">
+  <div class="panel" style="border-color:rgba(255,84,112,.35)"><span class="kicker">Implicazione 1 · prezzo Standard</span><h2>La Standard è fuori dallo spazio libero.</h2><p>Con BOM €3.394 la Standard si proietta a ~€6.800–8.500, sopra la Carvera. Per occupare lo spazio 1 (≈ $3,5–6k) il prezzo dovrebbe stare intorno a €4.500–5.500, cioè una BOM di circa <b>€2.000–2.400</b>. È il prossimo obiettivo di costo da discutere, insieme alla Light.</p></div>
+  <div class="panel" style="border-color:rgba(255,84,112,.35)"><span class="kicker">Implicazione 2 · Light Core</span><h2>Il vero rivale costa $949.</h2><p>A BOM ~€1.300 la Light Core si proietta a ~€2.600–3.250, dove stanno Carvera Air e Snapmaker Artisan. Ma l'AnoleX RX6040 offre a $949–1.799 quasi la stessa ricetta meccanica prevista per la Light Core (HGH15, 1204, spindle ad aria, controller con web UI) su un'area più grande. Sulla sola macchina la Light Core non vince: il suo valore deve stare in <b>ToolDock, pallet comuni, kit e upgrade Platform</b>. Da decidere se il prezzo d'ingresso punta a ~€1.500–2.000 (BOM ~€650–900) o se la Light Core si vende come piattaforma, non come router.</p></div>
+</section>
+
+<section class="section"><h2>Fonti</h2><ul class="sources">
+<li><a href="https://www.makera.com/products/carvera" target="_blank" rel="noopener">Makera · Carvera</a> e <a href="https://www.makera.com/products/carvera-air" target="_blank" rel="noopener">Carvera Air</a>; <a href="https://www.makera.com/blogs/cnc-buying-guide/carvera-carvera-air-which-desktop-cnc-is-right-for-you" target="_blank" rel="noopener">confronto Carvera / Carvera Air</a></li>
+<li><a href="https://us.snapmaker.com/products/snapmaker-artisan-3-in-1-3d-printer" target="_blank" rel="noopener">Snapmaker Artisan</a> · <a href="https://www.tomshardware.com/reviews/snapmaker-artisan-3-in-1" target="_blank" rel="noopener">recensione Tom's Hardware</a></li>
+<li><a href="https://shop.stepcraft.us/q-404-cnc-system" target="_blank" rel="noopener">Stepcraft Q-series</a> · <a href="https://globale.toolstoday.com/stepcraft-q-204-39-x-59-complete-system-cnc-machine.html" target="_blank" rel="noopener">Stepcraft Q.204</a></li>
+<li><a href="https://shop.carbide3d.com/products/shapeoko5" target="_blank" rel="noopener">Carbide 3D Shapeoko 5.1 Pro</a></li>
+<li><a href="https://www.onefinitycnc.com/product-page/gen2eliteseries" target="_blank" rel="noopener">Onefinity Elite</a></li>
+<li><a href="https://sienci.com/product/altmill-4x4/" target="_blank" rel="noopener">Sienci AltMill MK2</a> · <a href="https://desktopcncforge.com/sienci-longmill-mk2/" target="_blank" rel="noopener">LongMill MK2</a></li>
+<li><a href="https://www.sainsmart.com/products/4040-pro-max" target="_blank" rel="noopener">Genmitsu 4040-PRO MAX</a></li>
+<li><a href="https://www.bantamtools.com/products/international-bantam-tools-desktop-pcb-milling-machine" target="_blank" rel="noopener">Bantam Tools Desktop PCB</a></li>
+<li><a href="https://www.lpkf.com/en/industries-technologies/research-in-house-pcb-prototyping/products/lpkf-protomat-s64" target="_blank" rel="noopener">LPKF ProtoMat S64</a> · <a href="https://www.designworldonline.com/basics-of-printed-circuit-board-milling-machines/" target="_blank" rel="noopener">fascia di prezzo ProtoMat</a></li>
+<li>Stime di mercato: <a href="https://www.researchnester.com/reports/desktop-cnc-machine-market/7505" target="_blank" rel="noopener">Research Nester</a>, <a href="https://www.globalgrowthinsights.com/market-reports/desktop-cnc-machines-market-101320" target="_blank" rel="noopener">Global Growth Insights</a>, <a href="https://www.wiseguyreports.com/reports/desktop-cnc-machine-market" target="_blank" rel="noopener">WiseGuy Reports</a> (definizioni e cifre molto diverse: usarle solo come ordine di grandezza)</li>
+</ul></section>
+</main><script src="../assets/nav.js"></script></body></html>
