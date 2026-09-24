@@ -43,7 +43,7 @@
       ['Vincoli','base/constraints.html'],
       ['BOM Standard','bom/base.html'],
       ['BOM Light','bom/base-light.html'],
-      ['BOM Pro (riferimento)','bom/base-pro.html'],
+      ['BOM Pro','bom/base-pro.html'],
       ['Test & validazione','base/validation.html']
     ],['base/','bom/base','mechanics/']],
     ['03','PCB Kit',[

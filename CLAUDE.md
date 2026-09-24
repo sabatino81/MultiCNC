@@ -13,5 +13,5 @@
 - Versione della documentazione: unica, oggi V0.5 (`VERSION` in `nav.js`, README, dashboard).
 - I valori non misurati sono **TARGET**, non specifiche commerciali.
 - Le decisioni architetturali si registrano in `docs/decisions.html` (D001…) e vanno riflesse in tutte le pagine e nella BOM che toccano.
-- Basi (D007): Light / Standard / Pro; la Standard è in sviluppo. `bom/base.html` = BOM Standard, `bom/base-pro.html` = riferimento Pro.
+- Basi (D007): Light / Standard / Pro; la Standard è in sviluppo. `bom/base.html` = BOM Standard, `bom/base-light.html` = BOM Light, `bom/base-pro.html` = BOM Pro (non in sviluppo attivo).
 - BOM (`bom/base.html`): i KPI (numero righe, totale) devono coincidere con la tabella; ricalcolali quando cambi righe o prezzi.
