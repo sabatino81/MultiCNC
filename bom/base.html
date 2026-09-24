@@ -1,15 +1,15 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Base Standard · BOM</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
 <a class="back" href="../base/index.html">← Base Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard / BOM</div><h1>Bill of Materials.</h1><p class="lead">Distinta tecnica della <b>Base Standard</b>, la prima delle tre basi da sviluppare (D007). Ogni riga ha prezzo target e massa stimata: i valori sono PROVISIONAL fino a CAD e sourcing. La distinta precedente, più pesante, è ora il <a href="base-pro.html" style="color:var(--accent-2)">riferimento della Base Pro</a>.</p></div>
+<div class="pagehead"><div class="eyebrow">02 · Base Standard / BOM</div><h1>Bill of Materials.</h1><p class="lead">Distinta tecnica della <b>Base Standard</b>, la prima delle tre basi da sviluppare (D007). Ogni riga ha prezzo target e massa stimata: i valori sono PROVISIONAL fino a CAD e sourcing. Esiste anche la <a href="base-light.html" style="color:var(--accent-2)">BOM Light</a>; la distinta precedente, più pesante, è ora il <a href="base-pro.html" style="color:var(--accent-2)">riferimento della Base Pro</a>.</p></div>
 
 <section class="bom-summary">
 <div class="bom-kpi"><strong>38</strong><span>linee BOM attuali (accessori esclusi)</span></div>
 <div class="bom-kpi"><strong>€3.014</strong><span>prototipo, somma subtotali</span></div>
-<div class="bom-kpi"><strong>31,0 kg</strong><span>meccanica stimata · target 25–30 kg</span></div>
+<div class="bom-kpi"><strong>31,0 kg</strong><span>meccanica stimata · target ~31 kg (D009)</span></div>
 <div class="bom-kpi"><strong>7,8 kg</strong><span>quadro esterno stimato (non sulla macchina)</span></div>
 </section>
 
-<div class="callout"><b>Leve di massa applicate (D008):</b> guide X/Y MGN15, basamento ottimizzato, tavola 8 mm con tasche, spindle 0.5–0.8 kW, rialzi e dock rail come accessori. La stima scende da 37,8 a 31,0 kg: resta circa 1 kg sopra il limite alto del target, da recuperare in CAD (per esempio trave e spalle) o accettando 31 kg.</div>
+<div class="callout"><b>Leve di massa applicate (D008):</b> guide X/Y MGN15, basamento ottimizzato, tavola 8 mm con tasche, spindle 0.5–0.8 kW, rialzi e dock rail come accessori. La stima scende da 37,8 a 31,0 kg, accettati come target della Standard (D009).</div>
 
 <section class="section"><div class="table-wrap"><table class="bom-table">
 <tr><th>ID</th><th>Gruppo</th><th>Componente</th><th>Q.tà</th><th>Candidate / Part</th><th>Specifica tecnica</th><th>€/cad target</th><th>Subtotale</th><th>Massa kg</th><th>Stato</th></tr>
@@ -62,7 +62,7 @@
 <tr><td>MC-TD-006</td><td>ToolDock</td><td>Dock rail</td><td class="qty">1</td><td>2-position rail</td><td>Parcheggio moduli; arriva con il primo kit ToolDock (D008)</td><td class="money">€80</td><td class="money">€80</td><td class="money">0.8 <small>accessorio</small></td><td class="status-design">TO DESIGN</td></tr>
 <tr class="group-row"><td colspan="10">I · Totali provvisori</td></tr>
 <tr><td colspan="6"><b>Stima BOM prototipo attuale</b></td><td></td><td class="money"><b>€3,014</b></td><td class="money"><b>31.0 + 7.8</b></td><td class="status-target">PROVISIONAL</td></tr>
-<tr><td colspan="6"><b>Target industrializzato Base Standard</b></td><td></td><td class="money"><b>da definire</b></td><td class="money"><b>25–30</b></td><td class="status-target">TARGET</td></tr>
+<tr><td colspan="6"><b>Target industrializzato Base Standard</b></td><td></td><td class="money"><b>da definire</b></td><td class="money"><b>~31</b></td><td class="status-ok">ACCEPTED</td></tr>
 </table></div></section>
 
 <section class="section split"><div class="panel"><h2>Da congelare prima del CAD freeze</h2><p>Sezione trave e spalle (ultimo kg da recuperare), spessore tavola, geometria rialzi, ToolDock master/receiver, clamp e connettori comuni alle tre basi.</p></div><div class="panel"><h2>Da qualificare al banco</h2><p>Runout spindle 0.5–0.8 kW, rigidità a momento dei pattini MGN15, backlash, preload pattini, repeatability ToolDock con testa da 4 kg, probe/tool setter, comportamento termico.</p></div></section>

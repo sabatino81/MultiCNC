@@ -8,7 +8,7 @@ This repository is the engineering source of truth for the project: architecture
 Open `index.html` for the navigable engineering dashboard (works from disk, any web root or GitHub Pages subpath).
 
 ## Current design principles
-- Three bases (Light 10–15 kg, Standard 25–30 kg, Pro 50–60 kg) sharing work area, ToolDock, pallets and electronics.
+- Three bases (Light 10–15 kg, Standard ~31 kg, Pro 50–60 kg) sharing work area, ToolDock, pallets and electronics.
 - Modular expansion rather than a fully-loaded base.
 - Manual pinned risers on Light/Standard; motorized gantry lift with mechanical locking on Pro only.
 - One universal automatic ToolDock for complete head/module changes.

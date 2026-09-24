@@ -42,6 +42,7 @@
       ['Target prestazionali','base/performance.html'],
       ['Vincoli','base/constraints.html'],
       ['BOM Standard','bom/base.html'],
+      ['BOM Light','bom/base-light.html'],
       ['BOM Pro (riferimento)','bom/base-pro.html'],
       ['Test & validazione','base/validation.html']
     ],['base/','bom/base','mechanics/']],
