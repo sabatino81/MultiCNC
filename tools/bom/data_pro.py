@@ -1,0 +1,77 @@
+"""Dati BOM Base Pro → bom/base-pro.html.
+
+Ogni riga: (id, gruppo, componente, q.tà etichetta, q.tà numerica, candidate, specifica,
+€/cad, kg/cad, dove, classe stato, stato).
+dove: "M" = sulla macchina, "C" = quadro/unità esterne, "A" = accessorio (escluso dai totali).
+Dopo una modifica: python3 tools/bom/build.py
+"""
+PAGE = "bom/base-pro.html"
+EXTERNAL_LABEL = "esterno"
+
+G=[
+("A · Struttura e riferimenti",[
+("MP-BAS-001","Structure","Basamento lavorato","1",1,"Custom Al 5083/6061 spesso, nervato","Sedi guide Y e riferimenti lavorati; lunghezza ~corsa Y + tavola",250,14.0,"M","design","TO DESIGN"),
+("MP-GAN-001","Structure","Trave gantry","1",1,"Custom box / ribbed Al","Ponte fisso (D006), sezione scatolata, predisposta Gantry Lift",160,5.0,"M","design","TO DESIGN"),
+("MP-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 20 mm","Coppia simmetrica spinata al basamento; porta guide e viti lift",60,3.5,"M","design","TO DESIGN"),
+("MP-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 15–20 mm","Guide Z + ToolDock master",80,1.2,"M","design","TO DESIGN"),
+("MP-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 12 mm","Tavola mobile Y (D006), 450×350 utile; reference pattern comune alle tre basi",120,5.1,"M","design","TO DESIGN"),
+("MP-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, rondelle, inserti",50,1.0,"M","source","TO SOURCE"),
+]),
+("B · Cinematica XYZ",[
+("MP-LIN-201","XY","Guide lineari HGR20","4 rails",4,"HIWIN HGR20 class","2 rail Y nel basamento + 2 rail X sulla trave, ~600 mm",55,1.33,"M","source","TO SOURCE"),
+("MP-LIN-202","XY","Pattini HGH20CA","8",8,"HIWIN HGH20CA class","2 pattini per rail; preload TBC",20,0.3,"M","source","TO SOURCE"),
+("MP-LIN-151","Z","Guide lineari HGR15","2 rails",2,"HIWIN HGR15 class","~300 mm, corsa Z 120–140 mm",30,0.44,"M","source","TO SOURCE"),
+("MP-LIN-152","Z","Pattini HGH15CA","4",4,"HIWIN HGH15CA class","4 pattini complessivi",15,0.18,"M","source","TO SOURCE"),
+("MP-BS-1605X","X","Ball screw X","1",1,"SFU1605 C7 precaricata","~600 mm; precarico/errore passo da qualificare",55,1.3,"M","validate","TO VALIDATE"),
+("MP-BS-1605Y","Y","Ball screw Y","1",1,"SFU1605 C7 precaricata","Vite singola centrale sotto la tavola (D006), ~550 mm",55,1.2,"M","validate","TO VALIDATE"),
+("MP-BS-1204Z","Z","Ball screw Z","1",1,"SFU1204 C7","Vite compatta per asse Z",45,0.45,"M","validate","TO VALIDATE"),
+("MP-BKBF-001","XYZ","Supporti BK/BF precision","3 set",3,"BK/BF matched class","Supporti cuscinetto per le tre viti",25,0.6,"M","source","TO SOURCE"),
+("MP-CPL-001","XYZ","Giunti motore-vite","3",3,"Zero/low backlash bellows class","Da evitare giunti elicoidali economici",15,0.12,"M","source","TO SOURCE"),
+("MP-MOT-001","XYZ","Motori NEMA23 closed-loop 3 Nm","3",3,"StepperOnline 3 Nm class","Motore + encoder sulla macchina",43,1.5,"M","design","CANDIDATE"),
+("MP-DRV-001","XYZ","Driver closed-loop","3",3,"CL57T class, ~48 V","Nel quadro esterno",22,0.35,"C","design","CANDIDATE"),
+]),
+("C · Gantry Lift motorizzato (solo Pro)",[
+("MP-GL-LIN1","Gantry Lift","Guide verticali HGR15","2 rails",2,"HIWIN HGR15 class","Una guida per montante, ~350 mm",30,0.51,"M","design","TO DESIGN"),
+("MP-GL-LIN2","Gantry Lift","Pattini HGH15","4",4,"HIWIN HGH15 class","2 pattini per lato",15,0.18,"M","design","TO DESIGN"),
+("MP-GL-BS","Gantry Lift","Viti sollevamento","2",2,"SFU1605 class","Sollevamento sincronizzato, non asse di taglio",40,0.8,"M","design","TO DESIGN"),
+("MP-GL-BK","Gantry Lift","Supporti BK/BF lift","2 set",2,"BK/BF12 class","Supporto viti lift",20,0.5,"M","source","TO SOURCE"),
+("MP-GL-MOT","Gantry Lift","Motore G","1",1,"NEMA23 closed-loop class","Asse di setup, non richiede precisione metrologica",43,1.5,"M","design","CANDIDATE"),
+("MP-GL-DRV","Gantry Lift","Driver G","1",1,"CL57T class","Nel quadro esterno",22,0.35,"C","design","CANDIDATE"),
+("MP-GL-SYNC","Gantry Lift","Sincronizzazione","1 set",1,"HTD belt + pulleys + shaft","Sincronizza le due viti verticali",50,1.2,"M","design","TO DESIGN"),
+("MP-GL-LOCK","Gantry Lift","Locking + references","1 set",1,"Custom clamp / wedge / dowel","Scarica il lift durante la lavorazione",100,1.5,"M","critical","CRITICAL DESIGN"),
+]),
+("D · Spindle base",[
+("MP-SP-001","Spindle","Spindle 1.5 kW ER16","1",1,"Water-cooled 80 mm class","~24k rpm; runout da bench-test; testa entro il carico ToolDock di 7 kg",160,4.5,"M","design","TO QUALIFY"),
+("MP-SP-002","Spindle","VFD vector","1",1,"1.5 kW class","RS485/analog; nel quadro esterno",120,1.5,"C","source","TO SOURCE"),
+("MP-SP-003","Spindle","Spindle mount","1",1,"Custom machined clamp","Receiver-compatible con ToolDock",40,0.8,"M","design","TO DESIGN"),
+("MP-SP-004","Cooling","Cooling loop","1",1,"Pump + radiator + reservoir","Unità esterna a circuito chiuso",60,2.5,"C","source","TO SOURCE"),
+("MP-SP-005","Tooling","ER16 collet starter set","1",1,"Precision collets class","Starter tooling only",30,0.3,"M","source","TO SOURCE"),
+]),
+("E · ToolDock (identico sulle tre basi)",[
+("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Stessa parte della Standard","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
+("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Stessa parte della Standard","Receiver del modulo spindle base",80,0.3,"M","design","TO DESIGN"),
+("MC-TD-003","ToolDock","Automatic clamp","1",1,"Stessa parte della Standard","Clamp a molla ≥ 1500 N, sgancio passivo dal dock (ICD v1)",100,0.4,"M","critical","CRITICAL DESIGN"),
+("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Stessa parte della Standard","Power + signal + ID",120,0.3,"M","critical","CRITICAL DESIGN"),
+("MC-TD-005","ToolDock","Module ID","1",1,"Stessa parte della Standard","Identificazione automatica",30,0.02,"M","design","TO DESIGN"),
+]),
+("F · Controllo (quadro esterno)",[
+("MC-CTRL-001","Control","Motion controller","1",1,"Mesa 7i96S","Comune alle tre basi; I/O da verificare con il lift",160,0.2,"C","validate","I/O REVIEW"),
+("MC-CTRL-003","Control","Espansione I/O","1",1,"Scheda Mesa su porta di espansione 7i96S (modello da confermare)","≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v1)",90,0.2,"C","validate","I/O REVIEW"),
+("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC compatible","Ethernet dedicata alla Mesa",120,0.8,"C","source","TO SOURCE"),
+("MP-PWR-001","Power","48 V PSU","1",1,"Mean Well 500 W class","Motion supply, 4 assi",70,1.3,"C","source","TO SOURCE"),
+("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well DIN class","I/O, sensori, relè, logica ToolDock",35,0.3,"C","source","TO SOURCE"),
+("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process",80,0.5,"C","design","TO DESIGN"),
+("MP-IO-001","I/O","Relays / terminal blocks / protection","1 set",1,"DIN rail industrial","Fusibili, interruttori, relè, morsetti",90,0.8,"C","source","TO SOURCE"),
+("MP-EL-BOX","Electrical","Quadro elettrico esterno","1",1,"DIN cabinet","Controller, PSU, driver, VFD separato",80,3.0,"C","design","TO DESIGN"),
+]),
+("G · Cablaggio, sensori e metrologia",[
+("MP-CAB-001","Electrical","Cavi schermati macchina–quadro","1 set",1,"Motion + spindle + I/O","EMC-aware routing, 4 assi",100,1.2,"M","source","TO SOURCE"),
+("MP-CHAIN-001","Mechanical","Drag chains","1 set",1,"Low-profile cable chain","X/Z sul ponte + escursione lift",50,0.6,"M","source","TO SOURCE"),
+("MC-SNS-001","Sensing","Home/limit sensors","6",6,"Inductive industrial class","XYZ + gantry lift reference",8,0.05,"M","source","TO SOURCE"),
+("MC-PROBE-001","Metrology","XYZ touch probe","1",1,"Wired probe class","Work offset / edge finding",45,0.2,"M","design","TO QUALIFY"),
+("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
+]),
+("H · Accessori (non inclusi nei totali)",[
+("MC-TD-006","ToolDock","Dock rail","1",1,"Stessa parte della Standard","Arriva con il primo kit ToolDock (come su Light e Standard); include la camma di sgancio del clamp (ICD v1)",80,0.8,"A","design","TO DESIGN"),
+]),
+]

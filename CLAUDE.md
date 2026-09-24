@@ -14,4 +14,4 @@
 - I valori non misurati sono **TARGET**, non specifiche commerciali.
 - Le decisioni architetturali si registrano in `docs/decisions.html` (D001…) e vanno riflesse in tutte le pagine e nella BOM che toccano.
 - Basi (D007): Light / Standard / Pro; la Standard è in sviluppo. `bom/base.html` = BOM Standard, `bom/base-light.html` = BOM Light, `bom/base-pro.html` = BOM Pro (non in sviluppo attivo).
-- BOM (`bom/base.html`): i KPI (numero righe, totale) devono coincidere con la tabella; ricalcolali quando cambi righe o prezzi.
+- BOM: le tabelle delle tre BOM si generano da `tools/bom/data_*.py` con `python3 tools/bom/build.py` (vedi `tools/bom/README.md`). Non modificare a mano righe, KPI o totali nell'HTML. Prima del push esegui `python3 tools/bom/build.py --check`; se cambiano costi o masse, aggiorna anche i testi e le altre pagine che li citano.
