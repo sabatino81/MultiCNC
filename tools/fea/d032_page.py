@@ -58,11 +58,26 @@ def write(rows):
         gate = kxy >= GATE["XY"] and r["mach"]["Z"] >= GATE["Z"] and mass is not None and mass <= GATE["kg"]
         dkg = (mass - m0) if (mass is not None and m0 is not None) else None
         gain = (kxy - min(base["mach"]["X"], base["mach"]["Y"])) / dkg if dkg and dkg > 0.05 else None
+        to42 = (mass - GATE["kg"]) if mass is not None else None
+        # quota del margine slitta + master (energia in Y di A0) recuperata: cedevolezza tolta in Y / quota A0
+        c0, c1 = 1.0 / base["k"]["Y"], 1.0 / r["k"]["Y"]
+        share0 = base["fea"]["energy"]["Fy"].get("zslide", 0.0) / base["fea"]["work"]["Fy"]
+        rec = (c0 - c1) / (c0 * share0) if share0 else None
+        rec100 = rec / (dkg * 10.0) if rec is not None and dkg and dkg > 0.05 else None
         body += (f'<tr><td>{r["desc"]}</td><td>{" / ".join(it(r["k"][a], 2) for a in "XYZ")}</td><td><b>{" / ".join(it(r["mach"][a], 2) for a in "XYZ")}</b></td>'
                  f'<td class="{"status-ok" if dxy <= 20 else "status-critical"}">{it(dxy, 0)} µm</td><td class="{"status-ok" if dz <= 20 else "status-critical"}">{it(dz, 0)} µm</td>'
                  f'<td>{it(mass, 1) + " kg" if mass is not None else "—"}</td><td>{("+" if dkg and dkg > 0 else "") + it(dkg, 2) + " kg" if dkg is not None else "—"}</td>'
-                 f'<td>{it(gain, 2) if gain is not None else "—"}</td><td>{sweep}</td><td>{trans}</td>'
+                 f'<td>{it(to42, 1) + " kg" if to42 is not None else "—"}</td>'
+                 f'<td>{it(gain, 2) if gain is not None else "—"}</td>'
+                 f'<td>{(it(rec * 100, 0) + "%") if rec is not None and r is not base else "—"}{(" · " + it(rec100 * 100, 0) + "% / 100 g") if rec100 is not None else ""}</td>'
+                 f'<td>{sweep}</td><td>{trans}</td>'
                  f'<td class="{"status-ok" if gate else "status-critical"}">{"PASSA" if gate else "NO"}</td></tr>')
+    ref = json.loads((ROOT / "fea" / "d031" / "gantry.json").read_text())["runs"].get("gantry_h6_c12", {}).get("k")
+    nonreg = ""
+    if ref and base["name"] == "A0":
+        dd = max(abs(base["k"][a] - ref[n]) / ref[n] for a, n in zip("XYZ", ("Fx", "Fy", "Fz")))
+        nonreg = (f'<p style="margin-top:10px"><b>Non-regressione A0</b>: gantry {" / ".join(it(base["k"][a], 3) for a in "XYZ")} N/µm contro la baseline D031 6 / 12 '
+                  f'{" / ".join(it(ref[n], 3) for n in ("Fx", "Fy", "Fz"))}: scarto massimo {it(dd * 100, 2)}% ({"PASSA" if dd < 0.005 else "DA SPIEGARE"}).</p>')
     en_rows = ""
     for g, lab in EN:
         en_rows += f'<tr><td>{lab}</td>' + "".join(
@@ -74,9 +89,9 @@ def write(rows):
 <div class="pagehead"><div class="eyebrow">02 · Base Standard · D032 · Standard stiffness architecture v4</div><h1>Concept<br>a confronto.</h1><p class="lead">Varianti del mule Standard come override espliciti del mule v3 (<code>tools/cad/standard_concepts.py</code>): per ciascuna CAD con sweep, trasferitore e masse, e FEA del gantry con la pipeline D031 (solidi + molle D028, energia di deformazione per gruppo). La macchina è il gantry FEA in serie con telaio, tavola e asse Y del modello a travi. Target D032 PROVISIONAL: macchina ≥ {it(T_MIN["XY"], 0)} XY / {it(T_MIN["Z"], 1)} Z N/µm minimo, ~{it(T_DES["XY"], 0)} / ~{it(T_DES["Z"], 0)} di progetto; gate ≥ {it(GATE["XY"], 0)} XY / ≥ {it(GATE["Z"], 0)} Z entro {it(GATE["kg"], 0)} kg. Valori di progetto, non misure.</p><div class="badges"><span class="badge ok">D032 · concept A in corso</span><span class="badge">ICD v4 invariata in A</span><span class="badge">Asse spindle 53 mm fisso</span></div></div>
 
 <section class="section"><h2>Matrice</h2><div class="table-wrap"><table>
-<tr><th>Variante</th><th>Gantry X / Y / Z N/µm</th><th>Macchina X / Y / Z N/µm</th><th>δXY a {it(SERVICE["XY"], 0)} N</th><th>δZ a {it(SERVICE["Z"], 0)} N</th><th>Massa mule</th><th>Δ massa</th><th>ΔK XY per kg</th><th>Sweep coll · FAIL · WARN</th><th>Trasferitore</th><th>Gate</th></tr>
-{body}</table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">δ = deformazione della sola macchina (naso spindle ↔ punto di lavoro) a SERVICE HIGH: 20 µm è l'intero budget, quindi il verde qui vuol dire solo "entro il budget totale", non "entro la quota macchina". ΔK XY per kg = aumento della rigidezza radiale minima della macchina per kg aggiunto rispetto ad A0. Sweep su 125 configurazioni; trasferitore = gioco minimo lungo le 42 pose. Mesh della FEA come la baseline diagnostica D031 (6 / 12 mm).</p></section>
+<tr><th>Variante</th><th>Gantry X / Y / Z N/µm</th><th>Macchina X / Y / Z N/µm</th><th>δXY a {it(SERVICE["XY"], 0)} N</th><th>δZ a {it(SERVICE["Z"], 0)} N</th><th>Massa mule</th><th>Δ massa</th><th>Da recuperare → 42 kg</th><th>ΔK min XY per kg</th><th>Margine slitta + master recuperato</th><th>Sweep coll · FAIL · WARN</th><th>Trasferitore</th><th>Gate</th></tr>
+{body}</table></div>{nonreg}
+<p style="color:var(--dim);font-size:13px;margin-top:12px">δ = deformazione della sola macchina (naso spindle ↔ punto di lavoro) a SERVICE HIGH: 20 µm è l'intero budget, quindi il verde qui vuol dire solo "entro il budget totale", non "entro la quota macchina". ΔK min XY per kg = aumento della rigidezza radiale minima della macchina (N/µm) per kg aggiunto rispetto ad A0. Margine slitta + master recuperato = cedevolezza del gantry tolta in Y diviso la quota di energia di slitta + master in A0 ({it(base["fea"]["energy"]["Fy"].get("zslide", 0) / base["fea"]["work"]["Fy"] * 100, 0)}%: tetto del gantry con slitta + master perfette ≈ {it(base["k"]["Y"] / (1 - base["fea"]["energy"]["Fy"].get("zslide", 0) / base["fea"]["work"]["Fy"]), 2)} N/µm), anche per 100 g aggiunti. δ dalle rigidezze (modello lineare): δXY = {it(SERVICE["XY"], 0)} N / K min XY, δZ = {it(SERVICE["Z"], 0)} N / KZ. Monoscocca A1 modellata con giunti perfettamente solidali: la cedevolezza di bullonatura o incollaggio non è inclusa, il risultato è un limite superiore del giunto reale. Sweep su 125 configurazioni; trasferitore = gioco minimo lungo le 42 pose. Mesh della FEA come la baseline diagnostica D031 (6 / 12 mm).</p></section>
 
 <section class="section"><h2>Dove si deforma · energia per gruppo</h2><div class="table-wrap"><table><tr><th>Gruppo</th>{en_head}</tr>{en_rows}</table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">Quota dell'energia di deformazione del gantry a 150 N Y e a 200 N Z; la somma per colonna è il lavoro del carico.</p></section>
