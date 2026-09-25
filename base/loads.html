@@ -16,8 +16,8 @@
 <tr><td>Crash dinamico (energia a fine corsa)</td><td>~0,07 J · Y 7,5 kg a 8 m/min</td><td>~0,19 J · Y 13,5 kg a 10 m/min</td><td>~0,23 J · Y 26 kg a 8 m/min</td></tr>
 <tr><td>Carico di servizio ToolDock (Z allo sgancio)</td><td>~0,22 kN</td><td>~0,70 kN</td><td>~1,66 kN</td></tr>
 <tr><td>Duty cycle spindle</td><td>30 min al 50%</td><td>60 min al 60%</td><td>continuo al 100%</td></tr>
-<tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-critical">≥ 10 N/µm · da rivedere (D028)</td><td class="status-target">≥ 25 N/µm</td></tr>
-</table></div><p style="color:var(--dim);font-size:13px;margin-top:12px"><b>D028:</b> il <a href="compliance-d028.html" style="color:var(--accent-2)">modello di cedevolezza</a> del mule v1 dà 0,2–0,8 N/µm alla punta, ~1–1,5 N/µm con master, slitta e carrello scatolati e ~2–2,6 N/µm con tutte le migliorie: il valore Standard ≥ 10 N/µm non è raggiungibile con questa architettura e va rivisto o cambiata l'architettura.</p></section>
+<tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-target">≥ 10 N/µm · TARGET, non ancora dimostrato (D028, D029)</td><td class="status-target">≥ 25 N/µm</td></tr>
+</table></div><p style="color:var(--dim);font-size:13px;margin-top:12px"><b>D028 / D029:</b> il <a href="compliance-d028.html" style="color:var(--accent-2)">modello di cedevolezza</a> non raggiunge ancora il target (mule v1.1: 0,2–0,8 N/µm; <a href="tooldock-d029.html" style="color:var(--accent-2)">studio D029</a> con piastre scatolate, testa reale passante e spalle scatolate: ~2–3 N/µm). Il valore resta TARGET: prima di rivederlo servono geometria reale della testa, cedevolezza locale ottimizzata e validazione del modello al banco. La rigidezza si misura al naso dello spindle (faccia del dado ER11), non sulla punta di una fresa: una fresa in metallo duro Ø6 con 25 mm di sporgenza vale da sola ~7 N/µm.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Regole</span><h2>Come si usano.</h2><div class="spec-list">

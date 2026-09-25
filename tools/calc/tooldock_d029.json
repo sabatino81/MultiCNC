@@ -1,0 +1,1851 @@
+{
+ "steps": [
+  {
+   "name": "D028 · mule v1.1, testa rigida 220",
+   "N_per_um": {
+    "X": 0.43,
+    "Y": 0.18,
+    "Z": 0.8
+   },
+   "share": {
+    "X": {
+     "telaio": 2.2,
+     "spalle": 4.7,
+     "trave": 2.0,
+     "guide X + vite X": 1.9,
+     "carrello X": 10.2,
+     "guide Z + vite Z": 4.0,
+     "slitta Z": 5.6,
+     "master ToolDock": 52.4,
+     "accoppiamento ToolDock": 16.8,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 0.2,
+     "guide Y + vite Y": 0.1
+    },
+    "Y": {
+     "telaio": 1.3,
+     "spalle": 0.1,
+     "trave": 1.3,
+     "guide X + vite X": 1.2,
+     "carrello X": 22.4,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 28.4,
+     "master ToolDock": 30.4,
+     "accoppiamento ToolDock": 7.2,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 2.0,
+     "guide Y + vite Y": 0.5
+    },
+    "Z": {
+     "telaio": 11.4,
+     "spalle": 1.9,
+     "trave": 4.9,
+     "guide X + vite X": 2.1,
+     "carrello X": 28.7,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 12.5,
+     "master ToolDock": 5.1,
+     "accoppiamento ToolDock": 0.5,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 24.0,
+     "guide Y + vite Y": 3.8
+    }
+   },
+   "L": 220.0
+  },
+  {
+   "name": "+ master, slitta Z e carrello X scatolati",
+   "N_per_um": {
+    "X": 1.24,
+    "Y": 1.04,
+    "Z": 1.5
+   },
+   "share": {
+    "X": {
+     "telaio": 6.2,
+     "spalle": 13.5,
+     "trave": 5.1,
+     "guide X + vite X": 5.0,
+     "carrello X": 4.3,
+     "guide Z + vite Z": 5.4,
+     "slitta Z": 2.8,
+     "master ToolDock": 8.4,
+     "accoppiamento ToolDock": 48.5,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 0.5,
+     "guide Y + vite Y": 0.3
+    },
+    "Y": {
+     "telaio": 7.6,
+     "spalle": 0.7,
+     "trave": 7.5,
+     "guide X + vite X": 0.9,
+     "carrello X": 9.8,
+     "guide Z + vite Z": 5.8,
+     "slitta Z": 6.5,
+     "master ToolDock": 6.4,
+     "accoppiamento ToolDock": 40.5,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 11.5,
+     "guide Y + vite Y": 2.9
+    },
+    "Z": {
+     "telaio": 21.3,
+     "spalle": 3.6,
+     "trave": 9.2,
+     "guide X + vite X": 0.9,
+     "carrello X": 4.2,
+     "guide Z + vite Z": 6.1,
+     "slitta Z": 1.0,
+     "master ToolDock": 0.9,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 0.0,
+     "tavola": 44.9,
+     "guide Y + vite Y": 7.0
+    }
+   },
+   "L": 220.0
+  },
+  {
+   "name": "+ testa reale appesa (spindle Ø65 × 208)",
+   "N_per_um": {
+    "X": 1.01,
+    "Y": 0.85,
+    "Z": 1.47
+   },
+   "share": {
+    "X": {
+     "telaio": 5.1,
+     "spalle": 11.0,
+     "trave": 4.2,
+     "guide X + vite X": 4.1,
+     "carrello X": 4.4,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 2.6,
+     "master ToolDock": 8.2,
+     "accoppiamento ToolDock": 47.8,
+     "testa (spindle + utensile)": 7.0,
+     "tavola": 0.4,
+     "guide Y + vite Y": 0.2
+    },
+    "Y": {
+     "telaio": 6.3,
+     "spalle": 0.5,
+     "trave": 6.1,
+     "guide X + vite X": 0.7,
+     "carrello X": 10.0,
+     "guide Z + vite Z": 5.5,
+     "slitta Z": 6.3,
+     "master ToolDock": 6.4,
+     "accoppiamento ToolDock": 40.4,
+     "testa (spindle + utensile)": 5.9,
+     "tavola": 9.4,
+     "guide Y + vite Y": 2.3
+    },
+    "Z": {
+     "telaio": 20.9,
+     "spalle": 3.5,
+     "trave": 9.1,
+     "guide X + vite X": 0.9,
+     "carrello X": 4.6,
+     "guide Z + vite Z": 5.9,
+     "slitta Z": 1.0,
+     "master ToolDock": 0.9,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.4,
+     "tavola": 44.1,
+     "guide Y + vite Y": 6.9
+    }
+   },
+   "L": 243.0
+  },
+  {
+   "name": "testa reale nell'inviluppo 220 (spindle più corto)",
+   "N_per_um": {
+    "X": 1.15,
+    "Y": 0.97,
+    "Z": 1.48
+   },
+   "share": {
+    "X": {
+     "telaio": 5.8,
+     "spalle": 12.5,
+     "trave": 4.8,
+     "guide X + vite X": 4.6,
+     "carrello X": 4.0,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 2.6,
+     "master ToolDock": 7.8,
+     "accoppiamento ToolDock": 45.1,
+     "testa (spindle + utensile)": 7.0,
+     "tavola": 0.5,
+     "guide Y + vite Y": 0.3
+    },
+    "Y": {
+     "telaio": 7.2,
+     "spalle": 0.6,
+     "trave": 7.0,
+     "guide X + vite X": 0.8,
+     "carrello X": 9.2,
+     "guide Z + vite Z": 5.5,
+     "slitta Z": 6.1,
+     "master ToolDock": 6.1,
+     "accoppiamento ToolDock": 38.1,
+     "testa (spindle + utensile)": 5.9,
+     "tavola": 10.8,
+     "guide Y + vite Y": 2.7
+    },
+    "Z": {
+     "telaio": 21.0,
+     "spalle": 3.5,
+     "trave": 9.1,
+     "guide X + vite X": 0.9,
+     "carrello X": 4.1,
+     "guide Z + vite Z": 6.0,
+     "slitta Z": 1.0,
+     "master ToolDock": 0.9,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.4,
+     "tavola": 44.3,
+     "guide Y + vite Y": 6.9
+    }
+   },
+   "L": 220.0
+  },
+  {
+   "name": "testa reale passante (accoppiamento a metà spindle)",
+   "N_per_um": {
+    "X": 2.02,
+    "Y": 1.74,
+    "Z": 1.52
+   },
+   "share": {
+    "X": {
+     "telaio": 10.1,
+     "spalle": 22.0,
+     "trave": 8.1,
+     "guide X + vite X": 8.2,
+     "carrello X": 2.2,
+     "guide Z + vite Z": 4.5,
+     "slitta Z": 2.4,
+     "master ToolDock": 4.9,
+     "accoppiamento ToolDock": 26.9,
+     "testa (spindle + utensile)": 9.5,
+     "tavola": 0.8,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 12.8,
+     "spalle": 1.1,
+     "trave": 12.5,
+     "guide X + vite X": 1.3,
+     "carrello X": 4.6,
+     "guide Z + vite Z": 4.3,
+     "slitta Z": 4.6,
+     "master ToolDock": 3.7,
+     "accoppiamento ToolDock": 23.1,
+     "testa (spindle + utensile)": 8.1,
+     "tavola": 19.2,
+     "guide Y + vite Y": 4.8
+    },
+    "Z": {
+     "telaio": 21.5,
+     "spalle": 3.6,
+     "trave": 9.3,
+     "guide X + vite X": 0.8,
+     "carrello X": 2.1,
+     "guide Z + vite Z": 6.0,
+     "slitta Z": 1.1,
+     "master ToolDock": 0.9,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.4,
+     "tavola": 45.3,
+     "guide Y + vite Y": 7.1
+    }
+   },
+   "L": 124.0
+  }
+ ],
+ "axis": {
+  "appesa (reale)": [
+   {
+    "axis": 35.0,
+    "N_per_um": {
+     "X": 1.08,
+     "Y": 0.88,
+     "Z": 1.68
+    },
+    "share": {
+     "X": {
+      "telaio": 4.6,
+      "spalle": 11.7,
+      "trave": 3.5,
+      "guide X + vite X": 4.1,
+      "carrello X": 4.0,
+      "guide Z + vite Z": 5.2,
+      "slitta Z": 2.5,
+      "master ToolDock": 4.8,
+      "accoppiamento ToolDock": 51.4,
+      "testa (spindle + utensile)": 7.5,
+      "tavola": 0.4,
+      "guide Y + vite Y": 0.2
+     },
+     "Y": {
+      "telaio": 6.1,
+      "spalle": 0.5,
+      "trave": 6.4,
+      "guide X + vite X": 0.7,
+      "carrello X": 10.3,
+      "guide Z + vite Z": 5.7,
+      "slitta Z": 6.5,
+      "master ToolDock": 3.6,
+      "accoppiamento ToolDock": 41.8,
+      "testa (spindle + utensile)": 6.1,
+      "tavola": 9.7,
+      "guide Y + vite Y": 2.4
+     },
+     "Z": {
+      "telaio": 18.4,
+      "spalle": 2.8,
+      "trave": 8.2,
+      "guide X + vite X": 0.6,
+      "carrello X": 2.9,
+      "guide Z + vite Z": 6.2,
+      "slitta Z": 0.5,
+      "master ToolDock": 0.4,
+      "accoppiamento ToolDock": 1.1,
+      "testa (spindle + utensile)": 1.6,
+      "tavola": 50.1,
+      "guide Y + vite Y": 7.2
+     }
+    },
+    "L": 243.0
+   },
+   {
+    "axis": 45.0,
+    "N_per_um": {
+     "X": 1.06,
+     "Y": 0.87,
+     "Z": 1.62
+    },
+    "share": {
+     "X": {
+      "telaio": 4.7,
+      "spalle": 11.5,
+      "trave": 3.7,
+      "guide X + vite X": 4.1,
+      "carrello X": 4.1,
+      "guide Z + vite Z": 5.2,
+      "slitta Z": 2.5,
+      "master ToolDock": 5.8,
+      "accoppiamento ToolDock": 50.4,
+      "testa (spindle + utensile)": 7.4,
+      "tavola": 0.4,
+      "guide Y + vite Y": 0.2
+     },
+     "Y": {
+      "telaio": 6.1,
+      "spalle": 0.5,
+      "trave": 6.3,
+      "guide X + vite X": 0.7,
+      "carrello X": 10.2,
+      "guide Z + vite Z": 5.7,
+      "slitta Z": 6.5,
+      "master ToolDock": 4.4,
+      "accoppiamento ToolDock": 41.4,
+      "testa (spindle + utensile)": 6.1,
+      "tavola": 9.7,
+      "guide Y + vite Y": 2.4
+     },
+     "Z": {
+      "telaio": 19.2,
+      "spalle": 3.0,
+      "trave": 8.5,
+      "guide X + vite X": 0.7,
+      "carrello X": 3.3,
+      "guide Z + vite Z": 6.1,
+      "slitta Z": 0.6,
+      "master ToolDock": 0.5,
+      "accoppiamento ToolDock": 1.0,
+      "testa (spindle + utensile)": 1.6,
+      "tavola": 48.4,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 243.0
+   },
+   {
+    "axis": 55.0,
+    "N_per_um": {
+     "X": 1.04,
+     "Y": 0.86,
+     "Z": 1.56
+    },
+    "share": {
+     "X": {
+      "telaio": 4.9,
+      "spalle": 11.3,
+      "trave": 3.9,
+      "guide X + vite X": 4.1,
+      "carrello X": 4.2,
+      "guide Z + vite Z": 5.1,
+      "slitta Z": 2.5,
+      "master ToolDock": 6.8,
+      "accoppiamento ToolDock": 49.4,
+      "testa (spindle + utensile)": 7.2,
+      "tavola": 0.4,
+      "guide Y + vite Y": 0.2
+     },
+     "Y": {
+      "telaio": 6.2,
+      "spalle": 0.5,
+      "trave": 6.2,
+      "guide X + vite X": 0.7,
+      "carrello X": 10.1,
+      "guide Z + vite Z": 5.6,
+      "slitta Z": 6.4,
+      "master ToolDock": 5.2,
+      "accoppiamento ToolDock": 41.0,
+      "testa (spindle + utensile)": 6.0,
+      "tavola": 9.6,
+      "guide Y + vite Y": 2.4
+     },
+     "Z": {
+      "telaio": 19.9,
+      "spalle": 3.2,
+      "trave": 8.7,
+      "guide X + vite X": 0.7,
+      "carrello X": 3.8,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 0.7,
+      "master ToolDock": 0.6,
+      "accoppiamento ToolDock": 1.0,
+      "testa (spindle + utensile)": 1.5,
+      "tavola": 46.7,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 243.0
+   },
+   {
+    "axis": 70.0,
+    "N_per_um": {
+     "X": 1.01,
+     "Y": 0.85,
+     "Z": 1.47
+    },
+    "share": {
+     "X": {
+      "telaio": 5.1,
+      "spalle": 11.0,
+      "trave": 4.2,
+      "guide X + vite X": 4.1,
+      "carrello X": 4.4,
+      "guide Z + vite Z": 5.1,
+      "slitta Z": 2.6,
+      "master ToolDock": 8.2,
+      "accoppiamento ToolDock": 47.8,
+      "testa (spindle + utensile)": 7.0,
+      "tavola": 0.4,
+      "guide Y + vite Y": 0.2
+     },
+     "Y": {
+      "telaio": 6.3,
+      "spalle": 0.5,
+      "trave": 6.1,
+      "guide X + vite X": 0.7,
+      "carrello X": 10.0,
+      "guide Z + vite Z": 5.5,
+      "slitta Z": 6.3,
+      "master ToolDock": 6.4,
+      "accoppiamento ToolDock": 40.4,
+      "testa (spindle + utensile)": 5.9,
+      "tavola": 9.4,
+      "guide Y + vite Y": 2.3
+     },
+     "Z": {
+      "telaio": 20.9,
+      "spalle": 3.5,
+      "trave": 9.1,
+      "guide X + vite X": 0.9,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 5.9,
+      "slitta Z": 1.0,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.9,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 44.1,
+      "guide Y + vite Y": 6.9
+     }
+    },
+    "L": 243.0
+   }
+  ],
+  "passante": [
+   {
+    "axis": 35.0,
+    "N_per_um": {
+     "X": 2.18,
+     "Y": 1.78,
+     "Z": 1.71
+    },
+    "share": {
+     "X": {
+      "telaio": 9.2,
+      "spalle": 23.7,
+      "trave": 6.9,
+      "guide X + vite X": 8.3,
+      "carrello X": 2.0,
+      "guide Z + vite Z": 4.5,
+      "slitta Z": 2.0,
+      "master ToolDock": 2.8,
+      "accoppiamento ToolDock": 29.0,
+      "testa (spindle + utensile)": 10.2,
+      "tavola": 0.9,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 12.3,
+      "spalle": 1.1,
+      "trave": 12.9,
+      "guide X + vite X": 1.3,
+      "carrello X": 4.7,
+      "guide Z + vite Z": 4.4,
+      "slitta Z": 4.8,
+      "master ToolDock": 2.0,
+      "accoppiamento ToolDock": 23.7,
+      "testa (spindle + utensile)": 8.3,
+      "tavola": 19.7,
+      "guide Y + vite Y": 4.9
+     },
+     "Z": {
+      "telaio": 18.7,
+      "spalle": 2.9,
+      "trave": 8.4,
+      "guide X + vite X": 0.6,
+      "carrello X": 1.4,
+      "guide Z + vite Z": 6.2,
+      "slitta Z": 0.5,
+      "master ToolDock": 0.4,
+      "accoppiamento ToolDock": 1.1,
+      "testa (spindle + utensile)": 1.6,
+      "tavola": 50.9,
+      "guide Y + vite Y": 7.3
+     }
+    },
+    "L": 124.0
+   },
+   {
+    "axis": 45.0,
+    "N_per_um": {
+     "X": 2.14,
+     "Y": 1.77,
+     "Z": 1.65
+    },
+    "share": {
+     "X": {
+      "telaio": 9.5,
+      "spalle": 23.2,
+      "trave": 7.2,
+      "guide X + vite X": 8.2,
+      "carrello X": 2.0,
+      "guide Z + vite Z": 4.5,
+      "slitta Z": 2.1,
+      "master ToolDock": 3.4,
+      "accoppiamento ToolDock": 28.4,
+      "testa (spindle + utensile)": 10.0,
+      "tavola": 0.8,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 12.4,
+      "spalle": 1.1,
+      "trave": 12.8,
+      "guide X + vite X": 1.3,
+      "carrello X": 4.7,
+      "guide Z + vite Z": 4.3,
+      "slitta Z": 4.7,
+      "master ToolDock": 2.5,
+      "accoppiamento ToolDock": 23.5,
+      "testa (spindle + utensile)": 8.3,
+      "tavola": 19.6,
+      "guide Y + vite Y": 4.9
+     },
+     "Z": {
+      "telaio": 19.5,
+      "spalle": 3.1,
+      "trave": 8.6,
+      "guide X + vite X": 0.7,
+      "carrello X": 1.6,
+      "guide Z + vite Z": 6.2,
+      "slitta Z": 0.6,
+      "master ToolDock": 0.5,
+      "accoppiamento ToolDock": 1.0,
+      "testa (spindle + utensile)": 1.5,
+      "tavola": 49.4,
+      "guide Y + vite Y": 7.3
+     }
+    },
+    "L": 124.0
+   },
+   {
+    "axis": 55.0,
+    "N_per_um": {
+     "X": 2.09,
+     "Y": 1.75,
+     "Z": 1.6
+    },
+    "share": {
+     "X": {
+      "telaio": 9.8,
+      "spalle": 22.7,
+      "trave": 7.6,
+      "guide X + vite X": 8.2,
+      "carrello X": 2.1,
+      "guide Z + vite Z": 4.5,
+      "slitta Z": 2.2,
+      "master ToolDock": 4.0,
+      "accoppiamento ToolDock": 27.8,
+      "testa (spindle + utensile)": 9.8,
+      "tavola": 0.8,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 12.5,
+      "spalle": 1.1,
+      "trave": 12.7,
+      "guide X + vite X": 1.3,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 4.3,
+      "slitta Z": 4.7,
+      "master ToolDock": 3.0,
+      "accoppiamento ToolDock": 23.3,
+      "testa (spindle + utensile)": 8.2,
+      "tavola": 19.4,
+      "guide Y + vite Y": 4.8
+     },
+     "Z": {
+      "telaio": 20.3,
+      "spalle": 3.3,
+      "trave": 8.9,
+      "guide X + vite X": 0.7,
+      "carrello X": 1.8,
+      "guide Z + vite Z": 6.1,
+      "slitta Z": 0.8,
+      "master ToolDock": 0.7,
+      "accoppiamento ToolDock": 1.0,
+      "testa (spindle + utensile)": 1.5,
+      "tavola": 47.8,
+      "guide Y + vite Y": 7.2
+     }
+    },
+    "L": 124.0
+   },
+   {
+    "axis": 70.0,
+    "N_per_um": {
+     "X": 2.02,
+     "Y": 1.74,
+     "Z": 1.52
+    },
+    "share": {
+     "X": {
+      "telaio": 10.1,
+      "spalle": 22.0,
+      "trave": 8.1,
+      "guide X + vite X": 8.2,
+      "carrello X": 2.2,
+      "guide Z + vite Z": 4.5,
+      "slitta Z": 2.4,
+      "master ToolDock": 4.9,
+      "accoppiamento ToolDock": 26.9,
+      "testa (spindle + utensile)": 9.5,
+      "tavola": 0.8,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 12.8,
+      "spalle": 1.1,
+      "trave": 12.5,
+      "guide X + vite X": 1.3,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 4.3,
+      "slitta Z": 4.6,
+      "master ToolDock": 3.7,
+      "accoppiamento ToolDock": 23.1,
+      "testa (spindle + utensile)": 8.1,
+      "tavola": 19.2,
+      "guide Y + vite Y": 4.8
+     },
+     "Z": {
+      "telaio": 21.5,
+      "spalle": 3.6,
+      "trave": 9.3,
+      "guide X + vite X": 0.8,
+      "carrello X": 2.1,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.1,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.9,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 45.3,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 124.0
+   }
+  ]
+ },
+ "coupling": {
+  "appesa (reale)": [
+   {
+    "name": "Ø80 · 1,6 kN (ICD v4)",
+    "N_per_um": {
+     "X": 1.01,
+     "Y": 0.85,
+     "Z": 1.47
+    },
+    "share": {
+     "X": {
+      "telaio": 5.1,
+      "spalle": 11.0,
+      "trave": 4.2,
+      "guide X + vite X": 4.1,
+      "carrello X": 4.4,
+      "guide Z + vite Z": 5.1,
+      "slitta Z": 2.6,
+      "master ToolDock": 8.2,
+      "accoppiamento ToolDock": 47.8,
+      "testa (spindle + utensile)": 7.0,
+      "tavola": 0.4,
+      "guide Y + vite Y": 0.2
+     },
+     "Y": {
+      "telaio": 6.3,
+      "spalle": 0.5,
+      "trave": 6.1,
+      "guide X + vite X": 0.7,
+      "carrello X": 10.0,
+      "guide Z + vite Z": 5.5,
+      "slitta Z": 6.3,
+      "master ToolDock": 6.4,
+      "accoppiamento ToolDock": 40.4,
+      "testa (spindle + utensile)": 5.9,
+      "tavola": 9.4,
+      "guide Y + vite Y": 2.3
+     },
+     "Z": {
+      "telaio": 20.9,
+      "spalle": 3.5,
+      "trave": 9.1,
+      "guide X + vite X": 0.9,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 5.9,
+      "slitta Z": 1.0,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.9,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 44.1,
+      "guide Y + vite Y": 6.9
+     }
+    },
+    "L": 243.0
+   },
+   {
+    "name": "Ø90 · 2,4 kN",
+    "N_per_um": {
+     "X": 1.18,
+     "Y": 0.97,
+     "Z": 1.48
+    },
+    "share": {
+     "X": {
+      "telaio": 5.9,
+      "spalle": 12.9,
+      "trave": 4.9,
+      "guide X + vite X": 4.7,
+      "carrello X": 5.1,
+      "guide Z + vite Z": 5.9,
+      "slitta Z": 3.0,
+      "master ToolDock": 9.6,
+      "accoppiamento ToolDock": 38.9,
+      "testa (spindle + utensile)": 8.2,
+      "tavola": 0.5,
+      "guide Y + vite Y": 0.3
+     },
+     "Y": {
+      "telaio": 7.1,
+      "spalle": 0.6,
+      "trave": 7.0,
+      "guide X + vite X": 0.8,
+      "carrello X": 11.4,
+      "guide Z + vite Z": 6.3,
+      "slitta Z": 7.2,
+      "master ToolDock": 7.3,
+      "accoppiamento ToolDock": 32.0,
+      "testa (spindle + utensile)": 6.7,
+      "tavola": 10.7,
+      "guide Y + vite Y": 2.7
+     },
+     "Z": {
+      "telaio": 21.0,
+      "spalle": 3.5,
+      "trave": 9.1,
+      "guide X + vite X": 0.9,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.0,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.8,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 44.1,
+      "guide Y + vite Y": 6.9
+     }
+    },
+    "L": 243.0
+   },
+   {
+    "name": "Ø100 · 3,2 kN",
+    "N_per_um": {
+     "X": 1.31,
+     "Y": 1.06,
+     "Z": 1.48
+    },
+    "share": {
+     "X": {
+      "telaio": 6.6,
+      "spalle": 14.3,
+      "trave": 5.4,
+      "guide X + vite X": 5.3,
+      "carrello X": 5.7,
+      "guide Z + vite Z": 6.6,
+      "slitta Z": 3.4,
+      "master ToolDock": 10.7,
+      "accoppiamento ToolDock": 32.1,
+      "testa (spindle + utensile)": 9.1,
+      "tavola": 0.5,
+      "guide Y + vite Y": 0.3
+     },
+     "Y": {
+      "telaio": 7.8,
+      "spalle": 0.7,
+      "trave": 7.6,
+      "guide X + vite X": 0.9,
+      "carrello X": 12.4,
+      "guide Z + vite Z": 6.9,
+      "slitta Z": 7.9,
+      "master ToolDock": 8.0,
+      "accoppiamento ToolDock": 25.9,
+      "testa (spindle + utensile)": 7.4,
+      "tavola": 11.7,
+      "guide Y + vite Y": 2.9
+     },
+     "Z": {
+      "telaio": 21.0,
+      "spalle": 3.5,
+      "trave": 9.1,
+      "guide X + vite X": 0.9,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.0,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.7,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 44.2,
+      "guide Y + vite Y": 6.9
+     }
+    },
+    "L": 243.0
+   }
+  ],
+  "passante": [
+   {
+    "name": "Ø80 · 1,6 kN (ICD v4)",
+    "N_per_um": {
+     "X": 2.02,
+     "Y": 1.74,
+     "Z": 1.52
+    },
+    "share": {
+     "X": {
+      "telaio": 10.1,
+      "spalle": 22.0,
+      "trave": 8.1,
+      "guide X + vite X": 8.2,
+      "carrello X": 2.2,
+      "guide Z + vite Z": 4.5,
+      "slitta Z": 2.4,
+      "master ToolDock": 4.9,
+      "accoppiamento ToolDock": 26.9,
+      "testa (spindle + utensile)": 9.5,
+      "tavola": 0.8,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 12.8,
+      "spalle": 1.1,
+      "trave": 12.5,
+      "guide X + vite X": 1.3,
+      "carrello X": 4.6,
+      "guide Z + vite Z": 4.3,
+      "slitta Z": 4.6,
+      "master ToolDock": 3.7,
+      "accoppiamento ToolDock": 23.1,
+      "testa (spindle + utensile)": 8.1,
+      "tavola": 19.2,
+      "guide Y + vite Y": 4.8
+     },
+     "Z": {
+      "telaio": 21.5,
+      "spalle": 3.6,
+      "trave": 9.3,
+      "guide X + vite X": 0.8,
+      "carrello X": 2.1,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.1,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.9,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 45.3,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 124.0
+   },
+   {
+    "name": "Ø90 · 2,4 kN",
+    "N_per_um": {
+     "X": 2.19,
+     "Y": 1.86,
+     "Z": 1.52
+    },
+    "share": {
+     "X": {
+      "telaio": 11.0,
+      "spalle": 23.9,
+      "trave": 8.8,
+      "guide X + vite X": 8.9,
+      "carrello X": 2.4,
+      "guide Z + vite Z": 4.9,
+      "slitta Z": 2.6,
+      "master ToolDock": 5.3,
+      "accoppiamento ToolDock": 20.6,
+      "testa (spindle + utensile)": 10.3,
+      "tavola": 0.9,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 13.7,
+      "spalle": 1.2,
+      "trave": 13.4,
+      "guide X + vite X": 1.4,
+      "carrello X": 4.9,
+      "guide Z + vite Z": 4.6,
+      "slitta Z": 5.0,
+      "master ToolDock": 3.9,
+      "accoppiamento ToolDock": 17.5,
+      "testa (spindle + utensile)": 8.7,
+      "tavola": 20.6,
+      "guide Y + vite Y": 5.1
+     },
+     "Z": {
+      "telaio": 21.5,
+      "spalle": 3.6,
+      "trave": 9.3,
+      "guide X + vite X": 0.8,
+      "carrello X": 2.1,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.1,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.8,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 45.4,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 124.0
+   },
+   {
+    "name": "Ø100 · 3,2 kN",
+    "N_per_um": {
+     "X": 2.31,
+     "Y": 1.94,
+     "Z": 1.52
+    },
+    "share": {
+     "X": {
+      "telaio": 11.6,
+      "spalle": 25.2,
+      "trave": 9.3,
+      "guide X + vite X": 9.3,
+      "carrello X": 2.5,
+      "guide Z + vite Z": 5.2,
+      "slitta Z": 2.7,
+      "master ToolDock": 5.5,
+      "accoppiamento ToolDock": 16.4,
+      "testa (spindle + utensile)": 10.8,
+      "tavola": 0.9,
+      "guide Y + vite Y": 0.5
+     },
+     "Y": {
+      "telaio": 14.3,
+      "spalle": 1.2,
+      "trave": 14.0,
+      "guide X + vite X": 1.4,
+      "carrello X": 5.1,
+      "guide Z + vite Z": 4.8,
+      "slitta Z": 5.2,
+      "master ToolDock": 4.1,
+      "accoppiamento ToolDock": 13.8,
+      "testa (spindle + utensile)": 9.1,
+      "tavola": 21.5,
+      "guide Y + vite Y": 5.4
+     },
+     "Z": {
+      "telaio": 21.6,
+      "spalle": 3.6,
+      "trave": 9.3,
+      "guide X + vite X": 0.8,
+      "carrello X": 2.1,
+      "guide Z + vite Z": 6.0,
+      "slitta Z": 1.1,
+      "master ToolDock": 0.9,
+      "accoppiamento ToolDock": 0.8,
+      "testa (spindle + utensile)": 1.4,
+      "tavola": 45.4,
+      "guide Y + vite Y": 7.1
+     }
+    },
+    "L": 124.0
+   }
+  ]
+ },
+ "best": {
+  "name": "Scatolati + testa passante + asse a 45 mm + Ø90 · 2,4 kN",
+  "N_per_um": {
+   "X": 2.33,
+   "Y": 1.9,
+   "Z": 1.66
+  },
+  "share": {
+   "X": {
+    "telaio": 10.4,
+    "spalle": 25.3,
+    "trave": 7.9,
+    "guide X + vite X": 9.0,
+    "carrello X": 2.2,
+    "guide Z + vite Z": 4.9,
+    "slitta Z": 2.3,
+    "master ToolDock": 3.7,
+    "accoppiamento ToolDock": 21.9,
+    "testa (spindle + utensile)": 10.9,
+    "tavola": 0.9,
+    "guide Y + vite Y": 0.5
+   },
+   "Y": {
+    "telaio": 13.3,
+    "spalle": 1.2,
+    "trave": 13.7,
+    "guide X + vite X": 1.4,
+    "carrello X": 5.0,
+    "guide Z + vite Z": 4.7,
+    "slitta Z": 5.1,
+    "master ToolDock": 2.7,
+    "accoppiamento ToolDock": 17.9,
+    "testa (spindle + utensile)": 8.9,
+    "tavola": 21.0,
+    "guide Y + vite Y": 5.2
+   },
+   "Z": {
+    "telaio": 19.6,
+    "spalle": 3.1,
+    "trave": 8.7,
+    "guide X + vite X": 0.7,
+    "carrello X": 1.6,
+    "guide Z + vite Z": 6.2,
+    "slitta Z": 0.6,
+    "master ToolDock": 0.5,
+    "accoppiamento ToolDock": 0.9,
+    "testa (spindle + utensile)": 1.5,
+    "tavola": 49.4,
+    "guide Y + vite Y": 7.3
+   }
+  },
+  "L": 124.0
+ },
+ "best_plus": [
+  {
+   "name": "… + spalle scatolate 60 × 120 sp. 6 (+0,2 kg)",
+   "N_per_um": {
+    "X": 3.13,
+    "Y": 1.96,
+    "Z": 1.71
+   },
+   "share": {
+    "X": {
+     "telaio": 9.6,
+     "spalle": 4.1,
+     "trave": 10.7,
+     "guide X + vite X": 12.0,
+     "carrello X": 2.9,
+     "guide Z + vite Z": 6.6,
+     "slitta Z": 3.1,
+     "master ToolDock": 5.0,
+     "accoppiamento ToolDock": 29.4,
+     "testa (spindle + utensile)": 14.6,
+     "tavola": 1.3,
+     "guide Y + vite Y": 0.7
+    },
+    "Y": {
+     "telaio": 13.4,
+     "spalle": 2.1,
+     "trave": 10.5,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.2,
+     "guide Z + vite Z": 4.8,
+     "slitta Z": 5.2,
+     "master ToolDock": 2.8,
+     "accoppiamento ToolDock": 18.4,
+     "testa (spindle + utensile)": 9.2,
+     "tavola": 21.7,
+     "guide Y + vite Y": 5.4
+    },
+    "Z": {
+     "telaio": 19.1,
+     "spalle": 2.7,
+     "trave": 7.2,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.4,
+     "slitta Z": 0.7,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.6,
+     "tavola": 51.0,
+     "guide Y + vite Y": 7.7
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "… + tavola equivalente 14 mm (+2,6 kg)",
+   "N_per_um": {
+    "X": 3.16,
+    "Y": 2.38,
+    "Z": 3.07
+   },
+   "share": {
+    "X": {
+     "telaio": 9.4,
+     "spalle": 4.2,
+     "trave": 10.8,
+     "guide X + vite X": 12.1,
+     "carrello X": 3.0,
+     "guide Z + vite Z": 6.7,
+     "slitta Z": 3.1,
+     "master ToolDock": 5.0,
+     "accoppiamento ToolDock": 29.7,
+     "testa (spindle + utensile)": 14.8,
+     "tavola": 0.6,
+     "guide Y + vite Y": 0.6
+    },
+    "Y": {
+     "telaio": 16.1,
+     "spalle": 2.6,
+     "trave": 12.7,
+     "guide X + vite X": 1.7,
+     "carrello X": 6.3,
+     "guide Z + vite Z": 5.8,
+     "slitta Z": 6.4,
+     "master ToolDock": 3.4,
+     "accoppiamento ToolDock": 22.4,
+     "testa (spindle + utensile)": 11.1,
+     "tavola": 5.3,
+     "guide Y + vite Y": 6.2
+    },
+    "Z": {
+     "telaio": 32.0,
+     "spalle": 4.8,
+     "trave": 12.9,
+     "guide X + vite X": 1.2,
+     "carrello X": 2.9,
+     "guide Z + vite Z": 11.4,
+     "slitta Z": 1.2,
+     "master ToolDock": 1.0,
+     "accoppiamento ToolDock": 1.7,
+     "testa (spindle + utensile)": 2.8,
+     "tavola": 23.0,
+     "guide Y + vite Y": 5.0
+    }
+   },
+   "L": 124.0
+  }
+ ],
+ "best_hanging": {
+  "name": "Scatolati + testa appesa + asse a 45 mm + Ø90 · 2,4 kN",
+  "N_per_um": {
+   "X": 1.25,
+   "Y": 1.0,
+   "Z": 1.62
+  },
+  "share": {
+   "X": {
+    "telaio": 5.6,
+    "spalle": 13.6,
+    "trave": 4.4,
+    "guide X + vite X": 4.8,
+    "carrello X": 4.8,
+    "guide Z + vite Z": 6.1,
+    "slitta Z": 3.0,
+    "master ToolDock": 6.9,
+    "accoppiamento ToolDock": 41.4,
+    "testa (spindle + utensile)": 8.7,
+    "tavola": 0.5,
+    "guide Y + vite Y": 0.3
+   },
+   "Y": {
+    "telaio": 7.0,
+    "spalle": 0.6,
+    "trave": 7.2,
+    "guide X + vite X": 0.8,
+    "carrello X": 11.7,
+    "guide Z + vite Z": 6.5,
+    "slitta Z": 7.4,
+    "master ToolDock": 5.0,
+    "accoppiamento ToolDock": 32.9,
+    "testa (spindle + utensile)": 6.9,
+    "tavola": 11.0,
+    "guide Y + vite Y": 2.8
+   },
+   "Z": {
+    "telaio": 19.2,
+    "spalle": 3.0,
+    "trave": 8.5,
+    "guide X + vite X": 0.7,
+    "carrello X": 3.3,
+    "guide Z + vite Z": 6.1,
+    "slitta Z": 0.6,
+    "master ToolDock": 0.5,
+    "accoppiamento ToolDock": 0.9,
+    "testa (spindle + utensile)": 1.6,
+    "tavola": 48.5,
+    "guide Y + vite Y": 7.2
+   }
+  },
+  "L": 243.0
+ },
+ "sensitivity": [
+  {
+   "name": "Laterale pattini = 0,5 × radiale",
+   "N_per_um": {
+    "X": 2.25,
+    "Y": 1.9,
+    "Z": 1.65
+   },
+   "share": {
+    "X": {
+     "telaio": 10.0,
+     "spalle": 24.4,
+     "trave": 7.4,
+     "guide X + vite X": 9.6,
+     "carrello X": 1.9,
+     "guide Z + vite Z": 7.8,
+     "slitta Z": 2.0,
+     "master ToolDock": 3.6,
+     "accoppiamento ToolDock": 21.1,
+     "testa (spindle + utensile)": 10.5,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.8
+    },
+    "Y": {
+     "telaio": 13.3,
+     "spalle": 1.2,
+     "trave": 13.7,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.1,
+     "guide Z + vite Z": 4.7,
+     "slitta Z": 5.1,
+     "master ToolDock": 2.7,
+     "accoppiamento ToolDock": 17.8,
+     "testa (spindle + utensile)": 8.9,
+     "tavola": 21.0,
+     "guide Y + vite Y": 5.3
+    },
+    "Z": {
+     "telaio": 19.3,
+     "spalle": 3.1,
+     "trave": 8.6,
+     "guide X + vite X": 0.8,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.1,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 49.3,
+     "guide Y + vite Y": 7.7
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Chiocciole ×0,5",
+   "N_per_um": {
+    "X": 2.3,
+    "Y": 1.87,
+    "Z": 1.63
+   },
+   "share": {
+    "X": {
+     "telaio": 10.2,
+     "spalle": 24.9,
+     "trave": 7.8,
+     "guide X + vite X": 10.4,
+     "carrello X": 2.2,
+     "guide Z + vite Z": 4.8,
+     "slitta Z": 2.3,
+     "master ToolDock": 3.7,
+     "accoppiamento ToolDock": 21.6,
+     "testa (spindle + utensile)": 10.7,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 13.2,
+     "spalle": 1.1,
+     "trave": 13.5,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.0,
+     "guide Z + vite Z": 4.6,
+     "slitta Z": 5.0,
+     "master ToolDock": 2.7,
+     "accoppiamento ToolDock": 17.6,
+     "testa (spindle + utensile)": 8.8,
+     "tavola": 20.8,
+     "guide Y + vite Y": 6.4
+    },
+    "Z": {
+     "telaio": 19.2,
+     "spalle": 3.0,
+     "trave": 8.5,
+     "guide X + vite X": 0.6,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 7.7,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 48.6,
+     "guide Y + vite Y": 7.2
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Chiocciole ×2",
+   "N_per_um": {
+    "X": 2.35,
+    "Y": 1.91,
+    "Z": 1.67
+   },
+   "share": {
+    "X": {
+     "telaio": 10.5,
+     "spalle": 25.5,
+     "trave": 7.9,
+     "guide X + vite X": 8.3,
+     "carrello X": 2.2,
+     "guide Z + vite Z": 5.0,
+     "slitta Z": 2.3,
+     "master ToolDock": 3.7,
+     "accoppiamento ToolDock": 22.1,
+     "testa (spindle + utensile)": 11.0,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 13.4,
+     "spalle": 1.2,
+     "trave": 13.8,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.0,
+     "guide Z + vite Z": 4.7,
+     "slitta Z": 5.1,
+     "master ToolDock": 2.7,
+     "accoppiamento ToolDock": 18.0,
+     "testa (spindle + utensile)": 8.9,
+     "tavola": 21.1,
+     "guide Y + vite Y": 4.6
+    },
+    "Z": {
+     "telaio": 19.7,
+     "spalle": 3.1,
+     "trave": 8.7,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 5.4,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 49.8,
+     "guide Y + vite Y": 7.4
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Cuscinetti vite ×0,5",
+   "N_per_um": {
+    "X": 2.3,
+    "Y": 1.88,
+    "Z": 1.64
+   },
+   "share": {
+    "X": {
+     "telaio": 10.3,
+     "spalle": 25.0,
+     "trave": 7.8,
+     "guide X + vite X": 10.0,
+     "carrello X": 2.2,
+     "guide Z + vite Z": 4.9,
+     "slitta Z": 2.3,
+     "master ToolDock": 3.7,
+     "accoppiamento ToolDock": 21.7,
+     "testa (spindle + utensile)": 10.8,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 13.2,
+     "spalle": 1.1,
+     "trave": 13.6,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.0,
+     "guide Z + vite Z": 4.6,
+     "slitta Z": 5.0,
+     "master ToolDock": 2.7,
+     "accoppiamento ToolDock": 17.7,
+     "testa (spindle + utensile)": 8.8,
+     "tavola": 20.8,
+     "guide Y + vite Y": 6.1
+    },
+    "Z": {
+     "telaio": 19.3,
+     "spalle": 3.0,
+     "trave": 8.6,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 7.2,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 48.9,
+     "guide Y + vite Y": 7.2
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Tenuta motore ×0,5",
+   "N_per_um": {
+    "X": 2.3,
+    "Y": 1.88,
+    "Z": 1.65
+   },
+   "share": {
+    "X": {
+     "telaio": 10.2,
+     "spalle": 25.0,
+     "trave": 7.8,
+     "guide X + vite X": 10.3,
+     "carrello X": 2.2,
+     "guide Z + vite Z": 4.9,
+     "slitta Z": 2.3,
+     "master ToolDock": 3.7,
+     "accoppiamento ToolDock": 21.6,
+     "testa (spindle + utensile)": 10.7,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 13.2,
+     "spalle": 1.1,
+     "trave": 13.5,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.0,
+     "guide Z + vite Z": 4.6,
+     "slitta Z": 5.0,
+     "master ToolDock": 2.7,
+     "accoppiamento ToolDock": 17.6,
+     "testa (spindle + utensile)": 8.8,
+     "tavola": 20.8,
+     "guide Y + vite Y": 6.4
+    },
+    "Z": {
+     "telaio": 19.4,
+     "spalle": 3.1,
+     "trave": 8.6,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.8,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 49.1,
+     "guide Y + vite Y": 7.2
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Accoppiamento ×0,5 (Hertz ottimistico)",
+   "N_per_um": {
+    "X": 1.91,
+    "Y": 1.61,
+    "Z": 1.64
+   },
+   "share": {
+    "X": {
+     "telaio": 8.5,
+     "spalle": 20.8,
+     "trave": 6.5,
+     "guide X + vite X": 7.4,
+     "carrello X": 1.8,
+     "guide Z + vite Z": 4.0,
+     "slitta Z": 1.9,
+     "master ToolDock": 3.0,
+     "accoppiamento ToolDock": 36.0,
+     "testa (spindle + utensile)": 8.9,
+     "tavola": 0.8,
+     "guide Y + vite Y": 0.4
+    },
+    "Y": {
+     "telaio": 11.3,
+     "spalle": 1.0,
+     "trave": 11.6,
+     "guide X + vite X": 1.2,
+     "carrello X": 4.3,
+     "guide Z + vite Z": 4.0,
+     "slitta Z": 4.3,
+     "master ToolDock": 2.3,
+     "accoppiamento ToolDock": 30.3,
+     "testa (spindle + utensile)": 7.5,
+     "tavola": 17.8,
+     "guide Y + vite Y": 4.4
+    },
+    "Z": {
+     "telaio": 19.4,
+     "spalle": 3.1,
+     "trave": 8.6,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.1,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 1.8,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 49.0,
+     "guide Y + vite Y": 7.2
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Accoppiamento ×2",
+   "N_per_um": {
+    "X": 2.62,
+    "Y": 2.08,
+    "Z": 1.66
+   },
+   "share": {
+    "X": {
+     "telaio": 11.7,
+     "spalle": 28.4,
+     "trave": 8.8,
+     "guide X + vite X": 10.1,
+     "carrello X": 2.5,
+     "guide Z + vite Z": 5.5,
+     "slitta Z": 2.6,
+     "master ToolDock": 4.2,
+     "accoppiamento ToolDock": 12.3,
+     "testa (spindle + utensile)": 12.2,
+     "tavola": 1.0,
+     "guide Y + vite Y": 0.6
+    },
+    "Y": {
+     "telaio": 14.6,
+     "spalle": 1.3,
+     "trave": 15.0,
+     "guide X + vite X": 1.5,
+     "carrello X": 5.5,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 5.6,
+     "master ToolDock": 2.9,
+     "accoppiamento ToolDock": 9.8,
+     "testa (spindle + utensile)": 9.7,
+     "tavola": 23.1,
+     "guide Y + vite Y": 5.8
+    },
+    "Z": {
+     "telaio": 19.6,
+     "spalle": 3.1,
+     "trave": 8.7,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.2,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.5,
+     "testa (spindle + utensile)": 1.5,
+     "tavola": 49.6,
+     "guide Y + vite Y": 7.3
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Cuscinetti spindle 20 N/µm",
+   "N_per_um": {
+    "X": 2.15,
+    "Y": 1.78,
+    "Z": 1.63
+   },
+   "share": {
+    "X": {
+     "telaio": 9.6,
+     "spalle": 23.4,
+     "trave": 7.3,
+     "guide X + vite X": 8.3,
+     "carrello X": 2.1,
+     "guide Z + vite Z": 4.5,
+     "slitta Z": 2.1,
+     "master ToolDock": 3.4,
+     "accoppiamento ToolDock": 20.2,
+     "testa (spindle + utensile)": 17.8,
+     "tavola": 0.9,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 12.5,
+     "spalle": 1.1,
+     "trave": 12.8,
+     "guide X + vite X": 1.3,
+     "carrello X": 4.7,
+     "guide Z + vite Z": 4.4,
+     "slitta Z": 4.8,
+     "master ToolDock": 2.5,
+     "accoppiamento ToolDock": 16.7,
+     "testa (spindle + utensile)": 14.7,
+     "tavola": 19.7,
+     "guide Y + vite Y": 4.9
+    },
+    "Z": {
+     "telaio": 19.3,
+     "spalle": 3.0,
+     "trave": 8.5,
+     "guide X + vite X": 0.6,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.1,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 2.9,
+     "tavola": 48.7,
+     "guide Y + vite Y": 7.2
+    }
+   },
+   "L": 124.0
+  },
+  {
+   "name": "Cuscinetti spindle 80 N/µm",
+   "N_per_um": {
+    "X": 2.43,
+    "Y": 1.97,
+    "Z": 1.67
+   },
+   "share": {
+    "X": {
+     "telaio": 10.8,
+     "spalle": 26.4,
+     "trave": 8.2,
+     "guide X + vite X": 9.4,
+     "carrello X": 2.3,
+     "guide Z + vite Z": 5.1,
+     "slitta Z": 2.4,
+     "master ToolDock": 3.9,
+     "accoppiamento ToolDock": 22.9,
+     "testa (spindle + utensile)": 7.0,
+     "tavola": 1.0,
+     "guide Y + vite Y": 0.5
+    },
+    "Y": {
+     "telaio": 13.8,
+     "spalle": 1.2,
+     "trave": 14.2,
+     "guide X + vite X": 1.4,
+     "carrello X": 5.2,
+     "guide Z + vite Z": 4.8,
+     "slitta Z": 5.3,
+     "master ToolDock": 2.8,
+     "accoppiamento ToolDock": 18.5,
+     "testa (spindle + utensile)": 5.6,
+     "tavola": 21.8,
+     "guide Y + vite Y": 5.4
+    },
+    "Z": {
+     "telaio": 19.7,
+     "spalle": 3.1,
+     "trave": 8.7,
+     "guide X + vite X": 0.7,
+     "carrello X": 1.6,
+     "guide Z + vite Z": 6.2,
+     "slitta Z": 0.6,
+     "master ToolDock": 0.5,
+     "accoppiamento ToolDock": 0.9,
+     "testa (spindle + utensile)": 0.8,
+     "tavola": 49.8,
+     "guide Y + vite Y": 7.3
+    }
+   },
+   "L": 124.0
+  }
+ ],
+ "bench": {
+  "Ø80 · 1,6 kN (ICD v4)": {
+   "124.0": {
+    "k_rot_Nm_per_urad": 0.128,
+    "k_lat_N_per_um": 79.8,
+    "contact_N_per_um": 53.2,
+    "um_at": {
+     "50": 6.6,
+     "100": 13.3,
+     "150": 19.9
+    },
+    "N_per_um": 7.52
+   },
+   "220.0": {
+    "k_rot_Nm_per_urad": 0.128,
+    "k_lat_N_per_um": 79.8,
+    "contact_N_per_um": 53.2,
+    "um_at": {
+     "50": 19.6,
+     "100": 39.2,
+     "150": 58.7
+    },
+    "N_per_um": 2.55
+   },
+   "243.0": {
+    "k_rot_Nm_per_urad": 0.128,
+    "k_lat_N_per_um": 79.8,
+    "contact_N_per_um": 53.2,
+    "um_at": {
+     "50": 23.7,
+     "100": 47.5,
+     "150": 71.2
+    },
+    "N_per_um": 2.11
+   }
+  },
+  "Ø90 · 2,4 kN": {
+   "124.0": {
+    "k_rot_Nm_per_urad": 0.185,
+    "k_lat_N_per_um": 91.4,
+    "contact_N_per_um": 60.9,
+    "um_at": {
+     "50": 4.7,
+     "100": 9.4,
+     "150": 14.1
+    },
+    "N_per_um": 10.63
+   },
+   "220.0": {
+    "k_rot_Nm_per_urad": 0.185,
+    "k_lat_N_per_um": 91.4,
+    "contact_N_per_um": 60.9,
+    "um_at": {
+     "50": 13.6,
+     "100": 27.3,
+     "150": 40.9
+    },
+    "N_per_um": 3.67
+   },
+   "243.0": {
+    "k_rot_Nm_per_urad": 0.185,
+    "k_lat_N_per_um": 91.4,
+    "contact_N_per_um": 60.9,
+    "um_at": {
+     "50": 16.5,
+     "100": 33.0,
+     "150": 49.5
+    },
+    "N_per_um": 3.03
+   }
+  },
+  "Ø100 · 3,2 kN": {
+   "124.0": {
+    "k_rot_Nm_per_urad": 0.251,
+    "k_lat_N_per_um": 100.6,
+    "contact_N_per_um": 67.0,
+    "um_at": {
+     "50": 3.6,
+     "100": 7.1,
+     "150": 10.7
+    },
+    "N_per_um": 14.06
+   },
+   "220.0": {
+    "k_rot_Nm_per_urad": 0.251,
+    "k_lat_N_per_um": 100.6,
+    "contact_N_per_um": 67.0,
+    "um_at": {
+     "50": 10.1,
+     "100": 20.2,
+     "150": 30.4
+    },
+    "N_per_um": 4.94
+   },
+   "243.0": {
+    "k_rot_Nm_per_urad": 0.251,
+    "k_lat_N_per_um": 100.6,
+    "contact_N_per_um": 67.0,
+    "um_at": {
+     "50": 12.2,
+     "100": 24.5,
+     "150": 36.7
+    },
+    "N_per_um": 4.08
+   }
+  }
+ },
+ "tool": {
+  "k_N_per_um": 7.3,
+  "d": 6.0,
+  "stickout": 25.0,
+  "E": 600000.0,
+  "best_with_tool": {
+   "X": 1.77,
+   "Y": 1.51,
+   "Z": 1.66
+  }
+ },
+ "heads": {
+  "appesa (reale)": {
+   "L": 243.0,
+   "cog": 95.0,
+   "mass": 2.8
+  },
+  "nell'inviluppo 220": {
+   "L": 220.0,
+   "cog": 77.0,
+   "mass": 2.8
+  },
+  "passante": {
+   "L": 124.0,
+   "cog": 2.0,
+   "mass": 2.8
+  }
+ }
+}

@@ -166,7 +166,7 @@ def screw_axial(name, bearing, free_len):
     E = ST["E"]
     k_shaft = E * math.pi * D_ROOT[name] ** 2 / 4 / max(free_len, 20.0)
     k_motor = K_THETA_MOTOR * (2 * math.pi / PITCH[name]) ** 2
-    return 1 / (1 / k_shaft + 1 / K_NUT[name] + 1 / K_BEARING[bearing] + 1 / k_motor)
+    return 1 / (1 / k_shaft + 1 / (F_NUT * K_NUT[name]) + 1 / (F_BEARING * K_BEARING[bearing]) + 1 / (F_MOTOR * k_motor))
 
 
 def block_k(kind, axis_free, normal):
@@ -174,15 +174,22 @@ def block_k(kind, axis_free, normal):
     kr = K_BLOCK[kind]
     k = np.zeros(6)
     lat = ({0, 1, 2} - {axis_free, normal}).pop()
-    k[normal], k[lat] = kr, kr
+    k[normal], k[lat] = kr, kr * F_LAT
     Lb = parts.BLOCKS[kind]["L"]
     k[3 + axis_free] = kr * 8.0 ** 2            # rollio del singolo pattino (stima)
     k[3 + normal] = k[3 + lat] = kr * (Lb / 4) ** 2
     return k
 
 
+COUPLING_R = 40.0                                     # raggio del cerchio delle sfere (Ø80, ICD v4)
+F_LAT = 1.0          # rigidezza laterale pattini / radiale (sensibilità)
+F_NUT = 1.0
+F_BEARING = 1.0
+F_MOTOR = 1.0
+
+
 def coupling_k():
-    R, rb = 40.0, 5.0
+    R, rb = COUPLING_R, 5.0
     Pc = HERTZ_PRELOAD / 3 / 2 / math.cos(math.radians(45))       # per contatto
     Es = ST["E"] / (2 * (1 - 0.3 ** 2))
     delta = (9 * Pc ** 2 / (16 * rb * Es ** 2)) ** (1 / 3)
@@ -318,14 +325,31 @@ def build(X, Y, Zd, shear_panel=False, sec=None):
     nm0 = m.node(X, y_slide, zm)
     m.rigid(smap[sb], nm0)
     nm1 = m.node(X, 0.0, zm)
-    m.beam(nm0, nm1, sec.get("master", rect(P.MASTER["W"], P.MASTER["T"])), AL, "ToolDock", up=(0, 0, 1))
+    m.beam(nm0, nm1, sec.get("master", rect(P.MASTER["W"], P.MASTER["T"])), AL, "master ToolDock", up=(0, 0, 1))
     zcpl = sb - P.MASTER["T"]
     nc1, nc2 = m.node(X, 0.0, zcpl), m.node(X, 0.0, zcpl)
     m.rigid(nm1, nc1)
     kcpl, _ = coupling_k()
-    m.spring(nc1, nc2, kcpl * COUPLING_SCALE, "ToolDock")
+    m.spring(nc1, nc2, kcpl * COUPLING_SCALE, "accoppiamento ToolDock")
     tip = m.node(X, 0.0, zcpl - P.HEAD["L"])
-    m.rigid(nc2, tip)
+    hd = sec.get("head")
+    if hd is None:                      # testa rigida (D028 v0)
+        m.rigid(nc2, tip)
+    else:                               # testa reale: receiver + corpo spindle a sbalzo dal collare + cuscinetti + mandrino
+        nclamp = m.node(X, 0.0, zcpl - hd["clamp"])
+        m.rigid(nc2, nclamp)
+        nnose = m.node(X, 0.0, zcpl - hd["nose"])
+        do, di = hd["body_d"], hd["body_d"] - 2 * hd["body_t"]
+        body = dict(A=math.pi / 4 * (do ** 2 - di ** 2), Iy=math.pi / 64 * (do ** 4 - di ** 4), Iz=math.pi / 64 * (do ** 4 - di ** 4),
+                    J=math.pi / 32 * (do ** 4 - di ** 4), Asy=math.pi / 8 * (do ** 2 - di ** 2), Asz=math.pi / 8 * (do ** 2 - di ** 2))
+        m.beam(nclamp, nnose, body, ST, "testa (spindle + utensile)", up=(1, 0, 0))
+        nshaft = m.node(X, 0.0, zcpl - hd["nose"])
+        kb = hd["k_bearing"]
+        m.spring(nnose, nshaft, [kb, kb, 3 * kb, kb * 30.0 ** 2, kb * 30.0 ** 2, 1e12], "testa (spindle + utensile)")
+        dm = hd["mandrel_d"]
+        mand = dict(A=math.pi * dm ** 2 / 4, Iy=math.pi * dm ** 4 / 64, Iz=math.pi * dm ** 4 / 64, J=math.pi * dm ** 4 / 32,
+                    Asy=0.9 * math.pi * dm ** 2 / 4, Asz=0.9 * math.pi * dm ** 2 / 4)
+        m.beam(nshaft, tip, mand, ST, "testa (spindle + utensile)", up=(1, 0, 0))
 
     # ---------- tavola (griglia di travi) e pattini Y, vite Y
     xs = sorted({0.0, rails_x[0], xtc, rails_x[1], T["W"], X})
@@ -361,7 +385,8 @@ def build(X, Y, Zd, shear_panel=False, sec=None):
 
 
 COUPLING_SCALE = 1.0
-SUBSYSTEMS = ["telaio", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z", "ToolDock", "tavola", "guide Y + vite Y"]
+SUBSYSTEMS = ["telaio", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z", "master ToolDock",
+              "accoppiamento ToolDock", "testa (spindle + utensile)", "tavola", "guide Y + vite Y"]
 
 
 def mass_by_tag(m):
@@ -508,7 +533,7 @@ def write_page(r):
     <tr><td>Centro corsa · N/µm</td>{"".join(f'<td class="status-critical">{it(c[ax]["N_per_um"])}</td>' for ax in "XYZ")}</tr>
     <tr><td>Caso peggiore (8 vertici) · µm/N</td>{"".join(f'<td>{it(w[ax][1], 3)}<br><small style="color:var(--dim)">{w[ax][0]}</small></td>' for ax in "XYZ")}</tr>
   </table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Bracci reali dal mule: a = {it(r["geometry"]["a"], 0)} mm, b = {it(r["geometry"]["b"], 0)} mm, leva Z {it(r["geometry"]["z_lever"], 0)} mm. Testa, mandrino e utensile sono rigidi nel modello: la macchina vera sarà più cedevole.</p></div>
-  <div class="panel"><span class="kicker">Dove sta la cedevolezza · centro corsa</span><h2>Le piastre piatte.</h2><div class="table-wrap"><table><tr><th>Sottosistema</th><th>X</th><th>Y</th><th>Z</th></tr>{sub_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">La master ToolDock (piastra da {it(P.MASTER["T"], 0)} mm a sbalzo), la slitta Z ({it(P.PLATE["slide_t"], 0)} mm) e il carrello X ({it(P.PLATE["carriage_t"], 0)} mm) lavorano nel loro spessore. Telaio, spalle, trave e guide X pesano pochi punti: non sono il problema oggi.</p></div>
+  <div class="panel"><span class="kicker">Dove sta la cedevolezza · centro corsa</span><h2>Le piastre piatte.</h2><div class="table-wrap"><table><tr><th>Sottosistema</th><th>X</th><th>Y</th><th>Z</th></tr>{sub_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Master strutturale e accoppiamento cinematico sono separati: da solo, un accoppiamento ×4 porta X da 0,43 a 0,49 N/µm, mentre la master scatolata da sola lo porta a 0,85. La master ToolDock (piastra da {it(P.MASTER["T"], 0)} mm a sbalzo), la slitta Z ({it(P.PLATE["slide_t"], 0)} mm) e il carrello X ({it(P.PLATE["carriage_t"], 0)} mm) lavorano nel loro spessore. Telaio, spalle, trave e guide X pesano pochi punti: non sono il problema oggi.</p></div>
 </section>
 
 <section class="section"><h2>Cosa conviene fare · rigidezza per kg</h2><div class="table-wrap"><table>
@@ -524,7 +549,7 @@ def write_page(r):
     <div class="spec-row"><b>Non toccare</b><p>La trave (6 kg): pesa pochi punti sull'anello. Non va alleggerita né appesantita prima della FEA a solidi.</p></div>
     <div class="spec-row"><b>Tavola</b><p>È il primo contributo in Z. Più spessore costa molto in massa: meglio nervature sotto la pelle o appoggi pattini più vicini al pezzo.</p></div>
   </div></div>
-  <div class="panel" style="border-color:rgba(255,84,112,.35)"><span class="kicker">Da decidere</span><h2>I 10 N/µm non ci stanno.</h2><p>Anche con tutte le sezioni scatolate, tavola equivalente 14 mm e accoppiamento 4 volte più rigido l'anello arriva a ~{it(best["N_per_um"]["X"], 1)} / {it(best["N_per_um"]["Y"], 1)} / {it(best["N_per_um"]["Z"], 1)} N/µm in X / Y / Z: dopo le piastre il limite diventa l'accoppiamento ToolDock (sfere su Ø80, precarico 1,6 kN, testa lunga 220 mm), poi telaio, trave e guide Z in parti simili. Con questa architettura in alluminio da ~42 kg il target D014 di ≥ 10 N/µm non è raggiungibile. Le strade: rivedere il target della Standard (≈ 2–3 N/µm, coerente con una CNC desktop) oppure cambiare architettura (testa più corta, accoppiamento più grande, strutture in acciaio o ghisa, più massa).</p></div>
+  <div class="panel" style="border-color:rgba(255,84,112,.35)"><span class="kicker">Stato rispetto a D014</span><h2>Target non ancora raggiunto.</h2><p>D028 v0 non raggiunge il target D014 di ≥ 10 N/µm, che resta TARGET. Anche con tutte le sezioni scatolate, tavola equivalente 14 mm e accoppiamento 4 volte più rigido il modello dà ~{it(best["N_per_um"]["X"], 1)} / {it(best["N_per_um"]["Y"], 1)} / {it(best["N_per_um"]["Z"], 1)} N/µm in X / Y / Z. Prima di rivedere D014 servono la geometria reale della testa, la cedevolezza locale ottimizzata (carrello X, Z, master e testa: i primi 100–200 mm della catena) e la validazione del modello al banco: è lo studio <a href="tooldock-d029.html" style="color:var(--accent-2)">D029</a>. Per riferimento, con il carico radiale Standard di 150 N: 2 N/µm → 75 µm, 3 N/µm → 50 µm, 10 N/µm → 15 µm di deformazione elastica.</p></div>
 </section>
 
 <section class="section split">
