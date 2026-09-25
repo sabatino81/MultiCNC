@@ -129,6 +129,13 @@ def transfer_path():
     return pts + [legs[-1][1]]
 
 
+def master_shape(X, cz, wall=None):
+    """Master ToolDock scatolata (D029, D030) sotto la slitta Z, dal piano del coupling cz alla faccia inferiore della slitta."""
+    M, mw = P.MASTER, (wall if wall is not None else P.MASTER["wall"])
+    return box(X - M["W"] / 2, X + M["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], cz, cz + M["T"]).cut(
+        box(X - M["W"] / 2 + mw, X + M["W"] / 2 - mw, -P.HEAD["D"] / 2 + mw, D["slide_back"] - mw, cz + mw, cz + M["T"] - mw))
+
+
 def add_head(a, X, cz, S):
     """Testa reale di riferimento SycoTec 5045 AC-ER11 (D030) appesa sotto il coupling cz: receiver, mount a tazza
     con camicia, spindle e service envelope del connettore / cavo (D031, variante S["connector_mode"])."""
@@ -359,10 +366,7 @@ def build(X, Y, Zd, cfg=None):
           "ZSLIDE", AL, "MC-BRK-001", "gray")
     a.add("z_nut", screw_nut(za["screw"]).rotate(ORIGIN, (0, 1, 0), -90).translate((X, y_z_axis, tab0 + P.TAB_T)), "ZSLIDE", STEEL, "MC-BS-1204Z", "silver")
     coupling_z = sb - P.MASTER["T"]
-    mw = P.MASTER["wall"]
-    master = box(X - P.MASTER["W"] / 2, X + P.MASTER["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], coupling_z, sb).cut(
-        box(X - P.MASTER["W"] / 2 + mw, X + P.MASTER["W"] / 2 - mw, -P.HEAD["D"] / 2 + mw, D["slide_back"] - mw, coupling_z + mw, sb - mw))
-    a.add("tooldock_master", master, "ZSLIDE", AL, "MC-TD-001", "tomato")
+    a.add("tooldock_master", master_shape(X, coupling_z), "ZSLIDE", AL, "MC-TD-001", "tomato")
     add_head(a, X, coupling_z, P.SPINDLE)
     a.add("head_volume", box(X - P.HEAD["W"] / 2, X + P.HEAD["W"] / 2, -P.HEAD["D"] / 2, P.HEAD["D"] / 2, coupling_z - P.HEAD["L"], coupling_z),
           "ZSLIDE", "volume", None, "tomato")

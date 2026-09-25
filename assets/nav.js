@@ -46,6 +46,7 @@
       ['CAD Standard · mule','base/cad-standard.html'],
       ['Rigidezza · D028','base/compliance-d028.html'],
       ['ToolDock e testa · D029','base/tooldock-d029.html'],
+      ['FEA a solidi · D031','base/fea-d031.html'],
       ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
       ['ToolDock meccanico · D016','base/tooldock-d016.html'],
