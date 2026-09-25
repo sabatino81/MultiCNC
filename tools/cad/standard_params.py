@@ -108,6 +108,7 @@ PALLET_T = 15.0            # pallet tipico sopra la tavola (MULE): pezzo max sot
 # D030: carrello X a canale con ali verso la trave (fra la piastra e le guide X), slitta Z a canale con ali in avanti
 CARRIAGE_FLANGE = dict(t=10.0, depth=35.0)   # ali posteriori a |x| 85–95, dietro la piastra
 SLIDE_FLANGE = dict(t=10.0, depth=35.0)      # ali anteriori a |x| 65–75, sopra il piano del coupling
+SADDLE = dict(t=10.0, h=50.0)             # D031 mule v3: guance della master incollate alle facce interne delle ali della slitta (sella a U)
 PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, below_x_blocks=18.0,
              slot_w=70.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
 LADDER = dict(H=60.0, wall=4.0,                                  # tubi rettangolari Al
@@ -120,7 +121,7 @@ BEAM_X = (-155.0, 605.0)  # estensione trave = larghezza fra le facce esterne de
 NUT_BRACKET_T = 10.0
 X_SCREW_PAD = 7.0          # spessori sotto BK/BF X nel canale della trave (MULE)
 SUPPORT_GAP_Z = 8.0        # D028: gioco BK/BF Z ↔ slitta e piastrina (≥ 8 mm)
-TAB_T = 10.0               # piastrina chiocciola Z sulla slitta
+TAB_T = 16.0               # piastrina chiocciola Z sulla slitta: 10 mm nel v2, 16 nel v3 (D031, FEA: Z 6,1 → 7,2 N/µm con la sella; la chiocciola sale, margine dal BK 14 → 8 mm)
 CLEAR_FAIL = 5.0           # D027/D028: sotto questo gioco tra parti in moto relativo → FAIL
 CLEAR_PASS = 8.0           # 5–8 mm → WARNING; ≥ 8 mm → PASS (obiettivo nominale 8–10 mm)
 CLEAR_WARN = CLEAR_PASS    # soglia di controllo dei giochi

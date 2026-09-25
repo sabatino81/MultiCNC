@@ -35,6 +35,12 @@ def write(r):
     d_rows = "".join(f'<tr><td>{ax}</td><td>{it(d28[ax]["k_local"], 2)}</td><td>{it(ks[i], 2)}</td><td>{it(kb[i], 2)}</td>'
                      f'<td>{" · ".join(f"{t} {it(s, 0)}%" for t, s in d28[ax]["share"].items())}</td></tr>' for i, ax in enumerate("XYZ"))
     mesh = base["mesh"] if base else best["mesh"]
+    v3 = r.get("v3", {})
+    sad = V.get("saddle")
+    v3_list = ([("Sella + piastrina 10 mm (fase 2a)", sad)] if sad else []) + [(v["desc"], v) for v in v3.values()]
+    v3_rows = "".join(f'<tr><td>{d}</td><td>{it(v["k"]["Fx"], 2)}</td><td>{it(v["k"]["Fy"], 2)}</td><td><b>{it(v["k"]["Fz"], 2)}</b></td><td>{it(v["mass"]["struct"], 2)} kg</td></tr>' for d, v in v3_list)
+    v3_gain = (it((v3["saddle_tab16"]["k"]["Fz"] / sad["k"]["Fz"] - 1) * 100, 0) + "%") if sad and "saddle_tab16" in v3 else "—"
+    v3_lim = it(v3["saddle_tabrigid"]["k"]["Fz"], 1) if "saddle_tabrigid" in v3 else "—"
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — FEA slitta Z · D031</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/fea/d031_z.py (tools/fea/d031_z_page.py): non modificare a mano. -->
 <a class="back" href="fea-d031.html">← FEA a solidi · pilota</a>
@@ -53,6 +59,11 @@ def write(r):
 <tr><th>Topologia</th><th>Master</th><th>Δ massa</th><th>X N/µm</th><th>Y N/µm</th><th>Z N/µm</th><th>Δ punta worst µm</th><th>kg / (N/µm)</th><th>Macchina X / Y / Z (stima)</th></tr>
 {"".join(rows)}</table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">Rigidezze al dado ER11 rispetto al carrello X (rigido), casi 150 N X, 150 N Y, 200 N Z; Δ punta worst = massimo |u| tra i casi di forza e i combinati 150 N radiali + 200 N assiali. Massa = master con flangia e guance (slitta e testa uguali per tutte). kg / (N/µm) = massa della master sulla rigidezza radiale minima; <b>Pareto</b> = nessun'altra topologia è insieme più leggera e più rigida. Macchina = modello a travi D028 con questo sottoassieme al posto del suo: resto della macchina invariato.</p></section>
+
+<section class="section"><h2>Mule v3 · piastrina chiocciola Z</h2><div class="table-wrap"><table>
+<tr><th>Variante (con la sella)</th><th>X N/µm</th><th>Y N/µm</th><th>Z N/µm</th><th>Struttura</th></tr>
+{v3_rows}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">La piastrina che porta la chiocciola Z sporge ~52 mm dietro la slitta. Da 10 a 16 mm (solo verso l'alto: verso il basso il gioco dal BF è già 8 mm) Z sale del {v3_gain}; con la piastrina infinitamente rigida il limite è {v3_lim} N/µm. Il resto della cedevolezza in Z viene dal braccio di ~95 mm tra asse utensile e vite (la slitta beccheggia sui pattini) e dalla catena assiale della vite. Il mule v3 adotta sella + piastrina 16 mm.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Modello</span><h2>Cosa cambia rispetto al pilota.</h2><p><b>Slitta Z</b> del mule: piastra 150 × 12 × 160 con ali anteriori 10 × 35 e piastrina chiocciola 52 × 64 × 10, incollate alla master (bullonatura = incollaggio). <b>Pattini</b>: per ciascuno una molla a 6 gdl D028 (365 N/µm radiale e laterale, libera lungo la rotaia) tra la sua impronta sulla faccia posteriore della slitta e il carrello. <b>Vite Z</b>: catena assiale D028 (albero, chiocciola, BK, tenuta del motore) sulla faccia superiore della piastrina, sotto la chiocciola. Testa, accoppiamento a tre sfere, cuscinetti, punto di misura e carichi come nel pilota.</p><p><b>Topologie</b>: striscia = master appoggiata solo sul bordo inferiore da 12 mm della piastra (mule v2); flangia = parete posteriore della master che risale di {it(r["flange_h"], 0)} mm sulla faccia anteriore della slitta tra le ali; sella = guance laterali alte {it(r["cheek_h"], 0)} mm incollate alle facce interne delle due ali; flangia + sella = entrambe. Ingombri da verificare nel CAD (trasferitore, catene) prima di congelarne una.</p></div>

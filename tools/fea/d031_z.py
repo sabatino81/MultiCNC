@@ -65,7 +65,7 @@ def slide_parts():
 
 
 def master_variant(kind):
-    m = A.master_shape(0.0, 0.0).val()
+    m = A.master_shape(0.0, 0.0, saddle=False).val()          # topologie costruite da qui (mule v2)
     top, yf = P.MASTER["T"], D["slide_front"]
     if kind in ("FLANGE", "BOTH"):             # flangia sulla faccia anteriore della slitta, tra le ali (|x| < 65)
         m = m.fuse(box(-60.0, 60.0, yf - FLANGE_T, yf, top - 10.0, top + FLANGE_H))
@@ -78,10 +78,16 @@ def master_variant(kind):
     return m
 
 
-def build(tag, kind, h=H):
+def build(tag, kind, h=H, tab_t=None, tab_rigid=False):
     g = F.geometry(clamp_block=CLAMP)
     z = g["z"]
     slide, tab, blocks, nut = slide_parts()
+    tab_z0 = P.MASTER["T"] + P.PLATE["slide_len"]
+    if tab_t:                                  # piastrina chiocciola più spessa verso l'alto (la chiocciola sale)
+        tb = tab.BoundingBox()
+        tab = box(tb.xmin, tb.xmax, tb.ymin, tb.ymax, tab_z0, tab_z0 + tab_t).cut(
+            cq.Workplane("XY").circle(6.5).extrude(tab_t + 2).translate((nut[0], nut[1], tab_z0 - 1)).val())
+        nut = (nut[0], nut[1], tab_z0 + tab_t, nut[3])
     master = master_variant(kind)
     m = ccx.Model(tag, WORK / tag)
     m.body("struct", [master, slide, tab], "AL")
@@ -108,6 +114,15 @@ def build(tag, kind, h=H):
     m.elements["head"] = (ids[~tube], conn[~tube])
     q = m.quality["head"]
     m.quality["spindle_body"], m.quality["head"] = q[tube], q[~tube]
+    if tab_rigid:                              # diagnostica: piastrina chiocciola rigida (elementi sopra la slitta)
+        sid, sconn = m.elements["struct"]
+        c = m.xyz(sconn[:, :4].ravel()).reshape(-1, 4, 3).mean(axis=1)
+        sel = c[:, 2] > tab_z0
+        m.elements["tab_rigid"] = (sid[sel], sconn[sel])
+        m.elements["struct"] = (sid[~sel], sconn[~sel])
+        qq = m.quality["struct"]
+        m.quality["tab_rigid"], m.quality["struct"] = qq[sel], qq[~sel]
+        m.bodies.append(("tab_rigid", [], "RIGID"))
     m.bodies.append(("spindle_body", [], "STEEL"))
     m.body_nodes["spindle_body"] = np.unique(conn[tube])
     eps = 1e-3
@@ -123,7 +138,7 @@ def build(tag, kind, h=H):
         patches.append(pn)
     # vite Z: catena assiale D028 sulla faccia superiore della piastrina, sotto la chiocciola
     za = P.Z_AXIS
-    tab_top = P.MASTER["T"] + P.PLATE["slide_len"] + P.TAB_T
+    tab_top = tab_z0 + (tab_t or P.TAB_T)
     z_bk_top = (P.MASTER["T"] + P.PLATE["slide_len"]) - P.SUPPORT_GAP_Z - C.parts.ENDS[za["screw"]][1] + za["screw_len"] - 20
     kz = C.screw_axial(za["screw"], za["bk"], z_bk_top - (P.MASTER["T"] + P.PLATE["slide_len"]))
     nx, ny, nz0, nr = nut
@@ -162,15 +177,17 @@ def build(tag, kind, h=H):
     return m, info, [tip[0], tip[1], rel[0]], pts, dict(struct=ms, head_al=mm, master=master.Volume() * ccx.MATERIALS["AL"]["rho"])
 
 
-def solve(tag, kind):
+def solve(tag, kind, tab_t=None, tab_rigid=False):
     cache = WORK / tag / "result.json"
     key = dict(v="zslide-v1", kind=kind, h=H, clamp=CLAMP, fh=FLANGE_H, ch=CHEEK_H)
+    if tab_t or tab_rigid:
+        key.update(tab_t=tab_t, tab_rigid=tab_rigid)
     if cache.exists():
         old = json.loads(cache.read_text())
         if old.get("key") == key:
             return old["result"]
     t0 = time.time()
-    m, info, monitor, pts, mass = build(tag, kind)
+    m, info, monitor, pts, mass = build(tag, kind, tab_t=tab_t, tab_rigid=tab_rigid)
     disp, _ = m.run(monitor)
     U = {n: np.array(disp[n][pts["tip"]]) * 1000.0 for n, _, _ in CASES}
     U["FxFz"], U["FyFz"] = U["Fx"] + U["Fz"], U["Fy"] + U["Fz"]
@@ -209,6 +226,15 @@ def main():
         res["variants"][tag] = r
         print(f"{tag:7} k {r['k']} massa {r['mass']} {r['solve_s']} s", flush=True)
         (OUT / "zslide.json").write_text(json.dumps(res, indent=2, ensure_ascii=False))
+    # mule v3 (D031): sella + piastrina chiocciola da 16 mm, e limite con la piastrina rigida
+    res["v3"] = {}
+    for tag, desc, kw in (("saddle_tab16", "Sella + piastrina 16 mm (mule v3)", dict(tab_t=16.0)),
+                          ("saddle_tabrigid", "Sella + piastrina rigida (limite)", dict(tab_rigid=True))):
+        r = solve(f"z_{tag}", "SADDLE", **kw)
+        r["desc"] = desc
+        res["v3"][tag] = r
+        print(f"{tag:16} k {r['k']} massa {r['mass']}", flush=True)
+    (OUT / "zslide.json").write_text(json.dumps(res, indent=2, ensure_ascii=False))
     import d031_z_page
     d031_z_page.write(res)
 

@@ -119,7 +119,7 @@
             366.5
           ],
           "Z": [
-            14.0,
+            8.0,
             148.0
           ]
         }
@@ -198,7 +198,7 @@
             191.5
           ],
           "Z": [
-            84.0,
+            78.0,
             78.0
           ]
         }
@@ -277,7 +277,7 @@
             16.5
           ],
           "Z": [
-            154.0,
+            148.0,
             8.0
           ]
         }
@@ -356,7 +356,7 @@
             366.5
           ],
           "Z": [
-            14.0,
+            8.0,
             148.0
           ]
         }
@@ -421,8 +421,8 @@
       {
         "bom": "MC-BRK-001",
         "part": "Staffe chiocciole, motori e supporti",
-        "bom_kg": 0.46,
-        "mule_kg": 0.46
+        "bom_kg": 0.51,
+        "mule_kg": 0.51
       },
       {
         "bom": "MC-TBL-001",
@@ -445,8 +445,8 @@
       {
         "bom": "MC-TD-001",
         "part": "Master kinematic plate",
-        "bom_kg": 0.95,
-        "mule_kg": 0.95
+        "bom_kg": 1.05,
+        "mule_kg": 1.05
       },
       {
         "bom": "MC-TD-002",
@@ -462,8 +462,8 @@
       }
     ],
     "not_in_bom": [],
-    "machine_bom_kg": 44.8,
-    "machine_mule_kg": 44.8
+    "machine_bom_kg": 44.9,
+    "machine_mule_kg": 44.9
   },
   "head": {
     "mass": 2.7,
@@ -583,6 +583,16 @@
         "level": "PASS"
       },
       {
+        "pair": "z_bk ↔ z_nut",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
         "pair": "z_bf ↔ z_block_01",
         "clearance_mm": 8.0,
         "axes": [
@@ -677,16 +687,6 @@
         "clearance_mm": 10.0,
         "axes": [
           0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "x_pads ↔ x_nut_bracket",
-        "clearance_mm": 11.01,
-        "axes": [
-          450.0,
           0.0,
           -0.0
         ],
@@ -895,8 +895,8 @@
       "z_lever": 265.0
     },
     "mass": {
-      "mule": 44.8,
-      "bom": 44.8,
+      "mule": 44.9,
+      "bom": 44.9,
       "gate": 42.0,
       "target": 40.0,
       "pass_gate": false,

@@ -19,6 +19,7 @@ import numpy as np
 MATERIALS = {  # proprietà elastiche effettive; lega e stato non ancora scelti (D031)
     "AL": dict(E=70000.0, nu=0.33, rho=2.70e-6),
     "STEEL": dict(E=210000.0, nu=0.30, rho=7.85e-6),
+    "RIGID": dict(E=7.0e7, nu=0.30, rho=2.70e-6),      # solo diagnostica: parte "infinitamente" rigida
 }
 POOR_SJ = 0.2                                        # tetra quadratici sotto questa qualità: tensioni nodali inaffidabili
 GMSH_TO_CCX_TET10 = [0, 1, 2, 3, 4, 5, 6, 7, 9, 8]   # Gmsh e Abaqus/CalculiX differiscono sugli ultimi due nodi di spigolo

@@ -3,7 +3,8 @@
 
 Uso (dalla radice): python tools/fea/export_results.py
 Legge i .frd di CalculiX in build/fea/<tag>/ (prodotti da d031.py e d031_z.py), estrae la superficie esterna della
-mesh, applica la deformata amplificata e colora i vertici con lo spostamento |u| (µm) o la tensione di Von Mises
+mesh (tetra quadratici: per le tensioni facce a 6 nodi divise in 4 triangoli con i nodi di metà spigolo, per gli
+spostamenti solo i vertici come anteprima leggera), applica la deformata amplificata e colora i vertici con lo spostamento |u| (µm) o la tensione di Von Mises
 (MPa). Scrive fea/d031/glb/<tag>_<caso>_<campo>.glb e fea/d031/glb/index.json (elenco, scale, intervalli).
 Richiede numpy e trimesh.
 """
@@ -29,6 +30,7 @@ RUNS = [  # (tag, nomi degli step nell'ordine del .frd, titolo, [(caso, campo)])
     ("z_flange", ["Fx", "Fy", "Fz", "REL"], "Slitta Z · flangia posteriore 50 mm", [("Fy", "u")]),
     ("z_saddle", ["Fx", "Fy", "Fz", "REL"], "Slitta Z · sella a U sulle ali", [("Fy", "u"), ("Fz", "u")]),
     ("z_both", ["Fx", "Fy", "Fz", "REL"], "Slitta Z · flangia + sella", [("Fy", "u"), ("Fz", "u"), ("Fy", "vm")]),
+    ("z_saddle_tab16", ["Fx", "Fy", "Fz", "REL"], "Mule v3 · sella + piastrina chiocciola 16 mm", [("Fy", "u"), ("Fz", "u"), ("Fy", "vm"), ("REL", "vm")]),
 ]
 CASE = {"Fx": "150 N radiale X", "Fy": "150 N radiale Y", "Fz": "200 N assiale Z", "Mx": "18 N·m attorno a X",
         "My": "18 N·m attorno a Y", "REL": "0,7 kN di sgancio"}
@@ -67,7 +69,7 @@ def read_frd(path, steps):
                     pending = int(line.split()[2])            # tipo elemento (6 = tetra a 10 nodi)
                 elif line.startswith(" -2") and pending == 6:
                     ids = [int(v) for v in line.split()[1:]]
-                    elems.append(ids[:4])
+                    elems.append(ids[:10])                   # C3D10: 4 vertici + 6 nodi di metà spigolo
                     pending = None
             elif mode in ("d", "s") and line.startswith(" -1"):
                 n = int(line[3:13])
@@ -76,13 +78,28 @@ def read_frd(path, steps):
     return nodes, np.array(elems), disp, stress
 
 
-def surface(tets):
-    """Facce esterne (triangoli d'angolo) di una mesh di tetraedri: le facce che compaiono una volta sola."""
-    faces = np.vstack([tets[:, [0, 2, 1]], tets[:, [0, 1, 3]], tets[:, [1, 2, 3]], tets[:, [0, 3, 2]]])
+# facce del tetra quadratico (ordine CalculiX: 4 vertici, poi 0-1, 1-2, 2-0, 0-3, 1-3, 2-3), normale uscente:
+# (a, b, c, ab, bc, ca)
+TET10_FACES = [[0, 2, 1, 6, 5, 4], [0, 1, 3, 4, 8, 7], [1, 2, 3, 5, 9, 8], [0, 3, 2, 7, 9, 6]]
+
+
+def surface_linear(tets):
+    """Solo i triangoli d'angolo delle facce esterne: anteprima leggera per le mappe di spostamento."""
+    faces = np.vstack([tets[:, f[:3]] for f in TET10_FACES])
     key = np.sort(faces, axis=1)
     cnt = Counter(map(tuple, key))
-    keep = np.array([cnt[tuple(k)] == 1 for k in key])
-    return faces[keep]
+    return faces[np.array([cnt[tuple(k)] == 1 for k in key])]
+
+
+def surface(tets):
+    """Facce esterne della mesh C3D10 (quelle che compaiono una volta sola), ciascuna a 6 nodi divisa in 4 triangoli
+    con i nodi di metà spigolo: la superficie mostrata usa tutti i nodi del tetra quadratico, non solo i vertici."""
+    faces = np.vstack([tets[:, f] for f in TET10_FACES])
+    key = np.sort(faces[:, :3], axis=1)
+    cnt = Counter(map(tuple, key))
+    f6 = faces[np.array([cnt[tuple(k)] == 1 for k in key])]
+    a, b, c, ab, bc, ca = f6.T
+    return np.vstack([np.c_[a, ab, ca], np.c_[ab, b, bc], np.c_[ca, bc, c], np.c_[ab, bc, ca]])
 
 
 def colors(v, lo, hi):
@@ -108,12 +125,13 @@ def main():
             print("manca", frd)
             continue
         nodes, tets, disp, stress = read_frd(frd, steps)
-        tri = surface(tets)
-        used = np.unique(tri)
-        remap = {n: i for i, n in enumerate(used)}
-        faces = np.vectorize(remap.get)(tri)
-        X = np.array([nodes[n] for n in used])
+        surf = {"vm": surface(tets), "u": surface_linear(tets)}     # tensioni: facce quadratiche complete
         for case, field in wanted:
+            tri = surf[field]
+            used = np.unique(tri)
+            remap = {n: i for i, n in enumerate(used)}
+            faces = np.vectorize(remap.get)(tri)
+            X = np.array([nodes[n] for n in used])
             U = np.array([disp[case].get(n, (0, 0, 0)) for n in used])
             val = np.linalg.norm(U, axis=1) * 1000.0 if field == "u" else vm([stress[case].get(n, (0,) * 6) for n in used])
             lo, hi = 0.0, float(np.percentile(val, 99.5) if field == "vm" else val.max())
@@ -122,6 +140,8 @@ def main():
             mesh.export(OUT / name)
             index.append(dict(file=name, title=title, case=CASE[case], field=FIELD[field][0], unit=FIELD[field][1],
                               lo=round(lo, 2), hi=round(hi, 2), max=round(float(val.max()), 2), scale=SCALE,
+                              saturated="99,5° percentile" if field == "vm" else None,
+                              surface="quadratica (6 nodi per faccia)" if field == "vm" else "lineare (vertici)",
                               ramp=[[round(float(c), 3) for c in r] for r in RAMP]))
             print(name, f"{(OUT / name).stat().st_size / 1e6:.1f} MB", round(hi, 2), FIELD[field][1])
     (OUT / "index.json").write_text(json.dumps(index, indent=1, ensure_ascii=False), encoding="utf-8")

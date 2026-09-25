@@ -16,7 +16,7 @@ G=[
 ("MC-Z-001","Structure","Slitta Z","1",1,"Custom Al 12 mm, 150 × 160 a canale con ali anteriori 10 × 35","Porta i 4 pattini HGH15CA Z e la master ToolDock (D027); ali sopra il piano del coupling (D030); massa dal mule v2",70,1.08,"M","design","TO DESIGN"),
 ("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018); massa confermata dal mule v1",100,2.97,"M","design","TO DESIGN"),
 ("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 15 mm, 170 × 530 + torre, a canale con ali anteriori 10 × 45","Porta pattini X, guide Z, vite, supporti e motore Z (D027); ali fuori dalla slitta e dal corridoio di docking (D030); massa dal mule v2",110,4.06,"M","design","TO DESIGN"),
-("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z, piastre motore X e Z, spessori BK/BF X (mule v1)",45,0.46,"M","design","TO DESIGN"),
+("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z 16 mm (D031, mule v3), piastre motore X e Z, spessori BK/BF X",45,0.51,"M","design","TO DESIGN"),
 ("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
 ("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v4, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
@@ -45,7 +45,7 @@ G=[
 ("MC-SP-005","Tooling","ER collet starter set","1",1,"Precision collets class","Starter tooling only",25,0.2,"M","source","TO SOURCE"),
 ]),
 ("D · ToolDock (identico sulle tre basi)",[
-("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface, scatolata 120 × 40 sp. 8","Sotto la slitta Z, scatolata (D029, D030); massa dal mule v2",150,0.95,"M","critical","CRITICAL DESIGN"),
+("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface, scatolata 120 × 40 sp. 8 con sella a U","Sotto la slitta Z, scatolata (D029, D030); sella a U incollata/bullonata alle ali della slitta (D031, mule v3); massa dal mule v3",150,1.05,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Custom receiver plate","Receiver della testa spindle Standard, 96 × 96 × 15; massa dal mule v2",80,0.37,"M","design","TO DESIGN"),
 ("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v4)","Pacco molle ≥ 1,6 kN (classe S), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Power + signal + ID","Quick-connect; pneumatica/fluidi predisposti",120,0.3,"M","critical","CRITICAL DESIGN"),

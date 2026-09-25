@@ -79,7 +79,7 @@ def geometry(master_wall=None, clamp_block=None):
     z_tip = z_b - Sx["nose"]
     r_bore = Sx["d"] / 2 + 0.1
     g = dict(
-        master=A.master_shape(0.0, 0.0, master_wall).val(),
+        master=A.master_shape(0.0, 0.0, master_wall, saddle=False).val(),   # pilota: mule v2
         receiver=h.parts["head_receiver"]["shape"], mount=h.parts["head_mount"]["shape"],
         body=cyl(z_b, z_rear, r_bore, r_bore - 5.1),                   # corpo spindle equivalente, sp. 5 (D028)
         shaft=cyl(z_tip, z_b, 8.0),                                     # albero Ø16 fino al dado (D028)

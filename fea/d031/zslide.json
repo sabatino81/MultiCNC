@@ -276,5 +276,123 @@
       "seat_um": 109.16,
       "desc": "Flangia + sella"
     }
+  },
+  "v3": {
+    "saddle_tab16": {
+      "tag": "z_saddle_tab16",
+      "kind": "SADDLE",
+      "mesh": {
+        "nodes": 165778,
+        "elements": 98054,
+        "dof": 497334,
+        "min_sj": 0.641,
+        "poor": 0
+      },
+      "solve_s": 219.9,
+      "total_s": 269.1,
+      "mass": {
+        "struct": 2.27,
+        "head_al": 0.927,
+        "master": 1.052
+      },
+      "k": {
+        "Fx": 1.077,
+        "Fy": 0.904,
+        "Fz": 7.171
+      },
+      "tip_um": {
+        "Fx": [
+          139.22,
+          -2.73,
+          0.38
+        ],
+        "Fy": [
+          -2.73,
+          165.93,
+          -8.94
+        ],
+        "Fz": [
+          0.5,
+          -11.91,
+          27.89
+        ],
+        "REL": [
+          0.17,
+          -40.88,
+          86.28
+        ],
+        "FxFz": [
+          139.72,
+          -14.65,
+          28.27
+        ],
+        "FyFz": [
+          -2.23,
+          154.01,
+          18.95
+        ]
+      },
+      "worst_um": 166.2,
+      "seat_um": 92.93,
+      "desc": "Sella + piastrina 16 mm (mule v3)"
+    },
+    "saddle_tabrigid": {
+      "tag": "z_saddle_tabrigid",
+      "kind": "SADDLE",
+      "mesh": {
+        "nodes": 164724,
+        "elements": 97394,
+        "dof": 494172,
+        "min_sj": 0.702,
+        "poor": 0
+      },
+      "solve_s": 222.8,
+      "total_s": 272.1,
+      "mass": {
+        "struct": 2.132,
+        "head_al": 0.927,
+        "master": 1.052
+      },
+      "k": {
+        "Fx": 1.077,
+        "Fy": 0.904,
+        "Fz": 8.712
+      },
+      "tip_um": {
+        "Fx": [
+          139.22,
+          -2.7,
+          0.37
+        ],
+        "Fy": [
+          -2.7,
+          165.96,
+          -8.99
+        ],
+        "Fz": [
+          0.49,
+          -11.98,
+          22.96
+        ],
+        "REL": [
+          0.15,
+          -41.13,
+          69.01
+        ],
+        "FxFz": [
+          139.71,
+          -14.69,
+          23.33
+        ],
+        "FyFz": [
+          -2.21,
+          153.98,
+          13.97
+        ]
+      },
+      "worst_um": 166.2,
+      "seat_um": 75.66,
+      "desc": "Sella + piastrina rigida (limite)"
+    }
   }
 }

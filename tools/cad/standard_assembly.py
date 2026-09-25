@@ -129,11 +129,19 @@ def transfer_path():
     return pts + [legs[-1][1]]
 
 
-def master_shape(X, cz, wall=None):
-    """Master ToolDock scatolata (D029, D030) sotto la slitta Z, dal piano del coupling cz alla faccia inferiore della slitta."""
+def master_shape(X, cz, wall=None, saddle=True):
+    """Master ToolDock scatolata (D029, D030) sotto la slitta Z, dal piano del coupling cz alla faccia inferiore della slitta.
+    saddle: guance della sella a U (D031, mule v3) che salgono contro le facce interne delle ali della slitta."""
     M, mw = P.MASTER, (wall if wall is not None else P.MASTER["wall"])
-    return box(X - M["W"] / 2, X + M["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], cz, cz + M["T"]).cut(
+    m = box(X - M["W"] / 2, X + M["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], cz, cz + M["T"]).cut(
         box(X - M["W"] / 2 + mw, X + M["W"] / 2 - mw, -P.HEAD["D"] / 2 + mw, D["slide_back"] - mw, cz + mw, cz + M["T"] - mw))
+    if saddle and getattr(P, "SADDLE", None):
+        w_in = P.PLATE["slide_w"] / 2 - P.SLIDE_FLANGE["t"]
+        y0, top = D["slide_front"] - P.SLIDE_FLANGE["depth"], cz + M["T"]
+        for s in (-1, 1):
+            x0, x1 = sorted((X + s * (w_in - P.SADDLE["t"]), X + s * w_in))
+            m = m.union(box(x0, x1, y0, D["slide_front"], top - 10.0, top + P.SADDLE["h"]))
+    return m
 
 
 def add_head(a, X, cz, S):
@@ -662,6 +670,7 @@ D015_ASSUMED = dict(a=80.0, b=180.0)
 
 V0 = dict(b=455.7, height=1003.7, mass=50.5, collisions=1, zx=481.7)   # mule v0, commit 3e5d70a
 V1 = dict(b=220.0, height=850.0, mass=41.8, a=153.0, k=(0.43, 0.18, 0.80))  # mule v1.1, commit 151b3a0 (D028)
+V2 = dict(b=220.0, height=875.0, mass=44.8, a=136.0, k=(0.91, 0.79, 1.59), kz_fea=(1.00, 0.42, 4.25))  # mule v2, commit b893574 (D030); FEA fase 2a striscia
 
 
 def head_report(a, S=None, cz=None):
@@ -731,6 +740,10 @@ def design_checks(report):
     )
 
 
+def f2(x):
+    return f"{x:.2f}".replace(".", ",")
+
+
 def fmt(x):
     if isinstance(x, float):
         s = f"{x:,.1f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -764,6 +777,16 @@ def write_page(report):
     part_ok = '<td class="status-target">PARZIALE</td>'
     nocoll = not any(c["collisions"].values())
     nowarn = not any(c["warnings"].values())
+    zf = {}
+    zj = ROOT / "fea" / "d031" / "zslide.json"
+    if zj.exists():                         # FEA D031 fase 2a: sottoassieme testa + master + slitta Z (carrello rigido)
+        zr = json.loads(zj.read_text())
+        v3r = zr.get("v3", {}).get("saddle_tab16")
+        if v3r:
+            zf = dict(k=tuple(v3r["k"][n] for n in ("Fx", "Fy", "Fz")),
+                      mach=tuple(1.0 / (zr["d028"][ax]["rest"] + 1.0 / v3r["k"][n]) for ax, n in zip("XYZ", ("Fx", "Fy", "Fz"))),
+                      mach2=tuple(1.0 / (zr["d028"][ax]["rest"] + 1.0 / k) for ax, k in zip("XYZ", V2["kz_fea"])))
+    report["fea_v3"] = zf
     crit = [
         ("Un solo file di parametri <code>tools/cad/standard_params.py</code>", ok, ""),
         ("Assieme <code>tools/cad/standard_assembly.py</code>, configurazioni HOME / CENTER / MAX / DOCK", ok, ""),
@@ -775,6 +798,8 @@ def write_page(report):
         ("Tavola 450 × 350 × 10, R1/R2, griglia 9 × 7", ok, ""),
         ("A · Pattini Z sulla slitta, guide, vite, BK/BF e motore Z sul carrello", ok, ""),
         (f"D030 · Testa {hd['ref']} appesa, coupling → dado ≤ {fmt(P.HEAD['L'])} mm", ok if hd["L"] <= P.HEAD["L"] + 0.5 else ko, f'{fmt(hd["L"])} mm con service envelope {hd["connector_mode"]} ({fmt(hd["gap"])} mm): ipotesi, non quota del fornitore (D031)'),
+        ("D031 · Sella a U master ↔ ali della slitta Z e piastrina chiocciola Z irrigidita (mule v3)", ok if zf else part_ok,
+         (f'FEA fase 2a: sottoassieme {" / ".join(f2(v) for v in zf["k"])} N/µm (v2 striscia {" / ".join(f2(v) for v in V2["kz_fea"])}); controllo rapido delle tensioni alla radice della sella ≤ ~10 MPa, submodel con raccordi reali da fare' if zf else "FEA fase 2a non disponibile")),
         (f"D030 · Asse spindle a {fmt(P.HEAD_AXIS_FROM_SLIDE)} mm dalla slitta, inviluppo ICD v4 a ≥ {fmt(P.CLEAR_PASS)} mm", ok if not sw["fails"] else ko, "Congelato per la Standard v2 (D031); 40 mm resta solo uno scenario ICD v5"),
         (f"D030 · Testa ≤ 4 kg (classe S)", ok if hd["mass"] <= 4.0 else ko, f'{fmt(hd["mass"])} kg'),
         (f"D030 · Baricentro testa ≤ {fmt(P.HEAD_COG_MAX)} mm sotto il coupling (ICD v4)", ok if hd["cog_below_coupling"] <= P.HEAD_COG_MAX else ko,
@@ -796,13 +821,17 @@ def write_page(report):
     crit_rows = "".join(f"<tr><td>{t}</td>{r}<td>{n}</td></tr>" for t, r, n in crit)
     kv = " / ".join(fmt(kk[ax]["N_per_um"]) for ax in "XYZ")
     cmp_rows = "".join(f"<tr><td>{k}</td><td>{v0}</td><td>{v1}</td><td><b>{v2}</b></td></tr>" for k, v0, v1, v2 in [
-        ("Braccio b (punta ↔ guide X, Z giù)", f'{fmt(V0["b"])} mm', f'{fmt(V1["b"])} mm', f'{fmt(d15["b_real"])} mm'),
-        ("Braccio a (asse ↔ faccia trave)", "153 mm", f'{fmt(V1["a"])} mm', f'{fmt(d15["a_real"])} mm'),
-        ("Testa", "inviluppo rigido", "inviluppo rigido", f'SycoTec 5045 reale, {fmt(hd["mass"])} kg'),
-        ("Rigidezza X / Y / Z (N/µm, D028)", "—", " / ".join(fmt(v) for v in V1["k"]), kv),
-        ("Altezza macchina", f'{fmt(V0["height"])} mm', f'{fmt(V1["height"])} mm', f'{fmt(report["height_mm"])} mm'),
-        ("Massa macchina", f'{fmt(V0["mass"])} kg', f'{fmt(V1["mass"])} kg', f'{fmt(c["mass"]["mule"])} kg'),
-        ("Collisioni nello sweep", str(V0["collisions"]), "0", str(len(sw["collisions"]))),
+        ("Collegamento master ↔ slitta Z", "piastra", "striscia 12 mm", "sella a U sulle ali"),
+        ("Piastrina chiocciola Z", "10 mm", "10 mm", f'{fmt(P.TAB_T)} mm'),
+        ("Braccio b (punta ↔ guide X, Z giù)", f'{fmt(V1["b"])} mm', f'{fmt(V2["b"])} mm', f'{fmt(d15["b_real"])} mm'),
+        ("Braccio a (asse ↔ faccia trave)", f'{fmt(V1["a"])} mm', f'{fmt(V2["a"])} mm', f'{fmt(d15["a_real"])} mm'),
+        ("Testa", "inviluppo rigido", f'SycoTec 5045 reale', f'SycoTec 5045 reale, {fmt(hd["mass"])} kg'),
+        ("Rigidezza X / Y / Z, modello a travi D028 (N/µm)", " / ".join(f2(v) for v in V1["k"]), " / ".join(f2(v) for v in V2["k"]), " / ".join(f2(kk[ax]["N_per_um"]) for ax in "XYZ")),
+        ("Sottoassieme testa + master + slitta Z, FEA D031 (N/µm)", "—", " / ".join(f2(v) for v in V2["kz_fea"]), " / ".join(f2(v) for v in zf["k"]) if zf else "—"),
+        ("Macchina, D028 con il sottoassieme FEA (N/µm)", "—", " / ".join(f2(v) for v in zf["mach2"]) if zf else "—", " / ".join(f2(v) for v in zf["mach"]) if zf else "—"),
+        ("Altezza macchina", f'{fmt(V1["height"])} mm', f'{fmt(V2["height"])} mm', f'{fmt(report["height_mm"])} mm'),
+        ("Massa macchina", f'{fmt(V1["mass"])} kg', f'{fmt(V2["mass"])} kg', f'{fmt(c["mass"]["mule"])} kg'),
+        ("Collisioni nello sweep", "0", "0", str(len(sw["collisions"]))),
     ])
     cv = []
     for mode, v in report["connector_variants"].items():
@@ -822,7 +851,7 @@ def write_page(report):
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD Standard · mule</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/cad/standard_assembly.py: non modificare a mano. -->
 <a class="back" href="index.html">← Base Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v2 · digital mule · D030 / D031</div><h1>Digital mule<br>Standard v2.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Il v2 monta la testa corta di riferimento {hd["ref"]} appesa sotto il coupling (golden reference, non fornitore di produzione), con master scatolata, slitta Z e carrello X a canale e spalle scatolate, sulla stessa architettura del v1 (trave bassa, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra). ICD meccanica v4 invariata. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v2 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v3 · digital mule · D030 / D031</div><h1>Digital mule<br>Standard v3.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Il v3 aggiunge al v2, dalla FEA D031, la <b>sella a U</b> che collega la master alle ali della slitta Z e la <b>piastrina chiocciola Z da {fmt(P.TAB_T)} mm</b>. Monta la testa corta di riferimento {hd["ref"]} appesa sotto il coupling (golden reference, non fornitore di produzione), con master scatolata, slitta Z e carrello X a canale e spalle scatolate, sulla stessa architettura del v1 (trave bassa, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra). ICD meccanica v4 invariata. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v3 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
 
 <section class="metric-grid">
   <div class="metric"><strong>{kv}</strong><span>N/µm alla punta X / Y / Z · target D014 ≥ 10</span></div>
@@ -837,8 +866,8 @@ def write_page(report):
 </table></div></section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">v0 → v1 → v2</span><h2>Più rigida vicino alla punta.</h2><div class="table-wrap"><table><tr><th>Grandezza</th><th>v0</th><th>v1.1</th><th>v2</th></tr>{cmp_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Rigidezza del mule corrente dal modello D028 al centro corsa, punto di misura sul dado ER11:</p><div class="table-wrap"><table><tr><th>Asse</th><th>N/µm</th><th>Contributi principali</th></tr>{k_rows}</table></div></div>
-  <div class="panel"><span class="kicker">Masse dal mule</span><h2>{fmt(c["mass"]["mule"])} kg.</h2><div class="table-wrap"><table><tr><th>Riga BOM</th><th>Parte</th><th>kg</th></tr>{mass_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">La BOM Standard usa queste masse ({fmt(m["machine_bom_kg"])} kg); commerciali ed elettronica con le masse della BOM. Il v2 supera la soglia dura: carrello a canale, master scatolata, mount e receiver della testa reale pesano più delle piastre del v1. D031: 42 kg resta hard target e il v2 è accettato come prototipo strutturale sovrappeso. Le leve misurate (ali 20 mm, master e spalle con pareti sottili) arrivano a ~43,4 kg perdendo rigidezza e non si applicano; la trave con parete 5 mm toglie ~1 kg quasi senza perdita ed è una variante della FEA a solidi, non una modifica congelata.</p></div>
+  <div class="panel"><span class="kicker">v1.1 → v2 → v3</span><h2>Più rigida vicino alla punta.</h2><div class="table-wrap"><table><tr><th>Grandezza</th><th>v1.1</th><th>v2</th><th>v3</th></tr>{cmp_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Rigidezza del mule corrente dal modello D028 al centro corsa, punto di misura sul dado ER11:</p><div class="table-wrap"><table><tr><th>Asse</th><th>N/µm</th><th>Contributi principali</th></tr>{k_rows}</table></div></div>
+  <div class="panel"><span class="kicker">Masse dal mule</span><h2>{fmt(c["mass"]["mule"])} kg.</h2><div class="table-wrap"><table><tr><th>Riga BOM</th><th>Parte</th><th>kg</th></tr>{mass_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">La BOM Standard usa queste masse ({fmt(m["machine_bom_kg"])} kg); commerciali ed elettronica con le masse della BOM. Il v2 e il v3 superano la soglia dura: carrello a canale, master scatolata, mount e receiver della testa reale pesano più delle piastre del v1; sella e piastrina 16 mm del v3 aggiungono ~0,15 kg. D031: 42 kg resta hard target e il mule è accettato come prototipo strutturale sovrappeso. Le leve misurate (ali 20 mm, master e spalle con pareti sottili) arrivano a ~43,4 kg perdendo rigidezza e non si applicano; la trave con parete 5 mm toglie ~1 kg quasi senza perdita ed è una variante della FEA a solidi, non una modifica congelata.</p></div>
 </section>
 
 <section class="section"><h2>Connettore · service envelope D031</h2><p>Il connettore M23 non è una quota: il mule riserva uno spazio parametrico per spina e cavo tra receiver e retro dello spindle, in due varianti. Il mule (sweep e STEP) usa <b>{P.CONNECTOR_MODE}</b>; l'altra si confronta sulla sola testa con il coupling nella stessa posizione. Si sostituiscono entrambe con il disegno del connettore del fornitore.</p><div class="table-wrap"><table><tr><th>Variante</th><th>Spazio sopra il retro</th><th>Coupling → dado</th><th>Baricentro</th><th>Testa</th><th>X / Y / Z (N/µm)</th><th>Nota</th></tr>{cv_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Con la presa assiale la testa esce dall'inviluppo classe S: a parità di coupling la punta scende e la corsa Z utile si riduce della stessa quantità, oppure trave e coupling salgono. Il budget del 90° è tutto lo spazio che L {fmt(P.HEAD["L"])} lascia: un connettore a 90° reale più alto sfora.</p></section>

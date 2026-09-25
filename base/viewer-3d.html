@@ -83,7 +83,7 @@ function showLegend(e) {
   const f = v => v.toLocaleString('it-IT', { maximumFractionDigits: v < 10 ? 2 : 1 });
   legend.innerHTML = `<b>${e.fea.field}</b> · ${e.fea.case}<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div>` +
     `<div class="ends"><span>0 ${e.fea.unit}</span><span>${f(e.fea.hi)} ${e.fea.unit}${e.fea.max > e.fea.hi * 1.001 ? ' (picco ' + f(e.fea.max) + ')' : ''}</span></div>` +
-    `<div style="margin-top:4px;color:#aab4c2">deformata × ${e.fea.scale}</div>`;
+    `<div style="margin-top:4px;color:#aab4c2">deformata × ${e.fea.scale}${e.fea.saturated ? ' · scala colore saturata al ' + e.fea.saturated + ': il colore più scuro non è il massimo assoluto' : ''}${e.fea.surface ? ' · superficie ' + e.fea.surface : ''}</div>`;
   legend.style.display = 'block';
 }
 

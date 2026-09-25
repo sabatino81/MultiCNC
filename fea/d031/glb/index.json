@@ -9,6 +9,8 @@
   "hi": 131.5,
   "max": 131.5,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -47,6 +49,8 @@
   "hi": 223.65,
   "max": 223.65,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -85,6 +89,8 @@
   "hi": 37.44,
   "max": 37.44,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -120,9 +126,11 @@
   "field": "tensione di Von Mises",
   "unit": "MPa",
   "lo": 0.0,
-  "hi": 10.93,
-  "max": 35.53,
+  "hi": 10.91,
+  "max": 35.77,
   "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
   "ramp": [
    [
     0.99,
@@ -161,6 +169,8 @@
   "hi": 363.19,
   "max": 363.19,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -199,6 +209,8 @@
   "hi": 87.45,
   "max": 87.45,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -234,9 +246,11 @@
   "field": "tensione di Von Mises",
   "unit": "MPa",
   "lo": 0.0,
-  "hi": 15.09,
-  "max": 33.89,
+  "hi": 15.41,
+  "max": 39.68,
   "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
   "ramp": [
    [
     0.99,
@@ -275,6 +289,8 @@
   "hi": 223.09,
   "max": 223.09,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -313,6 +329,8 @@
   "hi": 166.8,
   "max": 166.8,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -351,6 +369,8 @@
   "hi": 35.09,
   "max": 35.09,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -389,6 +409,8 @@
   "hi": 164.26,
   "max": 164.26,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -427,6 +449,8 @@
   "hi": 34.7,
   "max": 34.7,
   "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
   "ramp": [
    [
     0.99,
@@ -462,9 +486,171 @@
   "field": "tensione di Von Mises",
   "unit": "MPa",
   "lo": 0.0,
-  "hi": 6.36,
-  "max": 12.72,
+  "hi": 6.32,
+  "max": 15.64,
   "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_tab16_Fy_u.glb",
+  "title": "Mule v3 · sella + piastrina chiocciola 16 mm",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 166.73,
+  "max": 166.73,
+  "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_tab16_Fz_u.glb",
+  "title": "Mule v3 · sella + piastrina chiocciola 16 mm",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 30.64,
+  "max": 30.64,
+  "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_tab16_Fy_vm.glb",
+  "title": "Mule v3 · sella + piastrina chiocciola 16 mm",
+  "case": "150 N radiale Y",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 6.34,
+  "max": 15.09,
+  "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_tab16_REL_vm.glb",
+  "title": "Mule v3 · sella + piastrina chiocciola 16 mm",
+  "case": "0,7 kN di sgancio",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 11.9,
+  "max": 26.99,
+  "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
   "ramp": [
    [
     0.99,
