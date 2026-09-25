@@ -1,0 +1,1656 @@
+{
+  "stage": "pilot",
+  "date": "2026-09-25",
+  "h_nom": 6.0,
+  "h_local": 2.5,
+  "fine": {
+    "tag": "pilot_fine",
+    "h": 4.199999999999999,
+    "mesh": {
+      "nodes": 315633,
+      "elements": 196744,
+      "dof": 946899
+    },
+    "mesh_s": 28.7,
+    "solve_s": 651.3,
+    "mass": {
+      "master": 0.948,
+      "head_al": 1.102
+    },
+    "cases": {
+      "Fx": {
+        "desc": "150 N radiale X",
+        "tip_um": [
+          131.72,
+          -2.21,
+          0.326
+        ],
+        "tip_abs_um": 131.739,
+        "k_N_um": 1.139,
+        "vm_peak": {
+          "MPa": 20.15,
+          "at": [
+            39.4,
+            -15.8,
+            0.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 10.05,
+          "at": [
+            30.0,
+            -29.2,
+            -16.0
+          ],
+          "body": "head_al"
+        }
+      },
+      "Fy": {
+        "desc": "150 N radiale Y",
+        "tip_um": [
+          -2.21,
+          222.228,
+          -26.34
+        ],
+        "tip_abs_um": 223.795,
+        "k_N_um": 0.675,
+        "vm_peak": {
+          "MPa": 50.3,
+          "at": [
+            -58.9,
+            52.6,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 14.02,
+          "at": [
+            5.7,
+            57.0,
+            31.4
+          ],
+          "body": "master"
+        }
+      },
+      "Fz": {
+        "desc": "200 N assiale Z",
+        "tip_um": [
+          0.434,
+          -35.121,
+          13.052
+        ],
+        "tip_abs_um": 37.47,
+        "k_N_um": 15.324,
+        "vm_peak": {
+          "MPa": 17.26,
+          "at": [
+            -58.9,
+            52.6,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 4.32,
+          "at": [
+            5.7,
+            57.0,
+            31.4
+          ],
+          "body": "master"
+        }
+      },
+      "FxFz": {
+        "desc": "150 N X + 200 N Z",
+        "tip_um": [
+          132.155,
+          -37.33,
+          13.377
+        ],
+        "tip_abs_um": 137.976,
+        "vm_peak": {
+          "MPa": 27.82,
+          "at": [
+            60.0,
+            52.7,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 11.23,
+          "at": [
+            30.0,
+            -29.2,
+            -16.0
+          ],
+          "body": "head_al"
+        }
+      },
+      "FyFz": {
+        "desc": "150 N Y + 200 N Z",
+        "tip_um": [
+          -1.775,
+          187.108,
+          -13.289
+        ],
+        "tip_abs_um": 187.587,
+        "vm_peak": {
+          "MPa": 33.03,
+          "at": [
+            -58.9,
+            52.6,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 9.72,
+          "at": [
+            5.7,
+            57.0,
+            31.4
+          ],
+          "body": "master"
+        }
+      }
+    }
+  },
+  "balls": [
+    90.0,
+    210.0,
+    330.0
+  ],
+  "d028": {
+    "X": {
+      "k_local": 1.686,
+      "share": {
+        "master ToolDock": 8.4,
+        "accoppiamento ToolDock": 35.5,
+        "testa (spindle + utensile)": 9.8
+      },
+      "k_machine": 0.907
+    },
+    "Y": {
+      "k_local": 1.685,
+      "share": {
+        "master ToolDock": 7.4,
+        "accoppiamento ToolDock": 31.0,
+        "testa (spindle + utensile)": 8.6
+      },
+      "k_machine": 0.792
+    },
+    "Z": {
+      "k_local": 46.189,
+      "share": {
+        "master ToolDock": 0.9,
+        "accoppiamento ToolDock": 1.0,
+        "testa (spindle + utensile)": 1.6
+      },
+      "k_machine": 1.591
+    }
+  },
+  "variants": {
+    "master_w8": {
+      "tag": "pilot_nom",
+      "h": 6.0,
+      "mesh": {
+        "nodes": 128752,
+        "elements": 76464,
+        "dof": 386256
+      },
+      "mesh_s": 10.3,
+      "solve_s": 282.4,
+      "mass": {
+        "master": 0.948,
+        "head_al": 1.103
+      },
+      "cases": {
+        "Fx": {
+          "desc": "150 N radiale X",
+          "tip_um": [
+            131.262,
+            -1.724,
+            0.205
+          ],
+          "tip_abs_um": 131.273,
+          "k_N_um": 1.143,
+          "vm_peak": {
+            "MPa": 18.11,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 8.05,
+            "at": [
+              30.0,
+              -30.0,
+              -17.4
+            ],
+            "body": "head_al"
+          }
+        },
+        "Fy": {
+          "desc": "150 N radiale Y",
+          "tip_um": [
+            -1.724,
+            220.892,
+            -26.036
+          ],
+          "tip_abs_um": 222.428,
+          "k_N_um": 0.679,
+          "vm_peak": {
+            "MPa": 35.77,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 11.38,
+            "at": [
+              -7.0,
+              57.0,
+              30.8
+            ],
+            "body": "master"
+          }
+        },
+        "Fz": {
+          "desc": "200 N assiale Z",
+          "tip_um": [
+            0.273,
+            -34.714,
+            12.947
+          ],
+          "tip_abs_um": 37.051,
+          "k_N_um": 15.448,
+          "vm_peak": {
+            "MPa": 12.31,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 3.67,
+            "at": [
+              33.6,
+              57.0,
+              31.0
+            ],
+            "body": "master"
+          }
+        },
+        "Mx": {
+          "desc": "18 N·m ToolDock attorno a X",
+          "tip_um": [
+            -0.626,
+            133.811,
+            -12.079
+          ],
+          "tip_abs_um": 134.357,
+          "vm_peak": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "My": {
+          "desc": "18 N·m ToolDock attorno a Y",
+          "tip_um": [
+            -93.894,
+            1.018,
+            -0.132
+          ],
+          "tip_abs_um": 93.9,
+          "vm_peak": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "REL": {
+          "desc": "0,7 kN di sgancio (D016)",
+          "tip_um": [
+            2.483,
+            -1.2,
+            0.458
+          ],
+          "tip_abs_um": 2.795,
+          "seat_um": 10.248,
+          "vm_peak": {
+            "MPa": 8.17,
+            "at": [
+              -40.6,
+              -21.7,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 6.24,
+            "at": [
+              -16.6,
+              -2.8,
+              0.0
+            ],
+            "body": "master"
+          }
+        },
+        "FxFz": {
+          "desc": "150 N X + 200 N Z",
+          "tip_um": [
+            131.535,
+            -36.439,
+            13.152
+          ],
+          "tip_abs_um": 137.121,
+          "vm_peak": {
+            "MPa": 20.57,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 8.98,
+            "at": [
+              30.0,
+              -30.0,
+              -17.4
+            ],
+            "body": "head_al"
+          }
+        },
+        "FyFz": {
+          "desc": "150 N Y + 200 N Z",
+          "tip_um": [
+            -1.451,
+            186.177,
+            -13.089
+          ],
+          "tip_abs_um": 186.642,
+          "vm_peak": {
+            "MPa": 23.46,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 7.81,
+            "at": [
+              -7.0,
+              57.0,
+              30.8
+            ],
+            "body": "master"
+          }
+        }
+      },
+      "desc": "Master parete 8 (mule v2)"
+    },
+    "master_w6": {
+      "tag": "master_w6",
+      "h": 6.0,
+      "mesh": {
+        "nodes": 126799,
+        "elements": 74530,
+        "dof": 380397
+      },
+      "mesh_s": 11.0,
+      "solve_s": 254.4,
+      "mass": {
+        "master": 0.745,
+        "head_al": 1.103
+      },
+      "cases": {
+        "Fx": {
+          "desc": "150 N radiale X",
+          "tip_um": [
+            167.686,
+            -1.495,
+            0.143
+          ],
+          "tip_abs_um": 167.692,
+          "k_N_um": 0.895,
+          "vm_peak": {
+            "MPa": 27.07,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 11.49,
+            "at": [
+              -28.3,
+              -19.6,
+              6.0
+            ],
+            "body": "master"
+          }
+        },
+        "Fy": {
+          "desc": "150 N radiale Y",
+          "tip_um": [
+            -1.495,
+            312.667,
+            -41.843
+          ],
+          "tip_abs_um": 315.458,
+          "k_N_um": 0.48,
+          "vm_peak": {
+            "MPa": 50.94,
+            "at": [
+              -60.0,
+              52.5,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 20.56,
+            "at": [
+              54.0,
+              53.5,
+              33.0
+            ],
+            "body": "master"
+          }
+        },
+        "Fz": {
+          "desc": "200 N assiale Z",
+          "tip_um": [
+            0.19,
+            -55.791,
+            19.775
+          ],
+          "tip_abs_um": 59.192,
+          "k_N_um": 10.114,
+          "vm_peak": {
+            "MPa": 17.97,
+            "at": [
+              -60.0,
+              52.5,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 7.02,
+            "at": [
+              54.0,
+              53.5,
+              33.0
+            ],
+            "body": "master"
+          }
+        },
+        "Mx": {
+          "desc": "18 N·m ToolDock attorno a X",
+          "tip_um": [
+            -0.513,
+            178.683,
+            -19.342
+          ],
+          "tip_abs_um": 179.728,
+          "vm_peak": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "My": {
+          "desc": "18 N·m ToolDock attorno a Y",
+          "tip_um": [
+            -113.778,
+            0.886,
+            -0.096
+          ],
+          "tip_abs_um": 113.781,
+          "vm_peak": {
+            "MPa": 3921.07,
+            "at": [
+              -22.5,
+              2.3,
+              -164.8
+            ],
+            "body": "spindle_body"
+          },
+          "vm_hot": {
+            "MPa": 3921.07,
+            "at": [
+              -22.5,
+              2.3,
+              -164.8
+            ],
+            "body": "spindle_body"
+          }
+        },
+        "REL": {
+          "desc": "0,7 kN di sgancio (D016)",
+          "tip_um": [
+            -1.012,
+            -196.931,
+            60.973
+          ],
+          "tip_abs_um": 206.156,
+          "seat_um": 76.084,
+          "vm_peak": {
+            "MPa": 1344.27,
+            "at": [
+              -36.1,
+              -42.7,
+              0.0
+            ],
+            "body": "head_al"
+          },
+          "vm_hot": {
+            "MPa": 1344.27,
+            "at": [
+              -36.1,
+              -42.7,
+              0.0
+            ],
+            "body": "head_al"
+          }
+        },
+        "FxFz": {
+          "desc": "150 N X + 200 N Z",
+          "tip_um": [
+            167.876,
+            -57.285,
+            19.917
+          ],
+          "tip_abs_um": 178.495,
+          "vm_peak": {
+            "MPa": 30.87,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 12.4,
+            "at": [
+              29.5,
+              -19.5,
+              6.0
+            ],
+            "body": "master"
+          }
+        },
+        "FyFz": {
+          "desc": "150 N Y + 200 N Z",
+          "tip_um": [
+            -1.305,
+            256.877,
+            -22.068
+          ],
+          "tip_abs_um": 257.826,
+          "vm_peak": {
+            "MPa": 32.97,
+            "at": [
+              -60.0,
+              52.5,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 13.54,
+            "at": [
+              54.0,
+              53.5,
+              33.0
+            ],
+            "body": "master"
+          }
+        }
+      },
+      "desc": "Master parete 6"
+    },
+    "master_w10": {
+      "tag": "master_w10",
+      "h": 6.0,
+      "mesh": {
+        "nodes": 131931,
+        "elements": 79257,
+        "dof": 395793
+      },
+      "mesh_s": 11.3,
+      "solve_s": 312.5,
+      "mass": {
+        "master": 1.129,
+        "head_al": 1.103
+      },
+      "cases": {
+        "Fx": {
+          "desc": "150 N radiale X",
+          "tip_um": [
+            116.88,
+            -1.887,
+            0.247
+          ],
+          "tip_abs_um": 116.895,
+          "k_N_um": 1.283,
+          "vm_peak": {
+            "MPa": 12.89,
+            "at": [
+              -39.4,
+              -16.4,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 8.05,
+            "at": [
+              30.0,
+              -30.0,
+              -17.4
+            ],
+            "body": "head_al"
+          }
+        },
+        "Fy": {
+          "desc": "150 N radiale Y",
+          "tip_um": [
+            -1.887,
+            183.691,
+            -19.12
+          ],
+          "tip_abs_um": 184.693,
+          "k_N_um": 0.817,
+          "vm_peak": {
+            "MPa": 28.93,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 8.46,
+            "at": [
+              54.2,
+              65.0,
+              33.6
+            ],
+            "body": "master"
+          }
+        },
+        "Fz": {
+          "desc": "200 N assiale Z",
+          "tip_um": [
+            0.329,
+            -25.494,
+            10.035
+          ],
+          "tip_abs_um": 27.4,
+          "k_N_um": 19.931,
+          "vm_peak": {
+            "MPa": 9.65,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 2.95,
+            "at": [
+              1.9,
+              55.0,
+              28.9
+            ],
+            "body": "master"
+          }
+        },
+        "Mx": {
+          "desc": "18 N·m ToolDock attorno a X",
+          "tip_um": [
+            -0.699,
+            115.728,
+            -8.898
+          ],
+          "tip_abs_um": 116.071,
+          "vm_peak": {
+            "MPa": 217.73,
+            "at": [
+              -9.7,
+              -4.1,
+              -15.0
+            ],
+            "body": "head_al"
+          },
+          "vm_hot": {
+            "MPa": 217.73,
+            "at": [
+              -9.7,
+              -4.1,
+              -15.0
+            ],
+            "body": "head_al"
+          }
+        },
+        "My": {
+          "desc": "18 N·m ToolDock attorno a Y",
+          "tip_um": [
+            -86.04,
+            1.111,
+            -0.155
+          ],
+          "tip_abs_um": 86.047,
+          "vm_peak": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "REL": {
+          "desc": "0,7 kN di sgancio (D016)",
+          "tip_um": [
+            -0.131,
+            -89.516,
+            23.618
+          ],
+          "tip_abs_um": 92.58,
+          "seat_um": 27.53,
+          "vm_peak": {
+            "MPa": 34.61,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 10.16,
+            "at": [
+              1.9,
+              55.0,
+              28.9
+            ],
+            "body": "master"
+          }
+        },
+        "FxFz": {
+          "desc": "150 N X + 200 N Z",
+          "tip_um": [
+            117.209,
+            -27.381,
+            10.281
+          ],
+          "tip_abs_um": 120.803,
+          "vm_peak": {
+            "MPa": 14.25,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 8.98,
+            "at": [
+              30.0,
+              -30.0,
+              -17.4
+            ],
+            "body": "head_al"
+          }
+        },
+        "FyFz": {
+          "desc": "150 N Y + 200 N Z",
+          "tip_um": [
+            -1.558,
+            158.197,
+            -9.086
+          ],
+          "tip_abs_um": 158.466,
+          "vm_peak": {
+            "MPa": 19.28,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 7.71,
+            "at": [
+              0.1,
+              8.0,
+              -201.3
+            ],
+            "body": "shaft"
+          }
+        }
+      },
+      "desc": "Master parete 10"
+    },
+    "mount_56": {
+      "tag": "mount_56",
+      "h": 6.0,
+      "mesh": {
+        "nodes": 124819,
+        "elements": 73540,
+        "dof": 374457
+      },
+      "mesh_s": 10.2,
+      "solve_s": 207.9,
+      "mass": {
+        "master": 0.948,
+        "head_al": 0.927
+      },
+      "cases": {
+        "Fx": {
+          "desc": "150 N radiale X",
+          "tip_um": [
+            137.796,
+            -2.329,
+            0.286
+          ],
+          "tip_abs_um": 137.816,
+          "k_N_um": 1.089,
+          "vm_peak": {
+            "MPa": 18.11,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 11.4,
+            "at": [
+              28.0,
+              -27.0,
+              -16.3
+            ],
+            "body": "head_al"
+          }
+        },
+        "Fy": {
+          "desc": "150 N radiale Y",
+          "tip_um": [
+            -2.329,
+            226.837,
+            -26.043
+          ],
+          "tip_abs_um": 228.338,
+          "k_N_um": 0.661,
+          "vm_peak": {
+            "MPa": 35.77,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 11.38,
+            "at": [
+              -7.0,
+              57.0,
+              30.8
+            ],
+            "body": "master"
+          }
+        },
+        "Fz": {
+          "desc": "200 N assiale Z",
+          "tip_um": [
+            0.381,
+            -34.724,
+            13.033
+          ],
+          "tip_abs_um": 37.091,
+          "k_N_um": 15.346,
+          "vm_peak": {
+            "MPa": 12.31,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 3.67,
+            "at": [
+              33.6,
+              57.0,
+              31.0
+            ],
+            "body": "master"
+          }
+        },
+        "Mx": {
+          "desc": "18 N·m ToolDock attorno a X",
+          "tip_um": [
+            -0.847,
+            137.331,
+            -12.082
+          ],
+          "tip_abs_um": 137.864,
+          "vm_peak": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "My": {
+          "desc": "18 N·m ToolDock attorno a Y",
+          "tip_um": [
+            -34.271,
+            -0.8,
+            0.057
+          ],
+          "tip_abs_um": 34.28,
+          "vm_peak": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "REL": {
+          "desc": "0,7 kN di sgancio (D016)",
+          "tip_um": [
+            -0.217,
+            -122.235,
+            34.667
+          ],
+          "tip_abs_um": 127.056,
+          "seat_um": 41.712,
+          "vm_peak": {
+            "MPa": 44.22,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 12.73,
+            "at": [
+              33.6,
+              57.0,
+              31.0
+            ],
+            "body": "master"
+          }
+        },
+        "FxFz": {
+          "desc": "150 N X + 200 N Z",
+          "tip_um": [
+            138.178,
+            -37.053,
+            13.319
+          ],
+          "tip_abs_um": 143.678,
+          "vm_peak": {
+            "MPa": 20.57,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 12.67,
+            "at": [
+              28.0,
+              -27.0,
+              -16.3
+            ],
+            "body": "head_al"
+          }
+        },
+        "FyFz": {
+          "desc": "150 N Y + 200 N Z",
+          "tip_um": [
+            -1.948,
+            192.113,
+            -13.01
+          ],
+          "tip_abs_um": 192.563,
+          "vm_peak": {
+            "MPa": 23.46,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 7.81,
+            "at": [
+              -7.0,
+              57.0,
+              30.8
+            ],
+            "body": "master"
+          }
+        }
+      },
+      "desc": "Mount a tazza 56 × 56"
+    },
+    "mount_66": {
+      "tag": "mount_66",
+      "h": 6.0,
+      "mesh": {
+        "nodes": 134402,
+        "elements": 80729,
+        "dof": 403206
+      },
+      "mesh_s": 11.8,
+      "solve_s": 337.1,
+      "mass": {
+        "master": 0.948,
+        "head_al": 1.391
+      },
+      "cases": {
+        "Fx": {
+          "desc": "150 N radiale X",
+          "tip_um": [
+            125.429,
+            -1.138,
+            0.137
+          ],
+          "tip_abs_um": 125.434,
+          "k_N_um": 1.196,
+          "vm_peak": {
+            "MPa": 18.11,
+            "at": [
+              40.8,
+              -17.1,
+              0.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 6.78,
+            "at": [
+              8.0,
+              0.0,
+              -201.2
+            ],
+            "body": "shaft"
+          }
+        },
+        "Fy": {
+          "desc": "150 N radiale Y",
+          "tip_um": [
+            -1.138,
+            215.147,
+            -26.048
+          ],
+          "tip_abs_um": 216.721,
+          "k_N_um": 0.697,
+          "vm_peak": {
+            "MPa": 35.77,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 11.38,
+            "at": [
+              -7.0,
+              57.0,
+              30.8
+            ],
+            "body": "master"
+          }
+        },
+        "Fz": {
+          "desc": "200 N assiale Z",
+          "tip_um": [
+            0.107,
+            -34.21,
+            12.777
+          ],
+          "tip_abs_um": 36.519,
+          "k_N_um": 15.653,
+          "vm_peak": {
+            "MPa": 157.08,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          },
+          "vm_hot": {
+            "MPa": 157.08,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          }
+        },
+        "Mx": {
+          "desc": "18 N·m ToolDock attorno a X",
+          "tip_um": [
+            -0.4,
+            130.399,
+            -12.088
+          ],
+          "tip_abs_um": 130.959,
+          "vm_peak": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.93,
+            "at": [
+              0.1,
+              8.0,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "My": {
+          "desc": "18 N·m ToolDock attorno a Y",
+          "tip_um": [
+            -90.285,
+            0.685,
+            -0.089
+          ],
+          "tip_abs_um": 90.287,
+          "vm_peak": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          },
+          "vm_hot": {
+            "MPa": 44.86,
+            "at": [
+              -8.0,
+              0.2,
+              -207.3
+            ],
+            "body": "shaft"
+          }
+        },
+        "REL": {
+          "desc": "0,7 kN di sgancio (D016)",
+          "tip_um": [
+            -0.217,
+            -122.235,
+            34.667
+          ],
+          "tip_abs_um": 127.056,
+          "seat_um": 41.712,
+          "vm_peak": {
+            "MPa": 44.22,
+            "at": [
+              -59.1,
+              53.1,
+              40.0
+            ],
+            "body": "master"
+          },
+          "vm_hot": {
+            "MPa": 12.73,
+            "at": [
+              33.6,
+              57.0,
+              31.0
+            ],
+            "body": "master"
+          }
+        },
+        "FxFz": {
+          "desc": "150 N X + 200 N Z",
+          "tip_um": [
+            125.536,
+            -35.349,
+            12.914
+          ],
+          "tip_abs_um": 131.055,
+          "vm_peak": {
+            "MPa": 156.97,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          },
+          "vm_hot": {
+            "MPa": 156.97,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          }
+        },
+        "FyFz": {
+          "desc": "150 N Y + 200 N Z",
+          "tip_um": [
+            -1.032,
+            180.936,
+            -13.271
+          ],
+          "tip_abs_um": 181.425,
+          "vm_peak": {
+            "MPa": 156.92,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          },
+          "vm_hot": {
+            "MPa": 156.92,
+            "at": [
+              -5.2,
+              -33.0,
+              -95.2
+            ],
+            "body": "head_al"
+          }
+        }
+      },
+      "desc": "Mount a tazza 66 × 66"
+    }
+  },
+  "self_test": {
+    "expected": {
+      "X": 2.265,
+      "Z": 68.502
+    },
+    "got": {
+      "X": 2.263,
+      "Y": 2.259,
+      "Z": 68.778
+    },
+    "err": 0.004,
+    "ok": true
+  },
+  "nominal": {
+    "tag": "pilot_nom",
+    "h": 6.0,
+    "mesh": {
+      "nodes": 128752,
+      "elements": 76464,
+      "dof": 386256
+    },
+    "mesh_s": 10.3,
+    "solve_s": 282.4,
+    "mass": {
+      "master": 0.948,
+      "head_al": 1.103
+    },
+    "cases": {
+      "Fx": {
+        "desc": "150 N radiale X",
+        "tip_um": [
+          131.262,
+          -1.724,
+          0.205
+        ],
+        "tip_abs_um": 131.273,
+        "k_N_um": 1.143,
+        "vm_peak": {
+          "MPa": 18.11,
+          "at": [
+            40.8,
+            -17.1,
+            0.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 8.05,
+          "at": [
+            30.0,
+            -30.0,
+            -17.4
+          ],
+          "body": "head_al"
+        }
+      },
+      "Fy": {
+        "desc": "150 N radiale Y",
+        "tip_um": [
+          -1.724,
+          220.892,
+          -26.036
+        ],
+        "tip_abs_um": 222.428,
+        "k_N_um": 0.679,
+        "vm_peak": {
+          "MPa": 35.77,
+          "at": [
+            -59.1,
+            53.1,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 11.38,
+          "at": [
+            -7.0,
+            57.0,
+            30.8
+          ],
+          "body": "master"
+        }
+      },
+      "Fz": {
+        "desc": "200 N assiale Z",
+        "tip_um": [
+          0.273,
+          -34.714,
+          12.947
+        ],
+        "tip_abs_um": 37.051,
+        "k_N_um": 15.448,
+        "vm_peak": {
+          "MPa": 12.31,
+          "at": [
+            -59.1,
+            53.1,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 3.67,
+          "at": [
+            33.6,
+            57.0,
+            31.0
+          ],
+          "body": "master"
+        }
+      },
+      "Mx": {
+        "desc": "18 N·m ToolDock attorno a X",
+        "tip_um": [
+          -0.626,
+          133.811,
+          -12.079
+        ],
+        "tip_abs_um": 134.357,
+        "vm_peak": {
+          "MPa": 44.93,
+          "at": [
+            0.1,
+            8.0,
+            -207.3
+          ],
+          "body": "shaft"
+        },
+        "vm_hot": {
+          "MPa": 44.93,
+          "at": [
+            0.1,
+            8.0,
+            -207.3
+          ],
+          "body": "shaft"
+        }
+      },
+      "My": {
+        "desc": "18 N·m ToolDock attorno a Y",
+        "tip_um": [
+          -93.894,
+          1.018,
+          -0.132
+        ],
+        "tip_abs_um": 93.9,
+        "vm_peak": {
+          "MPa": 44.86,
+          "at": [
+            -8.0,
+            0.2,
+            -207.3
+          ],
+          "body": "shaft"
+        },
+        "vm_hot": {
+          "MPa": 44.86,
+          "at": [
+            -8.0,
+            0.2,
+            -207.3
+          ],
+          "body": "shaft"
+        }
+      },
+      "REL": {
+        "desc": "0,7 kN di sgancio (D016)",
+        "tip_um": [
+          2.483,
+          -1.2,
+          0.458
+        ],
+        "tip_abs_um": 2.795,
+        "seat_um": 10.248,
+        "vm_peak": {
+          "MPa": 8.17,
+          "at": [
+            -40.6,
+            -21.7,
+            0.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 6.24,
+          "at": [
+            -16.6,
+            -2.8,
+            0.0
+          ],
+          "body": "master"
+        }
+      },
+      "FxFz": {
+        "desc": "150 N X + 200 N Z",
+        "tip_um": [
+          131.535,
+          -36.439,
+          13.152
+        ],
+        "tip_abs_um": 137.121,
+        "vm_peak": {
+          "MPa": 20.57,
+          "at": [
+            40.8,
+            -17.1,
+            0.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 8.98,
+          "at": [
+            30.0,
+            -30.0,
+            -17.4
+          ],
+          "body": "head_al"
+        }
+      },
+      "FyFz": {
+        "desc": "150 N Y + 200 N Z",
+        "tip_um": [
+          -1.451,
+          186.177,
+          -13.089
+        ],
+        "tip_abs_um": 186.642,
+        "vm_peak": {
+          "MPa": 23.46,
+          "at": [
+            -59.1,
+            53.1,
+            40.0
+          ],
+          "body": "master"
+        },
+        "vm_hot": {
+          "MPa": 7.81,
+          "at": [
+            -7.0,
+            57.0,
+            30.8
+          ],
+          "body": "master"
+        }
+      }
+    },
+    "desc": "Master parete 8 (mule v2)"
+  },
+  "convergence": {
+    "Fx": {
+      "nom": 131.273,
+      "fine": 131.739,
+      "delta": 0.0035
+    },
+    "Fy": {
+      "nom": 222.428,
+      "fine": 223.795,
+      "delta": 0.0061
+    },
+    "Fz": {
+      "nom": 37.051,
+      "fine": 37.47,
+      "delta": 0.0112
+    }
+  },
+  "converged": true
+}

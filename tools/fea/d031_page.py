@@ -54,16 +54,30 @@ def write(r):
         m = v["mass"]["master"] + v["mass"]["head_al"]
         k = [cc[n]["k_N_um"] for n in ("Fx", "Fy", "Fz")]
         worst = max(cc[n]["tip_abs_um"] for n in ("Fx", "Fy", "Fz", "FxFz", "FyFz"))
-        sig = max(cc[n]["vm_hot"]["MPa"] for n in cc)
+        sig = max(cc[n]["vm_hot_body"][b] for n in cc for b in ("master", "head_al"))    # parti che cambiano nelle varianti
         var.append(dict(tag=tag, desc=v["desc"], mass=m, k=k, kmin=min(k[:2]), worst=worst, sig=sig))
     front = pareto(var)
+    s0 = next((x["sig"] for x in var if x["tag"] == "master_w8"), None)
+    for x in var:
+        x["suspect"] = s0 is not None and x["sig"] > 4 * s0
     m0 = next((x["mass"] for x in var if x["tag"] == "master_w8"), None)
     var_rows = "".join(
         f'<tr><td>{x["desc"]}{" · <b>Pareto</b>" if x["tag"] in front else ""}</td><td>{it(x["mass"], 2)} kg</td>'
         f'<td>{("+" if x["mass"] - m0 > 0 else "") + it((x["mass"] - m0) * 1000, 0)} g</td>'
-        f'<td>{it(x["k"][0], 2)}</td><td>{it(x["k"][1], 2)}</td><td>{it(x["k"][2], 1)}</td><td>{it(x["sig"], 1)}</td><td>{it(x["worst"], 0)}</td>'
+        f'<td>{it(x["k"][0], 2)}</td><td>{it(x["k"][1], 2)}</td><td>{it(x["k"][2], 1)}</td><td>{it(x["sig"], 1)}{" · da verificare" if x["suspect"] else ""}</td><td>{it(x["worst"], 0)}</td>'
         f'<td>{it(x["mass"] / x["kmin"], 2)}</td></tr>'
         for x in var) if base else '<tr><td colspan="9">Varianti non ancora calcolate (<code>--quick</code>).</td></tr>'
+    vv = {x["tag"]: x for x in var}
+    findings = (f'La catena locale è più cedevole di quanto dica D028: {it(kx, 2)} / {it(ky, 2)} N/µm in X / Y contro {it(d28["X"]["k_local"], 2)} / {it(d28["Y"]["k_local"], 2)} '
+                f'(FEA / D028 = {it(kx / d28["X"]["k_local"], 2)} / {it(ky / d28["Y"]["k_local"], 2)}). Il modello a travi incastra la master sulla slitta; nel mule la master appoggia '
+                f'sotto la slitta solo sulla striscia da {it(12, 0)} mm della piastra e sporge di ~{it(123, 0)} mm verso il naso: in Y lavora a flessione e la radice è anche il picco di tensione. ')
+    if vv:
+        findings += (f'La parete della master rende molto: 8 → 10 mm dà Y {it(vv["master_w8"]["k"][1], 2)} → {it(vv["master_w10"]["k"][1], 2)} N/µm per '
+                     f'+{it((vv["master_w10"]["mass"] - vv["master_w8"]["mass"]) * 1000, 0)} g, 8 → 6 mm la fa crollare a {it(vv["master_w6"]["k"][1], 2)}. '
+                     f'Il mount invece si può snellire: 60 → 56 mm toglie {it((vv["master_w8"]["mass"] - vv["mount_56"]["mass"]) * 1000, 0)} g e perde solo '
+                     f'{it((1 - vv["mount_56"]["k"][1] / vv["master_w8"]["k"][1]) * 100, 0)}% in Y. Indicazione per la fase 2, non decisione: il materiale va spostato '
+                     f'dal mount alla master e soprattutto all\'appoggio master ↔ slitta (più lungo in Y o fissato anche alle ali della slitta), da verificare nel sottoassieme head + master + Z. ')
+    findings += f'Tensioni basse ovunque (hotspot ≤ ~{it(max(c[n]["vm_hot"]["MPa"] for n in ("Fx", "Fy", "Fz", "FxFz", "FyFz")), 0)} MPa nei casi di forza): la master è guidata dalla rigidezza, non dalla resistenza.'
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — FEA a solidi · D031</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/fea/d031.py (tools/fea/d031_page.py): non modificare a mano. -->
 <a class="back" href="cad-standard.html">← CAD Standard · mule</a>
@@ -84,17 +98,19 @@ def write(r):
 <section class="section"><h2>Casi di carico · mesh nominale</h2><div class="table-wrap"><table>
 <tr><th>Caso</th><th>Punta X / Y / Z (µm)</th><th>|u| (µm)</th><th>σ VM picco (MPa) · dove</th><th>σ VM hotspot (MPa) · dove</th></tr>
 {case_rows}</table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">Spostamento del dado ER11 rispetto alla slitta Z (qui rigida). Hotspot = massimo a più di 6 mm da vincoli e patch rigide; gli spigoli vivi rientranti del mule (senza raccordi) restano singolari, quindi il picco va letto con la convergenza: se cresce con la mesh fine è una singolarità, non una tensione di progetto. Sgancio: la sede del clamp sale di {it(rel["seat_um"], 1)} µm sotto 0,7 kN.</p></section>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Spostamento del dado ER11 rispetto alla slitta Z (qui rigida). Hotspot = massimo a più di 6 mm da vincoli e patch rigide, esclusi i nodi degli elementi con Jacobiano scalato &lt; 0,2 (mesh nominale: minimo {it(nom["mesh"]["min_sj"], 2)}, {nom["mesh"]["poor"]} elementi sotto soglia); gli spigoli vivi rientranti del mule (senza raccordi) restano singolari, quindi il picco va letto con la convergenza: se cresce con la mesh fine è una singolarità, non una tensione di progetto. Sgancio: la sede del clamp sale di {it(rel["seat_um"], 1)} µm sotto 0,7 kN.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">FEA ↔ D028</span><h2>Stessa catena, due modelli.</h2><div class="table-wrap"><table><tr><th>Asse</th><th>FEA N/µm</th><th>D028 N/µm</th><th>FEA / D028</th><th>Quote D028 nella macchina intera</th></tr>{cmp_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">D028 locale = cedevolezza di master, accoppiamento e testa al centro corsa, dalla ripartizione dell'energia del modello a travi (macchina intera {it(d28["X"]["k_machine"], 2)} / {it(d28["Y"]["k_machine"], 2)} / {it(d28["Z"]["k_machine"], 2)} N/µm).</p></div>
   <div class="panel"><span class="kicker">Tensioni · convergenza</span><h2>Picchi da leggere con cautela.</h2><div class="table-wrap"><table><tr><th>Caso</th><th>Picco nominale → fine</th><th>Hotspot nominale → fine</th></tr>{hot_rows}</table></div></div>
 </section>
 
+<section class="section"><div class="callout"><b>Lettura del pilota.</b> {findings}</div></section>
+
 <section class="section"><h2>Varianti · master e mount</h2><div class="table-wrap"><table>
-<tr><th>Variante</th><th>Massa</th><th>Δ massa</th><th>X N/µm</th><th>Y N/µm</th><th>Z N/µm</th><th>σ VM hotspot</th><th>Δ punta worst µm</th><th>kg / (N/µm)</th></tr>
+<tr><th>Variante</th><th>Massa</th><th>Δ massa</th><th>X N/µm</th><th>Y N/µm</th><th>Z N/µm</th><th>σ VM hotspot master / mount (MPa)</th><th>Δ punta worst µm</th><th>kg / (N/µm)</th></tr>
 {var_rows}</table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">Massa = master + receiver + mount (lo spindle non cambia). kg / (N/µm) = massa sulla rigidezza radiale minima tra X e Y; <b>Pareto</b> = nessun'altra variante è insieme più leggera e più rigida. Δ punta worst = massimo |u| tra i casi di forza.</p></section>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">"Da verificare": hotspot oltre 4 volte quello della variante di riferimento, isolato in un solo elemento: tipico di un tetraedro distorto, non di una tensione di progetto; si ricontrolla con una mesh diversa prima di usarlo. Massa = master + receiver + mount (lo spindle non cambia). kg / (N/µm) = massa sulla rigidezza radiale minima tra X e Y; <b>Pareto</b> = nessun'altra variante è insieme più leggera e più rigida. Δ punta worst = massimo |u| tra i casi di forza.</p></section>
 
 <section class="section"><div class="callout"><b>Prossimi passi D031.</b> Sottoassiemi head + master + slitta Z, poi + carrello X, poi gantry completo, con la stessa pipeline e le molle D028 per guide e viti; spalle e trave 6 mm baseline + variante 5 mm; tabella finale per variante e frontiera Pareto massa / rigidezza. Obiettivo: recuperare ≥ 2,8 kg mantenendo o migliorando la cedevolezza del mule v2. Il ToolDock resta una molla equivalente finché il test al banco non ne dà la rigidezza misurata.</div></section>
 

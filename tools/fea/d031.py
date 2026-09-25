@@ -176,7 +176,8 @@ def solve(tag, h, cases=None, **kw):
         for n in m.body_nodes[b]:
             body_of.setdefault(int(n), b)
     mesh_ids = np.unique(np.concatenate([c.ravel() for _, c in m.elements.values()]))
-    far = tree.query(m.xyz(mesh_ids))[0] > HOT_EXCL
+    far = (tree.query(m.xyz(mesh_ids))[0] > HOT_EXCL) & ~np.isin(mesh_ids, m.poor_nodes())
+    bodies = np.array([body_of.get(int(n)) for n in mesh_ids])
     U, SIG = {}, {}
     for name, _, _ in cases:
         U[name] = np.array(disp[name][pts["tip"]]) * 1000.0            # µm
@@ -202,6 +203,7 @@ def solve(tag, h, cases=None, **kw):
         j = int(np.argmax(np.where(far, val, -1)))
         r["vm_peak"] = dict(MPa=round(float(val[i]), 2), at=[round(float(c), 1) for c in m.nodes[int(mesh_ids[i])]], body=body_of.get(int(mesh_ids[i])))
         r["vm_hot"] = dict(MPa=round(float(val[j]), 2), at=[round(float(c), 1) for c in m.nodes[int(mesh_ids[j])]], body=body_of.get(int(mesh_ids[j])))
+        r["vm_hot_body"] = {b: round(float(np.max(np.where(far & (bodies == b), val, 0.0))), 2) for b in ("master", "head_al", "spindle_body", "shaft")}
         out[name] = r
     return dict(tag=tag, h=h, mesh=info, mesh_s=round(t_mesh, 1), solve_s=m.solve_s,
                 mass=dict(master=round(masses["master"], 3), head_al=round(masses["head_al"], 3)), cases=out)

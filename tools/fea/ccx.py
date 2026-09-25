@@ -20,6 +20,7 @@ MATERIALS = {  # proprietà elastiche effettive; lega e stato non ancora scelti 
     "AL": dict(E=70000.0, nu=0.33, rho=2.70e-6),
     "STEEL": dict(E=210000.0, nu=0.30, rho=7.85e-6),
 }
+POOR_SJ = 0.2                                        # tetra quadratici sotto questa qualità: tensioni nodali inaffidabili
 GMSH_TO_CCX_TET10 = [0, 1, 2, 3, 4, 5, 6, 7, 9, 8]   # Gmsh e Abaqus/CalculiX differiscono sugli ultimi due nodi di spigolo
 
 
@@ -87,28 +88,42 @@ class Model:
         gmsh.model.mesh.generate(3)
         gmsh.model.mesh.optimize("Netgen")
         gmsh.model.mesh.setOrder(order)                         # nodi di spigolo sulla geometria reale
+        gmsh.option.setNumber("Mesh.HighOrderOptimize", 2)
+        gmsh.model.mesh.optimize("HighOrderElastic")           # raddrizza i tetra quadratici distorti sulle superfici curve
+        gmsh.model.mesh.optimize("HighOrder")
         tags, coords, _ = gmsh.model.mesh.getNodes()
         self.nodes = dict(zip(tags.astype(int), coords.reshape(-1, 3)))
         self.elements = {}          # corpo → (ids, conn ccx)
         self.body_nodes = {}
         eid = 1
+        self.quality = {}
         for name, vols in self.body_vols.items():
-            conns = []
+            conns, quals = [], []
             for v in vols:
                 et, _, en = gmsh.model.mesh.getElements(3, v)
                 for t, n in zip(et, en):
                     if t != 11:                                     # 11 = tetra a 10 nodi
                         raise SystemExit(f"elemento Gmsh inatteso {t} in {name}")
                     conns.append(n.astype(int).reshape(-1, 10)[:, GMSH_TO_CCX_TET10])
+                    etags = gmsh.model.mesh.getElements(3, v)[1][0]
+                    quals.append(np.array(gmsh.model.mesh.getElementQualities(etags, "minSJ")))
             conn = np.vstack(conns)
             ids = np.arange(eid, eid + len(conn))
             eid += len(conn)
             self.elements[name] = (ids, conn)
+            self.quality[name] = np.concatenate(quals)            # Jacobiano scalato minimo per elemento
             self.body_nodes[name] = np.unique(conn)
         gmsh.finalize()
         self.next_id = max(self.nodes) + 1
         self.n_elem = eid - 1
-        return dict(nodes=len(self.nodes), elements=self.n_elem, dof=3 * len(self.nodes))
+        allq = np.concatenate(list(self.quality.values()))
+        return dict(nodes=len(self.nodes), elements=self.n_elem, dof=3 * len(self.nodes),
+                    min_sj=round(float(allq.min()), 3), poor=int((allq < POOR_SJ).sum()))
+
+    def poor_nodes(self):
+        """Nodi degli elementi con Jacobiano scalato < POOR_SJ: esclusi dalla tensione hotspot."""
+        out = [c[self.quality[n] < POOR_SJ].ravel() for n, (_, c) in self.elements.items() if n in self.quality]
+        return np.unique(np.concatenate(out)) if out else np.array([], int)
 
     # ------------------------------------------------------------------ selezioni
     def xyz(self, ids):
