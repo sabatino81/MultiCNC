@@ -279,7 +279,7 @@ def main():
         res["variants"][tag] = r
         k = [r["cases"][c]["k_N_um"] for c in ("Fx", "Fy", "Fz")]
         print(f"{tag:12} massa {r['mass']} k {k} peak {r['cases']['FxFz']['vm_peak']['MPa']} MPa", flush=True)
-    (OUT / "pilot.json").write_text(json.dumps(res, indent=2, ensure_ascii=False), encoding="utf-8")
+    (OUT / "pilot.json").write_text(json.dumps(res, indent=2, ensure_ascii=False, default=lambda o: o.item() if hasattr(o, "item") else str(o)), encoding="utf-8")
     try:
         import d031_page
         d031_page.write(res)

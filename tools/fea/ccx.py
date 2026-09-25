@@ -165,7 +165,7 @@ class Model:
 
     # ------------------------------------------------------------------ scrittura, soluzione, lettura
     def write(self, monitor):
-        f = self.dir / f"{self.name}.inp"
+        f = self.dir / f"{self.name}.inp.new"
         L = ["*HEADING", f"MultiCNC D031 {self.name}", "*NODE"]
         L += [f"{i},{x:.6f},{y:.6f},{z:.6f}" for i, (x, y, z) in self.nodes.items()]
         L += [f"{i},{x:.6f},{y:.6f},{z:.6f}" for i, (x, y, z) in self.extra_nodes.items()]
@@ -206,13 +206,21 @@ class Model:
         return f
 
     def run(self, monitor, threads=4):
-        inp = self.write(monitor)
+        new = self.write(monitor)
+        inp = self.dir / f"{self.name}.inp"
+        frd = self.dir / f"{self.name}.frd"
         t0 = time.time()
+        if inp.exists() and frd.exists() and inp.read_bytes() == new.read_bytes():   # stessa mesh e stessi carichi: riusa
+            new.unlink()
+            self.solve_s = float((self.dir / "solve_s.txt").read_text()) if (self.dir / "solve_s.txt").exists() else 0.0
+            return self.read_dat(), self.read_frd()
+        new.replace(inp)
         env = {"OMP_NUM_THREADS": str(threads), "CCX_NPROC_EQUATION_SOLVER": str(threads), "PATH": "/usr/bin:/bin"}
         r = subprocess.run(["ccx", "-i", self.name], cwd=self.dir, capture_output=True, text=True, env=env)
         if r.returncode != 0 or "ERROR" in r.stdout:
             raise SystemExit("CalculiX:\n" + r.stdout[-3000:] + r.stderr[-2000:])
         self.solve_s = round(time.time() - t0, 1)
+        (self.dir / "solve_s.txt").write_text(str(self.solve_s))
         return self.read_dat(), self.read_frd()
 
     def read_dat(self):
