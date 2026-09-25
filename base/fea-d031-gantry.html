@@ -14,7 +14,9 @@
 
 <section class="section"><p><a class="btn primary" href="viewer-3d.html?m=gantry_h6_c10_Fy_u.glb">Deformata del gantry in 3D · 150 N Y</a> <a class="btn" href="viewer-3d.html?m=gantry_h6_c10_Fx_u.glb">150 N X</a> <a class="btn" href="viewer-3d.html?m=gantry_h6_c10_Fz_u.glb">200 N Z</a></p></section>
 
-
+<section class="section"><h2>Quale parte del gantry pesa · sensibilità massima</h2><div class="table-wrap"><table><tr><th>Reso rigido</th><th>X N/µm · cedevolezza tolta</th><th>Y N/µm · cedevolezza tolta</th><th>Z N/µm · cedevolezza tolta</th></tr>
+<tr><td>Gantry FEA (riferimento)</td><td>0,79</td><td>0,65</td><td>2,03</td></tr><tr><td>Spalle + trave rigido</td><td>0,87 · 9%</td><td>0,73 · 12%</td><td>5,08 · 60%</td></tr><tr><td>Carrello X rigido</td><td>0,93 · 14%</td><td>0,77 · 16%</td><td>2,26 · 10%</td></tr><tr><td>Slitta Z + master + testa rigido</td><td>1,25 · 37%</td><td>1,07 · 39%</td><td>2,47 · 18%</td></tr></table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px"><b>Upper-bound sensitivity</b>: ogni riga rende quasi perfetto un solo sottosistema (solidi con E ×1000, oppure molle ×1000) e lascia reale tutto il resto, sulla stessa mesh del riferimento. La percentuale risponde a "quanto migliorerebbe al massimo il gantry se questo sottosistema fosse perfetto". Non è una ripartizione additiva: irrigidendo un gruppo cambia il percorso dei carichi, quindi le percentuali possono sommare a più (o meno) del 100%. Gruppo Z = slitta, piastrina chiocciola, master, receiver, mount, corpo spindle e albero; restano reali sfere ToolDock, cuscinetti, pattini e viti. Trave e spalle sono rese rigide insieme: per disegnare un pezzo serve lo split trave / spalle.</p></section>
 
 <section class="section"><h2>Gantry FEA ↔ D028</h2><div class="table-wrap"><table>
 <tr><th>Asse</th><th>Gantry D028</th><th>Gantry FEA</th><th>FEA / D028</th><th>Macchina D028</th><th>Macchina con gantry FEA</th><th>Limite, gantry rigido</th><th>D014</th></tr>
