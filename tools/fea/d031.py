@@ -121,6 +121,8 @@ def build_model(tag, h, master_wall=None, clamp_block=None, cases=None):
     tube = (rr < z["r_bore"] + 0.01) & (rr > z["r_bore"] - 5.2) & (p[:, 2] < z["rear"] + 0.01)
     m.elements["spindle_body"] = (ids[tube], conn[tube])
     m.elements["head"] = (ids[~tube], conn[~tube])
+    q = m.quality["head"]
+    m.quality["spindle_body"], m.quality["head"] = q[tube], q[~tube]
     m.bodies.append(("spindle_body", [], "STEEL"))
     m.body_nodes["spindle_body"] = np.unique(conn[tube])
     m.body_nodes["head_al"] = np.unique(conn[~tube])
