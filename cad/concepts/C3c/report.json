@@ -1,0 +1,865 @@
+{
+  "generated_by": "tools/cad/standard_assembly.py",
+  "derived": {
+    "table_bottom": 16,
+    "table_top": 26.0,
+    "slide_front": 53.0,
+    "slide_back": 65.0,
+    "carriage_front": 93.0,
+    "carriage_back": 108.0,
+    "beam_face": 136.0,
+    "beam_back": 216.0,
+    "tip_bottom": 26.0,
+    "coupling_bottom": 246.0,
+    "coupling_top": 386.0,
+    "slide_bottom_low": 286.0,
+    "z_block_span": 141.4,
+    "z_rail_bottom": 281.0,
+    "beam_bottom": 176.0,
+    "zx": 246.0,
+    "beam_top": 316.0,
+    "a_tool_to_x_face": 136.0,
+    "b_tip_below_x_rails": 220.0,
+    "z_lever_low": 265.0
+  },
+  "params": {
+    "travel": {
+      "X": 450.0,
+      "Y": 350.0,
+      "Z": 140.0
+    },
+    "x": {
+      "rail": "HGR15",
+      "block": "HGH15CA",
+      "rail_len": 640.0,
+      "block_pitch": 100.0,
+      "rail_spacing": 110.0,
+      "screw": "SFU1605",
+      "screw_len": 590.0,
+      "motor": "NEMA23_CL_2NM",
+      "bk": "BK12",
+      "bf": "BF12"
+    },
+    "y": {
+      "rail": "MGN15",
+      "block": "MGN15H",
+      "rail_len": 630.0,
+      "block_pitch": 200.0,
+      "rail_spacing": 300.0,
+      "screw": "SFU1605",
+      "screw_len": 490.0,
+      "motor": "NEMA23_CL_2NM",
+      "bk": "BK12",
+      "bf": "BF12"
+    },
+    "z": {
+      "rail": "HGR15",
+      "block": "HGH15CA",
+      "rail_len": 310.0,
+      "block_pitch": 80.0,
+      "rail_spacing": 110.0,
+      "screw": "SFU1204",
+      "screw_len": 260.0,
+      "motor": "NEMA23_CL_2NM",
+      "bk": "BK10",
+      "bf": "BF10"
+    },
+    "dock_x": 440.0,
+    "magazine": {
+      "x": [
+        500.0,
+        680.0
+      ],
+      "y": [
+        280.0,
+        460.0
+      ],
+      "z": [
+        180.0,
+        620.0
+      ]
+    }
+  },
+  "configs": {
+    "HOME": {
+      "axes": {
+        "X": 0.0,
+        "Y": 0.0,
+        "Z": 0.0
+      },
+      "parts": 63,
+      "bbox_mm": [
+        -155.0,
+        702.0,
+        -350.0,
+        447.0,
+        -60.0,
+        815.0
+      ],
+      "margins": {
+        "X_rail_margin_mm": [
+          14.3,
+          464.3
+        ],
+        "Y_rail_margin_mm": [
+          360.6,
+          10.6
+        ],
+        "Z_rail_margin_mm": [
+          150.0,
+          18.6
+        ],
+        "nut_to_supports_mm": {
+          "X": [
+            16.5,
+            458.5
+          ],
+          "Y": [
+            8.5,
+            366.5
+          ],
+          "Z": [
+            8.0,
+            148.0
+          ]
+        }
+      },
+      "collisions": [],
+      "clearance_warnings": [],
+      "datums": {
+        "MACHINE_ORIGIN": [
+          0.0,
+          0.0,
+          26.0
+        ],
+        "PALLET_R1": [
+          50.0,
+          50.0,
+          26.0
+        ],
+        "PALLET_R2": [
+          400.0,
+          50.0,
+          26.0
+        ],
+        "TOOLDOCK_MASTER": [
+          0.0,
+          0.0,
+          386.0
+        ],
+        "DOCK_POSITION": [
+          440.0,
+          0.0,
+          386.0
+        ],
+        "TOOL_TIP": [
+          0.0,
+          0.0,
+          183.0
+        ]
+      }
+    },
+    "CENTER": {
+      "axes": {
+        "X": 225.0,
+        "Y": 175.0,
+        "Z": -70.0
+      },
+      "parts": 63,
+      "bbox_mm": [
+        -155.0,
+        702.0,
+        -350.0,
+        447.0,
+        -60.0,
+        815.0
+      ],
+      "margins": {
+        "X_rail_margin_mm": [
+          239.3,
+          239.3
+        ],
+        "Y_rail_margin_mm": [
+          185.6,
+          185.6
+        ],
+        "Z_rail_margin_mm": [
+          80.0,
+          88.6
+        ],
+        "nut_to_supports_mm": {
+          "X": [
+            241.5,
+            233.5
+          ],
+          "Y": [
+            183.5,
+            191.5
+          ],
+          "Z": [
+            78.0,
+            78.0
+          ]
+        }
+      },
+      "collisions": [],
+      "clearance_warnings": [],
+      "datums": {
+        "MACHINE_ORIGIN": [
+          0.0,
+          0.0,
+          26.0
+        ],
+        "PALLET_R1": [
+          50.0,
+          -125.0,
+          26.0
+        ],
+        "PALLET_R2": [
+          400.0,
+          -125.0,
+          26.0
+        ],
+        "TOOLDOCK_MASTER": [
+          225.0,
+          0.0,
+          316.0
+        ],
+        "DOCK_POSITION": [
+          440.0,
+          0.0,
+          386.0
+        ],
+        "TOOL_TIP": [
+          225.0,
+          0.0,
+          113.0
+        ]
+      }
+    },
+    "MAX": {
+      "axes": {
+        "X": 450.0,
+        "Y": 350.0,
+        "Z": -140.0
+      },
+      "parts": 63,
+      "bbox_mm": [
+        -155.0,
+        702.0,
+        -350.0,
+        447.0,
+        -60.0,
+        815.0
+      ],
+      "margins": {
+        "X_rail_margin_mm": [
+          464.3,
+          14.3
+        ],
+        "Y_rail_margin_mm": [
+          10.6,
+          360.6
+        ],
+        "Z_rail_margin_mm": [
+          10.0,
+          158.6
+        ],
+        "nut_to_supports_mm": {
+          "X": [
+            466.5,
+            8.5
+          ],
+          "Y": [
+            358.5,
+            16.5
+          ],
+          "Z": [
+            148.0,
+            8.0
+          ]
+        }
+      },
+      "collisions": [],
+      "clearance_warnings": [
+        {
+          "a": "chain_y_volume",
+          "b": "head_volume",
+          "clearance_mm": 0.0,
+          "level": "FAIL"
+        }
+      ],
+      "datums": {
+        "MACHINE_ORIGIN": [
+          0.0,
+          0.0,
+          26.0
+        ],
+        "PALLET_R1": [
+          50.0,
+          -300.0,
+          26.0
+        ],
+        "PALLET_R2": [
+          400.0,
+          -300.0,
+          26.0
+        ],
+        "TOOLDOCK_MASTER": [
+          450.0,
+          0.0,
+          246.0
+        ],
+        "DOCK_POSITION": [
+          440.0,
+          0.0,
+          386.0
+        ],
+        "TOOL_TIP": [
+          450.0,
+          0.0,
+          43.0
+        ]
+      }
+    },
+    "DOCK": {
+      "axes": {
+        "X": 440.0,
+        "Y": 0.0,
+        "Z": 0.0
+      },
+      "parts": 68,
+      "bbox_mm": [
+        -155.0,
+        702.0,
+        -350.0,
+        447.0,
+        -60.0,
+        815.0
+      ],
+      "margins": {
+        "X_rail_margin_mm": [
+          454.3,
+          24.3
+        ],
+        "Y_rail_margin_mm": [
+          360.6,
+          10.6
+        ],
+        "Z_rail_margin_mm": [
+          150.0,
+          18.6
+        ],
+        "nut_to_supports_mm": {
+          "X": [
+            456.5,
+            18.5
+          ],
+          "Y": [
+            8.5,
+            366.5
+          ],
+          "Z": [
+            8.0,
+            148.0
+          ]
+        }
+      },
+      "collisions": [],
+      "clearance_warnings": [
+        {
+          "a": "transfer_head_1",
+          "b": "x_carriage",
+          "clearance_mm": 2.0,
+          "level": "FAIL"
+        }
+      ],
+      "datums": {
+        "MACHINE_ORIGIN": [
+          0.0,
+          0.0,
+          26.0
+        ],
+        "PALLET_R1": [
+          50.0,
+          50.0,
+          26.0
+        ],
+        "PALLET_R2": [
+          400.0,
+          50.0,
+          26.0
+        ],
+        "TOOLDOCK_MASTER": [
+          440.0,
+          0.0,
+          386.0
+        ],
+        "DOCK_POSITION": [
+          440.0,
+          0.0,
+          386.0
+        ],
+        "TOOL_TIP": [
+          440.0,
+          0.0,
+          183.0
+        ]
+      }
+    }
+  },
+  "mass": {
+    "custom": [
+      {
+        "bom": "MC-BAS-001",
+        "part": "Telaio a scala",
+        "bom_kg": 6.65,
+        "mule_kg": 6.65
+      },
+      {
+        "bom": "MC-GAN-002",
+        "part": "Spalle gantry",
+        "bom_kg": 1.94,
+        "mule_kg": 1.94
+      },
+      {
+        "bom": "MC-GAN-001",
+        "part": "Trave gantry",
+        "bom_kg": 6.06,
+        "mule_kg": 6.06
+      },
+      {
+        "bom": "MC-BRK-001",
+        "part": "Staffe chiocciole, motori e supporti",
+        "bom_kg": 0.51,
+        "mule_kg": 0.51
+      },
+      {
+        "bom": "MC-TBL-001",
+        "part": "Tavola Y / tooling plate",
+        "bom_kg": 2.97,
+        "mule_kg": 2.97
+      },
+      {
+        "bom": "MC-XC-001",
+        "part": "Carrello X",
+        "bom_kg": 4.06,
+        "mule_kg": 4.06
+      },
+      {
+        "bom": "MC-Z-001",
+        "part": "Slitta Z",
+        "bom_kg": 1.08,
+        "mule_kg": 1.08
+      },
+      {
+        "bom": "MC-TD-001",
+        "part": "Master kinematic plate",
+        "bom_kg": 1.05,
+        "mule_kg": 1.62
+      },
+      {
+        "bom": "MC-TD-002",
+        "part": "Base spindle receiver",
+        "bom_kg": 0.37,
+        "mule_kg": 0.64
+      },
+      {
+        "bom": "MC-SP-003",
+        "part": "Mount spindle a tazza con camicia",
+        "bom_kg": 0.73,
+        "mule_kg": 0.65
+      }
+    ],
+    "not_in_bom": [],
+    "machine_bom_kg": 44.9,
+    "machine_mule_kg": 45.7
+  },
+  "head": {
+    "mass": 2.89,
+    "cog_below_coupling": 77.0,
+    "L": 203.0,
+    "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
+    "inertia_moment_Nm": 0.45,
+    "connector_mode": "SIDE_EXIT",
+    "gap": 8.0
+  },
+  "envelope_mm": [
+    -155.0,
+    702.0,
+    -350.0,
+    447.0,
+    -60.0,
+    815.0
+  ],
+  "footprint_mm": [
+    857.0,
+    797.0
+  ],
+  "height_mm": 875.0,
+  "sweep": {
+    "configs": 125,
+    "grid": 5,
+    "collisions": [],
+    "closest": [
+      {
+        "pair": "chain_y_volume ↔ head_volume",
+        "clearance_mm": 0.0,
+        "axes": [
+          450.0,
+          0.0,
+          -140.0
+        ],
+        "level": "FAIL"
+      },
+      {
+        "pair": "beam ↔ x_nut",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_bf ↔ x_block_00",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_bf ↔ x_block_10",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_0 ↔ head_volume",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_1 ↔ head_volume",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_slide",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_block_00",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_block_10",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ tooldock_master",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bk ↔ z_nut",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_block_01",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -140.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_block_11",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -105.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_bf ↔ z_nut_tab",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -140.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_bk ↔ x_block_01",
+        "clearance_mm": 8.0,
+        "axes": [
+          450.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_bk ↔ x_block_11",
+        "clearance_mm": 8.0,
+        "axes": [
+          450.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "frame_cross_rear ↔ y_nut_bracket",
+        "clearance_mm": 8.56,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "frame_cross_rear ↔ y_nut",
+        "clearance_mm": 9.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_carriage ↔ z_nut_tab",
+        "clearance_mm": 9.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_carriage ↔ z_slide",
+        "clearance_mm": 10.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      }
+    ],
+    "fails": [
+      {
+        "pair": "chain_y_volume ↔ head_volume",
+        "clearance_mm": 0.0,
+        "axes": [
+          450.0,
+          0.0,
+          -140.0
+        ],
+        "level": "FAIL"
+      }
+    ],
+    "warnings": []
+  },
+  "transfer": {
+    "steps": 42,
+    "waypoints": [
+      [
+        600.0,
+        370.0,
+        616.0
+      ],
+      [
+        440.0,
+        0.0,
+        386.0
+      ]
+    ],
+    "transfer_top": 616.0,
+    "collisions": [],
+    "closest": [
+      {
+        "part": "x_carriage",
+        "clearance_mm": 2.0,
+        "step": 8,
+        "level": "FAIL"
+      },
+      {
+        "part": "z_rail_1",
+        "clearance_mm": 8.0,
+        "step": 41,
+        "level": "PASS"
+      },
+      {
+        "part": "z_rail_0",
+        "clearance_mm": 8.0,
+        "step": 41,
+        "level": "PASS"
+      },
+      {
+        "part": "z_slide",
+        "clearance_mm": 22.0,
+        "step": 10,
+        "level": "PASS"
+      },
+      {
+        "part": "z_block_10",
+        "clearance_mm": 25.0,
+        "step": 9,
+        "level": "PASS"
+      },
+      {
+        "part": "z_block_11",
+        "clearance_mm": 25.0,
+        "step": 9,
+        "level": "PASS"
+      },
+      {
+        "part": "z_bf",
+        "clearance_mm": 32.14,
+        "step": 41,
+        "level": "PASS"
+      },
+      {
+        "part": "chain_x_volume",
+        "clearance_mm": 37.0,
+        "step": 4,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_00",
+        "clearance_mm": 38.0,
+        "step": 41,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_01",
+        "clearance_mm": 38.0,
+        "step": 41,
+        "level": "PASS"
+      }
+    ]
+  },
+  "stiffness": {
+    "X": {
+      "N_per_um": 1.22,
+      "top": [
+        [
+          "accoppiamento ToolDock",
+          22
+        ],
+        [
+          "carrello X",
+          20
+        ],
+        [
+          "testa (spindle + utensile)",
+          12
+        ],
+        [
+          "guide Z + vite Z",
+          10
+        ]
+      ]
+    },
+    "Y": {
+      "N_per_um": 1.03,
+      "top": [
+        [
+          "accoppiamento ToolDock",
+          19
+        ],
+        [
+          "slitta Z",
+          15
+        ],
+        [
+          "carrello X",
+          13
+        ],
+        [
+          "tavola",
+          11
+        ]
+      ]
+    },
+    "Z": {
+      "N_per_um": 1.6,
+      "top": [
+        [
+          "tavola",
+          48
+        ],
+        [
+          "telaio",
+          19
+        ],
+        [
+          "trave",
+          7
+        ],
+        [
+          "guide Y + vite Y",
+          7
+        ]
+      ]
+    }
+  },
+  "concept": "C3c"
+}
