@@ -1,25 +1,26 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Tre basi</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
 <a class="back" href="index.html">← Base Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Line-up · D007</div><h1>Tre basi.<br>Un sistema di kit.</h1><p class="lead">Light, Standard e Pro condividono area di lavoro, ToolDock, pallet, elettronica e software. Cambiano struttura, guide, motori, spindle di serie e massa: chi non lavora alluminio non paga né trasporta la massa che serve all'alluminio.</p><div class="badges"><span class="badge ok">Standard in sviluppo</span><span class="badge">Light · derivata</span><span class="badge">Pro · riferimento</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Line-up · D007</div><h1>Tre basi.<br>Un sistema di kit.</h1><p class="lead">Light, Standard e Pro condividono area di lavoro, interfaccia ToolDock e pallet; Standard e Pro anche elettronica e software, la Light Core ci arriva con il Platform Pack (D024). Cambiano struttura, guide, motori, spindle di serie e massa: chi non lavora alluminio non paga né trasporta la massa che serve all'alluminio.</p><div class="badges"><span class="badge ok">Standard in sviluppo</span><span class="badge">Light Core · D024</span><span class="badge">Pro · riferimento</span></div></div>
 
 <section class="grid">
-  <div class="card"><span class="kicker">Light</span><h2>~18 kg</h2><p>MGN12, SFU1204, NEMA17 closed-loop, spindle 300–500 W ad aria. Legno, plastiche, PCB, laser, knife, dispenser, vision. Carico ToolDock 2 kg.</p></div>
+  <a class="card" href="../bom/base-light.html"><span class="kicker">Light Core</span><h2>~18 kg</h2><p>MGN12, SFU1204, NEMA17 open-loop, grblHAL, spindle 300–500 W ad aria, ToolDock manuale. BOM €997 a lotto, listino TARGET ~€2.290. Platform Pack per il cambio automatico. Carico ToolDock 2 kg.</p></a>
   <a class="card" href="index.html" style="border-color:rgba(255,106,43,.45)"><span class="kicker">Standard · prima da sviluppare</span><h2>~32 kg</h2><p>HGR15 su X, MGN15 su Y (D015), SFU1605, NEMA23 closed-loop ~2 Nm, spindle 0.5–0.8 kW. Aggiunge alluminio leggero e Fiber MOPA. Carico ToolDock 4 kg.</p></a>
   <a class="card" href="../bom/base-pro.html"><span class="kicker">Pro</span><h2>~70 kg</h2><p>HGR20, SFU1605 precaricate, NEMA23 3 Nm, spindle 1.5 kW ad acqua, Gantry Lift motorizzato. Alluminio vero e ATC ISO20. Carico ToolDock 7 kg.</p></a>
 </section>
 
 <section class="section"><h2>Confronto</h2><div class="table-wrap"><table>
-<tr><th>Parametro</th><th>Light</th><th>Standard</th><th>Pro</th></tr>
+<tr><th>Parametro</th><th>Light Core</th><th>Standard</th><th>Pro</th></tr>
 <tr><td>Area XY</td><td colspan="3"><span class="status-target">TARGET 450 × 350 mm</span> su tutte e tre</td></tr>
 <tr><td>Corsa Z</td><td colspan="3"><span class="status-target">TARGET 120–140 mm</span></td></tr>
-<tr><td>Massa meccanica</td><td>~18 kg (D010) · stima 18,9 kg</td><td>~32 kg (D009, D015)</td><td>~70 kg (D011)</td></tr>
+<tr><td>Massa meccanica</td><td>~18 kg (D010) · stima 17,6 kg</td><td>~32 kg (D009, D015)</td><td>~70 kg (D011)</td></tr>
 <tr><td>Struttura</td><td>Piastra lavorata leggera + profilati, sedi guide lavorate</td><td>Piastra Al nervata</td><td>Al spesso o epoxy-granite</td></tr>
 <tr><td>Guide X/Y · Z</td><td>MGN12 · MGN12</td><td>HGR15 X / MGN15 Y · HGR15</td><td>HGR20 · HGR15/20</td></tr>
 <tr><td>Viti</td><td>SFU1204</td><td>SFU1605</td><td>SFU1605 precaricata</td></tr>
-<tr><td>Motori</td><td>NEMA17 closed-loop</td><td>NEMA23 closed-loop ~2 Nm</td><td>NEMA23 closed-loop 3 Nm</td></tr>
+<tr><td>Motori</td><td>NEMA17 open-loop (closed-loop con Platform Pack)</td><td>NEMA23 closed-loop ~2 Nm</td><td>NEMA23 closed-loop 3 Nm</td></tr>
 <tr><td>Spindle di serie</td><td>300–500 W aria</td><td>0.5–0.8 kW aria</td><td>1.5 kW acqua</td></tr>
 <tr><td>Clearance</td><td>Rialzi manuali</td><td>Rialzi manuali spinati</td><td>Gantry Lift motorizzato 0–150 mm</td></tr>
 <tr><td>Precisione indicativa</td><td>~±50 µm</td><td>~±20–30 µm, con error map</td><td>~±10–15 µm, con error map + C5 o encoder lineari da valutare</td></tr>
+<tr><td>ToolDock · controllo</td><td>Manuale · grblHAL (automatico · Mesa + LinuxCNC con Platform Pack)</td><td>Automatico · Mesa + LinuxCNC</td><td>Automatico · Mesa + LinuxCNC</td></tr>
 <tr><td>Carico ToolDock (testa completa)</td><td>2 kg</td><td>4 kg</td><td>7 kg</td></tr>
 <tr><td>BOM</td><td><a href="../bom/base-light.html" style="color:var(--accent-2)">BOM Light</a></td><td><a href="../bom/base.html" style="color:var(--accent-2)">BOM Standard</a></td><td><a href="../bom/base-pro.html" style="color:var(--accent-2)">BOM Pro</a></td></tr>
 </table></div>
@@ -27,10 +28,10 @@
 
 <section class="section split">
   <div class="panel"><span class="kicker">Piattaforma comune</span><h2>Cosa non cambia mai.</h2><div class="spec-list">
-    <div class="spec-row"><b>ToolDock</b><p>Stessa piastra master, clamp, connettori e identificazione. Cambia solo il carico ammesso.</p></div>
+    <div class="spec-row"><b>ToolDock</b><p>Stessa piastra master, pull-stud, receiver e identificazione; cambia il carico ammesso. La Light Core ha clamp manuale e connettore Core finché non monta il Platform Pack.</p></div>
     <div class="spec-row"><b>Area e pallet</b><p>450 × 350 mm e stesso reference pattern: pallet e fixture passano da una base all'altra.</p></div>
     <div class="spec-row"><b>Cinematica</b><p>Ponte fisso + tavola mobile Y (D006) su tutte e tre.</p></div>
-    <div class="spec-row"><b>Elettronica</b><p>Stesso quadro esterno Mesa + LinuxCNC e stesso module manager; cambiano i driver.</p></div>
+    <div class="spec-row"><b>Elettronica</b><p>Standard e Pro: stesso quadro Mesa + LinuxCNC e module manager. Light Core: grblHAL, sostituito dal quadro Mesa con il Platform Pack.</p></div>
   </div></div>
   <div class="panel"><span class="kicker">Sviluppo</span><h2>Ordine e rischio.</h2><div class="spec-list">
     <div class="spec-row"><b>1 · Standard</b><p>Prima base da progettare e validare: copre quasi tutti i kit.</p></div>
@@ -41,12 +42,12 @@
 </section>
 
 <section class="section"><h2>Compatibilità kit</h2><div class="table-wrap"><table>
-<tr><th>Kit</th><th>Light</th><th>Standard</th><th>Pro</th><th>Note</th></tr>
-<tr><td>PCB Precision</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Micro-spindle leggero</td></tr>
-<tr><td>Diode Laser</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Safety ed estrazione dal kit</td></tr>
-<tr><td>Knife</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Forze basse</td></tr>
-<tr><td>Dispenser</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Pneumatica dal kit</td></tr>
-<tr><td>Vision</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Camera e calibrazione</td></tr>
+<tr><th>Kit</th><th>Light Core</th><th>Standard</th><th>Pro</th><th>Note</th></tr>
+<tr><td>PCB Precision</td><td class="status-ok">OK · Core-ready</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Micro-spindle leggero</td></tr>
+<tr><td>Diode Laser</td><td class="status-ok">OK · Core-ready</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Safety ed estrazione dal kit</td></tr>
+<tr><td>Knife</td><td class="status-ok">OK · Core-ready</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Forze basse</td></tr>
+<tr><td>Dispenser</td><td class="status-ok">OK · Core-ready</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Pneumatica dal kit</td></tr>
+<tr><td>Vision</td><td class="status-target">Platform Pack</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Camera e calibrazione; sulla Light Core serve il bus dati del Platform Pack</td></tr>
 <tr><td>Thermoforming</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td>Calore, vuoto, telaio, heater e distanze termiche</td></tr>
 <tr><td>Fiber MOPA</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td class="status-validate">DA VERIFICARE</td><td>Fibra e raggio di curvatura, galvo, enclosure Class 1, sorgente esterna: testa ToolDock o stazione dedicata da decidere</td></tr>
 <tr><td>Aluminium Light</td><td class="status-critical">NO</td><td class="status-ok">OK</td><td class="status-ok">OK</td><td>Passate leggere, MQL</td></tr>

@@ -4,7 +4,7 @@ Le tabelle delle tre BOM sono generate da dati Python, non scritte a mano.
 
 | Base | Dati | Pagina |
 |---|---|---|
-| Light | `data_light.py` | `bom/base-light.html` |
+| Light Core | `data_light.py` | `bom/base-light.html` (prezzi TARGET a lotto da 50, D024) |
 | Standard | `data_standard.py` | `bom/base.html` |
 | Pro | `data_pro.py` | `bom/base-pro.html` |
 

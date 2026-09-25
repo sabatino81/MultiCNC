@@ -4,6 +4,7 @@
 
 <section class="section"><div class="callout"><b>Regola di modifica:</b> un valore marcato FROZEN si cambia solo con una nuova decisione nel Decision Log e una nuova revisione della ICD (la prossima è v4). Ogni revisione deve accettare le teste e i pallet della precedente, oppure dichiarare esplicitamente cosa smette di essere compatibile.</div></section>
 
+<section class="section"><div class="callout" style="border-color:rgba(255,106,43,.45);background:linear-gradient(90deg,rgba(255,106,43,.12),rgba(255,106,43,.02))"><b>Light Core · profilo Core (D024):</b> la Light Core rispetta per intero la parte <b>meccanica</b> della ICD v3 (accoppiamento a 3 sfere, pull-stud, receiver, inviluppo classe L, Module ID, tavola, pallet, spalle e rialzi). Lato elettrico ha un profilo ridotto: clamp manuale ≥ 0,5 kN, connettore circolare 12 poli (spindle, 48 V ≤ 60 W, I/O, ID), niente 48 V MODULE AUX dedicato, 24 V aux, connettore dati e sequenza automatica di sgancio. I kit <b>Core-ready</b> funzionano con questo profilo; il <b>Platform Pack</b> riporta la Light Core alla ICD v3 completa e ai valori di potenza qui sotto.</div></section>
 <section class="section"><div class="callout" style="border-color:rgba(165,139,255,.4);background:linear-gradient(90deg,rgba(165,139,255,.1),rgba(165,139,255,.02))"><b>Revisione tecnica 2026-09-24:</b> alcune voci erano state congelate troppo presto e sono state riviste con le decisioni D014–D018: <s>forza del clamp e sgancio sulla Light, conferma di cattura nel rack, dock rail</s> (chiusi da <a href="tooldock-d016.html" style="color:var(--accent-2)">D016</a>), <s>bus dati, encoder differenziali, potenza disponibile per base</s> (chiusi da D017, rivisti da D020 in ICD v3), <s>R1/R2 sulla griglia, spessore tavola e filetto utile</s> (chiusi da D018). Resta aperta solo la zona dock (D016). Il resto resta FROZEN.</div></section>
 <section class="section"><h2>1 · ToolDock meccanico</h2><div class="table-wrap"><table>
 <tr><th>Elemento</th><th>Specifica v1</th><th>Stato</th></tr>
@@ -44,7 +45,7 @@
 <p style="color:var(--dim);font-size:13px;margin-top:12px"><b>Qualifica FROZEN:</b> il connettore blind-mate reale va qualificato per 100 Ω di impedenza differenziale e integrità di segnale di classe Cat5e sulle 4 coppie Ethernet; "contatti a molla schermati" non basta (D022).</p>
 <h3 style="margin-top:22px">2c · Potenza garantita per base</h3><div class="table-wrap"><table>
 <tr><th>Base</th><th>48 V MODULE AUX dedicato</th><th>48 V aux garantito</th><th>24 V (HDR-100-24, ~92 W) aux garantito</th></tr>
-<tr><td>Light</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">40 W</td></tr>
+<tr><td>Light (con Platform Pack)</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">40 W</td></tr>
 <tr><td>Standard</td><td>LRS-150-48</td><td class="status-target">120 W</td><td class="status-target">40 W</td></tr>
 <tr><td>Pro</td><td>LRS-350-48</td><td class="status-target">240 W</td><td class="status-target">40 W</td></tr>
 </table></div>

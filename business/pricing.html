@@ -20,7 +20,7 @@
 
 <section class="section"><h2>Scala dei prezzi</h2><div class="table-wrap"><table>
 <tr><th>Prodotto</th><th>Prezzo listino</th><th>BOM oggi (prototipo)</th><th>Tetto BOM (lotto 50)</th><th>Ruolo</th></tr>
-<tr><td><b>Light Core</b></td><td class="status-target">~€2.290</td><td>€2.790 (Light attuale)</td><td class="status-target">≤ €1.050</td><td>Ingresso nella piattaforma: stessi pallet e stessa interfaccia ToolDock (manuale), si aggiorna con il Platform Pack</td></tr>
+<tr><td><b>Light Core</b></td><td class="status-target">~€2.290</td><td>€997 a lotto 50 (BOM Light Core, D024)</td><td class="status-target">≤ €1.050</td><td>Ingresso nella piattaforma: stessi pallet e stessa interfaccia ToolDock (manuale), si aggiorna con il Platform Pack</td></tr>
 <tr><td><b>Standard</b></td><td class="status-target">€4.990</td><td>€3.394</td><td class="status-target">~€1.960</td><td>Prodotto principale: ToolDock automatico, closed-loop, spindle base incluso</td></tr>
 <tr><td><b>Pro</b></td><td class="status-target">€8.000–9.500</td><td>€4.392</td><td>da fissare</td><td>Alluminio serio, dopo la Standard</td></tr>
 <tr><td><b>Kit</b> (laser, PCB, stampa…)</td><td class="status-target">€300–1.500</td><td>—</td><td class="status-target">margine ≥ 60%</td><td>Dove si guadagna: li facciamo solo noi, su un'interfaccia che controlliamo</td></tr>
@@ -62,14 +62,14 @@
 </table></div></section>
 
 <section class="section"><h2>Tetti di costo per gruppo · Light Core</h2><div class="table-wrap"><table>
-<tr><th>Gruppo</th><th>Light oggi</th><th>Tetto Core</th><th>Leva</th></tr>
-<tr><td>A · Struttura</td><td>€425</td><td class="status-target">€260</td><td>Profilati e piastre tagliate in lotto; riferimenti lavorati solo dove servono (pallet, spalle)</td></tr>
-<tr><td>B · Cinematica XYZ</td><td>€628</td><td class="status-target">€320</td><td>Open-loop, guide e viti a volume</td></tr>
-<tr><td>C · Spindle base</td><td>€200</td><td class="status-target">€120</td><td>Spindle BLDC a volume</td></tr>
-<tr><td>D · ToolDock</td><td>€540</td><td class="status-target">€150</td><td>ToolDock manuale con la stessa interfaccia meccanica ICD: la testa si blocca a mano, il clamp automatico arriva con il Platform Pack</td></tr>
-<tr><td>E · Controllo</td><td>€760</td><td class="status-target">€120</td><td>Controller grblHAL integrato + alimentatore, niente Mesa e niente PC</td></tr>
-<tr><td>F · Cablaggio e sensori</td><td>€237</td><td class="status-target">€80</td><td>Cablaggio essenziale, niente connettore dati</td></tr>
-<tr><td><b>Totale</b></td><td><b>€2.790</b></td><td class="status-target"><b>€1.050</b></td><td>La BOM Light si rifà come Light Core quando il D023 è confermato</td></tr>
+<tr><th>Gruppo</th><th>Light prototipo</th><th>Tetto Core</th><th>BOM Core (D024)</th><th>Leva</th></tr>
+<tr><td>A · Struttura</td><td>€425</td><td class="status-target">€260</td><td class="status-ok">€252</td><td>Profilati e piastre tagliate in lotto; riferimenti lavorati solo dove servono (pallet, spalle)</td></tr>
+<tr><td>B · Cinematica XYZ</td><td>€628</td><td class="status-target">€320</td><td class="status-ok">€294</td><td>Open-loop, guide e viti a volume</td></tr>
+<tr><td>C · Spindle base</td><td>€200</td><td class="status-target">€120</td><td class="status-ok">€120</td><td>Spindle BLDC a volume</td></tr>
+<tr><td>D · ToolDock</td><td>€540</td><td class="status-target">€150</td><td class="status-ok">€143</td><td>ToolDock manuale con la stessa interfaccia meccanica ICD: la testa si blocca a mano, il clamp automatico arriva con il Platform Pack</td></tr>
+<tr><td>E · Controllo</td><td>€760</td><td class="status-target">€120</td><td class="status-ok">€120</td><td>Controller grblHAL integrato + alimentatore, niente Mesa e niente PC</td></tr>
+<tr><td>F · Cablaggio e sensori</td><td>€237</td><td class="status-target">€80</td><td class="status-ok">€68</td><td>Cablaggio essenziale, niente connettore dati</td></tr>
+<tr><td><b>Totale</b></td><td><b>€2.790</b></td><td class="status-target"><b>€1.050</b></td><td class="status-ok"><b>€997</b></td><td>Tutti i gruppi nel tetto, margine €53 (<a href="../bom/base-light.html" style="color:var(--accent-2)">BOM Light Core</a>)</td></tr>
 </table></div></section>
 
 <section class="section split">

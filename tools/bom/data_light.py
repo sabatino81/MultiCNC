@@ -1,8 +1,10 @@
-"""Dati BOM Base Light → bom/base-light.html.
+"""Dati BOM Base Light Core (D023) → bom/base-light.html.
 
 Ogni riga: (id, gruppo, componente, q.tà etichetta, q.tà numerica, candidate, specifica,
 €/cad, kg/cad, dove, classe stato, stato).
 dove: "M" = sulla macchina, "C" = quadro/unità esterne, "A" = accessorio (escluso dai totali).
+Prezzi: TARGET a lotto da 50 macchine (D023), non prezzi di prototipo come Standard e Pro.
+Tetto BOM Light Core: ≤ €1.050.
 Dopo una modifica: python3 tools/bom/build.py
 """
 PAGE = "bom/base-light.html"
@@ -10,63 +12,55 @@ EXTERNAL_LABEL = "quadro"
 
 G=[
 ("A · Struttura e riferimenti",[
-("ML-BAS-001","Structure","Telaio basamento","1",1,"Profilati Al 40×40 + piastre lavorate","Piastre con sedi guide Y lavorate su telaio a profilati; lunghezza ~corsa Y + tavola; piastre assottigliate (D010)",120,2.0,"M","design","TO DESIGN"),
-("ML-GAN-001","Structure","Trave gantry","1",1,"Profilo Al 40×80 lavorato","Ponte fisso (D006), faccia guide X lavorata, pareti ridotte (D010)",70,1.1,"M","design","TO DESIGN"),
-("ML-GAN-002","Structure","Spalle gantry","2",2,"Al 5083 8 mm alleggerito","Spinate al telaio; sede rialzi (D007)",30,0.5,"M","design","TO DESIGN"),
-("ML-Z-001","Structure","Piastra asse Z","1",1,"Al 5083 8 mm","Guide Z + ToolDock master",40,0.3,"M","design","TO DESIGN"),
-("ML-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al 9 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 4 mm, boss Ø16 × 9 mm attorno ai fori M6 e ai riferimenti (D018)",80,2.0,"M","design","TO DESIGN"),
-("ML-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO","Viteria, spine, inserti",30,0.4,"M","source","TO SOURCE"),
-("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v3, D018)",25,0.08,"M","source","TO SOURCE"),
+("ML-BAS-001","Structure","Telaio basamento","1",1,"Profilati Al 40×40 + piastre tagliate e lavorate in lotto","Piastre con sedi guide Y lavorate su telaio a profilati; lunghezza ~corsa Y + tavola (D010)",80,2.0,"M","design","TO DESIGN"),
+("ML-GAN-001","Structure","Trave gantry","1",1,"Profilo Al 40×80 lavorato in lotto","Ponte fisso (D006), faccia guide X lavorata",35,1.1,"M","design","TO DESIGN"),
+("ML-GAN-002","Structure","Spalle gantry","2",2,"Al 5083 8 mm, taglio + lavorazione in lotto","Spinate al telaio; sede rialzi (D007)",15,0.5,"M","design","TO DESIGN"),
+("ML-Z-001","Structure","Piastra asse Z","1",1,"Al 5083 8 mm","Guide Z + master ToolDock",18,0.3,"M","design","TO DESIGN"),
+("ML-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al 9 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 4 mm, boss Ø16 × 9 mm attorno ai fori M6 e ai riferimenti (D018): stessi pallet delle altre basi",60,2.0,"M","design","TO DESIGN"),
+("ML-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO","Viteria, spine, inserti",15,0.4,"M","source","TO SOURCE"),
+("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v3, D018)",14,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
-("ML-LIN-151","XY","Guide lineari MGN12","4 rails",4,"HIWIN MGN12 class","2 rail Y + 2 rail X, 620 mm (D019: corsa + margini + inviluppo pattini)",31,0.4,"M","source","TO SOURCE"),
-("ML-LIN-152","XY","Pattini MGN12H","8",8,"HIWIN MGN12H class","2 pattini per rail, versione lunga, precarico Z1 (175 N/µm, D022)",9,0.05,"M","source","TO SOURCE"),
-("ML-LIN-153","Z","Guide lineari MGN12","2 rails",2,"HIWIN MGN12 class","280 mm (D019)",16,0.18,"M","source","TO SOURCE"),
-("ML-LIN-154","Z","Pattini MGN12H","4",4,"HIWIN MGN12H class","4 pattini complessivi",9,0.05,"M","source","TO SOURCE"),
-("ML-BS-1204X","X","Ball screw X","1",1,"SFU1204 C7","570 mm totali, estremità BK/BF comprese (D019)",40,0.71,"M","validate","TO VALIDATE"),
-("ML-BS-1204Y","Y","Ball screw Y","1",1,"SFU1204 C7","Vite singola centrale sotto la tavola (D006), 470 mm totali (D019)",40,0.62,"M","validate","TO VALIDATE"),
-("ML-BS-1204Z","Z","Ball screw Z","1",1,"SFU1204 C7","260 mm totali (D019), stessa vite Z della Standard",35,0.43,"M","validate","TO VALIDATE"),
-("ML-BKBF-001","XYZ","Supporti BK10/BF10","3 set",3,"BK/BF class","Supporti per le tre viti",18,0.35,"M","source","TO SOURCE"),
-("ML-CPL-001","XYZ","Giunti motore-vite","3",3,"Low backlash bellows class","Taglia NEMA17",12,0.07,"M","source","TO SOURCE"),
-("ML-MOT-001","XYZ","Motori NEMA17 closed-loop","3",3,"NEMA17 ~0.6 Nm + encoder","Motore + encoder sulla macchina",35,0.55,"M","design","CANDIDATE"),
-("ML-DRV-001","XYZ","Driver closed-loop","3",3,"CL42T class","Nel quadro esterno",18,0.2,"C","design","CANDIDATE"),
+("ML-LIN-151","XY","Guide lineari MGN12","4 rails",4,"MGN12, HIWIN o equivalente qualificato","2 rail Y + 2 rail X, 620 mm (D019)",18,0.4,"M","source","TO SOURCE"),
+("ML-LIN-152","XY","Pattini MGN12H","8",8,"MGN12H, HIWIN o equivalente qualificato","2 pattini per rail, versione lunga, precarico Z1: equivalente accettato solo con rigidezza ≥ HIWIN (175 N/µm, D022)",5,0.05,"M","source","TO SOURCE"),
+("ML-LIN-153","Z","Guide lineari MGN12","2 rails",2,"MGN12, HIWIN o equivalente qualificato","280 mm (D019)",9,0.18,"M","source","TO SOURCE"),
+("ML-LIN-154","Z","Pattini MGN12H","4",4,"MGN12H, HIWIN o equivalente qualificato","4 pattini complessivi",5,0.05,"M","source","TO SOURCE"),
+("ML-BS-1204X","X","Ball screw X","1",1,"SFU1204 C7 rullata","570 mm totali, estremità BK/BF comprese (D019)",22,0.71,"M","validate","TO VALIDATE"),
+("ML-BS-1204Y","Y","Ball screw Y","1",1,"SFU1204 C7 rullata","Vite singola centrale sotto la tavola (D006), 470 mm totali (D019)",22,0.62,"M","validate","TO VALIDATE"),
+("ML-BS-1204Z","Z","Ball screw Z","1",1,"SFU1204 C7 rullata","260 mm totali (D019)",22,0.43,"M","validate","TO VALIDATE"),
+("ML-BKBF-001","XYZ","Supporti BK10/BF10","3 set",3,"BK/BF class","Supporti per le tre viti",9,0.35,"M","source","TO SOURCE"),
+("ML-CPL-001","XYZ","Giunti motore-vite","3",3,"Low backlash bellows class","Taglia NEMA17",5,0.07,"M","source","TO SOURCE"),
+("ML-MOT-002","XYZ","Motori NEMA17 open-loop","3",3,"NEMA17 ~0,6 Nm","Stessa coppia della Light closed-loop (crash load D014 invariato); il Platform Pack li sostituisce con i closed-loop",12,0.4,"M","design","CANDIDATE"),
 ]),
 ("C · Spindle base",[
-("ML-SP-001","Spindle","Spindle BLDC 300–500 W","1",1,"ER11, air-cooled","Testa completa entro il carico ToolDock di 2 kg",80,1.0,"M","design","TO QUALIFY"),
-("ML-SP-002","Spindle","Driver BLDC","1",1,"0.5 kW class","Al posto del VFD; nel quadro esterno",50,0.5,"C","source","TO SOURCE"),
-("MC-SP-006","Spindle","Contattore uscita spindle","1",1,"Contattore AC-3 con contatto ausiliario","Apre P1–P3 a valle di VFD/driver prima dello sgancio della testa (ICD v3, D020)",25,0.2,"C","design","TO DESIGN"),
-("ML-SP-003","Spindle","Spindle mount","1",1,"Custom machined clamp","Receiver-compatible con ToolDock",25,0.25,"M","design","TO DESIGN"),
-("ML-SP-005","Tooling","ER11 collet starter set","1",1,"Precision collets class","Starter tooling only",20,0.15,"M","source","TO SOURCE"),
+("ML-SP-001","Spindle","Spindle BLDC 300–500 W","1",1,"ER11, air-cooled","Testa completa entro il carico ToolDock di 2 kg",60,1.0,"M","design","TO QUALIFY"),
+("ML-SP-002","Spindle","Driver BLDC + alimentatore","1",1,"0,5 kW class, alimentatore dedicato","Nel quadro; enable dal controller, tolto dal consenso cambio testa",45,0.8,"C","source","TO SOURCE"),
+("ML-SP-003","Spindle","Spindle mount","1",1,"Custom machined clamp","Receiver-compatible con ToolDock",12,0.25,"M","design","TO DESIGN"),
+("ML-SP-005","Tooling","ER11 collet starter set","1",1,"2 pinze (3,175 · 6 mm)","Starter tooling only",3,0.05,"M","source","TO SOURCE"),
 ]),
-("D · ToolDock (identico sulle tre basi)",[
-("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Stessa parte della Standard","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
-("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Stessa parte della Standard","Receiver del modulo spindle base",80,0.3,"M","design","TO DESIGN"),
-("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v3)","Pacco molle ≥ 0,5 kN (classe L), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
-("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Stessa parte della Standard","Power + signal + ID",120,0.3,"M","critical","CRITICAL DESIGN"),
-("MC-TD-005","ToolDock","Module ID","1",1,"Stessa parte della Standard","Identificazione automatica",30,0.02,"M","design","TO DESIGN"),
-("MC-TD-007","ToolDock","Connettore dati","1",1,"Blind-mate a contatti a molla, schermato","Ethernet 1000BASE-T (4 coppie) + CAN FD + encoder RS-422 differenziale (ICD v3, D020)",60,0.05,"M","design","TO SOURCE"),
+("D · ToolDock manuale (interfaccia ICD comune)",[
+("ML-TD-001","ToolDock","Master kinematic plate","1",1,"Stesso accoppiamento a 3 sfere e pull-stud delle altre basi","Montata sul carrello Z; sedi già lavorate per clamp automatico, connettore ibrido e connettore dati del Platform Pack",60,0.55,"M","critical","CRITICAL DESIGN"),
+("ML-TD-002","ToolDock","Base spindle receiver","1",1,"Receiver ICD comune","Stessa receiver delle altre basi: le teste restano intercambiabili",30,0.3,"M","design","TO DESIGN"),
+("ML-TD-003","ToolDock","Clamp manuale","1",1,"Leva a camma sul pull-stud comune","Preload ≥ 0,5 kN come la classe L (D016); sostituito dal clamp automatico nel Platform Pack",35,0.35,"M","critical","CRITICAL DESIGN"),
+("ML-TD-004","ToolDock","Connettore modulo manuale","1",1,"Circolare industriale 12 poli","Spindle, 48 V modulo, I/O e ID; si innesta a mano, solo con consenso cambio testa attivo",15,0.1,"M","design","TO SOURCE"),
+("MC-TD-005","ToolDock","Module ID","1",1,"1-Wire comune","Stesso ID delle altre basi: il controller rifiuta le teste non Core-ready",3,0.01,"M","design","TO DESIGN"),
 ]),
 ("E · Controllo (quadro esterno)",[
-("MC-CTRL-001","Control","Motion controller","1",1,"Mesa 7i96S","Comune alle tre basi",160,0.2,"C","validate","I/O REVIEW"),
-("MC-CTRL-003","Control","Espansione I/O","1",1,"Scheda Mesa su porta di espansione 7i96S (modello da confermare)","≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v3)",90,0.2,"C","validate","I/O REVIEW"),
-("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v3, D020)",40,0.05,"C","source","TO SOURCE"),
-("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC, 2 porte Ethernet","Porta 1 dedicata alla Mesa, porta 2 per il bus dati ToolDock (D017)",150,0.8,"C","source","TO SOURCE"),
-("ML-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-200-48","Motion supply NEMA17",45,0.6,"C","source","TO SOURCE"),
-("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v3, D022)",45,0.35,"C","source","TO SOURCE"),
-("MC-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-150-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v3, D020)",40,0.6,"C","source","TO SOURCE"),
-("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process",70,0.5,"C","design","TO DESIGN"),
-("ML-IO-001","I/O","Relays / terminals / protection","1 set",1,"DIN rail","Fusibili, relè, morsetti",60,0.5,"C","source","TO SOURCE"),
-("ML-EL-BOX","Electrical","Quadro elettrico esterno compatto","1",1,"DIN cabinet","Controller, PSU, driver",60,1.8,"C","design","TO DESIGN"),
+("ML-CTRL-001","Control","Controller grblHAL","1",1,"32 bit, Ethernet, 3 driver TMC5160 integrati","Al posto di Mesa + PC + driver separati; web UI, niente PC dedicato",65,0.2,"C","validate","TO VALIDATE"),
+("ML-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-200-48","Motion NEMA17 + linea modulo Core-ready (≤ 60 W)",28,0.6,"C","source","TO SOURCE"),
+("ML-EL-BOX","Electrical","Quadro compatto + E-stop","1",1,"Box, E-stop, fusibili, morsetti","E-stop su enable driver e spindle; pulsante consenso cambio testa",27,1.2,"C","design","TO DESIGN"),
 ]),
 ("F · Cablaggio, sensori e metrologia",[
-("ML-CAB-001","Electrical","Cavi schermati macchina–quadro","1 set",1,"Motion + spindle + I/O","EMC-aware routing",70,0.7,"M","source","TO SOURCE"),
-("ML-CHAIN-001","Mechanical","Drag chains","1 set",1,"Low-profile cable chain","X/Z sul ponte",35,0.3,"M","source","TO SOURCE"),
-("MC-SNS-001","Sensing","Home/limit sensors","4",4,"Inductive class","XYZ home + limite",8,0.05,"M","source","TO SOURCE"),
-("MC-PROBE-001","Metrology","XYZ touch probe","1",1,"Wired probe class","Work offset / edge finding",45,0.2,"M","design","TO QUALIFY"),
-("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
+("ML-CAB-001","Electrical","Cavi macchina–quadro","1 set",1,"Cablaggi preassemblati","Motori, spindle, connettore modulo, sensori",25,0.6,"M","source","TO SOURCE"),
+("ML-CHAIN-001","Mechanical","Drag chains","1 set",1,"Low-profile cable chain","X/Z sul ponte",12,0.3,"M","source","TO SOURCE"),
+("ML-SNS-001","Sensing","Home sensors","3",3,"Micro-switch o induttivi","Home XYZ; i limiti restano sugli hard stop con bumper (D014)",3,0.03,"M","source","TO SOURCE"),
+("ML-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Riferimento lunghezza utensile",12,0.2,"M","design","TO QUALIFY"),
+("ML-CAB-002","Electrical","Pressacavi e connettori","1 set",1,"Pressacavi, capicorda, fascette","Minuteria di cablaggio",10,0.1,"M","source","TO SOURCE"),
 ]),
-("G · Accessori (non inclusi nei totali)",[
-("ML-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +50 mm","Clearance manuale riferita da spine",45,0.8,"A","design","TO DESIGN"),
-("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
+("G · Accessori e upgrade (non inclusi nei totali)",[
+("ML-UP-001","Upgrade","Platform Pack","1",1,"Clamp automatico + connettore ibrido e dati + quadro Mesa/LinuxCNC + NEMA17 closed-loop","Porta la Light Core al livello piattaforma della ICD v3: cambio testa automatico, kit Platform, magazine (D023)",480,1.5,"A","design","TO DESIGN"),
+("ML-PROBE-001","Metrology","XYZ touch probe","1",1,"Wired probe class","Work offset / edge finding",35,0.2,"A","design","TO QUALIFY"),
+("ML-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +50 mm","Clearance manuale riferita da spine",30,0.8,"A","design","TO DESIGN"),
+("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Richiede il Platform Pack; sul ponte, presenta la testa in un\'unica posizione di docking (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]
