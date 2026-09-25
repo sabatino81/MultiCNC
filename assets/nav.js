@@ -15,7 +15,7 @@
     ['00','Business',[
       ['Overview','business/index.html'],
       ['Mercato & competitor','business/market.html'],
-      ['Prezzo & margini','business/pricing.html','NEXT'],
+      ['Prezzo & margini','business/pricing.html'],
       ['Clienti & canali','business/channels.html','NEXT']
     ],['business/']],
     ['01','Progetto',[
