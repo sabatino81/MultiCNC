@@ -1,0 +1,103 @@
+{
+  "tag": "d032_C3c_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 258002,
+    "elements": 142056,
+    "dof": 774006,
+    "min_sj": 0.587,
+    "poor": 0
+  },
+  "solve_s": 211.7,
+  "total_s": 295.4,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 3.946,
+    "struct": 2.841,
+    "head": 1.136
+  },
+  "k": {
+    "Fx": 1.215,
+    "Fy": 1.024,
+    "Fz": 2.198
+  },
+  "tip_um": {
+    "Fx": [
+      123.5,
+      -2.24,
+      0.31
+    ],
+    "Fy": [
+      -2.24,
+      146.43,
+      -42.86
+    ],
+    "Fz": [
+      0.71,
+      -54.29,
+      91.01
+    ],
+    "FxFz": [
+      124.21,
+      -56.53,
+      91.32
+    ],
+    "FyFz": [
+      -1.53,
+      92.14,
+      48.15
+    ]
+  },
+  "worst_um": 164.2,
+  "energy": {
+    "Fx": {
+      "uprights": 0.371996,
+      "beam": 0.794872,
+      "carriage": 1.352208,
+      "zslide": 0.827965,
+      "head": 2.086845,
+      "xblocks": 0.218369,
+      "xscrew": 0.306162,
+      "zblocks": 0.68059,
+      "zscrew": 0.0,
+      "tooldock": 2.061224,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269308,
+      "beam": 1.652041,
+      "carriage": 2.223528,
+      "zslide": 1.169486,
+      "head": 2.122445,
+      "xblocks": 0.241263,
+      "xscrew": 0.0,
+      "zblocks": 0.680362,
+      "zscrew": 0.0,
+      "tooldock": 2.061224,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.554163,
+      "beam": 4.693145,
+      "carriage": 0.816098,
+      "zslide": 1.313194,
+      "head": 0.093855,
+      "xblocks": 0.179935,
+      "xscrew": 1e-06,
+      "zblocks": 0.081715,
+      "zscrew": 0.616506,
+      "tooldock": 0.112131,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 9.262733,
+    "Fy": 10.98216,
+    "Fz": 9.101007
+  },
+  "concept": "C3c",
+  "desc": "C3c · C1b + connettore a uscita laterale, receiver 15 (braccio ~203 mm)"
+}
