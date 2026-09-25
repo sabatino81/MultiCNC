@@ -14,9 +14,14 @@ A0 = mule v3 · A1 = master + slitta monoscocca · A2 = A1 + carrello scatolato 
 massa costante · A4 = combinazione ottimizzata.
 """
 import copy
+import pathlib
 import sys
 
 import standard_params as P
+
+_CALC = str(pathlib.Path(__file__).resolve().parents[1] / "calc")   # compliance_d028 (override del ToolDock)
+if _CALC not in sys.path:
+    sys.path.insert(0, _CALC)
 
 _BASE = {k: copy.deepcopy(v) for k, v in vars(P).items() if k.isupper()}
 
