@@ -43,6 +43,9 @@ CONCEPTS = {
     "C3a": dict(desc="C3a · C2 + connettore a uscita laterale (braccio ~196 mm)", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None,
                 "compliance_d028.COUPLING_R": 55.0, "SPINDLE_BASE": "sp:receiver_w=126,receiver_t=8", "HEAD": "head:W=126,L=196",
                 "CONNECTOR_ENVELOPES": "env:SIDE_EXIT", "CONNECTOR_MODE": "SIDE_EXIT"}),
+    "C3c": dict(desc="C3c · C1b + connettore a uscita laterale, receiver 15 (braccio ~203 mm)", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None,
+                "compliance_d028.COUPLING_R": 55.0, "SPINDLE_BASE": "sp:receiver_w=126", "HEAD": "head:W=126,L=203",
+                "CONNECTOR_ENVELOPES": "env:SIDE_EXIT", "CONNECTOR_MODE": "SIDE_EXIT"}),
     "A2": dict(desc="A2 · A1s + carrello a cassone (zaino 4 mm)", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None,
                                                                          "CARRIAGE_BOX": dict(z0=392.0, y1=200.0, wall=4.0)}),
 }
