@@ -199,9 +199,18 @@ class Model:
                 L.append(f"{e}," + ",".join(str(n) for n in c[:8]) + ",")
                 L.append(",".join(str(n) for n in c[8:]))
         eid = self.n_elem + 1
+        spring_eid = {}
         for (sname, n1, d1, n2, d2, k) in self.springs:
             L += [f"*ELEMENT, TYPE=SPRING2, ELSET=S_{sname}", f"{eid},{n1},{n2}", f"*SPRING, ELSET=S_{sname}", f"{d1},{d2}", f"{k:.6e}"]
+            spring_eid[sname] = eid
             eid += 1
+        # gruppi per l'energia di deformazione: corpi solidi (elementi) e molle (per prefisso del nome)
+        for g, (bodies, prefixes) in getattr(self, "energy_groups", {}).items():
+            ids = [int(e) for b in bodies if b in self.elements for e in self.elements[b][0]]
+            ids += [e for n, e in spring_eid.items() if n.startswith(tuple(prefixes))] if prefixes else []
+            if ids:
+                L.append(f"*ELSET, ELSET=EN_{g}")
+                L += [",".join(str(i) for i in ids[j:j + 16]) for j in range(0, len(ids), 16)]
         for m in {b[2] for b in self.bodies}:
             p = MATERIALS[m]
             L += [f"*MATERIAL, NAME={m}", "*ELASTIC", f"{p['E']},{p['nu']}"]
@@ -225,7 +234,10 @@ class Model:
         for sname, loads in self.steps:
             L += ["*STEP", "*STATIC", "*CLOAD, OP=NEW"]
             L += [f"{n},{d},{v:.6e}" for n, d, v in loads]
-            L += ["*NODE PRINT, NSET=MONITOR", "U", "*NODE FILE", "U", "*EL FILE", "S", "*END STEP"]
+            L += ["*NODE PRINT, NSET=MONITOR", "U"]
+            for g in getattr(self, "energy_groups", {}):
+                L += [f"*EL PRINT, ELSET=EN_{g}, TOTALS=ONLY", "ELSE"]
+            L += ["*NODE FILE", "U", "*EL FILE", "S", "*END STEP"]
         f.write_text("\n".join(L) + "\n")
         return f
 
@@ -262,6 +274,27 @@ class Model:
                     out[cur][int(parts[0])] = tuple(float(v) for v in parts[1:])
                 except ValueError:
                     pass
+        return out
+
+    def read_energy(self):
+        """Energia di deformazione totale per gruppo e per step (N·mm): {step: {gruppo: E}}."""
+        import re
+        out, k, cur, pending = {}, -1, None, None
+        for line in (self.dir / f"{self.name}.dat").read_text().splitlines():
+            if line.strip().startswith("displacements"):
+                k += 1
+                cur = out.setdefault(self.steps[k][0], {})
+                continue
+            mm = re.search(r"total internal energy for set EN_(\S+)", line, re.I)
+            if mm:
+                pending = mm.group(1).lower()
+                continue
+            if pending and line.strip():
+                try:
+                    cur[pending] = float(line.split()[0])
+                except ValueError:
+                    pass
+                pending = None
         return out
 
     def read_frd(self):

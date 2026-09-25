@@ -81,7 +81,22 @@ def build(tag, h, hc, rigid=(), stiff_springs=()):
     m.quality["spindle_body"], m.quality["head"] = q[tube], q[~tube]
     m.bodies.append(("spindle_body", [], "STEEL"))
     m.body_nodes["spindle_body"] = np.unique(conn[tube])
+    # trave e spalle: stessa mesh incollata, due gruppi di elementi (split per l'asse Z)
+    gid, gconn = m.elements.pop("gantry")
+    gq = m.quality.pop("gantry")
+    gc = m.xyz(gconn[:, :4].ravel()).reshape(-1, 4, 3).mean(axis=1)
+    upr = gc[:, 2] < bb(sh["beam"])[4]
+    m.elements["uprights"], m.elements["beam"] = (gid[upr], gconn[upr]), (gid[~upr], gconn[~upr])
+    m.quality["uprights"], m.quality["beam"] = gq[upr], gq[~upr]
+    m.bodies = [b for b in m.bodies if b[0] != "gantry"] + [("beam", [], "AL"), ("uprights", [], "AL")]
+    m.energy_groups = {
+        "uprights": (["uprights"], ()), "beam": (["beam"], ()), "carriage": (["carriage"], ()),
+        "zslide": (["struct"], ()), "head": (["head", "spindle_body", "shaft"], ()),
+        "xblocks": ((), ("x_block",)), "xscrew": ((), ("xscrew",)), "zblocks": ((), ("z_block",)), "zscrew": ((), ("zscrew",)),
+        "tooldock": ((), ("ball",)), "bearing": ((), ("bearing",)),
+    }
     if rigid:                                   # diagnostica: corpi resi "infinitamente" rigidi
+        rigid = set(rigid) | ({"beam", "uprights"} if "gantry" in rigid else set())
         m.bodies = [(n, s_, "RIGID" if n in rigid else mt) for n, s_, mt in m.bodies]
     eps = 1e-3
 
@@ -160,7 +175,7 @@ def build(tag, h, hc, rigid=(), stiff_springs=()):
         m.step(name, [(tip[0] if pt_ == "tip" else tip[1], d, v) for pt_, d, v in loads])
     if stiff_springs:                           # diagnostica: molle con questi prefissi ×1000 (quasi rigide)
         m.springs = [(n, a_, d1, b_, d2, k * 1000.0 if n.startswith(tuple(stiff_springs)) else k) for n, a_, d1, b_, d2, k in m.springs]
-    mass = {b: round(m.body_mass(b), 3) for b in ("gantry", "carriage", "struct", "head")}
+    mass = {b: round(m.body_mass(b), 3) for b in ("beam", "uprights", "carriage", "struct", "head")}
     return m, info, [tip[0], tip[1]], tip, mass
 
 
@@ -177,9 +192,11 @@ def d028_split():
     return out
 
 
-def solve(tag, h, hc, rigid=(), stiff_springs=()):
+def solve(tag, h, hc, rigid=(), stiff_springs=(), energy=False):
     cache = WORK / tag / "result.json"
     key = dict(v="gantry-v1", h=h, hc=hc, tab=P.TAB_T, saddle=P.SADDLE)
+    if energy:
+        key["energy"] = True
     if rigid:
         key["rigid"] = sorted(rigid)
     if stiff_springs:
@@ -191,12 +208,15 @@ def solve(tag, h, hc, rigid=(), stiff_springs=()):
     t0 = time.time()
     m, info, monitor, tip, mass = build(tag, h, hc, rigid, stiff_springs)
     disp, _ = m.run(monitor)
+    energy = m.read_energy()
     U = {n: np.array(disp[n][tip[0]]) * 1000.0 for n, _, _ in CASES}
     U["FxFz"], U["FyFz"] = U["Fx"] + U["Fz"], U["Fy"] + U["Fz"]
     k = {n: round(f / abs(float(U[n][d])), 3) for n, d, f in (("Fx", 0, 150.0), ("Fy", 1, 150.0), ("Fz", 2, 200.0))}
     r = dict(tag=tag, h=h, hc=hc, rigid=sorted(rigid), mesh=info, solve_s=m.solve_s, total_s=round(time.time() - t0, 1), mass=mass, k=k,
              tip_um={n: [round(float(v), 2) for v in u] for n, u in U.items()},
-             worst_um=round(max(float(np.linalg.norm(U[n])) for n in U), 1))
+             worst_um=round(max(float(np.linalg.norm(U[n])) for n in U), 1),
+             energy={n: {g: round(e, 6) for g, e in energy.get(n, {}).items()} for n, _, _ in CASES},
+             work={n: round(0.5 * f * abs(float(U[n][d])) / 1000.0, 6) for n, d, f in (("Fx", 0, 150.0), ("Fy", 1, 150.0), ("Fz", 2, 200.0))})
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_text(json.dumps(dict(key=key, result=r)))
     return r
@@ -208,6 +228,8 @@ DIAG = [  # (nome, corpi rigidi): la cedevolezza tolta misura il peso di ciascun
     ("zgroup", ("struct", "head", "spindle_body", "shaft")),
     ("tooldock", (), ("ball",)),                                        # molle delle tre sfere ×1000
     ("rails", (), ("x_block", "z_block", "xscrew", "zscrew")),          # pattini e viti X/Z ×1000
+    ("beam", ("beam",)),                                                  # split per Z (D032)
+    ("uprights", ("uprights",)),
 ]
 
 
@@ -217,6 +239,7 @@ def main():
     ap.add_argument("--coarse", type=float, default=12.0, help="mesh grossa su trave e spalle")
     ap.add_argument("--check", action="store_true", help="solo mesh, senza soluzione")
     ap.add_argument("--diag", action="store_true", help="diagnostica: gantry, carrello e gruppo Z resi rigidi uno alla volta")
+    ap.add_argument("--energy", action="store_true", help="energia di deformazione per gruppo sulla baseline diagnostica")
     args = ap.parse_args()
     if args.check:
         m, info, *_ = build("gantry_check", args.h, args.coarse)
@@ -227,7 +250,14 @@ def main():
     if old.exists():
         prev = json.loads(old.read_text())
         res["runs"], res["diag"] = prev.get("runs", {}), prev.get("diag", {})
-    if args.diag:
+        if "energy" in prev:
+            res["energy"] = prev["energy"]
+    if args.energy:
+        r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}_energy", args.h, args.coarse, energy=True)
+        res["energy"] = r
+        e = r["energy"]["Fy"]
+        print("energia", {k: round(v / r["work"]["Fy"] * 100, 1) for k, v in e.items()}, "somma", round(sum(e.values()) / r["work"]["Fy"] * 100, 1), flush=True)
+    elif args.diag:
         for name, rig, *spr in DIAG:
             r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}_rigid_{name}", args.h, args.coarse, rig, tuple(spr[0]) if spr else ())
             res["diag"][name] = r

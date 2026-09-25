@@ -36,8 +36,8 @@ def write(r):
         for t in ("telaio", "tavola", "guide Y + vite Y", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z",
                   "master ToolDock", "accoppiamento ToolDock", "testa (spindle + utensile)"))
     worst_gap = min(m_ / TARGET for m_ in mach)
-    DN = {"gantry": "Spalle + trave", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa", "tooldock": "Accoppiamento ToolDock (3 sfere)",
-          "rails": "Pattini e viti X / Z"}
+    DN = {"gantry": "Trave + spalle", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa", "tooldock": "Accoppiamento ToolDock (3 sfere)",
+          "rails": "Pattini e viti X / Z", "beam": "Solo la trave", "uprights": "Solo le spalle"}
     base_run = next((v for v in r["runs"].values() if v["h"] == r.get("diag_h", 6.0) and v["hc"] == 12.0), nom)
     diag_rows = ""
     for name, v in r.get("diag", {}).items():
@@ -45,10 +45,19 @@ def write(r):
         for n in ("Fx", "Fy", "Fz"):
             c0, c1 = 1.0 / base_run["k"][n], 1.0 / v["k"][n]
             cells += f'<td>{it(v["k"][n], 2)} · {it((c0 - c1) / c0 * 100, 0)}%</td>'
-        diag_rows += f'<tr><td>{DN.get(name, name)} rigido</td>{cells}</tr>'
+        diag_rows += f'<tr><td>{DN.get(name, name)}</td>{cells}</tr>'
     diag_sec = (f"""<section class="section"><h2>Quale parte del gantry pesa · sensibilità massima</h2><div class="table-wrap"><table><tr><th>Reso rigido</th><th>X N/µm · cedevolezza tolta</th><th>Y N/µm · cedevolezza tolta</th><th>Z N/µm · cedevolezza tolta</th></tr>
-<tr><td>Gantry FEA (riferimento)</td>{"".join(f'<td>{it(base_run["k"][n], 2)}</td>' for n in ("Fx", "Fy", "Fz"))}</tr>{diag_rows}</table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px"><b>Upper-bound sensitivity</b>: ogni riga rende quasi perfetto un solo sottosistema (solidi con E ×1000, oppure molle ×1000) e lascia reale tutto il resto, sulla stessa mesh del riferimento. La percentuale risponde a "quanto migliorerebbe al massimo il gantry se questo sottosistema fosse perfetto". Non è una ripartizione additiva: irrigidendo un gruppo cambia il percorso dei carichi, quindi le percentuali possono sommare a più (o meno) del 100%. Gruppo Z = slitta, piastrina chiocciola, master, receiver, mount, corpo spindle e albero; restano reali sfere ToolDock, cuscinetti, pattini e viti. Trave e spalle sono rese rigide insieme: per disegnare un pezzo serve lo split trave / spalle.</p></section>""" if diag_rows else "")
+<tr><td>Baseline diagnostica, mesh 6 / 12 mm</td>{"".join(f'<td>{it(base_run["k"][n], 2)}</td>' for n in ("Fx", "Fy", "Fz"))}</tr>{diag_rows}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px"><b>Upper-bound sensitivity</b>: ogni riga rende quasi perfetto un solo sottosistema (solidi con E ×1000, oppure molle ×1000) e lascia reale tutto il resto, sulla stessa mesh del riferimento. La percentuale risponde a "quanto migliorerebbe al massimo il gantry se questo sottosistema fosse perfetto". Non è una ripartizione additiva: irrigidendo un gruppo cambia il percorso dei carichi, quindi le percentuali possono sommare a più (o meno) del 100%. Gruppo Z = slitta, piastrina chiocciola, master, receiver, mount, corpo spindle e albero; restano reali sfere ToolDock, cuscinetti, pattini e viti. La baseline diagnostica è la mesh 6 / 12 mm ({" / ".join(it(base_run["k"][n], 3) for n in ("Fx", "Fy", "Fz"))} N/µm): le diagnostiche sono calcolate su quella mesh; la testata usa la mesh più fine 6 / 10 mm, entro l'1,2%.</p></section>""" if diag_rows else "")
+    en = r.get("energy")
+    energy_sec = ""
+    if en:
+        EN = [("uprights", "Spalle"), ("beam", "Trave"), ("carriage", "Carrello X"), ("zslide", "Slitta Z + master"), ("head", "Testa (receiver, mount, spindle)"),
+              ("xblocks", "Pattini X"), ("xscrew", "Vite X"), ("zblocks", "Pattini Z"), ("zscrew", "Vite Z"), ("tooldock", "Accoppiamento ToolDock"), ("bearing", "Cuscinetti spindle")]
+        rows_e = "".join(f'<tr><td>{lab}</td>' + "".join(f'<td>{it(en["energy"][n].get(g, 0.0) / en["work"][n] * 100, 0)}%</td>' for n in ("Fx", "Fy", "Fz")) + "</tr>" for g, lab in EN)
+        chk = " / ".join(it(sum(en["energy"][n].values()) / en["work"][n] * 100, 1) + "%" for n in ("Fx", "Fy", "Fz"))
+        energy_sec = f"""<section class="section"><h2>Dove si deforma oggi · energia di deformazione</h2><div class="table-wrap"><table><tr><th>Gruppo (baseline 6 / 12 mm)</th><th>150 N X</th><th>150 N Y</th><th>200 N Z</th></tr>{rows_e}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Quota dell'energia di deformazione totale per gruppo (solidi dall'energia degli elementi, molle dalla loro energia elastica), sullo stato di carico reale. Seconda lettura, complementare alla sensibilità: la sensibilità dice quanto si guadagnerebbe al massimo rendendo perfetto un gruppo, l'energia dice dove la struttura si deforma oggi. Controllo: somma delle energie / lavoro del carico ½·F·u = {chk}.</p></section>"""
     verdict = (f'Con il gantry reale la macchina stimata è <b>{" / ".join(it(v, 2) for v in mach)} N/µm</b>: tra {it(min(mach) / TARGET * 100, 0)}% e {it(max(mach) / TARGET * 100, 0)}% del target D014. '
                f'Anche con un gantry infinitamente rigido il resto (telaio, tavola, guide e vite Y, dal modello a travi) limiterebbe a {" / ".join(it(v, 2) for v in lim)} N/µm. '
                f'L\'ordine di grandezza è {"confermato" if max(mach) < 3.0 else "da rileggere"}: 10 N/µm non si raggiunge con ottimizzazioni di questa architettura. '
@@ -70,6 +79,8 @@ def write(r):
 <section class="section"><p><a class="btn primary" href="viewer-3d.html?m={nom["tag"]}_Fy_u.glb">Deformata del gantry in 3D · 150 N Y</a> <a class="btn" href="viewer-3d.html?m={nom["tag"]}_Fx_u.glb">150 N X</a> <a class="btn" href="viewer-3d.html?m={nom["tag"]}_Fz_u.glb">200 N Z</a></p></section>
 
 {diag_sec}
+
+{energy_sec}
 
 <section class="section"><h2>Gantry FEA ↔ D028</h2><div class="table-wrap"><table>
 <tr><th>Asse</th><th>Gantry D028</th><th>Gantry FEA</th><th>FEA / D028</th><th>Macchina D028</th><th>Macchina con gantry FEA</th><th>Limite, gantry rigido</th><th>D014</th></tr>

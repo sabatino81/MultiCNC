@@ -449,6 +449,313 @@
         ]
       },
       "worst_um": 215.4
+    },
+    "beam": {
+      "tag": "gantry_h6_c12_rigid_beam",
+      "h": 6.0,
+      "hc": 12.0,
+      "rigid": [
+        "beam"
+      ],
+      "mesh": {
+        "nodes": 241062,
+        "elements": 133062,
+        "dof": 723186,
+        "min_sj": 0.499,
+        "poor": 0
+      },
+      "solve_s": 172.9,
+      "total_s": 258.8,
+      "mass": {
+        "beam": 6.116,
+        "uprights": 1.932,
+        "carriage": 4.118,
+        "struct": 2.27,
+        "head": 0.927
+      },
+      "k": {
+        "Fx": 0.856,
+        "Fy": 0.732,
+        "Fz": 4.603
+      },
+      "tip_um": {
+        "Fx": [
+          175.14,
+          -2.6,
+          0.38
+        ],
+        "Fy": [
+          -2.6,
+          205.02,
+          -24.29
+        ],
+        "Fz": [
+          0.5,
+          -32.39,
+          43.45
+        ],
+        "FxFz": [
+          175.64,
+          -34.99,
+          43.83
+        ],
+        "FyFz": [
+          -2.09,
+          172.62,
+          19.16
+        ]
+      },
+      "worst_um": 206.5,
+      "energy": {
+        "Fx": {
+          "uprights": 0.270181,
+          "beam": 0.001875,
+          "carriage": 1.413383,
+          "zslide": 3.140162,
+          "head": 2.056482,
+          "xblocks": 0.241299,
+          "xscrew": 0.306162,
+          "zblocks": 0.738459,
+          "zscrew": 0.0,
+          "tooldock": 4.404985,
+          "bearing": 0.5625
+        },
+        "Fy": {
+          "uprights": 0.056608,
+          "beam": 0.003719,
+          "carriage": 2.670509,
+          "zslide": 68.88603,
+          "head": 2.068183,
+          "xblocks": 0.12429,
+          "xscrew": 0.0,
+          "zblocks": 0.774026,
+          "zscrew": 1.9e-05,
+          "tooldock": 4.46282,
+          "bearing": 0.5625
+        },
+        "Fz": {
+          "uprights": 0.407391,
+          "beam": 0.006848,
+          "carriage": 0.993103,
+          "zslide": 1.69123,
+          "head": 0.062443,
+          "xblocks": 0.110788,
+          "xscrew": 0.0,
+          "zblocks": 0.0922,
+          "zscrew": 0.689055,
+          "tooldock": 0.125297,
+          "bearing": 0.166667
+        }
+      },
+      "work": {
+        "Fx": 13.135485,
+        "Fy": 15.376133,
+        "Fz": 4.345022
+      }
+    },
+    "uprights": {
+      "tag": "gantry_h6_c12_rigid_uprights",
+      "h": 6.0,
+      "hc": 12.0,
+      "rigid": [
+        "uprights"
+      ],
+      "mesh": {
+        "nodes": 241062,
+        "elements": 133062,
+        "dof": 723186,
+        "min_sj": 0.499,
+        "poor": 0
+      },
+      "solve_s": 170.3,
+      "total_s": 255.7,
+      "mass": {
+        "beam": 6.116,
+        "uprights": 1.932,
+        "carriage": 4.118,
+        "struct": 2.27,
+        "head": 0.927
+      },
+      "k": {
+        "Fx": 0.818,
+        "Fy": 0.671,
+        "Fz": 2.258
+      },
+      "tip_um": {
+        "Fx": [
+          183.31,
+          -2.69,
+          0.4
+        ],
+        "Fy": [
+          -2.69,
+          223.68,
+          -45.55
+        ],
+        "Fz": [
+          0.54,
+          -60.74,
+          88.58
+        ],
+        "FxFz": [
+          183.85,
+          -63.43,
+          88.98
+        ],
+        "FyFz": [
+          -2.16,
+          162.94,
+          43.02
+        ]
+      },
+      "worst_um": 228.3,
+      "energy": {
+        "Fx": {
+          "uprights": 0.000727,
+          "beam": 0.753538,
+          "carriage": 1.541449,
+          "zslide": 3.159706,
+          "head": 2.056482,
+          "xblocks": 0.229795,
+          "xscrew": 0.306162,
+          "zblocks": 0.732937,
+          "zscrew": 0.0,
+          "tooldock": 4.404985,
+          "bearing": 0.5625
+        },
+        "Fy": {
+          "uprights": 0.001604,
+          "beam": 1.360242,
+          "carriage": 2.675026,
+          "zslide": 4.711132,
+          "head": 2.068183,
+          "xblocks": 0.217489,
+          "xscrew": 0.0,
+          "zblocks": 0.774595,
+          "zscrew": 0.0,
+          "tooldock": 4.404985,
+          "bearing": 0.5625
+        },
+        "Fz": {
+          "uprights": 0.006316,
+          "beam": 4.863439,
+          "carriage": 0.974904,
+          "zslide": 1.69097,
+          "head": 0.062443,
+          "xblocks": 0.18576,
+          "xscrew": 0.0,
+          "zblocks": 0.092877,
+          "zscrew": 0.689055,
+          "tooldock": 0.125297,
+          "bearing": 0.166667
+        }
+      },
+      "work": {
+        "Fx": 13.74828,
+        "Fy": 16.775753,
+        "Fz": 8.857728
+      }
+    }
+  },
+  "energy": {
+    "tag": "gantry_h6_c12_energy",
+    "h": 6.0,
+    "hc": 12.0,
+    "rigid": [],
+    "mesh": {
+      "nodes": 241062,
+      "elements": 133062,
+      "dof": 723186,
+      "min_sj": 0.499,
+      "poor": 0
+    },
+    "solve_s": 164.5,
+    "total_s": 250.0,
+    "mass": {
+      "beam": 6.116,
+      "uprights": 1.932,
+      "carriage": 4.118,
+      "struct": 2.27,
+      "head": 0.927
+    },
+    "k": {
+      "Fx": 0.792,
+      "Fy": 0.648,
+      "Fz": 2.03
+    },
+    "tip_um": {
+      "Fx": [
+        189.47,
+        -2.95,
+        0.36
+      ],
+      "Fy": [
+        -2.95,
+        231.41,
+        -49.9
+      ],
+      "Fz": [
+        0.49,
+        -66.53,
+        98.52
+      ],
+      "FxFz": [
+        189.96,
+        -69.48,
+        98.88
+      ],
+      "FyFz": [
+        -2.46,
+        164.88,
+        48.62
+      ]
+    },
+    "worst_um": 236.8,
+    "energy": {
+      "Fx": {
+        "uprights": 0.373931,
+        "beam": 0.829567,
+        "carriage": 1.55382,
+        "zslide": 3.161264,
+        "head": 2.056482,
+        "xblocks": 0.228992,
+        "xscrew": 0.306162,
+        "zblocks": 0.732623,
+        "zscrew": 0.0,
+        "tooldock": 4.404985,
+        "bearing": 0.5625
+      },
+      "Fy": {
+        "uprights": 0.269289,
+        "beam": 1.651196,
+        "carriage": 2.673222,
+        "zslide": 4.711365,
+        "head": 2.068183,
+        "xblocks": 0.2412,
+        "xscrew": 0.0,
+        "zblocks": 0.774086,
+        "zscrew": 0.0,
+        "tooldock": 4.404985,
+        "bearing": 0.5625
+      },
+      "Fz": {
+        "uprights": 0.618123,
+        "beam": 5.233942,
+        "carriage": 0.972235,
+        "zslide": 1.691,
+        "head": 0.062443,
+        "xblocks": 0.200099,
+        "xscrew": 0.0,
+        "zblocks": 0.092781,
+        "zscrew": 0.689055,
+        "tooldock": 0.125297,
+        "bearing": 0.166667
+      }
+    },
+    "work": {
+      "Fx": 14.210325,
+      "Fy": 17.356027,
+      "Fz": 9.851642
     }
   }
 }
