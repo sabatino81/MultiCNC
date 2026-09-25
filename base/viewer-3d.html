@@ -21,7 +21,7 @@
 </section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">CAD</span><h2>Il mule, parte per parte.</h2><p>Assieme del mule v2 in HOME, CENTER, MAX e DOCK con i colori delle viste di controllo: struttura in grigio, guide e pattini in blu, viti in argento, motori in nero, master e receiver ToolDock in rosso. I volumi riservati (catene, magazine, inviluppi) non sono mostrati. Gli STEP completi sono nella pagina <a href="cad-standard.html" style="color:var(--accent-2)">CAD mule</a>.</p></div>
+  <div class="panel"><span class="kicker">CAD</span><h2>Il mule, parte per parte.</h2><p>Assieme del mule v3 (sella a U, piastrina chiocciola Z 16 mm) in HOME, CENTER, MAX e DOCK, più i concept D032 in CENTER con i colori delle viste di controllo: struttura in grigio, guide e pattini in blu, viti in argento, motori in nero, master e receiver ToolDock in rosso. I volumi riservati (catene, magazine, inviluppi) non sono mostrati. Gli STEP completi sono nella pagina <a href="cad-standard.html" style="color:var(--accent-2)">CAD mule</a>.</p></div>
   <div class="panel"><span class="kicker">FEA</span><h2>Deformata e mappe colore.</h2><p>Superficie della mesh di calcolo con la deformata amplificata (fattore in legenda) e il colore dello spostamento |u| in µm o della tensione di Von Mises in MPa: chiaro = basso, scuro = alto. Nel pilota la slitta Z è rigida; nel sottoassieme la slitta è un solido su pattini e vite. Le tensioni non sono ancora convergenti (D031): la mappa mostra dove lavora il pezzo, non il valore di progetto.</p></div>
 </section>
 </main>
@@ -33,10 +33,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const CAD = [
-  ['cad', 'CAD · mule v2 · CENTER', '../cad/standard/glb/standard_center.glb'],
-  ['cad', 'CAD · mule v2 · HOME', '../cad/standard/glb/standard_home.glb'],
-  ['cad', 'CAD · mule v2 · MAX', '../cad/standard/glb/standard_max.glb'],
-  ['cad', 'CAD · mule v2 · DOCK (testa al cambio)', '../cad/standard/glb/standard_dock.glb'],
+  ['cad', 'CAD · mule v3 · CENTER', '../cad/standard/glb/standard_center.glb'],
+  ['cad', 'CAD · mule v3 · HOME', '../cad/standard/glb/standard_home.glb'],
+  ['cad', 'CAD · mule v3 · MAX', '../cad/standard/glb/standard_max.glb'],
+  ['cad', 'CAD · mule v3 · DOCK (testa al cambio)', '../cad/standard/glb/standard_dock.glb'],
+  ['cad', 'CAD · concept D032 A1 · monoscocca h 100 · CENTER', '../cad/concepts/A1/A1_center.glb'],
+  ['cad', 'CAD · concept D032 A1s · monoscocca h 60 · CENTER', '../cad/concepts/A1s/A1s_center.glb'],
 ];
 const canvas = document.getElementById('v3d'), status = document.getElementById('status');
 const legend = document.getElementById('legend'), note = document.getElementById('note'), pick = document.getElementById('pick');
@@ -101,7 +103,7 @@ function load(i) {
     }
     scene.add(current); current.updateWorldMatrix(true, true);
     frame(current); setEdges(document.getElementById('wire').checked); showLegend(e);
-    note.textContent = e.fea ? `${e.fea.title} · ${e.fea.case} · ${e.fea.field} (${e.fea.unit}). Deformata amplificata × ${e.fea.scale}; spostamenti rispetto al vincolo del modello.` : 'Mule v2 (D030/D031): quote da tools/cad/standard_params.py.';
+    note.textContent = e.fea ? `${e.fea.title} · ${e.fea.case} · ${e.fea.field} (${e.fea.unit}). Deformata amplificata × ${e.fea.scale}; spostamenti rispetto al vincolo del modello.` : e.url.includes('/concepts/') ? 'Concept D032: override di tools/cad/standard_concepts.py sul mule v3.' : 'Mule v3 (D031): quote da tools/cad/standard_params.py.';
     status.style.display = 'none';
   }, undefined, () => { status.textContent = 'Modello non disponibile: apri la pagina dal sito (non da file locale) o rigenera i GLB.'; });
 }

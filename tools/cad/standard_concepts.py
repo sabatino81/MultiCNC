@@ -26,7 +26,7 @@ CONCEPTS = {
     # A1: la master diventa una scatola chiusa con la slitta: pareti laterali contro le ali, parete anteriore e
     # cielo sopra il piano della master, schiena = faccia anteriore della slitta (incollata). Sostituisce la sella.
     "A1": dict(desc="A1 · master + slitta monoscocca, h 100", over={"MONOCOQUE": dict(h=100.0, wall=6.0), "SADDLE": None}),
-    "A1s": dict(desc="A1 · monoscocca bassa, h 60", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None}),
+    "A1s": dict(desc="A1s · monoscocca bassa, h 60", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None}),
 }
 
 

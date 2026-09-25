@@ -31,6 +31,16 @@ def export(cfg):
 
 
 def main():
+    if "--concept" in sys.argv:                 # D032: solo CENTER, in cad/concepts/<nome>/
+        global OUT
+        name = sys.argv[sys.argv.index("--concept") + 1]
+        import standard_concepts
+        standard_concepts.apply(name)
+        OUT = ROOT / "cad" / "concepts" / name
+        f = export("CENTER")
+        f = f.rename(OUT / f"{name}_center.glb")
+        print(name, f.name, f"{f.stat().st_size / 1e6:.1f} MB")
+        return
     for cfg in ("HOME", "CENTER", "MAX", "DOCK"):
         f = export(cfg)
         print(cfg, f.name, f"{f.stat().st_size / 1e6:.1f} MB")

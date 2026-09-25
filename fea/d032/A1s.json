@@ -1,0 +1,103 @@
+{
+  "tag": "d032_A1s_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 253941,
+    "elements": 139720,
+    "dof": 761823,
+    "min_sj": 0.372,
+    "poor": 0
+  },
+  "solve_s": 210.5,
+  "total_s": 305.5,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 4.118,
+    "struct": 2.841,
+    "head": 0.927
+  },
+  "k": {
+    "Fx": 0.832,
+    "Fy": 0.719,
+    "Fz": 2.063
+  },
+  "tip_um": {
+    "Fx": [
+      180.24,
+      -2.94,
+      0.35
+    ],
+    "Fy": [
+      -2.94,
+      208.68,
+      -44.81
+    ],
+    "Fz": [
+      0.47,
+      -59.74,
+      96.97
+    ],
+    "FxFz": [
+      180.72,
+      -62.68,
+      97.32
+    ],
+    "FyFz": [
+      -2.47,
+      148.94,
+      52.16
+    ]
+  },
+  "worst_um": 214.6,
+  "energy": {
+    "Fx": {
+      "uprights": 0.373262,
+      "beam": 0.817904,
+      "carriage": 1.538563,
+      "zslide": 2.483669,
+      "head": 2.056713,
+      "xblocks": 0.224906,
+      "xscrew": 0.306162,
+      "zblocks": 0.74967,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269343,
+      "beam": 1.651329,
+      "carriage": 2.688135,
+      "zslide": 3.013847,
+      "head": 2.067867,
+      "xblocks": 0.241404,
+      "xscrew": 0.0,
+      "zblocks": 0.751672,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.618127,
+      "beam": 5.233855,
+      "carriage": 0.974781,
+      "zslide": 1.535913,
+      "head": 0.062442,
+      "xblocks": 0.200214,
+      "xscrew": 0.0,
+      "zblocks": 0.090425,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 13.51833,
+    "Fy": 15.651083,
+    "Fz": 9.696776
+  },
+  "concept": "A1s",
+  "desc": "A1 · monoscocca bassa, h 60"
+}

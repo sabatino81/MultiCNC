@@ -78,10 +78,16 @@ def write(rows):
         dd = max(abs(base["k"][a] - ref[n]) / ref[n] for a, n in zip("XYZ", ("Fx", "Fy", "Fz")))
         nonreg = (f'<p style="margin-top:10px"><b>Non-regressione A0</b>: gantry {" / ".join(it(base["k"][a], 3) for a in "XYZ")} N/µm contro la baseline D031 6 / 12 '
                   f'{" / ".join(it(ref[n], 3) for n in ("Fx", "Fy", "Fz"))}: scarto massimo {it(dd * 100, 2)}% ({"PASSA" if dd < 0.005 else "DA SPIEGARE"}).</p>')
+    def ok(r, n):                               # la somma delle energie deve dare il lavoro del carico (entro 2%)
+        return abs(sum(r["fea"]["energy"][n].values()) / r["fea"]["work"][n] - 1.0) < 0.02
+
+    def cell(r, g, n):
+        return f'{it(r["fea"]["energy"][n].get(g, 0) / r["fea"]["work"][n] * 100, 0)}%' if ok(r, n) else "n.v."
     en_rows = ""
     for g, lab in EN:
-        en_rows += f'<tr><td>{lab}</td>' + "".join(
-            f'<td>{it(r["fea"]["energy"]["Fy"].get(g, 0) / r["fea"]["work"]["Fy"] * 100, 0)}% · {it(r["fea"]["energy"]["Fz"].get(g, 0) / r["fea"]["work"]["Fz"] * 100, 0)}%</td>' for r in rows) + "</tr>"
+        en_rows += f'<tr><td>{lab}</td>' + "".join(f'<td>{cell(r, g, "Fy")} · {cell(r, g, "Fz")}</td>' for r in rows) + "</tr>"
+    en_rows += '<tr><td>Somma / lavoro del carico</td>' + "".join(
+        f'<td>{it(sum(r["fea"]["energy"]["Fy"].values()) / r["fea"]["work"]["Fy"] * 100, 1)}% · {it(sum(r["fea"]["energy"]["Fz"].values()) / r["fea"]["work"]["Fz"] * 100, 1)}%</td>' for r in rows) + "</tr>"
     en_head = "".join(f'<th>{r["name"]} · Y / Z</th>' for r in rows)
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Concept D032</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/fea/d032_page.py: non modificare a mano. -->
@@ -94,7 +100,7 @@ def write(rows):
 <p style="color:var(--dim);font-size:13px;margin-top:12px">δ = deformazione della sola macchina (naso spindle ↔ punto di lavoro) a SERVICE HIGH: 20 µm è l'intero budget, quindi il verde qui vuol dire solo "entro il budget totale", non "entro la quota macchina". ΔK min XY per kg = aumento della rigidezza radiale minima della macchina (N/µm) per kg aggiunto rispetto ad A0. Margine slitta + master recuperato = cedevolezza del gantry tolta in Y diviso la quota di energia di slitta + master in A0 ({it(base["fea"]["energy"]["Fy"].get("zslide", 0) / base["fea"]["work"]["Fy"] * 100, 0)}%: tetto del gantry con slitta + master perfette ≈ {it(base["k"]["Y"] / (1 - base["fea"]["energy"]["Fy"].get("zslide", 0) / base["fea"]["work"]["Fy"]), 2)} N/µm), anche per 100 g aggiunti. δ dalle rigidezze (modello lineare): δXY = {it(SERVICE["XY"], 0)} N / K min XY, δZ = {it(SERVICE["Z"], 0)} N / KZ. Monoscocca A1 modellata con giunti perfettamente solidali: la cedevolezza di bullonatura o incollaggio non è inclusa, il risultato è un limite superiore del giunto reale. Sweep su 125 configurazioni; trasferitore = gioco minimo lungo le 42 pose. Mesh della FEA come la baseline diagnostica D031 (6 / 12 mm).</p></section>
 
 <section class="section"><h2>Dove si deforma · energia per gruppo</h2><div class="table-wrap"><table><tr><th>Gruppo</th>{en_head}</tr>{en_rows}</table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">Quota dell'energia di deformazione del gantry a 150 N Y e a 200 N Z; la somma per colonna è il lavoro del carico.</p></section>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Quota dell'energia di deformazione del gantry a 150 N Y e a 200 N Z; la somma per colonna deve dare il lavoro del carico ½·F·u. "n.v." = colonna non valida (somma fuori dal 2%): l'uscita dell'energia di CalculiX per quel caso è da verificare; spostamenti e rigidezze non dipendono da questa uscita.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Concept A · compact chain</span><h2>Una modifica alla volta.</h2><p>A0 mule v3 → A1 master + slitta monoscocca (la master diventa una scatola chiusa con la faccia anteriore della slitta: pareti laterali contro le ali, parete anteriore e cielo, sostituisce la sella) → A2 + carrello X scatolato → A3 + trave ad alta inerzia a massa costante (fondo trave fisso, cresce verso l'alto) → A4 combinazione. Fissi: asse spindle a 53 mm, piano cinematico e Ø80 del ToolDock, pull-stud, datum, inviluppo ICD v4, testa.</p></div>
