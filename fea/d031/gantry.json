@@ -1,0 +1,119 @@
+{
+  "stage": "gantry",
+  "date": "2026-09-25",
+  "d028": {
+    "X": {
+      "k_machine": 0.907,
+      "rest": 0.04453043655542554,
+      "k_gantry_d028": 0.945,
+      "limit": 22.457,
+      "share": {
+        "telaio": 3.5,
+        "spalle": 1.9,
+        "trave": 3.6,
+        "guide X + vite X": 3.7,
+        "carrello X": 17.7,
+        "guide Z + vite Z": 8.5,
+        "slitta Z": 6.8,
+        "master ToolDock": 8.4,
+        "accoppiamento ToolDock": 35.5,
+        "testa (spindle + utensile)": 9.8
+      }
+    },
+    "Y": {
+      "k_machine": 0.792,
+      "rest": 0.2039957480665146,
+      "k_gantry_d028": 0.945,
+      "limit": 4.902,
+      "share": {
+        "telaio": 5.2,
+        "spalle": 0.8,
+        "trave": 4.5,
+        "guide X + vite X": 0.8,
+        "carrello X": 12.1,
+        "guide Z + vite Z": 5.6,
+        "slitta Z": 13.0,
+        "master ToolDock": 7.4,
+        "accoppiamento ToolDock": 31.0,
+        "testa (spindle + utensile)": 8.6,
+        "tavola": 8.8,
+        "guide Y + vite Y": 2.2
+      }
+    },
+    "Z": {
+      "k_machine": 1.591,
+      "rest": 0.4598948060657322,
+      "k_gantry_d028": 5.93,
+      "limit": 2.174,
+      "share": {
+        "telaio": 18.5,
+        "spalle": 3.0,
+        "trave": 7.4,
+        "guide X + vite X": 0.8,
+        "carrello X": 4.8,
+        "guide Z + vite Z": 6.1,
+        "slitta Z": 1.3,
+        "master ToolDock": 0.9,
+        "accoppiamento ToolDock": 1.0,
+        "testa (spindle + utensile)": 1.6,
+        "tavola": 47.5,
+        "guide Y + vite Y": 7.2
+      }
+    }
+  },
+  "runs": {
+    "gantry_h6_c12": {
+      "tag": "gantry_h6_c12",
+      "h": 6.0,
+      "hc": 12.0,
+      "mesh": {
+        "nodes": 241062,
+        "elements": 133062,
+        "dof": 723186,
+        "min_sj": 0.499,
+        "poor": 0
+      },
+      "solve_s": 191.9,
+      "total_s": 280.9,
+      "mass": {
+        "gantry": 8.048,
+        "carriage": 4.118,
+        "struct": 2.27,
+        "head": 0.927
+      },
+      "k": {
+        "Fx": 0.792,
+        "Fy": 0.648,
+        "Fz": 2.03
+      },
+      "tip_um": {
+        "Fx": [
+          189.47,
+          -2.95,
+          0.36
+        ],
+        "Fy": [
+          -2.95,
+          231.41,
+          -49.9
+        ],
+        "Fz": [
+          0.49,
+          -66.53,
+          98.52
+        ],
+        "FxFz": [
+          189.96,
+          -69.48,
+          98.88
+        ],
+        "FyFz": [
+          -2.46,
+          164.88,
+          48.62
+        ]
+      },
+      "worst_um": 236.8
+    }
+  }
+}

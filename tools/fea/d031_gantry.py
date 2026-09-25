@@ -212,6 +212,8 @@ def main():
     res["runs"][r["tag"]] = r
     print(r["tag"], r["k"], r["mesh"], r["solve_s"], "s", flush=True)
     old.write_text(json.dumps(res, indent=2, ensure_ascii=False, default=float))
+    import d031_gantry_page
+    d031_gantry_page.write(json.loads(old.read_text()))
 
 
 if __name__ == "__main__":

@@ -678,5 +678,165 @@
     0.07
    ]
   ]
+ },
+ {
+  "file": "gantry_h6_c12_Fx_u.glb",
+  "title": "Gantry mule v3 · spalle, trave, carrello, slitta, testa",
+  "case": "150 N radiale X",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 189.9,
+  "max": 189.9,
+  "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "gantry_h6_c12_Fy_u.glb",
+  "title": "Gantry mule v3 · spalle, trave, carrello, slitta, testa",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 238.97,
+  "max": 238.97,
+  "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "gantry_h6_c12_Fz_u.glb",
+  "title": "Gantry mule v3 · spalle, trave, carrello, slitta, testa",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 209.17,
+  "max": 209.17,
+  "scale": 150.0,
+  "saturated": null,
+  "surface": "lineare (vertici)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "gantry_h6_c12_Fy_vm.glb",
+  "title": "Gantry mule v3 · spalle, trave, carrello, slitta, testa",
+  "case": "150 N radiale Y",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 4.89,
+  "max": 16.5,
+  "scale": 150.0,
+  "saturated": "99,5° percentile",
+  "surface": "quadratica (6 nodi per faccia)",
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
  }
 ]

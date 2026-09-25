@@ -116,10 +116,20 @@ def vm(s):
     return np.sqrt(0.5 * ((sx - sy) ** 2 + (sy - sz) ** 2 + (sz - sx) ** 2) + 3 * (txy ** 2 + tyz ** 2 + tzx ** 2))
 
 
+def gantry_runs():
+    """Deformate del gantry FEA (fase 3): la mesh più fine in fea/d031/gantry.json."""
+    f = ROOT / "fea" / "d031" / "gantry.json"
+    if not f.exists():
+        return []
+    runs = json.loads(f.read_text())["runs"].values()
+    best = min(runs, key=lambda v: (v["hc"], v["h"]))
+    return [(best["tag"], ["Fx", "Fy", "Fz"], "Gantry mule v3 · spalle, trave, carrello, slitta, testa", [("Fx", "u"), ("Fy", "u"), ("Fz", "u"), ("Fy", "vm")])]
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     index = []
-    for tag, steps, title, wanted in RUNS:
+    for tag, steps, title, wanted in RUNS + gantry_runs():
         frd = WORK / tag / f"{tag}.frd"
         if not frd.exists():
             print("manca", frd)
