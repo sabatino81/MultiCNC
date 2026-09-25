@@ -16,7 +16,7 @@ G=[
 ("MP-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 15–20 mm","Guide Z + ToolDock master",80,1.2,"M","design","TO DESIGN"),
 ("MP-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 12 mm","Tavola mobile Y (D006), 450×350 utile; spessore pieno, inserti M6 per usura (D018)",120,5.1,"M","design","TO DESIGN"),
 ("MP-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, rondelle, inserti",50,1.0,"M","source","TO SOURCE"),
-("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v3, D018)",25,0.08,"M","source","TO SOURCE"),
+("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v4, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
 ("MP-LIN-201","XY","Guide lineari HGR20","4 rails",4,"HIWIN HGR20 class","2 rail Y nel basamento + 2 rail X sulla trave, 650 mm (D019)",60,1.44,"M","source","TO SOURCE"),
@@ -44,7 +44,7 @@ G=[
 ("D · Spindle base",[
 ("MP-SP-001","Spindle","Spindle 1.5 kW ER16","1",1,"Water-cooled 80 mm class","~24k rpm; runout da bench-test; testa entro il carico ToolDock di 7 kg",160,4.5,"M","design","TO QUALIFY"),
 ("MP-SP-002","Spindle","VFD vector","1",1,"1.5 kW class","RS485/analog; nel quadro esterno",120,1.5,"C","source","TO SOURCE"),
-("MC-SP-006","Spindle","Contattore uscita spindle","1",1,"Contattore AC-3 con contatto ausiliario","Apre P1–P3 a valle di VFD/driver prima dello sgancio della testa (ICD v3, D020)",25,0.2,"C","design","TO DESIGN"),
+("MC-SP-006","Spindle","Contattore uscita spindle","1",1,"Contattore AC-3 con contatto ausiliario","Apre P1–P3 a valle di VFD/driver prima dello sgancio della testa (ICD v4, D020)",25,0.2,"C","design","TO DESIGN"),
 ("MP-SP-003","Spindle","Spindle mount","1",1,"Custom machined clamp","Receiver-compatible con ToolDock",40,0.8,"M","design","TO DESIGN"),
 ("MP-SP-004","Cooling","Cooling loop","1",1,"Pump + radiator + reservoir","Unità esterna a circuito chiuso",60,2.5,"C","source","TO SOURCE"),
 ("MP-SP-005","Tooling","ER16 collet starter set","1",1,"Precision collets class","Starter tooling only",30,0.3,"M","source","TO SOURCE"),
@@ -52,19 +52,19 @@ G=[
 ("E · ToolDock (identico sulle tre basi)",[
 ("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Stessa parte della Standard","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Stessa parte della Standard","Receiver del modulo spindle base",80,0.3,"M","design","TO DESIGN"),
-("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v3)","Pacco molle ≥ 3,8 kN (classe P), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
+("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v4)","Pacco molle ≥ 3,8 kN (classe P), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Stessa parte della Standard","Power + signal + ID",120,0.3,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-005","ToolDock","Module ID","1",1,"Stessa parte della Standard","Identificazione automatica",30,0.02,"M","design","TO DESIGN"),
-("MC-TD-007","ToolDock","Connettore dati","1",1,"Blind-mate a contatti a molla, schermato","Ethernet 1000BASE-T (4 coppie) + CAN FD + encoder RS-422 differenziale (ICD v3, D020)",60,0.05,"M","design","TO SOURCE"),
+("MC-TD-007","ToolDock","Connettore dati","1",1,"Blind-mate a contatti a molla, schermato","Ethernet 1000BASE-T (4 coppie) + CAN FD + encoder RS-422 differenziale (ICD v4, D020)",60,0.05,"M","design","TO SOURCE"),
 ]),
 ("F · Controllo (quadro esterno)",[
 ("MC-CTRL-001","Control","Motion controller","1",1,"Mesa 7i96S","Comune alle tre basi; I/O da verificare con il lift",160,0.2,"C","validate","I/O REVIEW"),
-("MC-CTRL-003","Control","Espansione I/O","1",1,"Scheda Mesa su porta di espansione 7i96S (modello da confermare)","≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v3)",90,0.2,"C","validate","I/O REVIEW"),
-("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v3, D020)",40,0.05,"C","source","TO SOURCE"),
+("MC-CTRL-003","Control","Espansione I/O","1",1,"Scheda Mesa su porta di espansione 7i96S (modello da confermare)","≥ +16 ingressi / +8 uscite 24 V: home, probe, setter, conferme ToolDock, sensori testa, interlock (ICD v4)",90,0.2,"C","validate","I/O REVIEW"),
+("MC-CTRL-004","Control","Interfaccia CAN FD","1",1,"Adattatore USB–CAN FD","Bus moduli ToolDock (ICD v4, D020)",40,0.05,"C","source","TO SOURCE"),
 ("MC-CTRL-002","Compute","Fanless mini PC","1",1,"x86 LinuxCNC, 2 porte Ethernet","Porta 1 dedicata alla Mesa, porta 2 per il bus dati ToolDock (D017)",150,0.8,"C","source","TO SOURCE"),
 ("MP-PWR-001","Power","48 V PSU","1",1,"Mean Well LRS-600-48","Motion supply, 4 assi",70,1.3,"C","source","TO SOURCE"),
-("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v3, D022)",45,0.35,"C","source","TO SOURCE"),
-("MP-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-350-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v3, D020)",60,0.8,"C","source","TO SOURCE"),
+("MC-PWR-002","Power","24 V PSU","1",1,"Mean Well HDR-100-24","~92 W (24 V × 3,83 A): I/O, sensori, logica ToolDock; 40 W garantiti ai moduli (ICD v4, D022)",45,0.35,"C","source","TO SOURCE"),
+("MP-PWR-003","Power","48 V MODULE AUX","1",1,"Mean Well LRS-350-48","Linea 48 V dedicata ai moduli ToolDock, separata dal motion (ICD v4, D020)",60,0.8,"C","source","TO SOURCE"),
 ("MC-SAFE-001","Safety","E-stop + contactor chain","1 set",1,"Industrial safety hardware","Arresto energia motion/process",80,0.5,"C","design","TO DESIGN"),
 ("MP-IO-001","I/O","Relays / terminal blocks / protection","1 set",1,"DIN rail industrial","Fusibili, interruttori, relè, morsetti",90,0.8,"C","source","TO SOURCE"),
 ("MP-EL-BOX","Electrical","Quadro elettrico esterno","1",1,"DIN cabinet","Controller, PSU, driver, VFD separato",80,3.0,"C","design","TO DESIGN"),
@@ -77,6 +77,7 @@ G=[
 ("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
 ]),
 ("H · Accessori (non inclusi nei totali)",[
+("MP-ENC-001","Enclosure","Cabina opzionale Pro","1",1,"Telaio indipendente rinforzato + pannelli PC 5 mm + porta con interlock","Più alta per il Gantry Lift e lo spindle ad acqua; agganciata al basamento, mai al ponte; LED, aspirazione Ø100, vasca trucioli e MQL; prezzo TARGET a lotto 50 (D025)",380,18.0,"A","design","TO DESIGN"),
 ("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]

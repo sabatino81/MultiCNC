@@ -18,7 +18,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from cad_sources import cell  # noqa: E402
-BASES = ["light", "standard", "pro"]
+BASES = ["light", "standard", "pro", "platform"]
 WHERE = {"M": "macchina", "A": "accessorio"}
 
 
