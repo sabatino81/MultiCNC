@@ -115,10 +115,11 @@ def head_box(cx, cy, coupling_z):
 
 
 def transfer_path():
-    """Traiettoria del centro testa (x, y, coupling z): magazine → sopra la trave → davanti → giù → dentro lungo −X."""
+    """Traiettoria del centro testa (x, y, coupling z): magazine → sopra la trave → davanti → giù → lungo −X → dentro lungo +Y (D030)."""
     sx, sy = P.STORE_POSE
-    top, dock_z = P.TRANSFER_TOP, D["coupling_top"]
-    legs = [((sx, sy, top), (sx, 0.0, top)), ((sx, 0.0, top), (sx, 0.0, dock_z)), ((sx, 0.0, dock_z), (P.DOCK_X, 0.0, dock_z))]
+    top, dock_z, ya = P.TRANSFER_TOP, D["coupling_top"], P.DOCK_APPROACH_Y
+    legs = [((sx, sy, top), (sx, ya, top)), ((sx, ya, top), (sx, ya, dock_z)), ((sx, ya, dock_z), (P.DOCK_X, ya, dock_z)),
+            ((P.DOCK_X, ya, dock_z), (P.DOCK_X, 0.0, dock_z))]
     n = P.TRANSFER_STEPS
     lens = [math.dist(p0, p1) for p0, p1 in legs]
     pts = []
@@ -158,24 +159,27 @@ def build(X, Y, Zd, cfg=None):
     yc = (D["beam_face"] + D["beam_back"]) / 2
     rear_y = (yc - U["depth"] / 2, yc + U["depth"] / 2)
     pw = L["pocket_w"]
-    pocket = box(xtc - pw / 2, xtc + pw / 2, -400, 400, -H + L["pad_t"], 1)
+    pocket = box(xtc - pw / 2, xtc + pw / 2, -400, 400, -H + w, 1)        # passaggio chiocciola Y fino al fondo del tubo
     a.add("frame_cross_front", rtube_x(inner0, inner1, *L["front_y"]), "FRAME", AL, "MC-BAS-001", "gray")
     sy_th = ya["screw_len"] - sum(parts.ENDS[ya["screw"]])
     bf_pad = (-sy_th / 2 - P.SUPPORTS[ya["bf"]]["T"] - 5, -sy_th / 2)
     bk_pad = (sy_th / 2 + 2, sy_th / 2 + 2 + P.SUPPORTS[ya["bk"]]["T"] + 5)
     a.add("frame_cross_bf", rtube_x(inner0, inner1, *L["bf_y"]).cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, bf_pad[0], bf_pad[1], -H, -H + L["pad_t"])),
           "FRAME", AL, "MC-BAS-001", "gray")
-    rear = box(P.BEAM_X[0], P.BEAM_X[1], rear_y[0], rear_y[1], -H, -dz).cut(box(P.BEAM_X[0] - 1, P.BEAM_X[1] + 1, rear_y[0] + w, rear_y[1] - w, -H + w, -w - dz))
+    ry1 = max(rear_y[1], bk_pad[1] + 5)       # la traversa posteriore arriva sotto il supporto BK Y
+    rear = box(P.BEAM_X[0], P.BEAM_X[1], rear_y[0], ry1, -H, -dz).cut(box(P.BEAM_X[0] - 1, P.BEAM_X[1] + 1, rear_y[0] + w, ry1 - w, -H + w, -w - dz))
     for xr in rails_x:   # i longheroni attraversano la traversa posteriore
-        rear = rear.cut(box(xr - lw / 2, xr + lw / 2, rear_y[0] - 1, rear_y[1] + 1, -H - 1, 1))
-    rear = rear.cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, rear_y[0], rear_y[1], -H, -H + w)).union(
+        rear = rear.cut(box(xr - lw / 2, xr + lw / 2, rear_y[0] - 1, ry1 + 1, -H - 1, 1))
+    rear = rear.cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, rear_y[0], ry1, -H, -H + w)).union(
         box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"]))
     a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
     end = rtube_x(inner0, inner1, *L["end_y"]).cut(cyl("y", L["end_y"][0] - 1, L["end_y"][1] + 1, xtc, z_y_axis, 20))
     a.add("frame_cross_end", end, "FRAME", AL, "MC-BAS-001", "gray")
 
     for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + U["t"])), ("R", (P.BEAM_X[1] - U["t"], P.BEAM_X[1]))):
-        a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]), "FRAME", AL, "MC-GAN-002", "gray")
+        uw = U["wall"]
+        up = box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]).cut(box(x0 + uw, x1 - uw, rear_y[0] + uw, rear_y[1] - uw, -dz + uw, D["beam_bottom"] - uw))
+        a.add(f"upright_{side}", up, "FRAME", AL, "MC-GAN-002", "gray")
 
     bf, bb = D["beam_face"], D["beam_back"]
     bx0, bx1, t = P.BEAM_X[0], P.BEAM_X[1], BM["wall"]
@@ -277,6 +281,10 @@ def build(X, Y, Zd, cfg=None):
     car = box(X - C["carriage_w"] / 2, X + C["carriage_w"] / 2, cf, cb, car_bot, z_rail1)
     car = car.union(box(X - C["tower_w"] / 2, X + C["tower_w"] / 2, cf, cb, z_rail1 - 1, tower_top))
     car = car.cut(box(X - C["slot_w"] / 2, X + C["slot_w"] / 2, cf - 1, cb + 1, zs0 - 10, tower_top + 1))
+    cfl = P.CARRIAGE_FLANGE           # D030: ali in avanti ai lati, fuori dalla slitta e dal corridoio di docking (+Y)
+    for sgn in (-1, 1):
+        x_in, x_out = X + sgn * (C["carriage_w"] / 2), X + sgn * (C["carriage_w"] / 2 + cfl["t"])
+        car = car.union(box(min(x_in, x_out), max(x_in, x_out), cf - cfl["depth"] - 10, cb, car_bot, z_rail1))
     a.add("x_carriage", car, "XCAR", AL, "MC-XC-001", "gray")
     for i, dz in enumerate((xa["rail_spacing"] / 2, -xa["rail_spacing"] / 2)):
         for j, dx in enumerate((-xa["block_pitch"] / 2, xa["block_pitch"] / 2)):
@@ -308,7 +316,12 @@ def build(X, Y, Zd, cfg=None):
 
     # ============ ZSLIDE (si muove in X e Z): slitta corta con i pattini Z ============
     sb = D["slide_bottom_low"] + (P.TRAVEL["Z"] - Zd)
-    a.add("z_slide", box(X - C["slide_w"] / 2, X + C["slide_w"] / 2, D["slide_front"], D["slide_back"], sb, sb + C["slide_len"]), "ZSLIDE", AL, "MC-Z-001", "gray")
+    slide = box(X - C["slide_w"] / 2, X + C["slide_w"] / 2, D["slide_front"], D["slide_back"], sb, sb + C["slide_len"])
+    sfl = P.SLIDE_FLANGE              # D030: ali anteriori sopra il piano del coupling
+    for sgn in (-1, 1):
+        x_out, x_in = X + sgn * C["slide_w"] / 2, X + sgn * (C["slide_w"] / 2 - sfl["t"])
+        slide = slide.union(box(min(x_in, x_out), max(x_in, x_out), D["slide_front"] - sfl["depth"], D["slide_front"], sb, sb + C["slide_len"]))
+    a.add("z_slide", slide, "ZSLIDE", AL, "MC-Z-001", "gray")
     zbc = sb + C["block_offset"] + zb["L"] / 2 + za["block_pitch"] / 2
     for i, dx in enumerate((-za["rail_spacing"] / 2, za["rail_spacing"] / 2)):
         for j, dz in enumerate((-za["block_pitch"] / 2, za["block_pitch"] / 2)):
@@ -319,7 +332,32 @@ def build(X, Y, Zd, cfg=None):
           "ZSLIDE", AL, "MC-BRK-001", "gray")
     a.add("z_nut", screw_nut(za["screw"]).rotate(ORIGIN, (0, 1, 0), -90).translate((X, y_z_axis, tab0 + P.TAB_T)), "ZSLIDE", STEEL, "MC-BS-1204Z", "silver")
     coupling_z = sb - P.MASTER["T"]
-    a.add("tooldock_master", box(X - P.MASTER["W"] / 2, X + P.MASTER["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], coupling_z, sb), "ZSLIDE", AL, "MC-TD-001", "tomato")
+    mw = P.MASTER["wall"]
+    master = box(X - P.MASTER["W"] / 2, X + P.MASTER["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], coupling_z, sb).cut(
+        box(X - P.MASTER["W"] / 2 + mw, X + P.MASTER["W"] / 2 - mw, -P.HEAD["D"] / 2 + mw, D["slide_back"] - mw, coupling_z + mw, sb - mw))
+    a.add("tooldock_master", master, "ZSLIDE", AL, "MC-TD-001", "tomato")
+    # testa reale di riferimento SycoTec 5045 AC-ER11 (D030): receiver, mount con camicia, spindle, connettore a 90°
+    S = P.SPINDLE
+    cz = coupling_z
+    z_rear = cz - S["receiver_t"] - S["connector"]
+    z_h1, z_h0 = z_rear - S["rear"], z_rear - S["rear"] - S["housing"]
+    z_neck = z_h0 - S["neck"]
+    z_nose = z_neck - S["nose"]
+    rw = S["receiver_w"] / 2
+    a.add("head_receiver", box(X - rw, X + rw, -rw, rw, cz - S["receiver_t"], cz), "ZSLIDE", AL, "MC-TD-002", "tomato")
+    cb_ = S["clamp_block"] / 2
+    zc0 = z_h1 - 10
+    # mount a tazza chiusa dal receiver al fondo del collare (D030): collare sul Ø45 h6, cavità per retro e connettore, finestra laterale
+    z_top = cz - S["receiver_t"]
+    mount = box(X - cb_, X + cb_, -cb_, cb_, zc0 - S["clamp_len"], z_top)
+    mount = mount.cut(cyl("z", zc0 - S["clamp_len"] - 1, zc0 + 1, X, 0.0, S["d"] / 2 + 0.1))
+    mount = mount.cut(cyl("z", zc0, z_top + 1, X, 0.0, S["d"] / 2 + 1.5))
+    mount = mount.cut(box(X + 10, X + cb_ + 1, -19, 19, z_rear, z_top + 1))     # finestra per il connettore M23 a 90°
+    a.add("head_mount", mount, "ZSLIDE", AL, "MC-SP-003", "lightgray")
+    spindle = (cyl("z", z_h1, z_rear, X, 0.0, 44.8 / 2).union(cyl("z", z_h0, z_h1, X, 0.0, S["d"] / 2))
+               .union(cyl("z", z_neck, z_h0, X, 0.0, 44.8 / 2)).union(cyl("z", z_nose, z_neck, X, 0.0, S["nut_d"] / 2)))
+    a.add("head_spindle", spindle, "ZSLIDE", STEEL, "MC-SP-001", "silver")
+    a.add("head_connector", box(X - 15, X + 40, -18, 18, z_rear, cz - S["receiver_t"]), "ZSLIDE", "volume", None, "black")
     a.add("head_volume", box(X - P.HEAD["W"] / 2, X + P.HEAD["W"] / 2, -P.HEAD["D"] / 2, P.HEAD["D"] / 2, coupling_z - P.HEAD["L"], coupling_z),
           "ZSLIDE", "volume", None, "tomato")
 
@@ -341,7 +379,7 @@ DESIGNED = [  # coppie in moto relativo che si toccano per progetto (guida-patti
     ("x_screw", "x_nut_bracket"), ("y_screw", "y_nut_bracket"), ("z_screw", "z_nut_tab"),
     # tavola 6 mm sopra la rotaia Y: MGN15H H 16 − rotaia 10 (luce di catalogo)
     ("head_volume", "table"), ("y_rail", "table"), ("transfer_head", "head_volume"), ("transfer_head", "tooldock_master"),
-    ("magazine_volume", "transfer_head"),
+    ("magazine_volume", "transfer_head"), ("head_volume", "head_"), ("transfer_head", "head_"), ("head_spindle", "table"),
     # superficie che porta la rotaia ↔ pattino: luce H1 di catalogo (HGH15 4,3 mm, MGN15 4 mm)
     ("beam", "x_block"), ("frame_longeron", "y_block"), ("x_carriage", "z_block"),
 ]
@@ -388,7 +426,7 @@ def analyse(a, all_pairs):
         r = pair_check(n1, p1["shape"], n2, p2["shape"], bbs[n1], bbs[n2])
         if r is None:
             continue
-        if r[0] == "collision" and not (designed(n1, n2) and "TRANSFER" in (p1["group"], p2["group"])):
+        if r[0] == "collision" and not (designed(n1, n2) and ("TRANSFER" in (p1["group"], p2["group"]) or "volume" in (p1["kind"], p2["kind"]))):
             collisions.append(dict(a=n1, b=n2, volume_mm3=round(r[1], 1)))
             continue
         if r[0] == "collision" or p1["group"] == p2["group"] or designed(n1, n2):
@@ -454,7 +492,7 @@ def transfer_check():
     """Testa vera lungo la traiettoria del trasferitore, macchina in DOCK (X 440, Y 0, Z alto)."""
     X, Y, Zd = P.CONFIGS["DOCK"]
     base, _ = build(X, Y, Zd)
-    others = {n: p for n, p in base.parts.items() if n not in ("head_volume", "magazine_volume")}
+    others = {n: p for n, p in base.parts.items() if not n.startswith("head_") and n != "magazine_volume"}
     bbs = {n: p["shape"].BoundingBox() for n, p in others.items()}
     pts = transfer_path()
     worst, collisions = {}, []
@@ -578,6 +616,7 @@ def main():
             print("   gioco", w)
         if cfg == "HOME":
             report["mass"] = masses(a)
+            report["head"] = head_report(a)
     report["envelope_mm"] = [min(b[0] for b in env), max(b[1] for b in env), min(b[2] for b in env),
                              max(b[3] for b in env), min(b[4] for b in env), max(b[5] for b in env)]
     e = report["envelope_mm"]
@@ -592,6 +631,7 @@ def main():
     report["transfer"] = transfer_check()
     tr = report["transfer"]
     print(f"trasferitore {tr['steps']} pose · collisioni {len(tr['collisions'])} · più vicini {tr['closest'][:4]}")
+    report["stiffness"] = stiffness_report()
     report["checks"] = design_checks(report)
     (OUT / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     if write_step:
@@ -608,6 +648,35 @@ D015_ASSUMED = dict(a=80.0, b=180.0)
 
 
 V0 = dict(b=455.7, height=1003.7, mass=50.5, collisions=1, zx=481.7)   # mule v0, commit 3e5d70a
+V1 = dict(b=220.0, height=850.0, mass=41.8, a=153.0, k=(0.43, 0.18, 0.80))  # mule v1.1, commit 151b3a0 (D028)
+
+
+def head_report(a):
+    """Massa e baricentro della testa reale sotto il coupling (D016 / ICD v4: ≤ 80 mm)."""
+    cz = a.parts["tooldock_master"]["shape"].BoundingBox().zmin
+    items = []
+    for n in ("head_receiver", "head_mount"):
+        sh = a.parts[n]["shape"]
+        items.append((sh.Volume() * P.AL_DENSITY, sh.Center().z))
+    sp = a.parts["head_spindle"]["shape"].BoundingBox()
+    S = P.SPINDLE
+    z_h1 = cz - S["receiver_t"] - S["connector"] - S["rear"]
+    items.append((S["mass"], z_h1 - S["housing"] / 2))
+    m = sum(k for k, _ in items)
+    cog = cz - sum(k * z for k, z in items) / m
+    return dict(mass=round(m, 2), cog_below_coupling=round(cog, 0), L=round(cz - sp.zmin, 1), ref=S["ref"],
+                inertia_moment_Nm=round(m * 2.0 * cog / 1000, 2))
+
+
+def stiffness_report():
+    """Rigidezza alla punta del mule corrente con il modello D028 (centro corsa)."""
+    sys.path.insert(0, str(ROOT / "tools" / "calc"))
+    import compliance_d028 as C
+    C.D = P.derived()
+    r = C.compliance(*P.CONFIGS["CENTER"])
+    r.pop("_mass", None)
+    return {ax: dict(N_per_um=round(r[ax]["N_per_um"], 2),
+                     top=sorted(((k, round(v * 100)) for k, v in r[ax]["share"].items() if v > 0.04), key=lambda t: -t[1])[:4]) for ax in "XYZ"}
 
 
 def design_checks(report):
@@ -658,7 +727,7 @@ def write_page(report):
     dat_rows = "".join(f'<tr><td><code>{k}</code></td><td>{", ".join(fmt(v) for v in xyz)}</td></tr>' for k, xyz in home.items())
     ok, ko = '<td class="status-ok">PASSA</td>', '<td class="status-critical">NON PASSA</td>'
     warn_td = '<td class="status-target">WARNING</td>'
-    sw, tr = report["sweep"], report["transfer"]
+    sw, tr, hd, kk = report["sweep"], report["transfer"], report["head"], report["stiffness"]
     part_ok = '<td class="status-target">PARZIALE</td>'
     nocoll = not any(c["collisions"].values())
     nowarn = not any(c["warnings"].values())
@@ -672,6 +741,11 @@ def write_page(report):
         ("X HGR15/HGH15CA ZA 640 · Y MGN15H Z1 630 + SFU1605 centrale · Z HGR15/HGH15CA 310 + SFU1204 260", ok, ""),
         ("Tavola 450 × 350 × 10, R1/R2, griglia 9 × 7", ok, ""),
         ("A · Pattini Z sulla slitta, guide, vite, BK/BF e motore Z sul carrello", ok, ""),
+        (f"D030 · Testa {hd['ref']} appesa, coupling → dado ≤ {fmt(P.HEAD['L'])} mm", ok if hd["L"] <= P.HEAD["L"] + 0.5 else ko, f'{fmt(hd["L"])} mm con connettore M23 a 90° (ingombro {fmt(P.SPINDLE["connector"])} mm da verificare)'),
+        (f"D030 · Asse spindle a {fmt(P.HEAD_AXIS_FROM_SLIDE)} mm dalla slitta, inviluppo ICD v4 a ≥ {fmt(P.CLEAR_PASS)} mm", ok if not sw["fails"] else ko, "40 mm solo con inviluppo posteriore ridotto (ICD v5)"),
+        (f"D030 · Testa ≤ 4 kg (classe S)", ok if hd["mass"] <= 4.0 else ko, f'{fmt(hd["mass"])} kg'),
+        (f"D030 · Baricentro testa ≤ {fmt(P.HEAD_COG_MAX)} mm sotto il coupling (ICD v4)", ok if hd["cog_below_coupling"] <= P.HEAD_COG_MAX else ko,
+         f'{fmt(hd["cog_below_coupling"])} mm; momento d\'inerzia sul clamp {fmt(hd["inertia_moment_Nm"])} N·m a 2 m/s² contro ~18 N·m di taglio (D014)'),
         (f"A · b ≤ {fmt(P.B_TARGET[1])} mm e D015 verificata con a e b misurati", ok if d15["b_ok"] and d15["pass_real"] else ko, f'b = {fmt(d15["b_real"])} mm · {fmt(d15["k_min_real"])} N/µm richiesti · ZA ×{fmt(d15["margin_za"])}'),
         ("B · Telaio a scala separato dalla cabina", ok, "Longheroni Y + traverse fronte / BF / posteriore / motore"),
         (f"C · Docking unico a X {fmt(P.DOCK_X)}, magazine dietro la spalla destra, nessun volume permanente davanti alla trave", ok, "Corridoio del trasferitore controllato solo in DOCK"),
@@ -681,17 +755,21 @@ def write_page(report):
          f'{len(sw["fails"])} FAIL · {len(sw["warnings"])} WARNING nello sweep; gioco minimo {fmt(sw["closest"][0]["clearance_mm"]) if sw["closest"] else "—"} mm'),
         (f"Trasferitore: testa reale lungo {tr['steps']} pose magazine → dock", ok if not tr["collisions"] else ko, f'gioco minimo {fmt(tr["closest"][0]["clearance_mm"])} mm ({tr["closest"][0]["part"]})' if tr["closest"] else ""),
         (f"D · Soglia dura massa ≤ {fmt(P.MASS_GATE_KG)} kg", ok if c["mass"]["pass_gate"] else ko, f'{fmt(c["mass"]["mule"])} kg nel mule · {fmt(c["mass"]["bom"])} kg in BOM'),
-        (f"D · Target di progetto ≤ {fmt(P.MASS_TARGET_KG)} kg prima di cablaggi e dettagli", ok if c["mass"]["pass_target"] else warn_td, f'mancano {fmt(round(c["mass"]["mule"] - P.MASS_TARGET_KG, 1))} kg: dopo la FEA (D028), prima carrello X, spalle e staffe'),
+        (f"D · Target di progetto ≤ {fmt(P.MASS_TARGET_KG)} kg prima di cablaggi e dettagli", ok if c["mass"]["pass_target"] else warn_td, f'mancano {fmt(round(c["mass"]["mule"] - P.MASS_TARGET_KG, 1))} kg: dopo la FEA a solidi'),
+        ("D014 · Rigidezza alla punta ≥ 10 N/µm (TARGET, modello D028)", ko, f'{fmt(kk["X"]["N_per_um"])} / {fmt(kk["Y"]["N_per_um"])} / {fmt(kk["Z"]["N_per_um"])} N/µm in X / Y / Z al centro corsa'),
     ]
     crit_rows = "".join(f"<tr><td>{t}</td>{r}<td>{n}</td></tr>" for t, r, n in crit)
-    cmp_rows = "".join(f"<tr><td>{k}</td><td>{v0}</td><td><b>{v1}</b></td></tr>" for k, v0, v1 in [
-        ("Centro guide X sopra i longheroni", f'{fmt(V0["zx"])} mm', f'{fmt(D["zx"])} mm'),
-        ("Braccio b (punta ↔ guide X, Z giù)", f'{fmt(V0["b"])} mm', f'{fmt(d15["b_real"])} mm'),
-        ("Rigidezza richiesta per pattino X (D015)", "522 N/µm · ZA non basta", f'{fmt(d15["k_min_real"])} N/µm · ZA ×{fmt(d15["margin_za"])}'),
-        ("Altezza macchina", f'{fmt(V0["height"])} mm', f'{fmt(report["height_mm"])} mm'),
-        ("Massa macchina", f'{fmt(V0["mass"])} kg', f'{fmt(c["mass"]["mule"])} kg'),
-        ("Collisioni", str(V0["collisions"]), str(sum(c["collisions"].values()))),
+    kv = " / ".join(fmt(kk[ax]["N_per_um"]) for ax in "XYZ")
+    cmp_rows = "".join(f"<tr><td>{k}</td><td>{v0}</td><td>{v1}</td><td><b>{v2}</b></td></tr>" for k, v0, v1, v2 in [
+        ("Braccio b (punta ↔ guide X, Z giù)", f'{fmt(V0["b"])} mm', f'{fmt(V1["b"])} mm', f'{fmt(d15["b_real"])} mm'),
+        ("Braccio a (asse ↔ faccia trave)", "153 mm", f'{fmt(V1["a"])} mm', f'{fmt(d15["a_real"])} mm'),
+        ("Testa", "inviluppo rigido", "inviluppo rigido", f'SycoTec 5045 reale, {fmt(hd["mass"])} kg'),
+        ("Rigidezza X / Y / Z (N/µm, D028)", "—", " / ".join(fmt(v) for v in V1["k"]), kv),
+        ("Altezza macchina", f'{fmt(V0["height"])} mm', f'{fmt(V1["height"])} mm', f'{fmt(report["height_mm"])} mm'),
+        ("Massa macchina", f'{fmt(V0["mass"])} kg', f'{fmt(V1["mass"])} kg', f'{fmt(c["mass"]["mule"])} kg'),
+        ("Collisioni nello sweep", str(V0["collisions"]), "0", str(len(sw["collisions"]))),
     ])
+    k_rows = "".join(f'<tr><td>{ax}</td><td>{fmt(kk[ax]["N_per_um"])}</td><td>{" · ".join(f"{t} {v}%" for t, v in kk[ax]["top"])}</td></tr>' for ax in "XYZ")
     views = "".join(f'<figure style="margin:0"><img src="../cad/standard/views/{n}.png" alt="Mule Standard {n}" style="width:100%;background:#fff;border-radius:10px"><figcaption style="color:var(--dim);font-size:12px;margin-top:6px">{n.replace("_", " · ").upper()}</figcaption></figure>'
                     for n in ("home_iso", "dock_iso", "max_iso", "max_front", "max_side", "dock_top"))
     sw_rows = "".join(f'<tr><td>{x["pair"]}</td><td class="{ {"PASS": "status-ok", "WARNING": "status-target", "FAIL": "status-critical"}[x["level"]] }">{fmt(x["clearance_mm"])} mm · {x["level"]}</td><td>X {fmt(float(x["axes"][0]))} · Y {fmt(float(x["axes"][1]))} · Z {fmt(float(x["axes"][2]) + 0.0)}</td></tr>' for x in sw["closest"][:10])
@@ -699,12 +777,12 @@ def write_page(report):
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD Standard · mule</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/cad/standard_assembly.py: non modificare a mano. -->
 <a class="back" href="index.html">← Base Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v1.1 · digital mule · D027 · D028</div><h1>Digital mule<br>Standard v1.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Dopo il v0: pattini Z sulla slitta, trave abbassata, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v1 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v2 · digital mule · D030</div><h1>Digital mule<br>Standard v2.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Il v2 monta la testa corta di riferimento {hd["ref"]} appesa sotto il coupling (golden reference, non fornitore di produzione), con master scatolata, slitta Z e carrello X a canale e spalle scatolate, sulla stessa architettura del v1 (trave bassa, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra). ICD meccanica v4 invariata. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v2 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
 
 <section class="metric-grid">
-  <div class="metric"><strong>{fmt(d15["b_real"])} mm</strong><span>braccio b · D015 {fmt(d15["k_min_real"])} N/µm, ZA ×{fmt(d15["margin_za"])}</span></div>
+  <div class="metric"><strong>{kv}</strong><span>N/µm alla punta X / Y / Z · target D014 ≥ 10</span></div>
   <div class="metric"><strong>{fmt(report["height_mm"])}</strong><span>mm · altezza, dal fondo telaio al motore Z</span></div>
-  <div class="metric"><strong>{fmt(c["mass"]["mule"])} kg</strong><span>massa macchina · soglia {fmt(P.MASS_GATE_KG)} kg (D027)</span></div>
+  <div class="metric"><strong>{fmt(c["mass"]["mule"])} kg</strong><span>massa macchina · soglia dura {fmt(P.MASS_GATE_KG)} kg</span></div>
   <div class="metric"><strong>{len(sw["collisions"])} · {len(sw["fails"])} · {len(sw["warnings"])}</strong><span>collisioni · FAIL · WARNING su {sw["configs"]} configurazioni</span></div>
 </section>
 
@@ -714,12 +792,12 @@ def write_page(report):
 </table></div></section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">v0 → v1</span><h2>Da torre a CNC desktop.</h2><div class="table-wrap"><table><tr><th>Grandezza</th><th>v0</th><th>v1</th></tr>{cmp_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">La causa del v0 non era il lato su cui stanno i pattini, ma la quota delle guide X legata alla zona guide Z. Nel v1 la trave scende a {fmt(P.CLEAR_UNDER_BEAM)} mm sopra la tavola (pezzo alto quanto la corsa Z + 10 mm) e il carrello X porta più in alto le guide Z. I pattini Z sulla slitta corta tengono la leva punta ↔ pattino più basso a {fmt(d15["z_lever"])} mm.</p></div>
-  <div class="panel"><span class="kicker">Masse dal mule</span><h2>{fmt(c["mass"]["mule"])} kg.</h2><div class="table-wrap"><table><tr><th>Riga BOM</th><th>Parte</th><th>kg</th></tr>{mass_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Da D027 la BOM Standard usa queste masse (tranne la master ToolDock, parte comune alle basi: 0,6 kg in BOM): {fmt(m["machine_bom_kg"])} kg; carrello X (MC-XC-001) e staffe (MC-BRK-001) sono righe BOM. Commerciali ed elettronica con le masse della BOM. Prossimo passo: FEA e alleggerimento di trave (6,0 kg), carrello X e telaio, obiettivo 35–37 kg.</p></div>
+  <div class="panel"><span class="kicker">v0 → v1 → v2</span><h2>Più rigida vicino alla punta.</h2><div class="table-wrap"><table><tr><th>Grandezza</th><th>v0</th><th>v1.1</th><th>v2</th></tr>{cmp_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Rigidezza del mule corrente dal modello D028 al centro corsa, punto di misura sul dado ER11:</p><div class="table-wrap"><table><tr><th>Asse</th><th>N/µm</th><th>Contributi principali</th></tr>{k_rows}</table></div></div>
+  <div class="panel"><span class="kicker">Masse dal mule</span><h2>{fmt(c["mass"]["mule"])} kg.</h2><div class="table-wrap"><table><tr><th>Riga BOM</th><th>Parte</th><th>kg</th></tr>{mass_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">La BOM Standard usa queste masse ({fmt(m["machine_bom_kg"])} kg); commerciali ed elettronica con le masse della BOM. Il v2 supera la soglia dura: carrello a canale, master scatolata, mount e receiver della testa reale pesano più delle piastre del v1. Le leve misurate (ali 20 mm, master e spalle con pareti sottili) arrivano a ~43,4 kg perdendo rigidezza; la trave con parete 5 mm toglie ~1 kg quasi senza perdita, ma resta intoccata fino alla FEA a solidi.</p></div>
 </section>
 
 <section class="section split">
-  <div class="panel"><span class="kicker">ToolDock · D021 / D027</span><h2>Docking a X {fmt(P.DOCK_X)}.</h2><p>Posizione unica di docking a X {fmt(P.DOCK_X)}, Y 0, coupling a {fmt(D["coupling_top"])} mm con Z in alto: 10 mm prima del fine corsa, dentro i 450 mm utili. Il magazine indicizzato sta dietro la spalla destra (volume riservato {fmt(P.MAGAZINE["x"][1] - P.MAGAZINE["x"][0])} × {fmt(P.MAGAZINE["y"][1] - P.MAGAZINE["y"][0])} × {fmt(P.MAGAZINE["z"][1] - P.MAGAZINE["z"][0])} mm). Solo la testa selezionata arriva davanti alla trave: il trasferitore la solleva sopra trave e catena X nel corridoio x {fmt(P.TRANSFER_X[0])}–{fmt(P.TRANSFER_X[1])}, oltre il carrello, la abbassa davanti alla trave e la infila lungo −X sotto la master. Il corridoio esiste solo durante il cambio e viene controllato in DOCK. Il meccanismo del trasferitore è da progettare.</p></div>
+  <div class="panel"><span class="kicker">ToolDock · D021 / D027</span><h2>Docking a X {fmt(P.DOCK_X)}.</h2><p>Posizione unica di docking a X {fmt(P.DOCK_X)}, Y 0, coupling a {fmt(D["coupling_top"])} mm con Z in alto: 10 mm prima del fine corsa, dentro i 450 mm utili. Il magazine indicizzato sta dietro la spalla destra (volume riservato {fmt(P.MAGAZINE["x"][1] - P.MAGAZINE["x"][0])} × {fmt(P.MAGAZINE["y"][1] - P.MAGAZINE["y"][0])} × {fmt(P.MAGAZINE["z"][1] - P.MAGAZINE["z"][0])} mm). Solo la testa selezionata arriva davanti alla trave: il trasferitore la solleva sopra trave e catena X nel corridoio x {fmt(P.TRANSFER_X[0])}–{fmt(P.TRANSFER_X[1])}, oltre il carrello, la porta davanti alla macchina (y {fmt(P.DOCK_APPROACH_Y)}), la abbassa, la allinea lungo −X e la infila lungo +Y sotto la master (D030: le ali del carrello impediscono l\'ingresso lungo −X). Il corridoio esiste solo durante il cambio e viene controllato in DOCK. Il meccanismo del trasferitore è da progettare.</p></div>
   <div class="panel"><span class="kicker">Ingombri</span><h2>Motori ancora a sbalzo.</h2><p>Inviluppo X {fmt(e[0])} … {fmt(e[1])}, Y {fmt(e[2])} … {fmt(e[3])}, Z {fmt(e[4])} … {fmt(e[5])} mm, footprint {fmt(report["footprint_mm"][0])} × {fmt(report["footprint_mm"][1])} mm con i motori. Il motore X sporge oltre la trave e il motore Y oltre il telaio di ~97 mm; il motore Z sul carrello porta l'altezza a {fmt(report["height_mm"])} mm. Rinvii a cinghia da valutare quando la meccanica è chiusa. Il magazine aggiunge profondità dietro il ponte fino a y = {fmt(P.MAGAZINE["y"][1])}.</p></div>
 </section>
 

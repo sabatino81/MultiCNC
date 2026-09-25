@@ -19,7 +19,7 @@
 <tr><td>Clamp</td><td>Pull-stud centrale, normalmente chiuso (fail-safe). Stessa geometria su tutte le basi, pacco molle per classe: <b>L ≥ 0,5 kN · S ≥ 1,6 kN · P ≥ 3,8 kN</b> (D016, distacco con S = 1,5)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Sgancio</td><td>Passivo: camma comune <b>3:1</b> sulla stazione del dock rail, azionata dal movimento Z. Nessuna aria e nessun attuatore sul carrello (D016)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Classi di carico</td><td>Testa completa: <b>L</b> ≤ 2 kg · <b>S</b> ≤ 4 kg · <b>P</b> ≤ 7 kg; il pacco molle del clamp segue la classe della base (D016)</td><td class="status-frozen">FROZEN</td></tr>
-<tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud</td><td class="status-frozen">FROZEN</td></tr>
+<tr><td>Baricentro testa</td><td>≤ 80 mm sotto il piano di accoppiamento, ≤ 25 mm dall'asse del pull-stud. D030: la testa Standard 5045-style appesa sta a ~97 mm (momento d'inerzia 0,5 N·m): deroga o limite rivisto in ICD v5, aperto</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Conferma aggancio</td><td>Master: clamp chiuso + modulo presente. Rack: sensore di cattura per ogni posto. Sgancio solo con cattura confermata; uscita dal rack solo con clamp chiuso e ID valido (D016)</td><td class="status-frozen">FROZEN</td></tr>
 <tr><td>Inviluppo testa</td><td>Classi L e S: X ≤ 110 mm · Y ≤ 140 mm · lunghezza sotto il coupling ≤ 220 mm; passo posti rack ~130 mm (D016). <small style="color:var(--crit)">Classe P in revisione: i candidati ISO20 ATC esaminati sono Ø80, circa 287–353 mm e 8–10 kg.</small></td><td class="status-validate">L · S FROZEN · P IN REVISIONE</td></tr>
 <tr><td>Ripetibilità di riaggancio</td><td>≤ 10 µm</td><td class="status-target">TARGET</td></tr>
@@ -30,7 +30,7 @@
 <h3 style="margin-top:22px">2a · Potenza e I/O</h3><div class="table-wrap"><table>
 <tr><th>Contatto</th><th>Funzione</th><th>Rating connettore</th><th>Note</th></tr>
 <tr><td>PE</td><td>Terra di protezione</td><td>10 A</td><td>Primo a connettersi, ultimo a scollegarsi</td></tr>
-<tr><td>P1 · P2 · P3</td><td>Fasi motore spindle</td><td>300 V AC · 10 A</td><td>Da VFD (Standard, Pro) o driver BLDC (Light)</td></tr>
+<tr><td>P1 · P2 · P3</td><td>Fasi motore spindle</td><td>300 V AC · 10 A</td><td>Da VFD (Standard, Pro) o driver BLDC (Light). Spindle HF Standard di riferimento (D030): 180 V · 3,5 A S1 · fino a 1 kHz, entro il rating</td></tr>
 <tr><td>P4 · P5</td><td>48 V DC ausiliario</td><td>5 A (240 W)</td><td>Potenza garantita per base nella tabella 2c</td></tr>
 <tr><td>P6 · P7</td><td>24 V DC logica</td><td>2 A (48 W)</td><td>Potenza garantita per base nella tabella 2c</td></tr>
 <tr><td>S1</td><td>Module ID (1-Wire)</td><td>—</td><td>Vedi sezione 3</td></tr>
@@ -38,7 +38,7 @@
 <tr><td>S4 · S5 · S6</td><td>Riserva</td><td>24 V</td><td>Gli encoder passano sul connettore dati (2b)</td></tr>
 <tr><td>S7</td><td>Interlock di processo</td><td>24 V</td><td>Catena safety del modulo (laser, termoformatura)</td></tr>
 <tr><td>S8 · GND</td><td>Riserva · massa segnale</td><td>—</td><td>Non assegnare</td></tr>
-<tr><td>Aria · fluido</td><td>1 passaggio Ø6 mm · 2 porte Ø4 mm</td><td>≤ 7 bar</td><td>Predisposti e tappati; usati solo dai kit che li portano</td></tr>
+<tr><td>Aria · fluido</td><td>1 passaggio Ø6 mm · 2 porte Ø4 mm</td><td>≤ 7 bar</td><td>Predisposti e tappati; usati solo dai kit che li portano. Testa spindle Standard (D030): Ø6 = sealing air 30 l/min, 2 × Ø4 = mandata e ritorno della camicia di raffreddamento nel mount</td></tr>
 </table></div>
 <h3 style="margin-top:22px">2b · Dati · 18 contatti + schermo</h3><div class="table-wrap"><table>
 <tr><th>Contatti</th><th>Funzione</th><th>Standard</th><th>Note</th></tr>

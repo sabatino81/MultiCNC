@@ -65,6 +65,41 @@ def tube(b, h, t):
     return dict(A=A, Iy=Iy, Iz=Iz, J=J, Asy=2 * t * b, Asz=2 * t * h)
 
 
+def comp(rects):
+    """Sezione composta da rettangoli (cy, cz, b, h) in coordinate locali: b lungo y, h lungo z. Torsione da sezione aperta."""
+    A = sum(b * h for _, _, b, h in rects)
+    yc = sum(cy * b * h for cy, _, b, h in rects) / A
+    zc = sum(cz * b * h for _, cz, b, h in rects) / A
+    Iy = sum(b * h ** 3 / 12 + b * h * (cz - zc) ** 2 for _, cz, b, h in rects)
+    Iz = sum(h * b ** 3 / 12 + b * h * (cy - yc) ** 2 for cy, _, b, h in rects)
+    J = sum(max(b, h) * min(b, h) ** 3 / 3 for _, _, b, h in rects)
+    return dict(A=A, Iy=Iy, Iz=Iz, J=J, Asy=A / 1.5, Asz=A / 1.5)
+
+
+def default_sections():
+    """Sezioni del mule corrente da standard_params (D030: canali, master scatolata, spalle scatolate, testa 5045)."""
+    C_, out = P.PLATE, {}
+    if hasattr(P, "CARRIAGE_FLANGE"):
+        f = P.CARRIAGE_FLANGE
+        h = C_["carriage_t"] + f["depth"] + 10
+        off = (C_["carriage_t"] - h) / 2
+        out["carriage"] = comp([(0, 0, C_["carriage_w"], C_["carriage_t"])] +
+                               [(s_ * (C_["carriage_w"] + f["t"]) / 2, off, f["t"], h) for s_ in (-1, 1)])
+    if hasattr(P, "SLIDE_FLANGE"):
+        f = P.SLIDE_FLANGE
+        off = -(C_["slide_t"] + f["depth"]) / 2
+        out["slide"] = comp([(0, 0, C_["slide_w"], C_["slide_t"])] +
+                            [(s_ * (C_["slide_w"] - f["t"]) / 2, off, f["t"], f["depth"]) for s_ in (-1, 1)])
+    if "wall" in P.MASTER:
+        out["master"] = tube(P.MASTER["W"], P.MASTER["T"], P.MASTER["wall"])
+    if "wall" in P.UPRIGHT:
+        out["upright"] = tube(P.UPRIGHT["t"], P.UPRIGHT["depth"], P.UPRIGHT["wall"])
+    if hasattr(P, "SPINDLE"):
+        S = P.SPINDLE
+        out["head"] = dict(real5045=True)
+    return out
+
+
 RIGID_SEC = dict(A=1e4, Iy=1e8, Iz=1e8, J=1e8, Asy=1e4, Asz=1e4)
 
 
@@ -202,8 +237,8 @@ def coupling_k():
 
 
 def build(X, Y, Zd, shear_panel=False, sec=None):
-    """sec: sezioni equivalenti alternative (nervature/scatolati) per le analisi di sensibilità."""
-    sec = sec or {}
+    """sec: sezioni alternative per le analisi di sensibilità; di default quelle del mule corrente."""
+    sec = {**default_sections(), **(sec or {})}
     m = Model()
     Lg, U, BM, T, C = P.LADDER, P.UPRIGHT, P.BEAM, P.TABLE, P.PLATE
     xa, ya, za = P.X_AXIS, P.Y_AXIS, P.Z_AXIS
@@ -335,6 +370,39 @@ def build(X, Y, Zd, shear_panel=False, sec=None):
     hd = sec.get("head")
     if hd is None:                      # testa rigida (D028 v0)
         m.rigid(nc2, tip)
+    elif hd.get("real5045"):            # D030: SycoTec 5045 appeso: receiver, dorso, mount a collare, corpo, cuscinetti, naso
+        S = P.SPINDLE
+        z_rear = zcpl - S["receiver_t"] - S["connector"]
+        zc0 = z_rear - S["rear"] - 10
+        zc1 = zc0 - S["clamp_len"]
+        z_h0 = z_rear - S["rear"] - S["housing"]
+        z_b = z_h0 - S["neck"]
+        n1 = m.node(X, 0.0, zcpl - S["receiver_t"])
+        m.rigid(nc2, n1)
+        n2 = m.node(X, 0.0, zc0)
+        cb = S["clamp_block"]
+        d_cup = S["d"] + 3
+        cup = dict(A=cb ** 2 - math.pi * d_cup ** 2 / 4, Iy=cb ** 4 / 12 - math.pi * d_cup ** 4 / 64, Iz=cb ** 4 / 12 - math.pi * d_cup ** 4 / 64,
+                   J=0.14 * cb ** 4 - math.pi * d_cup ** 4 / 32, Asy=0.4 * cb ** 2, Asz=0.4 * cb ** 2)
+        m.beam(n1, n2, cup, AL, "testa (spindle + utensile)", up=(1, 0, 0))     # tazza sopra il collare (finestra connettore trascurata)
+        n3 = m.node(X, 0.0, zc1)
+        blk = dict(A=cb ** 2 - math.pi * S["d"] ** 2 / 4, Iy=cb ** 4 / 12 - math.pi * S["d"] ** 4 / 64, Iz=cb ** 4 / 12 - math.pi * S["d"] ** 4 / 64,
+                   J=0.14 * cb ** 4 - math.pi * S["d"] ** 4 / 32, Asy=0.5 * cb ** 2, Asz=0.5 * cb ** 2)
+        # collare e corpo spindle lavorano in parallelo: corpo in acciaio inox (tubo equivalente sp. 5) dentro il collare
+        m.beam(n2, n3, blk, AL, "testa (spindle + utensile)", up=(1, 0, 0))
+        do, di = S["d"], S["d"] - 10
+        body = dict(A=math.pi / 4 * (do ** 2 - di ** 2), Iy=math.pi / 64 * (do ** 4 - di ** 4), Iz=math.pi / 64 * (do ** 4 - di ** 4),
+                    J=math.pi / 32 * (do ** 4 - di ** 4), Asy=math.pi / 8 * (do ** 2 - di ** 2), Asz=math.pi / 8 * (do ** 2 - di ** 2))
+        m.beam(n2, n3, body, ST, "testa (spindle + utensile)", up=(1, 0, 0))
+        n4 = m.node(X, 0.0, z_b)
+        m.beam(n3, n4, body, ST, "testa (spindle + utensile)", up=(1, 0, 0))
+        n5 = m.node(X, 0.0, z_b)
+        kb = S["k_bearing"]
+        m.spring(n4, n5, [kb, kb, 3 * kb, kb * 25.0 ** 2, kb * 25.0 ** 2, 1e12], "testa (spindle + utensile)")
+        dn = 16.0
+        nose = dict(A=math.pi * dn ** 2 / 4, Iy=math.pi * dn ** 4 / 64, Iz=math.pi * dn ** 4 / 64, J=math.pi * dn ** 4 / 32,
+                    Asy=0.9 * math.pi * dn ** 2 / 4, Asz=0.9 * math.pi * dn ** 2 / 4)
+        m.beam(n5, tip, nose, ST, "testa (spindle + utensile)", up=(1, 0, 0))
     else:                               # testa reale: receiver + corpo spindle a sbalzo dal collare + cuscinetti + mandrino
         nclamp = m.node(X, 0.0, zcpl - hd["clamp"])
         m.rigid(nc2, nclamp)

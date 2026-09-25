@@ -3,24 +3,24 @@
   "derived": {
     "table_bottom": 16,
     "table_top": 26.0,
-    "slide_front": 70.0,
-    "slide_back": 82.0,
-    "carriage_front": 110.0,
-    "carriage_back": 125.0,
-    "beam_face": 153.0,
-    "beam_back": 233.0,
+    "slide_front": 53.0,
+    "slide_back": 65.0,
+    "carriage_front": 93.0,
+    "carriage_back": 108.0,
+    "beam_face": 136.0,
+    "beam_back": 216.0,
     "tip_bottom": 26.0,
     "coupling_bottom": 246.0,
     "coupling_top": 386.0,
-    "slide_bottom_low": 261.0,
+    "slide_bottom_low": 286.0,
     "z_block_span": 141.4,
-    "z_rail_bottom": 256.0,
+    "z_rail_bottom": 281.0,
     "beam_bottom": 176.0,
     "zx": 246.0,
     "beam_top": 316.0,
-    "a_tool_to_x_face": 153.0,
+    "a_tool_to_x_face": 136.0,
     "b_tip_below_x_rails": 220.0,
-    "z_lever_low": 240.0
+    "z_lever_low": 265.0
   },
   "params": {
     "travel": {
@@ -87,14 +87,14 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 59,
+      "parts": 63,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
         -60.0,
-        790.0
+        815.0
       ],
       "margins": {
         "X_rail_margin_mm": [
@@ -166,14 +166,14 @@
         "Y": 175.0,
         "Z": -70.0
       },
-      "parts": 59,
+      "parts": 63,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
         -60.0,
-        790.0
+        815.0
       ],
       "margins": {
         "X_rail_margin_mm": [
@@ -245,14 +245,14 @@
         "Y": 350.0,
         "Z": -140.0
       },
-      "parts": 59,
+      "parts": 63,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
         -60.0,
-        790.0
+        815.0
       ],
       "margins": {
         "X_rail_margin_mm": [
@@ -324,14 +324,14 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 64,
+      "parts": 68,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
         -60.0,
-        790.0
+        815.0
       ],
       "margins": {
         "X_rail_margin_mm": [
@@ -403,14 +403,14 @@
       {
         "bom": "MC-BAS-001",
         "part": "Telaio a scala",
-        "bom_kg": 6.48,
-        "mule_kg": 6.48
+        "bom_kg": 6.65,
+        "mule_kg": 6.65
       },
       {
         "bom": "MC-GAN-002",
         "part": "Spalle gantry",
-        "bom_kg": 1.76,
-        "mule_kg": 1.76
+        "bom_kg": 1.94,
+        "mule_kg": 1.94
       },
       {
         "bom": "MC-GAN-001",
@@ -433,25 +433,44 @@
       {
         "bom": "MC-XC-001",
         "part": "Carrello X",
-        "bom_kg": 2.47,
-        "mule_kg": 2.47
+        "bom_kg": 4.06,
+        "mule_kg": 4.06
       },
       {
         "bom": "MC-Z-001",
         "part": "Slitta Z",
-        "bom_kg": 0.78,
-        "mule_kg": 0.78
+        "bom_kg": 1.08,
+        "mule_kg": 1.08
       },
       {
         "bom": "MC-TD-001",
         "part": "Master kinematic plate",
-        "bom_kg": 0.6,
-        "mule_kg": 0.74
+        "bom_kg": 0.95,
+        "mule_kg": 0.95
+      },
+      {
+        "bom": "MC-TD-002",
+        "part": "Base spindle receiver",
+        "bom_kg": 0.37,
+        "mule_kg": 0.37
+      },
+      {
+        "bom": "MC-SP-003",
+        "part": "Mount spindle a tazza con camicia",
+        "bom_kg": 0.73,
+        "mule_kg": 0.73
       }
     ],
     "not_in_bom": [],
-    "machine_bom_kg": 41.7,
-    "machine_mule_kg": 41.8
+    "machine_bom_kg": 44.8,
+    "machine_mule_kg": 44.8
+  },
+  "head": {
+    "mass": 2.7,
+    "cog_below_coupling": 97.0,
+    "L": 220.0,
+    "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
+    "inertia_moment_Nm": 0.52
   },
   "envelope_mm": [
     -155.0,
@@ -459,13 +478,13 @@
     -350.0,
     447.0,
     -60.0,
-    790.0
+    815.0
   ],
   "footprint_mm": [
     857.0,
     797.0
   ],
-  "height_mm": 850.0,
+  "height_mm": 875.0,
   "sweep": {
     "configs": 125,
     "grid": 5,
@@ -493,6 +512,26 @@
       },
       {
         "pair": "x_bf ↔ x_block_10",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_0 ↔ head_volume",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_1 ↔ head_volume",
         "clearance_mm": 8.0,
         "axes": [
           0.0,
@@ -592,6 +631,16 @@
         "level": "PASS"
       },
       {
+        "pair": "chain_y_volume ↔ head_volume",
+        "clearance_mm": 8.0,
+        "axes": [
+          450.0,
+          0.0,
+          -140.0
+        ],
+        "level": "PASS"
+      },
+      {
         "pair": "frame_cross_rear ↔ y_nut_bracket",
         "clearance_mm": 8.56,
         "axes": [
@@ -622,38 +671,18 @@
         "level": "PASS"
       },
       {
+        "pair": "x_carriage ↔ z_slide",
+        "clearance_mm": 10.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
         "pair": "x_pads ↔ x_nut_bracket",
         "clearance_mm": 11.01,
-        "axes": [
-          450.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "beam ↔ x_nut_bracket",
-        "clearance_mm": 14.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "x_carriage ↔ z_nut",
-        "clearance_mm": 14.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "x_pads ↔ x_nut",
-        "clearance_mm": 18.53,
         "axes": [
           450.0,
           0.0,
@@ -666,10 +695,10 @@
     "warnings": []
   },
   "transfer": {
-    "steps": 41,
+    "steps": 42,
     "waypoints": [
       [
-        590.0,
+        600.0,
         370.0,
         616.0
       ],
@@ -683,15 +712,21 @@
     "collisions": [],
     "closest": [
       {
-        "part": "x_carriage",
-        "clearance_mm": 10.0,
-        "step": 10,
+        "part": "z_rail_1",
+        "clearance_mm": 8.0,
+        "step": 41,
         "level": "PASS"
       },
       {
-        "part": "z_slide",
-        "clearance_mm": 15.0,
-        "step": 34,
+        "part": "z_rail_0",
+        "clearance_mm": 8.0,
+        "step": 41,
+        "level": "PASS"
+      },
+      {
+        "part": "x_carriage",
+        "clearance_mm": 10.0,
+        "step": 8,
         "level": "PASS"
       },
       {
@@ -701,48 +736,107 @@
         "level": "PASS"
       },
       {
+        "part": "z_slide",
+        "clearance_mm": 30.0,
+        "step": 10,
+        "level": "PASS"
+      },
+      {
         "part": "z_bf",
-        "clearance_mm": 21.19,
-        "step": 36,
+        "clearance_mm": 32.14,
+        "step": 41,
         "level": "PASS"
       },
       {
         "part": "z_block_10",
-        "clearance_mm": 23.0,
-        "step": 11,
+        "clearance_mm": 33.0,
+        "step": 9,
         "level": "PASS"
       },
       {
         "part": "z_block_11",
-        "clearance_mm": 23.0,
-        "step": 11,
+        "clearance_mm": 33.0,
+        "step": 9,
         "level": "PASS"
       },
       {
-        "part": "z_block_00",
-        "clearance_mm": 23.32,
-        "step": 40,
+        "part": "x_block_00",
+        "clearance_mm": 38.0,
+        "step": 41,
         "level": "PASS"
       },
       {
-        "part": "z_rail_1",
-        "clearance_mm": 25.0,
-        "step": 34,
-        "level": "PASS"
-      },
-      {
-        "part": "z_rail_0",
-        "clearance_mm": 25.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
-        "part": "z_screw",
-        "clearance_mm": 41.63,
-        "step": 38,
+        "part": "x_block_01",
+        "clearance_mm": 38.0,
+        "step": 41,
         "level": "PASS"
       }
     ]
+  },
+  "stiffness": {
+    "X": {
+      "N_per_um": 0.91,
+      "top": [
+        [
+          "accoppiamento ToolDock",
+          36
+        ],
+        [
+          "carrello X",
+          18
+        ],
+        [
+          "testa (spindle + utensile)",
+          10
+        ],
+        [
+          "guide Z + vite Z",
+          8
+        ]
+      ]
+    },
+    "Y": {
+      "N_per_um": 0.79,
+      "top": [
+        [
+          "accoppiamento ToolDock",
+          31
+        ],
+        [
+          "slitta Z",
+          13
+        ],
+        [
+          "carrello X",
+          12
+        ],
+        [
+          "testa (spindle + utensile)",
+          9
+        ]
+      ]
+    },
+    "Z": {
+      "N_per_um": 1.59,
+      "top": [
+        [
+          "tavola",
+          47
+        ],
+        [
+          "telaio",
+          18
+        ],
+        [
+          "trave",
+          7
+        ],
+        [
+          "guide Y + vite Y",
+          7
+        ]
+      ]
+    }
   },
   "checks": {
     "d015": {
@@ -750,20 +844,20 @@
       "b_assumed": 180.0,
       "b_real": 220.0,
       "a_assumed": 80.0,
-      "a_real": 153.0,
+      "a_real": 136.0,
       "k_min_real": 128.0,
       "k_za": 365.0,
       "margin_za": 2.9,
       "pass_real": true,
       "b_ok": true,
-      "z_lever": 240.0
+      "z_lever": 265.0
     },
     "mass": {
-      "mule": 41.8,
-      "bom": 41.7,
+      "mule": 44.8,
+      "bom": 44.8,
       "gate": 42.0,
       "target": 40.0,
-      "pass_gate": true,
+      "pass_gate": false,
       "pass_target": false
     },
     "collisions": {

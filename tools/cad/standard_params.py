@@ -1,5 +1,9 @@
 """Base Standard · parametri geometrici del "digital mule" (unica fonte di verità CAD).
 
+Mule v2 (D030): testa corta di riferimento SycoTec 5045 AC-ER11 appesa sotto il coupling
+(golden reference geometrica, non fornitore di produzione), asse spindle a 40 mm dalla slitta,
+master scatolata, slitta Z e carrello X a canale, spalle scatolate. ICD meccanica v4 invariata.
+
 Mule v1 (D027): pattini Z sulla slitta mobile e guide Z sul carrello X; trave abbassata
 e disaccoppiata dalla zona guide Z; telaio a scala (due longheroni Y + traverse); docking
 unico a X 440 con magazine dietro la spalla destra, nessun volume permanente davanti alla trave.
@@ -61,21 +65,36 @@ R2_SLOT = 12.0
 
 # ------------------------------------------------------------------ ToolDock (D016, ICD v4)
 HEAD = dict(W=110.0, D=140.0, L=220.0)   # inviluppo testa classe L/S sotto il coupling
-MASTER = dict(W=120.0, T=15.0)            # piastra master sotto la slitta Z (MULE)
-HEAD_AXIS_FROM_SLIDE = HEAD["D"] / 2      # asse utensile a metà profondità testa (MULE)
+MASTER = dict(W=120.0, T=40.0, wall=8.0)  # master scatolata sotto la slitta Z (D029, D030)
+HEAD_AXIS_FROM_SLIDE = 53.0               # D030: minimo con ICD v4 (inviluppo ±70 a ≥ 8 mm dalle guide Z); 40 mm solo con inviluppo posteriore ridotto (ICD v5)
+
+# ------------------------------------------------------------------ spindle di riferimento (D030)
+# SycoTec 5045 AC-ER11 · 2002 5400 (catalogo SycoTec, disegno 2.002.5400): quote dal naso verso il retro.
+SPINDLE = dict(ref="SycoTec 5045 AC-ER11 · 2002 5400", d=45.0, nut_d=28.0, nose=25.0, neck=15.0, housing=120.0, rear=20.0,
+               total=180.0, mass=1.6, p_s1=650.0, p_max=1280.0, rpm=(6000, 60000), voltage=180.0, current_s1=3.5,
+               current_max=5.0, sealing_air_lpm=30.0, collet_max=8.0,
+               connector=25.0,          # MULE: connettore M23 a 90° sul retro (assiale nel catalogo): ingombro da verificare
+               receiver_t=15.0,         # receiver ToolDock della testa
+               clamp_len=90.0, clamp_block=60.0, receiver_w=96.0,   # mount a tazza 60 × 60: collare + camicia + finestra connettore   # mount con camicia di raffreddamento, serraggio sul Ø45 h6
+               k_bearing=40e3)          # N/mm al naso: 3 cuscinetti ibridi, stima da verificare
+assert abs(SPINDLE["receiver_t"] + SPINDLE["connector"] + SPINDLE["total"] - HEAD["L"]) < 0.5, "la testa 5045 deve stare nell'inviluppo L"
+HEAD_COG_MAX = 80.0                       # ICD v4 / D016: baricentro testa sotto il coupling
 TIP_AT_Z_BOTTOM = 0.0                     # punta a Z = −140 sul piano tavola (MULE)
 
 # ------------------------------------------------------------------ strutture custom (MULE)
 AL_DENSITY = 2.70e-6      # kg/mm³
 CLEAR_UNDER_BEAM = TRAVEL["Z"] + 10.0     # luce sotto la trave sopra la tavola (non è l'altezza massima del pezzo: va tolto pallet/fixture)
 PALLET_T = 15.0            # pallet tipico sopra la tavola (MULE): pezzo max sotto la trave = luce − pallet; +75 mm con i rialzi (D007)
+# D030: carrello X a canale con ali verso la trave (fra la piastra e le guide X), slitta Z a canale con ali in avanti
+CARRIAGE_FLANGE = dict(t=10.0, depth=35.0)   # ali posteriori a |x| 85–95, dietro la piastra
+SLIDE_FLANGE = dict(t=10.0, depth=35.0)      # ali anteriori a |x| 65–75, sopra il piano del coupling
 PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, below_x_blocks=18.0,
              slot_w=70.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
 LADDER = dict(H=60.0, wall=4.0,                                  # tubi rettangolari Al
               long_w=40.0, long_y=(-350.0, 350.0),              # longheroni sotto le guide Y
               front_y=(-350.0, -310.0), bf_y=(-250.0, -210.0),  # traverse
               end_y=(310.0, 350.0), pocket_w=80.0, pad_t=12.0, cross_drop=5.0)
-UPRIGHT = dict(t=15.0, depth=120.0)
+UPRIGHT = dict(t=40.0, depth=120.0, wall=6.0)   # D030: spalle scatolate 40 × 120 sp. 6
 BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=31.0, end=6.0)
 BEAM_X = (-155.0, 605.0)  # estensione trave = larghezza fra le facce esterne delle spalle
 NUT_BRACKET_T = 10.0
@@ -91,11 +110,12 @@ B_TARGET = (250.0, 300.0)  # D027: braccio b ideale / massimo
 
 # ------------------------------------------------------------------ riserve di volume
 CHAIN_X = dict(w=75.0, h=60.0, inset=5.0)        # sopra la trave, arretrata dalla faccia guide
-CHAIN_Y = dict(x0=520.0, x1=570.0, h=60.0)        # a destra della tavola
+CHAIN_Y = dict(x0=513.0, x1=557.0, h=60.0)        # a destra della tavola, fra la testa a X max e la spalla scatolata
 MAGAZINE = dict(x=(500.0, 680.0), y=(280.0, 460.0), z=(180.0, 620.0))  # dietro la spalla destra (D027)
 TRANSFER_X = (530.0, 640.0)                       # corridoio del trasferitore oltre il carrello
 TRANSFER_TOP = 616.0                              # coupling della testa sopra trave e catena X (fondo testa 20 mm sopra la catena)
-STORE_POSE = (590.0, 370.0)                       # centro testa nel magazine (x, y), coupling a TRANSFER_TOP
+DOCK_APPROACH_Y = -150.0                          # D030: ultimo tratto del docking lungo +Y, da davanti
+STORE_POSE = (600.0, 370.0)                       # centro testa nel magazine (x, y), coupling a TRANSFER_TOP
 TRANSFER_STEPS = 40                               # campioni lungo la traiettoria magazine → dock
 SWEEP_N = 5                                       # griglia 5 × 5 × 5 del workspace (vertici compresi)
 
