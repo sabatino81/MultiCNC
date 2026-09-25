@@ -43,7 +43,7 @@ S = P.SPINDLE
 BALL_ANGLES = (90.0, 210.0, 330.0)
 BALL_PATCH_R = 6.0
 H_NOM, H_LOCAL = 6.0, 2.5           # mm: globale e locale (D031: 5–8 e 2–3 mm)
-FINE = 0.75                          # mesh di convergenza: dimensioni −25% (−30% supera la memoria del container con SPOOLES)
+FINE = 0.7                           # mesh di convergenza: dimensioni −30% (~950k gdl, ~14 GB con SPOOLES: al limite del container)
 CONV_LIMIT = 0.05                    # spostamento alla punta entro 5%
 HOT_EXCL = 6.0                       # mm dai vincoli e dalle patch rigide per la tensione "hotspot"
 
@@ -300,6 +300,10 @@ def main():
         res["variants"][tag] = r
         k = [r["cases"][c]["k_N_um"] for c in ("Fx", "Fy", "Fz")]
         print(f"{tag:12} massa {r['mass']} k {k} peak {r['cases']['FxFz']['vm_peak']['MPa']} MPa", flush=True)
+    opt = WORK / "pilot_nom" / "result.json"          # nominale con mesh ottimizzata high-order (tensioni della baseline)
+    if opt.exists():
+        res["nominal_opt"] = json.loads(opt.read_text())["result"]
+    res["status"] = dict(displacement="converged" if res["converged"] else "not_converged", stress="not_converged")
     (OUT / "pilot.json").write_text(json.dumps(res, indent=2, ensure_ascii=False, default=lambda o: o.item() if hasattr(o, "item") else str(o)), encoding="utf-8")
     try:
         import d031_page
