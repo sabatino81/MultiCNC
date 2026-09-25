@@ -16,8 +16,28 @@
 <tr><td>Crash dinamico (energia a fine corsa)</td><td>~0,07 J · Y 7,5 kg a 8 m/min</td><td>~0,19 J · Y 13,5 kg a 10 m/min</td><td>~0,23 J · Y 26 kg a 8 m/min</td></tr>
 <tr><td>Carico di servizio ToolDock (Z allo sgancio)</td><td>~0,22 kN</td><td>~0,70 kN</td><td>~1,66 kN</td></tr>
 <tr><td>Duty cycle spindle</td><td>30 min al 50%</td><td>60 min al 60%</td><td>continuo al 100%</td></tr>
-<tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-target">≥ 10 N/µm · TARGET in revisione (D032): da separare in carico di servizio, carico strutturale e rigidezza derivata</td><td class="status-target">≥ 25 N/µm</td></tr>
+<tr><td>Rigidezza statica alla punta</td><td class="status-target">≥ 3 N/µm</td><td class="status-target">DERIVED / PROVISIONAL (D032): macchina, naso spindle ↔ punto di lavoro, ≥ 4 XY / 7,5 Z N/µm minimo, ~6 / ~8 di progetto</td><td class="status-target">≥ 25 N/µm</td></tr>
 </table></div><p style="color:var(--dim);font-size:13px;margin-top:12px"><b>D031 / D032:</b> la <a href="fea-d031-gantry.html" style="color:var(--accent-2)">FEA del gantry</a> stima la macchina a ~0,77 / 0,57 / 1,05 N/µm; D032 separa i carichi di servizio (reali, XY e Z distinti) dai casi strutturali (150 N radiali / 200 N assiali, robustezza) e deriva la rigidezza dal budget di deformazione alla punta. Finché D032 non fissa i valori, 150 / 200 N restano carichi strutturali e la rigidezza resta TARGET. <b>D028 / D029:</b> il <a href="compliance-d028.html" style="color:var(--accent-2)">modello di cedevolezza</a> non raggiunge ancora il target (mule v1.1: 0,2–0,8 N/µm; <a href="tooldock-d029.html" style="color:var(--accent-2)">studio D029</a> con piastre scatolate, testa reale passante e spalle scatolate: ~2–3 N/µm). Il valore resta TARGET: prima di rivederlo servono geometria reale della testa, cedevolezza locale ottimizzata e validazione del modello al banco. La rigidezza si misura al naso dello spindle (faccia del dado ER11), non sulla punta di una fresa: una fresa in metallo duro Ø6 con 25 mm di sporgenza vale da sola ~7 N/µm.</p></section>
+
+<section class="section"><h2>Standard · D032 · carichi e budget</h2><div class="table-wrap"><table>
+<tr><th>Caso Standard</th><th>SERVICE NOMINAL</th><th>SERVICE HIGH</th><th>STRUCTURAL PEAK</th></tr>
+<tr><td>Radiale XY</td><td class="status-target">60 N</td><td class="status-target">80 N</td><td>150 N</td></tr>
+<tr><td>Assiale Z</td><td class="status-target">100 N</td><td class="status-target">150 N</td><td>200 N</td></tr>
+</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">PROVISIONAL (D032): carichi di servizio coerenti con lo spindle ~650 W S1 (Ø6 a 24.000 giri/min: F ≈ P / v ≈ 86 N tangenziali a piena potenza), da confermare con le misure di forza sul prototipo. I casi STRUCTURAL PEAK sono quelli di robustezza di D014: nessuna deformazione permanente, margini statici dei pattini.</p>
+<div class="table-wrap" style="margin-top:14px"><table>
+<tr><th>Budget di deformazione alla punta (20 µm)</th><th>Definizione</th><th>Esempio a 60 N XY</th></tr>
+<tr><td>Macchina strutturale</td><td>Naso spindle (dado ER11) ↔ punto di lavoro sulla tavola: guide, viti, strutture, ToolDock, testa. È ciò che misura la FEA; l'utensile non è compreso.</td><td>~10 µm con 6 N/µm</td></tr>
+<tr><td>Utensile e portautensile</td><td>Flessione della fresa e della pinza oltre il dado: fresa Ø6 × 25 ≈ 7 N/µm da sola.</td><td>~8,6 µm</td></tr>
+<tr><td>Fixture e pezzo</td><td>Pallet, staffaggio e pezzo.</td><td>~1,4 µm</td></tr>
+</table></div>
+<div class="table-wrap" style="margin-top:14px"><table>
+<tr><th>Rigidezza macchina · DERIVED / PROVISIONAL</th><th>XY</th><th>Z</th><th>Da dove</th></tr>
+<tr><td>Minimo</td><td class="status-target">4 N/µm</td><td class="status-target">7,5 N/µm</td><td>20 µm alla sola macchina a SERVICE HIGH (80 N · 150 N)</td></tr>
+<tr><td>Di progetto</td><td class="status-target">~6 N/µm</td><td class="status-target">~8 N/µm</td><td>Margine per utensile e fixture a SERVICE NOMINAL</td></tr>
+<tr><td>Mule v3 oggi (FEA D031)</td><td class="status-critical">0,57–0,77</td><td class="status-critical">1,05</td><td>~8–10 volte sotto il target di progetto</td></tr>
+</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Non si usa più F / 20 µm come se i 20 µm fossero tutti della macchina: con 80 N e una fresa a 7 N/µm resterebbero 8,6 µm alla macchina (~9,3 N/µm). La rigidezza si deriva dal budget, non si sceglie a priori; il budget completo macchina + utensile + fixture si chiude con le misure.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Regole</span><h2>Come si usano.</h2><div class="spec-list">

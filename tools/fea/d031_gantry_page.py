@@ -6,7 +6,9 @@ import pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 PAGE = ROOT / "base" / "fea-d031-gantry.html"
-TARGET = 10.0
+TARGET = 10.0                                    # D014 originale (storico)
+T_MIN = dict(X=4.0, Y=4.0, Z=7.5)                # D032 PROVISIONAL: minimo macchina
+T_DES = dict(X=6.0, Y=6.0, Z=8.0)                # D032 PROVISIONAL: di progetto
 
 
 def it(x, d=2):
@@ -22,7 +24,7 @@ def write(r):
     lim = [d28[ax]["limit"] for ax in "XYZ"]
     cmp_rows = "".join(
         f'<tr><td>{ax}</td><td>{it(d28[ax]["k_gantry_d028"], 2)}</td><td><b>{it(k[i], 2)}</b></td><td>{it(k[i] / d28[ax]["k_gantry_d028"], 2)}</td>'
-        f'<td>{it(d28[ax]["k_machine"], 2)}</td><td><b>{it(mach[i], 2)}</b></td><td>{it(lim[i], 2)}</td><td>{it(TARGET, 0)}</td></tr>' for i, ax in enumerate("XYZ"))
+        f'<td>{it(d28[ax]["k_machine"], 2)}</td><td><b>{it(mach[i], 2)}</b></td><td>{it(lim[i], 2)}</td><td>{it(T_MIN[ax], 1)} / {it(T_DES[ax], 0)}</td></tr>' for i, ax in enumerate("XYZ"))
     conv_rows = "".join(
         f'<tr><td>{it(v["h"], 0)} / {it(v["hc"], 0)} mm</td><td>{v["mesh"]["elements"]:,}</td><td>{v["mesh"]["dof"] // 1000}k</td>'
         f'<td>{" / ".join(it(v["k"][n], 3) for n in ("Fx", "Fy", "Fz"))}</td><td>{it(v["solve_s"], 0)} s</td></tr>' for v in runs)
@@ -35,7 +37,7 @@ def write(r):
         f'<tr><td>{t}</td>' + "".join(f'<td>{it(d28[ax]["share"].get(t, 0.0), 0)}%</td>' for ax in "XYZ") + '</tr>'
         for t in ("telaio", "tavola", "guide Y + vite Y", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z",
                   "master ToolDock", "accoppiamento ToolDock", "testa (spindle + utensile)"))
-    worst_gap = min(m_ / TARGET for m_ in mach)
+    worst_gap = min(m_ / T_DES[ax] for m_, ax in zip(mach, "XYZ"))
     DN = {"gantry": "Trave + spalle", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa", "tooldock": "Accoppiamento ToolDock (3 sfere)",
           "rails": "Pattini e viti X / Z", "beam": "Solo la trave", "uprights": "Solo le spalle"}
     base_run = next((v for v in r["runs"].values() if v["h"] == r.get("diag_h", 6.0) and v["hc"] == 12.0), nom)
@@ -58,9 +60,9 @@ def write(r):
         chk = " / ".join(it(sum(en["energy"][n].values()) / en["work"][n] * 100, 1) + "%" for n in ("Fx", "Fy", "Fz"))
         energy_sec = f"""<section class="section"><h2>Dove si deforma oggi · energia di deformazione</h2><div class="table-wrap"><table><tr><th>Gruppo (baseline 6 / 12 mm)</th><th>150 N X</th><th>150 N Y</th><th>200 N Z</th></tr>{rows_e}</table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">Quota dell'energia di deformazione totale per gruppo (solidi dall'energia degli elementi, molle dalla loro energia elastica), sullo stato di carico reale. Seconda lettura, complementare alla sensibilità: la sensibilità dice quanto si guadagnerebbe al massimo rendendo perfetto un gruppo, l'energia dice dove la struttura si deforma oggi. Controllo: somma delle energie / lavoro del carico ½·F·u = {chk}.</p></section>"""
-    verdict = (f'Con il gantry reale la macchina stimata è <b>{" / ".join(it(v, 2) for v in mach)} N/µm</b>: tra {it(min(mach) / TARGET * 100, 0)}% e {it(max(mach) / TARGET * 100, 0)}% del target D014. '
+    verdict = (f'Con il gantry reale la macchina stimata è <b>{" / ".join(it(v, 2) for v in mach)} N/µm</b>: {" / ".join(it(v / T_DES[ax] * 100, 0) + "%" for v, ax in zip(mach, "XYZ"))} del target di progetto D032 (~6 / ~6 / ~8, minimo 4 / 4 / 7,5). '
                f'Anche con un gantry infinitamente rigido il resto (telaio, tavola, guide e vite Y, dal modello a travi) limiterebbe a {" / ".join(it(v, 2) for v in lim)} N/µm. '
-               f'L\'ordine di grandezza è {"confermato" if max(mach) < 3.0 else "da rileggere"}: 10 N/µm non si raggiunge con ottimizzazioni di questa architettura. '
+               f'L\'ordine di grandezza è {"confermato" if max(mach) < 3.0 else "da rileggere"}: né i 10 N/µm originali di D014 né i target D032 si raggiungono ottimizzando questa architettura. '
                'È l\'ingresso della decisione architetturale: riposizionare D014 per la Standard oppure rivedere la struttura in modo profondo.')
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — FEA gantry · D031</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/fea/d031_gantry.py (tools/fea/d031_gantry_page.py): non modificare a mano. -->
@@ -71,7 +73,7 @@ def write(r):
   <div class="metric"><strong>{" / ".join(it(v, 2) for v in k)}</strong><span>N/µm del gantry FEA in X / Y / Z</span></div>
   <div class="metric"><strong>{" / ".join(it(v, 2) for v in mach)}</strong><span>N/µm stimati sulla macchina (gantry FEA + resto D028)</span></div>
   <div class="metric"><strong>{" / ".join(it(v, 2) for v in lim)}</strong><span>N/µm di limite con il gantry infinitamente rigido</span></div>
-  <div class="metric"><strong>{it(worst_gap * 100, 0)}%</strong><span>del target D014 (10 N/µm) sull'asse peggiore</span></div>
+  <div class="metric"><strong>{it(worst_gap * 100, 0)}%</strong><span>del target di progetto D032 (~6 XY / ~8 Z N/µm) sull'asse peggiore</span></div>
 </section>
 
 <section class="section"><div class="callout" style="border-color:rgba(255,84,112,.45)"><b>Lettura.</b> {verdict}</div></section>
@@ -83,7 +85,7 @@ def write(r):
 {energy_sec}
 
 <section class="section"><h2>Gantry FEA ↔ D028</h2><div class="table-wrap"><table>
-<tr><th>Asse</th><th>Gantry D028</th><th>Gantry FEA</th><th>FEA / D028</th><th>Macchina D028</th><th>Macchina con gantry FEA</th><th>Limite, gantry rigido</th><th>D014</th></tr>
+<tr><th>Asse</th><th>Gantry D028</th><th>Gantry FEA</th><th>FEA / D028</th><th>Macchina D028</th><th>Macchina con gantry FEA</th><th>Limite, gantry rigido</th><th>D032 min / progetto</th></tr>
 {cmp_rows}</table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">N/µm al centro corsa. Gantry D028 = cedevolezza del modello a travi senza telaio, tavola e asse Y (dalla ripartizione dell'energia); macchina con gantry FEA = gantry FEA in serie con quel resto.</p></section>
 

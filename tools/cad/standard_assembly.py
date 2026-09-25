@@ -816,7 +816,7 @@ def write_page(report):
         (f"Trasferitore: testa reale lungo {tr['steps']} pose magazine → dock", ok if not tr["collisions"] else ko, f'gioco minimo {fmt(tr["closest"][0]["clearance_mm"])} mm ({tr["closest"][0]["part"]})' if tr["closest"] else ""),
         (f"D · Soglia dura massa ≤ {fmt(P.MASS_GATE_KG)} kg", ok if c["mass"]["pass_gate"] else ko, f'{fmt(c["mass"]["mule"])} kg nel mule · {fmt(c["mass"]["bom"])} kg in BOM: accettato come prototipo strutturale sovrappeso (D031), 42 kg resta hard target'),
         (f"D · Target di progetto ≤ {fmt(P.MASS_TARGET_KG)} kg prima di cablaggi e dettagli", ok if c["mass"]["pass_target"] else warn_td, f'mancano {fmt(round(c["mass"]["mule"] - P.MASS_TARGET_KG, 1))} kg: alleggerimento solo dopo la FEA a solidi D031'),
-        ("D014 · Rigidezza alla punta ≥ 10 N/µm (TARGET, modello D028)", ko, f'{fmt(kk["X"]["N_per_um"])} / {fmt(kk["Y"]["N_per_um"])} / {fmt(kk["Z"]["N_per_um"])} N/µm in X / Y / Z al centro corsa'),
+        ("D032 · Rigidezza macchina ≥ 4 XY / 7,5 Z N/µm minimo, ~6 / ~8 di progetto (PROVISIONAL; modello D028)", ko, f'{fmt(kk["X"]["N_per_um"])} / {fmt(kk["Y"]["N_per_um"])} / {fmt(kk["Z"]["N_per_um"])} N/µm in X / Y / Z al centro corsa'),
     ]
     crit_rows = "".join(f"<tr><td>{t}</td>{r}<td>{n}</td></tr>" for t, r, n in crit)
     kv = " / ".join(fmt(kk[ax]["N_per_um"]) for ax in "XYZ")
