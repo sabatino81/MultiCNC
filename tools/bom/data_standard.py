@@ -68,7 +68,7 @@ G=[
 ("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
 ]),
 ("G · Accessori (non inclusi nei totali)",[
-("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Stessa cabina della Light Core; agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; finestra filtrante per i kit laser; prezzo TARGET a lotto 50 (D025)",280,13.0,"A","design","TO DESIGN"),
+("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Stessa cabina della Light Core; agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; variante laser-ready da qualificare per ogni modulo laser (lunghezza d'onda, protezione ottica, interlock, verifica delle fughe); prezzo TARGET a lotto 50 (D025)",280,13.0,"A","design","TO DESIGN"),
 ("MC-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +75 mm","Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)",60,1.4,"A","design","TO DESIGN"),
 ("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),

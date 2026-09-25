@@ -10,7 +10,7 @@
 - Sito statico HTML/CSS/JS in italiano, senza build. Lo stile sta in `assets/styles.css`; menu, pager, ricerca e footer sono iniettati da `assets/nav.js`.
 - L'albero di navigazione (`TREE` in `assets/nav.js`) è l'elenco ufficiale dei capitoli: una pagina nuova va aggiunta lì, togliendo il badge `NEXT`/`PLANNED`.
 - I link devono restare relativi (niente `href="/..."`): il sito deve funzionare da `file://`, dalla radice del dominio e da un sottopercorso.
-- Versione della documentazione: unica, oggi V0.5 (`VERSION` in `nav.js`, README, dashboard).
+- Versione della documentazione: unica, oggi V0.6 (`VERSION` in `nav.js`, README, dashboard).
 - I valori non misurati sono **TARGET**, non specifiche commerciali.
 - Le decisioni architetturali si registrano in `docs/decisions.html` (D001…) e vanno riflesse in tutte le pagine e nella BOM che toccano.
 - Basi (D007): Light / Standard / Pro; la Standard è in sviluppo. `bom/base.html` = BOM Standard, `bom/base-light.html` = BOM Light Core (D024, prezzi TARGET a lotto da 50, tetto €1.050), `bom/base-pro.html` = BOM Pro (non in sviluppo attivo), `bom/platform-pack.html` = BOM Platform Pack (D026, upgrade della Light Core). Cabina opzionale (D025) come accessorio nelle BOM.

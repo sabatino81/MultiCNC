@@ -60,7 +60,7 @@ G=[
 ("G · Accessori e upgrade (non inclusi nei totali)",[
 ("ML-UP-001","Upgrade","Platform Pack","1",1,"Upgrade montabile dal cliente, BOM dedicata","Encoder a innesto, driver closed-loop, Mesa + LinuxCNC, clamp automatico, connettori ibrido e dati: profilo Platform della ICD v4 (D026, vedi BOM Platform Pack)",829,6.4,"A","design","TO DESIGN"),
 ("ML-PROBE-001","Metrology","XYZ touch probe","1",1,"Wired probe class","Work offset / edge finding",35,0.2,"A","design","TO QUALIFY"),
-("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; finestra filtrante per i kit laser (D025)",280,13.0,"A","design","TO DESIGN"),
+("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; variante laser-ready da qualificare per ogni modulo laser (lunghezza d'onda, protezione ottica, interlock, verifica delle fughe) (D025)",280,13.0,"A","design","TO DESIGN"),
 ("ML-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +50 mm","Clearance manuale riferita da spine",30,0.8,"A","design","TO DESIGN"),
 ("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Richiede il Platform Pack; sul ponte, presenta la testa in un\'unica posizione di docking (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),

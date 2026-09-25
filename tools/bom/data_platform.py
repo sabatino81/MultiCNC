@@ -10,8 +10,8 @@ EXTERNAL_LABEL = "quadro"
 
 G=[
 ("A · Closed-loop sugli assi",[
-("PP-ENC-001","XYZ","Encoder a innesto","3",3,"Encoder magnetico ABZ differenziale 1000 linee","Si monta sul secondo albero dei NEMA17 encoder-ready della Light Core: i motori restano (D026)",12,0.05,"M","design","TO QUALIFY"),
-("PP-DRV-001","XYZ","Driver closed-loop","3",3,"CL42T class, ingresso encoder ABZ","Nel nuovo quadro; al posto dei driver integrati del controller Core",15,0.2,"C","source","TO SOURCE"),
+("PP-ENC-001","XYZ","Encoder a innesto","3",3,"Encoder magnetico ABZ differenziale 1000 linee","Si monta sul secondo albero dei NEMA17 encoder-ready della Light Core: i motori restano (D026). Da qualificare in coppia con il driver: prova prioritaria",12,0.05,"M","critical","TO QUALIFY · COPPIA"),
+("PP-DRV-001","XYZ","Driver closed-loop","3",3,"CL42T class, ingresso encoder ABZ","Nel nuovo quadro; deve accettare davvero l'ABZ differenziale di un encoder esterno e chiudere l'anello su un motore non suo: da scegliere insieme all'encoder",15,0.2,"C","critical","TO QUALIFY · COPPIA"),
 ]),
 ("B · Controllo Mesa + LinuxCNC",[
 ("MC-CTRL-001","Control","Motion controller","1",1,"Mesa 7i96S","Stesso controller di Standard e Pro",140,0.2,"C","validate","I/O REVIEW"),

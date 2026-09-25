@@ -1,6 +1,6 @@
 # BOM generator
 
-Le tabelle delle tre BOM sono generate da dati Python, non scritte a mano.
+Le tabelle delle quattro BOM (tre basi e Platform Pack) sono generate da dati Python, non scritte a mano. Standard e Pro: stime di prototipo a pezzo singolo. Light Core e Platform Pack: costi TARGET a lotto da 50 (D023).
 
 | Base | Dati | Pagina |
 |---|---|---|

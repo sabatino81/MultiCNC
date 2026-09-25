@@ -1,5 +1,5 @@
 (()=> {
-  const VERSION='V0.5';
+  const VERSION='V0.6';
 
   // Root of the docs site, derived from this script's own URL (assets/nav.js → ../).
   // Works from disk (file://), at a domain root and under a GitHub Pages subpath.
