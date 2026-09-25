@@ -135,6 +135,13 @@ def master_shape(X, cz, wall=None, saddle=True):
     M, mw = P.MASTER, (wall if wall is not None else P.MASTER["wall"])
     m = box(X - M["W"] / 2, X + M["W"] / 2, -P.HEAD["D"] / 2, D["slide_back"], cz, cz + M["T"]).cut(
         box(X - M["W"] / 2 + mw, X + M["W"] / 2 - mw, -P.HEAD["D"] / 2 + mw, D["slide_back"] - mw, cz + mw, cz + M["T"] - mw))
+    mono = getattr(P, "MONOCOQUE", None)
+    if mono:                                   # D032 A1: scatola chiusa con la slitta davanti alla sua faccia anteriore
+        w_in = P.PLATE["slide_w"] / 2 - P.SLIDE_FLANGE["t"]
+        y0, y1, top, wt = -P.HEAD["D"] / 2, D["slide_front"], cz + M["T"], mono["wall"]
+        shell = box(X - w_in, X + w_in, y0, y1, top - 10.0, top + mono["h"]).cut(
+            box(X - w_in + wt, X + w_in - wt, y0 + wt, y1 + 1.0, top, top + mono["h"] - wt))
+        m = m.union(shell)
     if saddle and getattr(P, "SADDLE", None):
         w_in = P.PLATE["slide_w"] / 2 - P.SLIDE_FLANGE["t"]
         y0, top = D["slide_front"] - P.SLIDE_FLANGE["depth"], cz + M["T"]
@@ -608,9 +615,16 @@ def export_step(a, datums, path):
 
 
 def main():
+    global OUT
     t0 = time.time()
-    OUT.mkdir(parents=True, exist_ok=True)
     write_step = "--no-step" not in sys.argv
+    concept = sys.argv[sys.argv.index("--concept") + 1] if "--concept" in sys.argv else None
+    if concept:                                # D032: variante del mule, niente STEP né pagina, report a parte
+        import standard_concepts
+        standard_concepts.apply(concept)
+        OUT = ROOT / "cad" / "concepts" / concept
+        write_step = False
+    OUT.mkdir(parents=True, exist_ok=True)
     report = dict(generated_by="tools/cad/standard_assembly.py", derived={k: round(v, 1) for k, v in D.items()},
                   params=dict(travel=P.TRAVEL, x=P.X_AXIS, y=P.Y_AXIS, z=P.Z_AXIS, dock_x=P.DOCK_X, magazine=P.MAGAZINE), configs={})
     env = []
@@ -650,6 +664,11 @@ def main():
     tr = report["transfer"]
     print(f"trasferitore {tr['steps']} pose · collisioni {len(tr['collisions'])} · più vicini {tr['closest'][:4]}")
     report["stiffness"] = stiffness_report()
+    if concept:
+        report["concept"] = concept
+        (OUT / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=float), encoding="utf-8")
+        print("massa", report["mass"]["machine_mule_kg"], "kg · altezza", report["height_mm"], f"· {time.time() - t0:.0f} s")
+        return
     report["connector_variants"] = connector_variants()
     for mode, v in report["connector_variants"].items():
         print("connettore", mode, "L", v["L"], "CoG", v["cog_below_coupling"], "kg", v["mass"], "k", v["k"])

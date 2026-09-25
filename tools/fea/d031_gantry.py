@@ -195,6 +195,10 @@ def d028_split():
 def solve(tag, h, hc, rigid=(), stiff_springs=(), energy=False):
     cache = WORK / tag / "result.json"
     key = dict(v="gantry-v1", h=h, hc=hc, tab=P.TAB_T, saddle=P.SADDLE)
+    if getattr(P, "CONCEPT", None):
+        import standard_concepts
+        key["concept"] = P.CONCEPT
+        key["over"] = json.loads(json.dumps(standard_concepts.overrides(P.CONCEPT), default=str))
     if energy:
         key["energy"] = True
     if rigid:
@@ -240,7 +244,19 @@ def main():
     ap.add_argument("--check", action="store_true", help="solo mesh, senza soluzione")
     ap.add_argument("--diag", action="store_true", help="diagnostica: gantry, carrello e gruppo Z resi rigidi uno alla volta")
     ap.add_argument("--energy", action="store_true", help="energia di deformazione per gruppo sulla baseline diagnostica")
+    ap.add_argument("--concept", help="D032: variante di tools/cad/standard_concepts.py (gantry con energia, fea/d032/<nome>.json)")
     args = ap.parse_args()
+    if args.concept:
+        import standard_concepts
+        c = standard_concepts.apply(args.concept)
+        P.CONCEPT = args.concept
+        r = solve(f"d032_{args.concept}_h{args.h:g}_c{args.coarse:g}", args.h, args.coarse, energy=True)
+        r.update(concept=args.concept, desc=c["desc"])
+        out = ROOT / "fea" / "d032"
+        out.mkdir(parents=True, exist_ok=True)
+        (out / f"{args.concept}.json").write_text(json.dumps(r, indent=2, ensure_ascii=False, default=float))
+        print(args.concept, r["k"], r["mass"], r["solve_s"], "s", flush=True)
+        return
     if args.check:
         m, info, *_ = build("gantry_check", args.h, args.coarse)
         print(info)

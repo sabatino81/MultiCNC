@@ -28,8 +28,8 @@
 <div class="table-wrap" style="margin-top:14px"><table>
 <tr><th>Budget di deformazione alla punta (20 µm)</th><th>Definizione</th><th>Esempio a 60 N XY</th></tr>
 <tr><td>Macchina strutturale</td><td>Naso spindle (dado ER11) ↔ punto di lavoro sulla tavola: guide, viti, strutture, ToolDock, testa. È ciò che misura la FEA; l'utensile non è compreso.</td><td>~10 µm con 6 N/µm</td></tr>
-<tr><td>Utensile e portautensile</td><td>Flessione della fresa e della pinza oltre il dado: fresa Ø6 × 25 ≈ 7 N/µm da sola.</td><td>~8,6 µm</td></tr>
-<tr><td>Fixture e pezzo</td><td>Pallet, staffaggio e pezzo.</td><td>~1,4 µm</td></tr>
+<tr><td>Utensile e portautensile</td><td>Flessione della fresa oltre il dado più pinza ER11 e serraggio. ~7 N/µm è una stima della sola fresa Ø6 × 25 (cutter-only); il contributo di pinza e serraggio è da misurare e qualificare.</td><td>≥ 8,6 µm (solo fresa)</td></tr>
+<tr><td>Fixture e pezzo</td><td>Pallet, staffaggio e pezzo. 1,4 µm a 60 N vogliono dire ~43 N/µm equivalenti: budget ambizioso, PROVISIONAL finché non si scelgono pallet, serraggio e pezzo campione.</td><td>~1,4 µm</td></tr>
 </table></div>
 <div class="table-wrap" style="margin-top:14px"><table>
 <tr><th>Rigidezza macchina · DERIVED / PROVISIONAL</th><th>XY</th><th>Z</th><th>Da dove</th></tr>
@@ -37,7 +37,7 @@
 <tr><td>Di progetto</td><td class="status-target">~6 N/µm</td><td class="status-target">~8 N/µm</td><td>Margine per utensile e fixture a SERVICE NOMINAL</td></tr>
 <tr><td>Mule v3 oggi (FEA D031)</td><td class="status-critical">0,57–0,77</td><td class="status-critical">1,05</td><td>~8–10 volte sotto il target di progetto</td></tr>
 </table></div>
-<p style="color:var(--dim);font-size:13px;margin-top:12px">Non si usa più F / 20 µm come se i 20 µm fossero tutti della macchina: con 80 N e una fresa a 7 N/µm resterebbero 8,6 µm alla macchina (~9,3 N/µm). La rigidezza si deriva dal budget, non si sceglie a priori; il budget completo macchina + utensile + fixture si chiude con le misure.</p></section>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Non si usa più F / 20 µm come se i 20 µm fossero tutti della macchina: con 80 N e la sola fresa a ~7 N/µm resterebbero 8,6 µm alla macchina (~9,3 N/µm), e pinza e serraggio ne tolgono ancora. La rigidezza si deriva dal budget, non si sceglie a priori; il budget completo macchina + utensile + fixture si chiude con le misure.</p></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Regole</span><h2>Come si usano.</h2><div class="spec-list">

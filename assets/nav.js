@@ -50,6 +50,7 @@
       ['FEA a solidi · D031','base/fea-d031.html'],
       ['FEA slitta Z · D031','base/fea-d031-z.html'],
       ['FEA gantry · D031','base/fea-d031-gantry.html'],
+      ['Concept · D032','base/fea-d032.html'],
       ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
       ['ToolDock meccanico · D016','base/tooldock-d016.html'],
