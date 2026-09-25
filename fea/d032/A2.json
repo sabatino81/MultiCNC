@@ -1,0 +1,103 @@
+{
+  "tag": "d032_A2_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 339537,
+    "elements": 182943,
+    "dof": 1018611,
+    "min_sj": 0.554,
+    "poor": 0
+  },
+  "solve_s": 305.0,
+  "total_s": 383.6,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 5.467,
+    "struct": 2.841,
+    "head": 0.927
+  },
+  "k": {
+    "Fx": 0.858,
+    "Fy": 0.735,
+    "Fz": 2.09
+  },
+  "tip_um": {
+    "Fx": [
+      174.82,
+      -2.83,
+      0.33
+    ],
+    "Fy": [
+      -2.83,
+      204.05,
+      -42.86
+    ],
+    "Fz": [
+      0.44,
+      -57.15,
+      95.68
+    ],
+    "FxFz": [
+      175.26,
+      -59.98,
+      96.01
+    ],
+    "FyFz": [
+      -2.39,
+      146.9,
+      52.82
+    ]
+  },
+  "worst_um": 208.6,
+  "energy": {
+    "Fx": {
+      "uprights": 0.3717,
+      "beam": 0.782884,
+      "carriage": 1.297391,
+      "zslide": 2.461496,
+      "head": 2.056735,
+      "xblocks": 0.215183,
+      "xscrew": 0.306162,
+      "zblocks": 0.652212,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269345,
+      "beam": 1.646666,
+      "carriage": 2.417067,
+      "zslide": 3.056885,
+      "head": 2.067132,
+      "xblocks": 0.241692,
+      "xscrew": 0.0,
+      "zblocks": 0.637565,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.619461,
+      "beam": 5.225837,
+      "carriage": 0.867563,
+      "zslide": 1.53735,
+      "head": 0.062433,
+      "xblocks": 0.200758,
+      "xscrew": 0.0,
+      "zblocks": 0.073348,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 13.111245,
+    "Fy": 15.303833,
+    "Fz": 9.567768
+  },
+  "concept": "A2",
+  "desc": "A2 · A1s + carrello a cassone (zaino 4 mm)"
+}
