@@ -109,6 +109,25 @@ class Asm:
                                 kind=kind, bom=bom, color=color)
 
 
+def head_box(cx, cy, coupling_z):
+    h = P.HEAD
+    return box(cx - h["W"] / 2, cx + h["W"] / 2, cy - h["D"] / 2, cy + h["D"] / 2, coupling_z - h["L"], coupling_z)
+
+
+def transfer_path():
+    """Traiettoria del centro testa (x, y, coupling z): magazine → sopra la trave → davanti → giù → dentro lungo −X."""
+    sx, sy = P.STORE_POSE
+    top, dock_z = P.TRANSFER_TOP, D["coupling_top"]
+    legs = [((sx, sy, top), (sx, 0.0, top)), ((sx, 0.0, top), (sx, 0.0, dock_z)), ((sx, 0.0, dock_z), (P.DOCK_X, 0.0, dock_z))]
+    n = P.TRANSFER_STEPS
+    lens = [math.dist(p0, p1) for p0, p1 in legs]
+    pts = []
+    for (p0, p1), ln in zip(legs, lens):
+        k = max(2, round(n * ln / sum(lens)))
+        pts += [tuple(p0[m] + (p1[m] - p0[m]) * i / k for m in range(3)) for i in range(k)]
+    return pts + [legs[-1][1]]
+
+
 def build(X, Y, Zd, cfg=None):
     a = Asm()
     zx, t_top, t_bot = D["zx"], D["table_top"], D["table_bottom"]
@@ -127,8 +146,10 @@ def build(X, Y, Zd, cfg=None):
     def rtube_y(x0, x1, y0, y1):     # tubo rettangolare con asse lungo Y
         return box(x0, x1, y0, y1, -H, 0).cut(box(x0 + w, x1 - w, y0 - 1, y1 + 1, -H + w, -w))
 
+    dz = L["cross_drop"]                 # traverse ribassate sotto il passaggio dei pattini Y
+
     def rtube_x(x0, x1, y0, y1):     # tubo rettangolare con asse lungo X
-        return box(x0, x1, y0, y1, -H, 0).cut(box(x0 - 1, x1 + 1, y0 + w, y1 - w, -H + w, -w))
+        return box(x0, x1, y0, y1, -H, -dz).cut(box(x0 - 1, x1 + 1, y0 + w, y1 - w, -H + w, -w - dz))
     rails_x = (xtc - ya["rail_spacing"] / 2, xtc + ya["rail_spacing"] / 2)
     lw = L["long_w"]
     for tag, xr in zip("LR", rails_x):
@@ -144,7 +165,7 @@ def build(X, Y, Zd, cfg=None):
     bk_pad = (sy_th / 2 + 2, sy_th / 2 + 2 + P.SUPPORTS[ya["bk"]]["T"] + 5)
     a.add("frame_cross_bf", rtube_x(inner0, inner1, *L["bf_y"]).cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, bf_pad[0], bf_pad[1], -H, -H + L["pad_t"])),
           "FRAME", AL, "MC-BAS-001", "gray")
-    rear = box(P.BEAM_X[0], P.BEAM_X[1], rear_y[0], rear_y[1], -H, 0).cut(box(P.BEAM_X[0] - 1, P.BEAM_X[1] + 1, rear_y[0] + w, rear_y[1] - w, -H + w, -w))
+    rear = box(P.BEAM_X[0], P.BEAM_X[1], rear_y[0], rear_y[1], -H, -dz).cut(box(P.BEAM_X[0] - 1, P.BEAM_X[1] + 1, rear_y[0] + w, rear_y[1] - w, -H + w, -w - dz))
     for xr in rails_x:   # i longheroni attraversano la traversa posteriore
         rear = rear.cut(box(xr - lw / 2, xr + lw / 2, rear_y[0] - 1, rear_y[1] + 1, -H - 1, 1))
     rear = rear.cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, rear_y[0], rear_y[1], -H, -H + w)).union(
@@ -154,7 +175,7 @@ def build(X, Y, Zd, cfg=None):
     a.add("frame_cross_end", end, "FRAME", AL, "MC-BAS-001", "gray")
 
     for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + U["t"])), ("R", (P.BEAM_X[1] - U["t"], P.BEAM_X[1]))):
-        a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], 0, D["beam_bottom"]), "FRAME", AL, "MC-GAN-002", "gray")
+        a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]), "FRAME", AL, "MC-GAN-002", "gray")
 
     bf, bb = D["beam_face"], D["beam_back"]
     bx0, bx1, t = P.BEAM_X[0], P.BEAM_X[1], BM["wall"]
@@ -209,14 +230,9 @@ def build(X, Y, Zd, cfg=None):
     a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], L["long_y"][0], L["long_y"][1], 0, P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
     M = P.MAGAZINE
     a.add("magazine_volume", box(*M["x"], *M["y"], *M["z"]), "FRAME", "volume", None, "violet")
-    if cfg == "DOCK":   # corridoio del trasferitore: esiste solo durante il cambio testa
-        tx0, tx1 = P.TRANSFER_X
-        hy = P.HEAD["D"] / 2
-        low, ztop = D["coupling_top"] - P.HEAD["L"], P.TRANSFER_TOP
-        corr = (box(tx0, tx1, hy, M["y"][0], D["beam_top"] + P.CHAIN_X["h"] + 5, ztop)
-                .union(box(tx0, tx1, -hy, hy, low, ztop))
-                .union(box(P.DOCK_X + P.HEAD["W"] / 2, tx1, -hy, hy, low, D["coupling_top"])))
-        a.add("transfer_volume", corr, "TRANSFER", "volume", None, "violet")
+    if cfg == "DOCK":   # alcune pose della testa lungo la traiettoria del trasferitore (solo visualizzazione)
+        for k, (cx, cy, cz) in enumerate(transfer_path()[::10]):
+            a.add(f"transfer_head_{k}", head_box(cx, cy, cz), "TRANSFER", "volume", None, "violet")
 
     # ============ TABLE (si muove in Y) ============
     g = P.GRID
@@ -272,7 +288,7 @@ def build(X, Y, Zd, cfg=None):
     nut_x0 = X - nx_["L"] / 2
     a.add("x_nut", screw_nut(xa["screw"], flange_end=True).translate((nut_x0, y_x_axis, zx)), "XCAR", STEEL, "MC-BS-1605X", "silver")
     nx1 = nut_x0 + nx_["L"]
-    a.add("x_nut_bracket", box(nx1, nx1 + P.NUT_BRACKET_T, cb, y_x_axis + 22, zx - 28, zx + 28)
+    a.add("x_nut_bracket", box(nx1, nx1 + P.NUT_BRACKET_T, cb, y_x_axis + 18, zx - 28, zx + 28)
           .cut(cyl("x", nx1 - 1, nx1 + P.NUT_BRACKET_T + 1, y_x_axis, zx, nx_["d"] / 2 + 0.5)), "XCAR", AL, "MC-BRK-001", "gray")
     rot_z = lambda wp: wp.rotate(ORIGIN, (0, 1, 0), -90).rotate(ORIGIN, (0, 0, 1), -90)  # noqa: E731
     a.add("z_screw", screw_shaft(za["screw"], za["screw_len"]).rotate(ORIGIN, (0, 1, 0), -90).translate((X, y_z_axis, zs0)), "XCAR", STEEL, "MC-BS-1204Z", "silver")
@@ -323,8 +339,9 @@ DESIGNED = [  # coppie in moto relativo che si toccano per progetto (guida-patti
     ("x_rail", "x_block"), ("y_rail", "y_block"), ("z_rail", "z_block"),
     ("x_screw", "x_nut"), ("y_screw", "y_nut"), ("z_screw", "z_nut"),
     ("x_screw", "x_nut_bracket"), ("y_screw", "y_nut_bracket"), ("z_screw", "z_nut_tab"),
-    ("head_volume", "table"), ("transfer_volume", "head_volume"), ("transfer_volume", "tooldock_master"),
-    ("magazine_volume", "transfer_volume"),
+    # tavola 6 mm sopra la rotaia Y: MGN15H H 16 − rotaia 10 (luce di catalogo)
+    ("head_volume", "table"), ("y_rail", "table"), ("transfer_head", "head_volume"), ("transfer_head", "tooldock_master"),
+    ("magazine_volume", "transfer_head"),
     # superficie che porta la rotaia ↔ pattino: luce H1 di catalogo (HGH15 4,3 mm, MGN15 4 mm)
     ("beam", "x_block"), ("frame_longeron", "y_block"), ("x_carriage", "z_block"),
 ]
@@ -341,6 +358,23 @@ def bb_gap(b1, b2):
     return math.sqrt(dx * dx + dy * dy + dz * dz)
 
 
+def pair_check(n1, s1, n2, s2, b1, b2):
+    """Ritorna ('collision', vol) | ('clear', dist) | None se lontani oltre CLEAR_PASS."""
+    if bb_gap(b1, b2) > P.CLEAR_PASS:
+        return None
+    common = s1.intersect(s2)
+    vol = common.Volume() if common is not None else 0.0
+    if vol > 1.0:
+        return ("collision", vol)
+    ext = BRepExtrema_DistShapeShape(s1.wrapped, s2.wrapped)
+    ext.Perform()
+    return ("clear", ext.Value()) if ext.IsDone() else None
+
+
+def level(dist):
+    return "FAIL" if dist < P.CLEAR_FAIL - 0.05 else ("WARNING" if dist < P.CLEAR_PASS - 0.05 else "PASS")
+
+
 def analyse(a, all_pairs):
     names = list(a.parts)
     bbs = {n: a.parts[n]["shape"].BoundingBox() for n in names}
@@ -349,21 +383,101 @@ def analyse(a, all_pairs):
         p1, p2 = a.parts[n1], a.parts[n2]
         if not all_pairs and p1["group"] == p2["group"]:
             continue
-        if bb_gap(bbs[n1], bbs[n2]) > P.CLEAR_WARN:
+        if p1["group"] == p2["group"] == "TRANSFER":
             continue
-        common = p1["shape"].intersect(p2["shape"])
-        vol = common.Volume() if common is not None else 0.0
-        if vol > 1.0:
-            collisions.append(dict(a=n1, b=n2, volume_mm3=round(vol, 1)))
+        r = pair_check(n1, p1["shape"], n2, p2["shape"], bbs[n1], bbs[n2])
+        if r is None:
             continue
-        if p1["group"] == p2["group"] or designed(n1, n2):
+        if r[0] == "collision" and not (designed(n1, n2) and "TRANSFER" in (p1["group"], p2["group"])):
+            collisions.append(dict(a=n1, b=n2, volume_mm3=round(r[1], 1)))
             continue
-        ext = BRepExtrema_DistShapeShape(p1["shape"].wrapped, p2["shape"].wrapped)
-        ext.Perform()
-        dist = ext.Value() if ext.IsDone() else None
-        if dist is not None and dist < P.CLEAR_WARN - 0.05:
-            warnings.append(dict(a=n1, b=n2, clearance_mm=round(dist, 2)))
+        if r[0] == "collision" or p1["group"] == p2["group"] or designed(n1, n2):
+            continue
+        lv = level(r[1])
+        if lv != "PASS":
+            warnings.append(dict(a=n1, b=n2, clearance_mm=round(r[1], 2), level=lv))
     return collisions, warnings
+
+
+GROUP_OFFSET = {"FRAME": lambda X, Y, Zd: (0, 0, 0), "TABLE": lambda X, Y, Zd: (0, -Y, 0),
+                "XCAR": lambda X, Y, Zd: (X, 0, 0), "ZSLIDE": lambda X, Y, Zd: (X, 0, -Zd)}
+
+
+def placed(base, X, Y, Zd):
+    """Parti dell'assieme HOME spostate come corpi rigidi per gruppo (per lo sweep, senza ricostruire)."""
+    out = {}
+    for n, p in base.parts.items():
+        if p["group"] not in GROUP_OFFSET:
+            continue
+        dx, dy, dz = GROUP_OFFSET[p["group"]](X, Y, Zd)
+        sh = p["shape"] if (dx, dy, dz) == (0, 0, 0) else p["shape"].moved(cq.Location(cq.Vector(dx, dy, dz)))
+        out[n] = dict(p, shape=sh)
+    return out
+
+
+def sweep():
+    """Griglia SWEEP_N³ del workspace: solo collisioni e giochi tra gruppi in moto relativo."""
+    base, _ = build(0.0, 0.0, 0.0)
+    n = P.SWEEP_N
+    grid = lambda T: [T * i / (n - 1) for i in range(n)]  # noqa: E731
+    worst, collisions, count = {}, [], 0
+    for X in grid(P.TRAVEL["X"]):
+        for Y in grid(P.TRAVEL["Y"]):
+            for Zd in grid(P.TRAVEL["Z"]):
+                parts_ = placed(base, X, Y, Zd)
+                names = list(parts_)
+                bbs = {k: parts_[k]["shape"].BoundingBox() for k in names}
+                count += 1
+                for n1, n2 in itertools.combinations(names, 2):
+                    g1, g2 = parts_[n1]["group"], parts_[n2]["group"]
+                    if g1 == g2:
+                        continue
+                    r = pair_check(n1, parts_[n1]["shape"], n2, parts_[n2]["shape"], bbs[n1], bbs[n2])
+                    if r is None:
+                        continue
+                    if r[0] == "collision":
+                        if not designed(n1, n2):
+                            collisions.append(dict(a=n1, b=n2, volume_mm3=round(r[1], 1), axes=[X, Y, -Zd]))
+                        continue
+                    if designed(n1, n2):
+                        continue
+                    key = f"{n1} ↔ {n2}"
+                    if key not in worst or r[1] < worst[key][0]:
+                        worst[key] = (r[1], [X, Y, -Zd])
+    close = sorted(({"pair": k, "clearance_mm": round(v[0], 2), "axes": v[1], "level": level(v[0])} for k, v in worst.items()),
+                   key=lambda d: d["clearance_mm"])
+    return dict(configs=count, grid=n, collisions=collisions, closest=close[:20],
+                fails=[c for c in close if c["level"] == "FAIL"], warnings=[c for c in close if c["level"] == "WARNING"])
+
+
+def transfer_check():
+    """Testa vera lungo la traiettoria del trasferitore, macchina in DOCK (X 440, Y 0, Z alto)."""
+    X, Y, Zd = P.CONFIGS["DOCK"]
+    base, _ = build(X, Y, Zd)
+    others = {n: p for n, p in base.parts.items() if n not in ("head_volume", "magazine_volume")}
+    bbs = {n: p["shape"].BoundingBox() for n, p in others.items()}
+    pts = transfer_path()
+    worst, collisions = {}, []
+    far = P.CLEAR_PASS
+    P.CLEAR_PASS = 60.0          # per la traiettoria riporta anche i giochi fino a 60 mm
+    for k, (cx, cy, cz) in enumerate(pts):
+        hb = head_box(cx, cy, cz).val()
+        hbb = hb.BoundingBox()
+        for n, p in others.items():
+            if n == "tooldock_master" and k == len(pts) - 1:
+                continue            # a fine corsa la testa è sotto la master: contatto di progetto
+            r = pair_check("head", hb, n, p["shape"], hbb, bbs[n])
+            if r is None:
+                continue
+            if r[0] == "collision":
+                collisions.append(dict(part=n, step=k, pose=[round(c, 1) for c in (cx, cy, cz)], volume_mm3=round(r[1], 1)))
+            elif n != "tooldock_master" and (n not in worst or r[1] < worst[n][0]):
+                worst[n] = (r[1], k)
+    P.CLEAR_PASS = far
+    close = sorted(({"part": n, "clearance_mm": round(v[0], 2), "step": v[1], "level": level(v[0])} for n, v in worst.items()),
+                   key=lambda d: d["clearance_mm"])
+    return dict(steps=len(pts), waypoints=[[round(c, 1) for c in pts[0]], [round(c, 1) for c in pts[-1]]],
+                transfer_top=P.TRANSFER_TOP, collisions=collisions, closest=close[:10])
 
 
 def dist(a, n1, n2):
@@ -469,6 +583,15 @@ def main():
     e = report["envelope_mm"]
     report["footprint_mm"] = [round(e[1] - e[0], 1), round(e[3] - e[2], 1)]
     report["height_mm"] = round(e[5] - e[4], 1)
+    t1 = time.time()
+    report["sweep"] = sweep()
+    sw = report["sweep"]
+    print(f"sweep {sw['configs']} configurazioni · collisioni {len(sw['collisions'])} · FAIL {len(sw['fails'])} · WARNING {len(sw['warnings'])} · {time.time() - t1:.0f} s")
+    for c in sw["closest"][:8]:
+        print("   ", c)
+    report["transfer"] = transfer_check()
+    tr = report["transfer"]
+    print(f"trasferitore {tr['steps']} pose · collisioni {len(tr['collisions'])} · più vicini {tr['closest'][:4]}")
     report["checks"] = design_checks(report)
     (OUT / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     if write_step:
@@ -500,7 +623,8 @@ def design_checks(report):
         d015=dict(h=h, b_assumed=D015_ASSUMED["b"], b_real=round(b, 1), a_assumed=D015_ASSUMED["a"], a_real=round(D["a_tool_to_x_face"], 1),
                   k_min_real=round(kmin(b), 0), k_za=K_BLOCK["ZA"], margin_za=round(K_BLOCK["ZA"] / kmin(b), 1),
                   pass_real=kmin(b) <= K_BLOCK["ZA"], b_ok=b <= P.B_TARGET[1], z_lever=round(D["z_lever_low"], 1)),
-        mass=dict(mule=m["machine_mule_kg"], gate=P.MASS_GATE_KG, pass_gate=m["machine_mule_kg"] <= P.MASS_GATE_KG + 0.05),
+        mass=dict(mule=m["machine_mule_kg"], bom=m["machine_bom_kg"], gate=P.MASS_GATE_KG, target=P.MASS_TARGET_KG,
+                  pass_gate=m["machine_mule_kg"] <= P.MASS_GATE_KG + 0.05, pass_target=m["machine_mule_kg"] <= P.MASS_TARGET_KG + 0.05),
         collisions=col, warnings=warn,
     )
 
@@ -533,6 +657,8 @@ def write_page(report):
     home = report["configs"]["HOME"]["datums"]
     dat_rows = "".join(f'<tr><td><code>{k}</code></td><td>{", ".join(fmt(v) for v in xyz)}</td></tr>' for k, xyz in home.items())
     ok, ko = '<td class="status-ok">PASSA</td>', '<td class="status-critical">NON PASSA</td>'
+    warn_td = '<td class="status-target">WARNING</td>'
+    sw, tr = report["sweep"], report["transfer"]
     part_ok = '<td class="status-target">PARZIALE</td>'
     nocoll = not any(c["collisions"].values())
     nowarn = not any(c["warnings"].values())
@@ -549,9 +675,13 @@ def write_page(report):
         (f"A · b ≤ {fmt(P.B_TARGET[1])} mm e D015 verificata con a e b misurati", ok if d15["b_ok"] and d15["pass_real"] else ko, f'b = {fmt(d15["b_real"])} mm · {fmt(d15["k_min_real"])} N/µm richiesti · ZA ×{fmt(d15["margin_za"])}'),
         ("B · Telaio a scala separato dalla cabina", ok, "Longheroni Y + traverse fronte / BF / posteriore / motore"),
         (f"C · Docking unico a X {fmt(P.DOCK_X)}, magazine dietro la spalla destra, nessun volume permanente davanti alla trave", ok, "Corridoio del trasferitore controllato solo in DOCK"),
-        (f"Gioco minimo {fmt(P.CLEAR_WARN)} mm tra parti in moto relativo", ok if nowarn else ko, "BF Z ↔ slitta 5 mm"),
-        ("Nessuna collisione nelle quattro configurazioni", ok if nocoll else ko, ""),
-        (f"D · Massa ≤ {fmt(P.MASS_GATE_KG)} kg", ok if c["mass"]["pass_gate"] else ko, f'{fmt(c["mass"]["mule"])} kg: esattamente al limite' if abs(c["mass"]["mule"] - P.MASS_GATE_KG) < 0.1 else f'{fmt(c["mass"]["mule"])} kg'),
+        ("Nessuna collisione in HOME, CENTER, MAX, DOCK", ok if nocoll else ko, ""),
+        (f"Sweep {sw['grid']} × {sw['grid']} × {sw['grid']} = {sw['configs']} configurazioni, vertici compresi: nessuna collisione", ok if not sw["collisions"] else ko, "Solo verifica, senza STEP"),
+        (f"Giochi: &lt; {fmt(P.CLEAR_FAIL)} mm FAIL · {fmt(P.CLEAR_FAIL)}–{fmt(P.CLEAR_PASS)} mm WARNING · ≥ {fmt(P.CLEAR_PASS)} mm PASS", ok if not sw["fails"] and not sw["warnings"] and nowarn else (warn_td if not sw["fails"] else ko),
+         f'{len(sw["fails"])} FAIL · {len(sw["warnings"])} WARNING nello sweep; gioco minimo {fmt(sw["closest"][0]["clearance_mm"]) if sw["closest"] else "—"} mm'),
+        (f"Trasferitore: testa reale lungo {tr['steps']} pose magazine → dock", ok if not tr["collisions"] else ko, f'gioco minimo {fmt(tr["closest"][0]["clearance_mm"])} mm ({tr["closest"][0]["part"]})' if tr["closest"] else ""),
+        (f"D · Soglia dura massa ≤ {fmt(P.MASS_GATE_KG)} kg", ok if c["mass"]["pass_gate"] else ko, f'{fmt(c["mass"]["mule"])} kg nel mule · {fmt(c["mass"]["bom"])} kg in BOM'),
+        (f"D · Target di progetto ≤ {fmt(P.MASS_TARGET_KG)} kg prima di cablaggi e dettagli", ok if c["mass"]["pass_target"] else warn_td, f'mancano {fmt(round(c["mass"]["mule"] - P.MASS_TARGET_KG, 1))} kg: dopo la FEA (D028), prima carrello X, spalle e staffe'),
     ]
     crit_rows = "".join(f"<tr><td>{t}</td>{r}<td>{n}</td></tr>" for t, r, n in crit)
     cmp_rows = "".join(f"<tr><td>{k}</td><td>{v0}</td><td><b>{v1}</b></td></tr>" for k, v0, v1 in [
@@ -564,16 +694,18 @@ def write_page(report):
     ])
     views = "".join(f'<figure style="margin:0"><img src="../cad/standard/views/{n}.png" alt="Mule Standard {n}" style="width:100%;background:#fff;border-radius:10px"><figcaption style="color:var(--dim);font-size:12px;margin-top:6px">{n.replace("_", " · ").upper()}</figcaption></figure>'
                     for n in ("home_iso", "dock_iso", "max_iso", "max_front", "max_side", "dock_top"))
+    sw_rows = "".join(f'<tr><td>{x["pair"]}</td><td class="{ {"PASS": "status-ok", "WARNING": "status-target", "FAIL": "status-critical"}[x["level"]] }">{fmt(x["clearance_mm"])} mm · {x["level"]}</td><td>X {fmt(float(x["axes"][0]))} · Y {fmt(float(x["axes"][1]))} · Z {fmt(float(x["axes"][2]) + 0.0)}</td></tr>' for x in sw["closest"][:10])
+    tr_rows = "".join(f'<tr><td>{x["part"]}</td><td class="status-ok">{fmt(x["clearance_mm"])} mm</td><td>posa {x["step"]} di {tr["steps"]}</td></tr>' for x in tr["closest"][:6])
     html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD Standard · mule</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
 <!-- Pagina generata da tools/cad/standard_assembly.py: non modificare a mano. -->
 <a class="back" href="index.html">← Base Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v1 · digital mule · D027</div><h1>Digital mule<br>Standard v1.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Dopo il v0: pattini Z sulla slitta, trave abbassata, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v1 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD v1.1 · digital mule · D027 · D028</div><h1>Digital mule<br>Standard v1.</h1><p class="lead">Assieme parametrico dimensionale della Standard, brutto ma corretto. Dopo il v0: pattini Z sulla slitta, trave abbassata, telaio a scala, docking a X {fmt(P.DOCK_X)} con magazine dietro la spalla destra. Tutte le quote vengono da <code>tools/cad/standard_params.py</code>; lo script costruisce l'assieme in HOME, CENTER, MAX e DOCK, cerca collisioni e giochi, misura ingombri e masse e rigenera questa pagina.</p><div class="badges"><span class="badge ok">CAD v1 · mule</span><span class="badge">{report["configs"]["HOME"]["parts"]} parti · 4 configurazioni</span><span class="badge">Valori MULE da rivedere</span></div></div>
 
 <section class="metric-grid">
   <div class="metric"><strong>{fmt(d15["b_real"])} mm</strong><span>braccio b · D015 {fmt(d15["k_min_real"])} N/µm, ZA ×{fmt(d15["margin_za"])}</span></div>
   <div class="metric"><strong>{fmt(report["height_mm"])}</strong><span>mm · altezza, dal fondo telaio al motore Z</span></div>
   <div class="metric"><strong>{fmt(c["mass"]["mule"])} kg</strong><span>massa macchina · soglia {fmt(P.MASS_GATE_KG)} kg (D027)</span></div>
-  <div class="metric"><strong>{sum(c["collisions"].values())} · {sum(c["warnings"].values())}</strong><span>collisioni · giochi &lt; {fmt(P.CLEAR_WARN)} mm in 4 configurazioni</span></div>
+  <div class="metric"><strong>{len(sw["collisions"])} · {len(sw["fails"])} · {len(sw["warnings"])}</strong><span>collisioni · FAIL · WARNING su {sw["configs"]} configurazioni</span></div>
 </section>
 
 <section class="section"><h2>Criteri di accettazione</h2><div class="table-wrap"><table>
@@ -592,9 +724,16 @@ def write_page(report):
 </section>
 
 <section class="section"><h2>Configurazioni</h2><div class="table-wrap"><table>
-<tr><th>Config</th><th>Assi</th><th>Collisioni</th><th>Giochi &lt; {fmt(P.CLEAR_WARN)} mm</th><th>Margine pattini-rotaie (mm)</th><th>Chiocciola-supporti (mm)</th><th>Assieme</th></tr>
+<tr><th>Config</th><th>Assi</th><th>Collisioni</th><th>Giochi &lt; {fmt(P.CLEAR_PASS)} mm</th><th>Margine pattini-rotaie (mm)</th><th>Chiocciola-supporti (mm)</th><th>Assieme</th></tr>
 {rows_cfg}</table></div>
 <p style="color:var(--dim);font-size:13px;margin-top:12px">Collisione = volume comune &gt; 1 mm³. Giochi controllati tra parti in moto relativo, escluse le coppie che si toccano per progetto (guida-pattino, vite-chiocciola, vite-foro, punta-tavola a Z giù, testa-master nel corridoio) e la luce H1 di catalogo tra superficie di montaggio e pattino. Volumi riservati (catene, magazine, testa, corridoio) inclusi nel controllo.</p></section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">Sweep del workspace</span><h2>{sw["configs"]} configurazioni.</h2><p>Griglia {sw["grid"]} × {sw["grid"]} × {sw["grid"]} su X, Y e Z, vertici del cubo compresi: nessuna collisione, {len(sw["fails"])} FAIL, {len(sw["warnings"])} WARNING. I dieci giochi più piccoli tra parti in moto relativo:</p><div class="table-wrap"><table><tr><th>Coppia</th><th>Gioco</th><th>Dove (peggiore)</th></tr>{sw_rows}</table></div></div>
+  <div class="panel"><span class="kicker">Trasferitore</span><h2>La testa vera, posa per posa.</h2><p>Testa {fmt(P.HEAD["W"])} × {fmt(P.HEAD["D"])} × {fmt(P.HEAD["L"])} mm lungo {tr["steps"]} pose: magazine ({fmt(P.STORE_POSE[0])}, {fmt(P.STORE_POSE[1])}) → sopra trave e catena X con coupling a {fmt(P.TRANSFER_TOP)} mm → davanti → giù a {fmt(D["coupling_top"])} mm → dentro lungo −X fino a X {fmt(P.DOCK_X)}. Macchina in DOCK. Nessuna collisione; i giochi più piccoli:</p><div class="table-wrap"><table><tr><th>Parte</th><th>Gioco</th><th>Dove</th></tr>{tr_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Da progettare nel trasferitore: ritenuta meccanica della testa da 4 kg anche senza alimentazione, e la forcella di presentazione deve reggere la reazione di sgancio D016 (~0,7 kN sullo Z) senza fare da molla attaccata alla trave.</p></div>
+</section>
+
+<section class="section"><div class="callout"><b>Corsa Z ≠ altezza massima del pezzo.</b> Sotto la trave ci sono {fmt(P.CLEAR_UNDER_BEAM)} mm sopra la tavola. Con un pallet da {fmt(P.PALLET_T)} mm il pezzo più alto che passa sotto la trave è ~{fmt(P.CLEAR_UNDER_BEAM - P.PALLET_T)} mm, meno fixture e utensile; con i rialzi +75 mm (D007) sale di conseguenza. Nelle specifiche commerciali si dichiarano separatamente corsa Z (140 mm) e altezza pezzo per configurazione.</div></section>
 
 <section class="section"><h2>Viste di controllo</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
 

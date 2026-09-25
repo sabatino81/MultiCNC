@@ -67,22 +67,26 @@ TIP_AT_Z_BOTTOM = 0.0                     # punta a Z = −140 sul piano tavola 
 
 # ------------------------------------------------------------------ strutture custom (MULE)
 AL_DENSITY = 2.70e-6      # kg/mm³
-CLEAR_UNDER_BEAM = TRAVEL["Z"] + 10.0     # luce sotto la trave sopra la tavola: pezzo alto quanto la corsa Z
+CLEAR_UNDER_BEAM = TRAVEL["Z"] + 10.0     # luce sotto la trave sopra la tavola (non è l'altezza massima del pezzo: va tolto pallet/fixture)
+PALLET_T = 15.0            # pallet tipico sopra la tavola (MULE): pezzo max sotto la trave = luce − pallet; +75 mm con i rialzi (D007)
 PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, below_x_blocks=18.0,
-             slot_w=64.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
+             slot_w=70.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
 LADDER = dict(H=60.0, wall=4.0,                                  # tubi rettangolari Al
               long_w=40.0, long_y=(-350.0, 350.0),              # longheroni sotto le guide Y
               front_y=(-350.0, -310.0), bf_y=(-250.0, -210.0),  # traverse
-              end_y=(310.0, 350.0), pocket_w=70.0, pad_t=9.0)
+              end_y=(310.0, 350.0), pocket_w=80.0, pad_t=12.0, cross_drop=5.0)
 UPRIGHT = dict(t=15.0, depth=120.0)
-BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=28.0, end=6.0)
+BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=31.0, end=6.0)
 BEAM_X = (-155.0, 605.0)  # estensione trave = larghezza fra le facce esterne delle spalle
-NUT_BRACKET_T = 12.0
-X_SCREW_PAD = 4.0          # spessori sotto BK/BF X nel canale della trave (MULE)
-SUPPORT_GAP_Z = 5.0        # D027: gioco minimo BK/BF Z ↔ slitta
+NUT_BRACKET_T = 10.0
+X_SCREW_PAD = 7.0          # spessori sotto BK/BF X nel canale della trave (MULE)
+SUPPORT_GAP_Z = 8.0        # D028: gioco BK/BF Z ↔ slitta e piastrina (≥ 8 mm)
 TAB_T = 10.0               # piastrina chiocciola Z sulla slitta
-CLEAR_WARN = 5.0           # D027: gioco minimo geometrico tra parti in moto relativo
-MASS_GATE_KG = 42.0        # D027: soglia provvisoria del mule v1 (non più 32,8 kg)
+CLEAR_FAIL = 5.0           # D027/D028: sotto questo gioco tra parti in moto relativo → FAIL
+CLEAR_PASS = 8.0           # 5–8 mm → WARNING; ≥ 8 mm → PASS (obiettivo nominale 8–10 mm)
+CLEAR_WARN = CLEAR_PASS    # soglia di controllo dei giochi
+MASS_GATE_KG = 42.0        # D027: soglia dura del mule (non più 32,8 kg)
+MASS_TARGET_KG = 40.0      # D028: target di progetto prima di cablaggi e dettagli; 35–37 kg solo se la FEA lo concede
 B_TARGET = (250.0, 300.0)  # D027: braccio b ideale / massimo
 
 # ------------------------------------------------------------------ riserve di volume
@@ -90,7 +94,10 @@ CHAIN_X = dict(w=75.0, h=60.0, inset=5.0)        # sopra la trave, arretrata dal
 CHAIN_Y = dict(x0=520.0, x1=570.0, h=60.0)        # a destra della tavola
 MAGAZINE = dict(x=(500.0, 680.0), y=(280.0, 460.0), z=(180.0, 620.0))  # dietro la spalla destra (D027)
 TRANSFER_X = (530.0, 640.0)                       # corridoio del trasferitore oltre il carrello
-TRANSFER_TOP = 601.0                              # testa sollevata sopra trave e catena X
+TRANSFER_TOP = 616.0                              # coupling della testa sopra trave e catena X (fondo testa 20 mm sopra la catena)
+STORE_POSE = (590.0, 370.0)                       # centro testa nel magazine (x, y), coupling a TRANSFER_TOP
+TRANSFER_STEPS = 40                               # campioni lungo la traiettoria magazine → dock
+SWEEP_N = 5                                       # griglia 5 × 5 × 5 del workspace (vertici compresi)
 
 
 def derived():

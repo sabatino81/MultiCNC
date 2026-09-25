@@ -10,13 +10,13 @@ EXTERNAL_LABEL = "quadro"
 
 G=[
 ("A · Struttura e riferimenti",[
-("MC-BAS-001","Structure","Telaio a scala","1",1,"2 longheroni Y + 4 traverse, tubi Al 40×60 / 120×60 sp. 4, pad lavorati","Telaio di precisione a scala (D027): longheroni sotto le guide Y con sedi lavorate, traverse fronte / BF / posteriore (porta le spalle) / motore; massa dal mule v1",180,6.62,"M","design","TO DESIGN"),
-("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al 80×140, canale vite","Ponte fisso (D006), interasse guide X 110 mm (D015), centro guide a 246 mm (D027); massa dal mule v1, da ridisegnare",150,6.0,"M","design","TO DESIGN"),
-("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm","Alte 176 mm sulla traversa posteriore (D027); sede rialzi (D007); massa dal mule v1",45,0.86,"M","design","TO DESIGN"),
+("MC-BAS-001","Structure","Telaio a scala","1",1,"2 longheroni Y + 4 traverse, tubi Al 40×60 / 120×60 sp. 4, pad lavorati","Telaio di precisione a scala (D027): longheroni sotto le guide Y con sedi lavorate, traverse fronte / BF / posteriore (porta le spalle) / motore; massa dal mule v1",180,6.48,"M","design","TO DESIGN"),
+("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al 80×140, canale vite","Ponte fisso (D006), interasse guide X 110 mm (D015), centro guide a 246 mm (D027); massa dal mule v1, da ridisegnare",150,6.06,"M","design","TO DESIGN"),
+("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm","Alte 176 mm sulla traversa posteriore (D027); sede rialzi (D007); massa dal mule v1",45,0.88,"M","design","TO DESIGN"),
 ("MC-Z-001","Structure","Slitta Z","1",1,"Custom Al 5083 12 mm, 150 × 160","Porta i 4 pattini HGH15CA Z e la master ToolDock (D027); massa dal mule v1",60,0.78,"M","design","TO DESIGN"),
 ("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018); massa confermata dal mule v1",100,2.97,"M","design","TO DESIGN"),
-("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 5083 15 mm, 170 × 530 + torre","Porta i pattini X, le guide Z, vite, supporti e motore Z (D027); massa dal mule v1",80,2.56,"M","design","TO DESIGN"),
-("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z, piastre motore X e Z, spessori BK/BF X (mule v1)",45,0.47,"M","design","TO DESIGN"),
+("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 5083 15 mm, 170 × 530 + torre","Porta i pattini X, le guide Z, vite, supporti e motore Z (D027); massa dal mule v1",80,2.47,"M","design","TO DESIGN"),
+("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z, piastre motore X e Z, spessori BK/BF X (mule v1)",45,0.46,"M","design","TO DESIGN"),
 ("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
 ("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v4, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
@@ -43,7 +43,7 @@ G=[
 ("MC-SP-005","Tooling","ER collet starter set","1",1,"Precision collets class","Starter tooling only",25,0.2,"M","source","TO SOURCE"),
 ]),
 ("D · ToolDock (identico sulle tre basi)",[
-("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface","Montata sul carrello Z",150,0.6,"M","critical","CRITICAL DESIGN"),
+("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface","Montata sotto la slitta Z; 0,6 kg è la massa target da raggiungere (il mule v1 misura 0,74 kg con una piastra piena, D028)",150,0.6,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Custom receiver plate","Receiver dedicata al modulo spindle base",80,0.3,"M","design","TO DESIGN"),
 ("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v4)","Pacco molle ≥ 1,6 kN (classe S), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Power + signal + ID","Quick-connect; pneumatica/fluidi predisposti",120,0.3,"M","critical","CRITICAL DESIGN"),
