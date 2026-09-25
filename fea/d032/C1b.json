@@ -1,0 +1,103 @@
+{
+  "tag": "d032_C1b_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 261421,
+    "elements": 143974,
+    "dof": 784263,
+    "min_sj": 0.372,
+    "poor": 0
+  },
+  "solve_s": 209.7,
+  "total_s": 304.6,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 4.118,
+    "struct": 2.841,
+    "head": 1.197
+  },
+  "k": {
+    "Fx": 1.074,
+    "Fy": 0.902,
+    "Fz": 2.068
+  },
+  "tip_um": {
+    "Fx": [
+      139.66,
+      -2.4,
+      0.31
+    ],
+    "Fy": [
+      -2.4,
+      166.34,
+      -44.84
+    ],
+    "Fz": [
+      0.41,
+      -59.78,
+      96.72
+    ],
+    "FxFz": [
+      140.07,
+      -62.19,
+      97.03
+    ],
+    "FyFz": [
+      -1.99,
+      106.56,
+      51.88
+    ]
+  },
+  "worst_um": 181.4,
+  "energy": {
+    "Fx": {
+      "uprights": 0.373243,
+      "beam": 0.817563,
+      "carriage": 1.538783,
+      "zslide": 0.957528,
+      "head": 2.548069,
+      "xblocks": 0.224792,
+      "xscrew": 0.306162,
+      "zblocks": 0.749584,
+      "zscrew": 0.0,
+      "tooldock": 2.396312,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269352,
+      "beam": 1.651344,
+      "carriage": 2.688867,
+      "zslide": 1.338586,
+      "head": 2.576793,
+      "xblocks": 0.241436,
+      "xscrew": 0.0,
+      "zblocks": 0.750615,
+      "zscrew": 0.0,
+      "tooldock": 2.396312,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.618129,
+      "beam": 5.233839,
+      "carriage": 0.974832,
+      "zslide": 1.467978,
+      "head": 0.105667,
+      "xblocks": 0.200236,
+      "xscrew": 0.0,
+      "zblocks": 0.090411,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 10.474537,
+    "Fy": 12.475807,
+    "Fz": 9.672109
+  },
+  "concept": "C1b",
+  "desc": "C1b · coupling Ø110, preload 1,6 kN"
+}
