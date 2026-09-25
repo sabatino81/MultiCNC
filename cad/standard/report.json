@@ -470,7 +470,9 @@
     "cog_below_coupling": 97.0,
     "L": 220.0,
     "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
-    "inertia_moment_Nm": 0.52
+    "inertia_moment_Nm": 0.52,
+    "connector_mode": "RIGHT_ANGLE_ASSUMED",
+    "gap": 25.0
   },
   "envelope_mm": [
     -155.0,
@@ -836,6 +838,46 @@
           7
         ]
       ]
+    }
+  },
+  "connector_variants": {
+    "RIGHT_ANGLE_ASSUMED": {
+      "mass": 2.7,
+      "cog_below_coupling": 97.0,
+      "L": 220.0,
+      "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
+      "inertia_moment_Nm": 0.52,
+      "connector_mode": "RIGHT_ANGLE_ASSUMED",
+      "gap": 25.0,
+      "k": {
+        "X": 0.91,
+        "Y": 0.79,
+        "Z": 1.59
+      },
+      "fits_L": true,
+      "z_loss": 0.0,
+      "note": "connettore a 90° ipotizzato: 25 mm è il budget residuo dell'inviluppo L 220, non una quota del fornitore",
+      "plug": 25.0,
+      "bend_r": 0.0
+    },
+    "AXIAL": {
+      "mass": 3.04,
+      "cog_below_coupling": 150.0,
+      "L": 295.0,
+      "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
+      "inertia_moment_Nm": 0.91,
+      "connector_mode": "AXIAL",
+      "gap": 100.0,
+      "k": {
+        "X": 0.6,
+        "Y": 0.51,
+        "Z": 1.59
+      },
+      "fits_L": false,
+      "z_loss": 75.0,
+      "note": "presa assiale da catalogo: spina diritta ~55 mm + raggio di curvatura cavo ~45 mm (ipotesi MULE)",
+      "plug": 55.0,
+      "bend_r": 45.0
     }
   },
   "checks": {

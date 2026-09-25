@@ -366,8 +366,12 @@ def build(X, Y, Zd, shear_panel=False, sec=None):
     m.rigid(nm1, nc1)
     kcpl, _ = coupling_k()
     m.spring(nc1, nc2, kcpl * COUPLING_SCALE, "accoppiamento ToolDock")
-    tip = m.node(X, 0.0, zcpl - P.HEAD["L"])
     hd = sec.get("head")
+    if hd and hd.get("real5045"):       # D031: punta sul dado ER11 reale, anche se il connettore allunga la testa oltre L
+        S = P.SPINDLE
+        tip = m.node(X, 0.0, zcpl - S["receiver_t"] - S["connector"] - S["total"])
+    else:
+        tip = m.node(X, 0.0, zcpl - P.HEAD["L"])
     if hd is None:                      # testa rigida (D028 v0)
         m.rigid(nc2, tip)
     elif hd.get("real5045"):            # D030: SycoTec 5045 appeso: receiver, dorso, mount a collare, corpo, cuscinetti, naso

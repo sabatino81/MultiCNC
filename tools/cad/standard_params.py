@@ -70,15 +70,35 @@ HEAD_AXIS_FROM_SLIDE = 53.0               # D030: minimo con ICD v4 (inviluppo �
 
 # ------------------------------------------------------------------ spindle di riferimento (D030)
 # SycoTec 5045 AC-ER11 · 2002 5400 (catalogo SycoTec, disegno 2.002.5400): quote dal naso verso il retro.
-SPINDLE = dict(ref="SycoTec 5045 AC-ER11 · 2002 5400", d=45.0, nut_d=28.0, nose=25.0, neck=15.0, housing=120.0, rear=20.0,
-               total=180.0, mass=1.6, p_s1=650.0, p_max=1280.0, rpm=(6000, 60000), voltage=180.0, current_s1=3.5,
-               current_max=5.0, sealing_air_lpm=30.0, collet_max=8.0,
-               connector=25.0,          # MULE: connettore M23 a 90° sul retro (assiale nel catalogo): ingombro da verificare
-               receiver_t=15.0,         # receiver ToolDock della testa
-               clamp_len=90.0, clamp_block=60.0, receiver_w=96.0,   # mount a tazza 60 × 60: collare + camicia + finestra connettore   # mount con camicia di raffreddamento, serraggio sul Ø45 h6
-               k_bearing=40e3)          # N/mm al naso: 3 cuscinetti ibridi, stima da verificare
-assert abs(SPINDLE["receiver_t"] + SPINDLE["connector"] + SPINDLE["total"] - HEAD["L"]) < 0.5, "la testa 5045 deve stare nell'inviluppo L"
+SPINDLE_BASE = dict(ref="SycoTec 5045 AC-ER11 · 2002 5400", d=45.0, nut_d=28.0, nose=25.0, neck=15.0, housing=120.0, rear=20.0,
+                    total=180.0, mass=1.6, p_s1=650.0, p_max=1280.0, rpm=(6000, 60000), voltage=180.0, current_s1=3.5,
+                    current_max=5.0, sealing_air_lpm=30.0, collet_max=8.0,
+                    receiver_t=15.0,         # receiver ToolDock della testa
+                    clamp_len=90.0, clamp_block=60.0, receiver_w=96.0,   # mount a tazza 60 × 60 con camicia, serraggio sul Ø45 h6
+                    k_bearing=40e3)          # N/mm al naso: 3 cuscinetti ibridi, stima da verificare
+# D031: service envelope del connettore / cavo sul retro dello spindle. Nessuna delle due varianti è una quota reale:
+# si sostituiscono con il disegno del connettore del fornitore. "gap" = spazio assiale tra receiver e retro spindle.
+CONNECTOR_ENVELOPES = {
+    # budget: è tutto lo spazio che l'inviluppo classe S (L 220) lascia sopra il 5045; cavo in uscita laterale verso +x
+    "RIGHT_ANGLE_ASSUMED": dict(gap=25.0, side=40.0, plug=25.0, bend_r=0.0,
+                                note="connettore a 90° ipotizzato: 25 mm è il budget residuo dell'inviluppo L 220, non una quota del fornitore"),
+    # presa assiale come nel catalogo: spina diritta + curva del cavo dentro il mount prima dell'uscita laterale (ipotesi MULE)
+    "AXIAL": dict(gap=100.0, side=40.0, plug=55.0, bend_r=45.0,
+                  note="presa assiale da catalogo: spina diritta ~55 mm + raggio di curvatura cavo ~45 mm (ipotesi MULE)"),
+}
+CONNECTOR_MODE = "RIGHT_ANGLE_ASSUMED"   # configurazione del mule per sweep e STEP; AXIAL si confronta sulla sola testa
+
+
+def spindle(mode=None):
+    """Spindle di riferimento con il service envelope del connettore scelto (D031)."""
+    mode = mode or CONNECTOR_MODE
+    return {**SPINDLE_BASE, "connector": CONNECTOR_ENVELOPES[mode]["gap"], "connector_mode": mode,
+            "connector_side": CONNECTOR_ENVELOPES[mode]["side"]}
+
+
+SPINDLE = spindle()
 HEAD_COG_MAX = 80.0                       # ICD v4 / D016: baricentro testa sotto il coupling
+HEAD_COG_WAIVER = 100.0                   # D031: deroga provvisoria Standard per la testa 5045-style (golden reference)
 TIP_AT_Z_BOTTOM = 0.0                     # punta a Z = −140 sul piano tavola (MULE)
 
 # ------------------------------------------------------------------ strutture custom (MULE)
