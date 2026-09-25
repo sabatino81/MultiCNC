@@ -237,6 +237,8 @@ class Model:
             L += ["*NODE PRINT, NSET=MONITOR", "U"]
             for g in getattr(self, "energy_groups", {}):
                 L += [f"*EL PRINT, ELSET=EN_{g}, TOTALS=ONLY", "ELSE"]
+            for g in getattr(self, "energy_detail", ()):          # diagnostica: energia elemento per elemento
+                L += [f"*EL PRINT, ELSET=EN_{g}", "ELSE"]
             L += ["*NODE FILE", "U", "*EL FILE", "S", "*END STEP"]
         f.write_text("\n".join(L) + "\n")
         return f

@@ -18,7 +18,7 @@ SERVICE = dict(XY=80.0, Z=150.0)                   # D032 SERVICE HIGH (PROVISIO
 T_MIN = dict(XY=4.0, Z=7.5)
 T_DES = dict(XY=6.0, Z=8.0)
 GATE = dict(XY=3.0, Z=4.0, kg=42.0)
-ORDER = ["A0", "A1s", "A1", "A2", "A3", "A4", "B", "C"]
+ORDER = ["A0", "A1s", "A1", "A2", "A3", "A4", "B", "C"]   # A1 resta come variante diagnostica (upper bound)
 EN = [("zslide", "slitta Z + master"), ("tooldock", "ToolDock"), ("carriage", "carrello X"), ("head", "testa"), ("beam", "trave"),
       ("uprights", "spalle"), ("zblocks", "pattini Z"), ("xblocks", "pattini X"), ("zscrew", "vite Z"), ("xscrew", "vite X"), ("bearing", "cuscinetti")]
 

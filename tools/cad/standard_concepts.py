@@ -27,6 +27,10 @@ CONCEPTS = {
     # cielo sopra il piano della master, schiena = faccia anteriore della slitta (incollata). Sostituisce la sella.
     "A1": dict(desc="A1 · master + slitta monoscocca, h 100", over={"MONOCOQUE": dict(h=100.0, wall=6.0), "SADDLE": None}),
     "A1s": dict(desc="A1s · monoscocca bassa, h 60", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None}),
+    # A2: A1s + carrello X a cassone: zaino scatolato dietro la piastra, sopra trave e catena X (z ≥ 392, 16 mm dalla
+    # catena), profondo fino a y 200; pattini X, guide Z, asse, ToolDock e master A1s invariati.
+    "A2": dict(desc="A2 · A1s + carrello a cassone (zaino 4 mm)", over={"MONOCOQUE": dict(h=60.0, wall=6.0), "SADDLE": None,
+                                                                         "CARRIAGE_BOX": dict(z0=392.0, y1=200.0, wall=4.0)}),
 }
 
 

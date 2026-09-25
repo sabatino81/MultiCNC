@@ -334,6 +334,15 @@ def build(X, Y, Zd, cfg=None):
     for sgn in (-1, 1):
         x_in, x_out = X + sgn * (C["carriage_w"] / 2), X + sgn * (C["carriage_w"] / 2 + cfl["t"])
         car = car.union(box(min(x_in, x_out), max(x_in, x_out), cf - cfl["depth"] - 10, cb, car_bot, z_rail1))
+    cbx = getattr(P, "CARRIAGE_BOX", None)     # D032 A2: zaino scatolato dietro la piastra, sopra trave e catena X
+    if cbx:
+        xw = C["carriage_w"] / 2 + P.CARRIAGE_FLANGE["t"]
+        z0, z1, y1, wt = cbx["z0"], z_rail1, cbx["y1"], cbx["wall"]
+        car = car.union(box(X - xw, X + xw, cb - 1.0, y1, z0, z1).cut(box(X - xw + wt, X + xw - wt, cb - 2.0, y1 - wt, z0 + wt, z1 - wt)))
+        # canale centrale per piastrina e chiocciola Z, vite, BK/BF (fessura + gioco ≥ 8 mm), chiuso da pareti proprie
+        cw, cy = C["slot_w"] / 2 + P.CLEAR_PASS, y_z_axis + 22 + P.CLEAR_PASS + 5
+        car = car.cut(box(X - cw, X + cw, cb - 2.0, cy, z0 - 1, z1 + 1))
+        car = car.union(box(X - cw - wt, X + cw + wt, cb - 1.0, cy + wt, z0, z1).cut(box(X - cw, X + cw, cb - 2.0, cy, z0 - 1, z1 + 1)))
     a.add("x_carriage", car, "XCAR", AL, "MC-XC-001", "gray")
     for i, dz in enumerate((xa["rail_spacing"] / 2, -xa["rail_spacing"] / 2)):
         for j, dx in enumerate((-xa["block_pitch"] / 2, xa["block_pitch"] / 2)):
