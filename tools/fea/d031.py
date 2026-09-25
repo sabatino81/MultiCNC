@@ -252,28 +252,33 @@ def self_test():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true", help="solo baseline e convergenza")
+    ap.add_argument("--resume", action="store_true", help="riusa nominale e mesh fine da fea/d031/pilot.json")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     res = dict(stage="pilot", date=time.strftime("%Y-%m-%d"), h_nom=H_NOM, h_local=H_LOCAL, fine=FINE,
                balls=BALL_ANGLES, d028=d028_local(), variants={})
     res["self_test"] = self_test()
-    print("autotest molle", res["self_test"])
-    base = solve("pilot_nom", H_NOM)
-    print("nominale", base["mesh"], base["solve_s"], "s")
-    fine = solve("pilot_fine", H_NOM * FINE, cases=UNIT[:3])
-    print("fine", fine["mesh"], fine["solve_s"], "s")
+    print("autotest molle", res["self_test"], flush=True)
+    if args.resume:
+        old = json.loads((OUT / "pilot.json").read_text())
+        base, fine = old["nominal"], old["fine"]
+    else:
+        base = solve("pilot_nom", H_NOM)
+        print("nominale", base["mesh"], base["solve_s"], "s", flush=True)
+        fine = solve("pilot_fine", H_NOM * FINE, cases=UNIT[:3])
+        print("fine", fine["mesh"], fine["solve_s"], "s", flush=True)
     conv = {}
     for c in ("Fx", "Fy", "Fz"):
         a, b = base["cases"][c]["tip_abs_um"], fine["cases"][c]["tip_abs_um"]
         conv[c] = dict(nom=a, fine=b, delta=round(abs(a - b) / b, 4))
     res.update(nominal=base, fine=fine, convergence=conv, converged=all(v["delta"] < CONV_LIMIT for v in conv.values()))
-    print("convergenza", conv, "→", res["converged"])
+    print("convergenza", conv, "→", res["converged"], flush=True)
     for tag, desc, kw in ([] if args.quick else VARIANTS):
         r = base if tag == "master_w8" else solve(tag, H_NOM, **kw)
         r["desc"] = desc
         res["variants"][tag] = r
         k = [r["cases"][c]["k_N_um"] for c in ("Fx", "Fy", "Fz")]
-        print(f"{tag:12} massa {r['mass']} k {k} peak {r['cases']['FxFz']['vm_peak']['MPa']} MPa")
+        print(f"{tag:12} massa {r['mass']} k {k} peak {r['cases']['FxFz']['vm_peak']['MPa']} MPa", flush=True)
     (OUT / "pilot.json").write_text(json.dumps(res, indent=2, ensure_ascii=False), encoding="utf-8")
     try:
         import d031_page
