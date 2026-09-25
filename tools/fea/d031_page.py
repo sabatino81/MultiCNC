@@ -102,6 +102,8 @@ def write(r):
   <div class="panel"><span class="kicker">Verifiche</span><h2>Autotest e convergenza.</h2><p><b>Autotest</b>: con i moduli elastici ×10³ la FEA ridà la cedevolezza analitica di accoppiamento D028 e cuscinetti: attesi {it(st["expected"]["X"], 3)} N/µm in X e Y e {it(st["expected"]["Z"], 2)} in Z, ottenuti {it(st["got"]["X"], 3)} / {it(st["got"]["Y"], 3)} / {it(st["got"]["Z"], 2)} (errore {it(st["err"] * 100, 2)}%).</p><p><b>Mesh</b>: globale {it(r["h_nom"], 0)} mm, locale {it(r["h_local"], 1)} mm su sfere, radice della master, estremità del collare, cuscinetti e naso; fine con tutte le dimensioni −{fine_pct}%. Nominale {nom["mesh"]["elements"]:,} elementi ({nom["mesh"]["dof"] // 1000}k gdl), fine {fine["mesh"]["elements"]:,} ({fine["mesh"]["dof"] // 1000}k gdl). Spostamento alla punta:</p><div class="table-wrap"><table><tr><th>Caso</th><th>|u| nominale µm</th><th>|u| fine µm</th><th>Δ</th></tr>{conv_rows}</table></div></div>
 </section>
 
+<section class="section"><p><a class="btn primary" href="viewer-3d.html?m=pilot_nom_Fy_u.glb">Deformata in 3D · 150 N Y</a> <a class="btn" href="viewer-3d.html?m=pilot_nom_Fx_u.glb">150 N X</a> <a class="btn" href="viewer-3d.html?m=pilot_nom_Fy_vm.glb">Von Mises · 150 N Y</a></p></section>
+
 <section class="section"><h2>Casi di carico · spostamenti</h2><div class="table-wrap"><table>
 <tr><th>Caso</th><th>Punta X / Y / Z (µm)</th><th>|u| (µm)</th><th>N/µm</th></tr>
 {case_rows}</table></div>

@@ -24,6 +24,9 @@ python tools/fea/d031.py --resume   # riusa nominale e fine da pilot.json, rical
 python tools/fea/d031_page.py       # solo la pagina dal JSON
 ```
 
+Fase 2a: `python tools/fea/d031_z.py` (testa + master + slitta Z, quattro topologie master ↔ slitta).
+Vista 3D: `python tools/fea/export_results.py` (richiede `trimesh`) scrive le deformate colorate in `fea/d031/glb/` per `base/viewer-3d.html`.
+
 File di lavoro in `build/fea/` (non versionati). Regole D031: carichi su punti di riferimento (mai su un nodo),
 spostamento relativo naso ER11 ↔ riferimento, convergenza con dimensioni −30% entro il 5% alla punta, tensione
 "hotspot" lontano da vincoli, patch rigide ed elementi scadenti; guide, viti e ToolDock come molle calibrate D028.

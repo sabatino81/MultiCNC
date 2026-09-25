@@ -1,0 +1,496 @@
+[
+ {
+  "file": "pilot_nom_Fx_u.glb",
+  "title": "Pilota · master + testa (slitta rigida)",
+  "case": "150 N radiale X",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 131.5,
+  "max": 131.5,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "pilot_nom_Fy_u.glb",
+  "title": "Pilota · master + testa (slitta rigida)",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 223.65,
+  "max": 223.65,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "pilot_nom_Fz_u.glb",
+  "title": "Pilota · master + testa (slitta rigida)",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 37.44,
+  "max": 37.44,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "pilot_nom_Fy_vm.glb",
+  "title": "Pilota · master + testa (slitta rigida)",
+  "case": "150 N radiale Y",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 10.93,
+  "max": 35.53,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_strip_Fy_u.glb",
+  "title": "Slitta Z · striscia 12 mm (mule v2)",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 363.19,
+  "max": 363.19,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_strip_Fz_u.glb",
+  "title": "Slitta Z · striscia 12 mm (mule v2)",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 87.45,
+  "max": 87.45,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_strip_Fy_vm.glb",
+  "title": "Slitta Z · striscia 12 mm (mule v2)",
+  "case": "150 N radiale Y",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 15.09,
+  "max": 33.89,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_flange_Fy_u.glb",
+  "title": "Slitta Z · flangia posteriore 50 mm",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 223.09,
+  "max": 223.09,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_Fy_u.glb",
+  "title": "Slitta Z · sella a U sulle ali",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 166.8,
+  "max": 166.8,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_saddle_Fz_u.glb",
+  "title": "Slitta Z · sella a U sulle ali",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 35.09,
+  "max": 35.09,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_both_Fy_u.glb",
+  "title": "Slitta Z · flangia + sella",
+  "case": "150 N radiale Y",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 164.26,
+  "max": 164.26,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_both_Fz_u.glb",
+  "title": "Slitta Z · flangia + sella",
+  "case": "200 N assiale Z",
+  "field": "spostamento |u|",
+  "unit": "µm",
+  "lo": 0.0,
+  "hi": 34.7,
+  "max": 34.7,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ },
+ {
+  "file": "z_both_Fy_vm.glb",
+  "title": "Slitta Z · flangia + sella",
+  "case": "150 N radiale Y",
+  "field": "tensione di Von Mises",
+  "unit": "MPa",
+  "lo": 0.0,
+  "hi": 6.36,
+  "max": 12.72,
+  "scale": 150.0,
+  "ramp": [
+   [
+    0.99,
+    0.95,
+    0.86
+   ],
+   [
+    0.99,
+    0.8,
+    0.55
+   ],
+   [
+    0.96,
+    0.55,
+    0.26
+   ],
+   [
+    0.84,
+    0.29,
+    0.13
+   ],
+   [
+    0.55,
+    0.1,
+    0.07
+   ]
+  ]
+ }
+]

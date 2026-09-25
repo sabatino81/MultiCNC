@@ -860,7 +860,7 @@ def write_page(report):
 
 <section class="section"><div class="callout"><b>Corsa Z ≠ altezza massima del pezzo.</b> Sotto la trave ci sono {fmt(P.CLEAR_UNDER_BEAM)} mm sopra la tavola. Con un pallet da {fmt(P.PALLET_T)} mm il pezzo più alto che passa sotto la trave è ~{fmt(P.CLEAR_UNDER_BEAM - P.PALLET_T)} mm, meno fixture e utensile; con i rialzi +75 mm (D007) sale di conseguenza. Nelle specifiche commerciali si dichiarano separatamente corsa Z (140 mm) e altezza pezzo per configurazione.</div></section>
 
-<section class="section"><h2>Viste di controllo</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
+<section class="section"><h2>Viste di controllo</h2><p style="margin:-4px 0 14px"><a class="btn primary" href="viewer-3d.html">Apri il mule in 3D</a> <a class="btn" href="viewer-3d.html?m=standard_dock.glb">DOCK in 3D</a></p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Datum · HOME</span><h2>Riferimenti.</h2><div class="table-wrap"><table><tr><th>Datum</th><th>x, y, z (mm)</th></tr>{dat_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Sistema macchina: z = 0 sul piano dei longheroni, asse utensile sempre su y = 0 (ponte fisso). PALLET_R1/R2 si muovono con la tavola; TOOLDOCK_MASTER con la slitta Z.</p></div>

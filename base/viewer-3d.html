@@ -1,0 +1,128 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — Vista 3D · mule e FEA</title><link rel="stylesheet" href="../assets/styles.css">
+<style>
+.v3d-wrap{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#0b0f16}
+#v3d{display:block;width:100%;height:min(72vh,720px);touch-action:none}
+.v3d-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+.v3d-bar select{font:inherit;font-size:14px;color:var(--text);background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r-sm);padding:9px 12px;min-width:0;max-width:100%;flex:1 1 320px}
+.v3d-bar label{font-size:13px;color:var(--dim);display:flex;gap:6px;align-items:center}
+.v3d-legend{position:absolute;left:12px;bottom:12px;right:12px;max-width:360px;background:rgba(5,7,11,.82);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 12px;font-size:12px;color:#dfe6ef;display:none}
+.v3d-legend .ramp{height:10px;border-radius:5px;margin:6px 0 4px}
+.v3d-legend .ends{display:flex;justify-content:space-between;color:#aab4c2}
+.v3d-hint{position:absolute;right:12px;top:10px;font-size:12px;color:#8f9aab;pointer-events:none}
+.v3d-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#aab4c2;font-size:14px;pointer-events:none}
+</style></head><body><main class="shell page">
+<a class="back" href="cad-standard.html">← CAD Standard · mule</a>
+<div class="pagehead"><div class="eyebrow">02 · Base Standard · Vista 3D</div><h1>Mule e FEA<br>in 3D.</h1><p class="lead">Il digital mule della Standard e i risultati FEA D031 navigabili nel browser: trascina per ruotare, rotella o pizzico per lo zoom, tasto destro o due dita per spostare. I modelli CAD vengono da <code>tools/cad/export_glb.py</code>, i risultati FEA da <code>tools/fea/export_results.py</code>: stessi dati delle pagine <a href="cad-standard.html" style="color:var(--accent-2)">CAD mule</a>, <a href="fea-d031.html" style="color:var(--accent-2)">FEA pilota</a> e <a href="fea-d031-z.html" style="color:var(--accent-2)">FEA slitta Z</a>. Valori di progetto, non misure.</p><div class="badges"><span class="badge ok">glTF · three.js</span><span class="badge">Deformata amplificata</span><span class="badge">three.js r160 incluso nel sito</span></div></div>
+
+<section class="section">
+  <div class="v3d-bar"><select id="pick" aria-label="Modello da visualizzare"></select><label><input type="checkbox" id="wire"> spigoli</label><label><input type="checkbox" id="spin"> rotazione</label></div>
+  <div class="v3d-wrap"><canvas id="v3d"></canvas><div class="v3d-status" id="status">Caricamento…</div><div class="v3d-hint">trascina · zoom · sposta</div><div class="v3d-legend" id="legend"></div></div>
+  <p style="color:var(--dim);font-size:13px;margin-top:10px" id="note"></p>
+</section>
+
+<section class="section split">
+  <div class="panel"><span class="kicker">CAD</span><h2>Il mule, parte per parte.</h2><p>Assieme del mule v2 in HOME, CENTER, MAX e DOCK con i colori delle viste di controllo: struttura in grigio, guide e pattini in blu, viti in argento, motori in nero, master e receiver ToolDock in rosso. I volumi riservati (catene, magazine, inviluppi) non sono mostrati. Gli STEP completi sono nella pagina <a href="cad-standard.html" style="color:var(--accent-2)">CAD mule</a>.</p></div>
+  <div class="panel"><span class="kicker">FEA</span><h2>Deformata e mappe colore.</h2><p>Superficie della mesh di calcolo con la deformata amplificata (fattore in legenda) e il colore dello spostamento |u| in µm o della tensione di Von Mises in MPa: chiaro = basso, scuro = alto. Nel pilota la slitta Z è rigida; nel sottoassieme la slitta è un solido su pattini e vite. Le tensioni non sono ancora convergenti (D031): la mappa mostra dove lavora il pezzo, non il valore di progetto.</p></div>
+</section>
+</main>
+<script src="../assets/nav.js"></script>
+<script type="importmap">{"imports":{"three":"../assets/vendor/three/build/three.module.js","three/addons/":"../assets/vendor/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const CAD = [
+  ['cad', 'CAD · mule v2 · CENTER', '../cad/standard/glb/standard_center.glb'],
+  ['cad', 'CAD · mule v2 · HOME', '../cad/standard/glb/standard_home.glb'],
+  ['cad', 'CAD · mule v2 · MAX', '../cad/standard/glb/standard_max.glb'],
+  ['cad', 'CAD · mule v2 · DOCK (testa al cambio)', '../cad/standard/glb/standard_dock.glb'],
+];
+const canvas = document.getElementById('v3d'), status = document.getElementById('status');
+const legend = document.getElementById('legend'), note = document.getElementById('note'), pick = document.getElementById('pick');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0f16);
+const camera = new THREE.PerspectiveCamera(35, 1, 1, 20000);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x334055, 1.4));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(1, 2, 1.5); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.6); fill.position.set(-1.5, 0.5, -1); scene.add(fill);
+const loader = new GLTFLoader();
+let current = null, edges = null, entries = [];
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(canvas);
+
+function frame(obj) {
+  const box = new THREE.Box3().setFromObject(obj), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  const r = size.length() / 2;
+  controls.target.copy(c);
+  camera.position.copy(c).add(new THREE.Vector3(1.1, 0.75, 1.35).normalize().multiplyScalar(r / Math.tan(THREE.MathUtils.degToRad(17.5)) * 1.05));
+  camera.near = r / 100; camera.far = r * 100; camera.updateProjectionMatrix(); controls.update();
+}
+
+function setEdges(on) {
+  if (edges) { scene.remove(edges); edges = null; }
+  if (!on || !current) return;
+  edges = new THREE.Group();
+  current.traverse(o => { if (o.isMesh) {
+    const e = new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 25), new THREE.LineBasicMaterial({ color: 0x0b0f16, transparent: true, opacity: 0.55 }));
+    o.updateWorldMatrix(true, false); e.applyMatrix4(o.matrixWorld); edges.add(e); } });
+  scene.add(edges);
+}
+
+function showLegend(e) {
+  if (!e.fea) { legend.style.display = 'none'; return; }
+  const stops = e.fea.ramp.map((c, i) => `rgb(${c.map(v => Math.round(v * 255)).join(',')}) ${Math.round(i / (e.fea.ramp.length - 1) * 100)}%`).join(',');
+  const f = v => v.toLocaleString('it-IT', { maximumFractionDigits: v < 10 ? 2 : 1 });
+  legend.innerHTML = `<b>${e.fea.field}</b> · ${e.fea.case}<div class="ramp" style="background:linear-gradient(90deg,${stops})"></div>` +
+    `<div class="ends"><span>0 ${e.fea.unit}</span><span>${f(e.fea.hi)} ${e.fea.unit}${e.fea.max > e.fea.hi * 1.001 ? ' (picco ' + f(e.fea.max) + ')' : ''}</span></div>` +
+    `<div style="margin-top:4px;color:#aab4c2">deformata × ${e.fea.scale}</div>`;
+  legend.style.display = 'block';
+}
+
+function load(i) {
+  const e = entries[i];
+  status.textContent = 'Caricamento…'; status.style.display = 'flex';
+  loader.load(e.url, g => {
+    if (current) scene.remove(current);
+    current = g.scene;
+    if (e.fea) {                                  // FEA in mm con Z in alto → Y in alto
+      current.rotation.x = -Math.PI / 2;
+      current.traverse(o => { if (o.isMesh) { o.geometry.computeVertexNormals(); o.material = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8, metalness: 0.0, side: THREE.DoubleSide }); } });
+    } else {
+      current.traverse(o => { if (o.isMesh && o.material) { o.material.side = THREE.DoubleSide; o.material.roughness = 0.6; o.material.metalness = 0.15; } });
+    }
+    scene.add(current); current.updateWorldMatrix(true, true);
+    frame(current); setEdges(document.getElementById('wire').checked); showLegend(e);
+    note.textContent = e.fea ? `${e.fea.title} · ${e.fea.case} · ${e.fea.field} (${e.fea.unit}). Deformata amplificata × ${e.fea.scale}; spostamenti rispetto al vincolo del modello.` : 'Mule v2 (D030/D031): quote da tools/cad/standard_params.py.';
+    status.style.display = 'none';
+  }, undefined, () => { status.textContent = 'Modello non disponibile: apri la pagina dal sito (non da file locale) o rigenera i GLB.'; });
+}
+
+async function init() {
+  entries = CAD.map(([k, label, url]) => ({ label, url }));
+  try {
+    const idx = await (await fetch('../fea/d031/glb/index.json')).json();
+    for (const r of idx) entries.push({ label: `FEA · ${r.title} · ${r.case} · ${r.field}`, url: '../fea/d031/glb/' + r.file, fea: r });
+  } catch (err) { /* senza indice FEA restano i modelli CAD */ }
+  const groups = { CAD: [], FEA: [] };
+  entries.forEach((e, i) => groups[e.fea ? 'FEA' : 'CAD'].push(`<option value="${i}">${e.label}</option>`));
+  pick.innerHTML = `<optgroup label="CAD mule">${groups.CAD.join('')}</optgroup>` + (groups.FEA.length ? `<optgroup label="FEA D031">${groups.FEA.join('')}</optgroup>` : '');
+  const want = new URLSearchParams(location.search).get('m');
+  const start = want ? Math.max(0, entries.findIndex(e => e.url.endsWith(want))) : 0;
+  pick.value = start; load(start);
+}
+pick.addEventListener('change', () => load(+pick.value));
+document.getElementById('wire').addEventListener('change', ev => setEdges(ev.target.checked));
+document.getElementById('spin').addEventListener('change', ev => { controls.autoRotate = ev.target.checked; });
+resize(); init();
+renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+</script>
+</body></html>

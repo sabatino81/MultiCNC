@@ -47,6 +47,8 @@ def write(r):
   <div class="metric"><strong>{" / ".join(it(x, 2) for x in lim)}</strong><span>N/µm di limite con testa, master, slitta e guide Z rigide</span></div>
 </section>
 
+<section class="section"><p><a class="btn primary" href="viewer-3d.html?m=z_strip_Fy_u.glb">Striscia in 3D · 150 N Y</a> <a class="btn" href="viewer-3d.html?m=z_saddle_Fy_u.glb">Sella in 3D</a> <a class="btn" href="viewer-3d.html?m=z_both_Fy_u.glb">Flangia + sella in 3D</a> <a class="btn" href="viewer-3d.html?m=z_strip_Fz_u.glb">Striscia · 200 N Z (piastrina chiocciola)</a></p></section>
+
 <section class="section"><h2>Topologie del collegamento</h2><div class="table-wrap"><table>
 <tr><th>Topologia</th><th>Master</th><th>Δ massa</th><th>X N/µm</th><th>Y N/µm</th><th>Z N/µm</th><th>Δ punta worst µm</th><th>kg / (N/µm)</th><th>Macchina X / Y / Z (stima)</th></tr>
 {"".join(rows)}</table></div>

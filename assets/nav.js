@@ -44,6 +44,7 @@
       ['Cinematica XYZ','base/xyz.html'],
       ['Guide Standard · D015','base/rails.html'],
       ['CAD Standard · mule','base/cad-standard.html'],
+      ['Vista 3D · mule e FEA','base/viewer-3d.html'],
       ['Rigidezza · D028','base/compliance-d028.html'],
       ['ToolDock e testa · D029','base/tooldock-d029.html'],
       ['FEA a solidi · D031','base/fea-d031.html'],
