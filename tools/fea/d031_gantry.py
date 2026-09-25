@@ -44,7 +44,7 @@ def bb(sh):
     return b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax
 
 
-def build(tag, h, hc):
+def build(tag, h, hc, rigid=()):
     import compliance_d028 as C
     a, sh = parts_center()
     X0 = (bb(sh["tooldock_master"])[0] + bb(sh["tooldock_master"])[1]) / 2
@@ -81,6 +81,8 @@ def build(tag, h, hc):
     m.quality["spindle_body"], m.quality["head"] = q[tube], q[~tube]
     m.bodies.append(("spindle_body", [], "STEEL"))
     m.body_nodes["spindle_body"] = np.unique(conn[tube])
+    if rigid:                                   # diagnostica: corpi resi "infinitamente" rigidi
+        m.bodies = [(n, s_, "RIGID" if n in rigid else mt) for n, s_, mt in m.bodies]
     eps = 1e-3
 
     def patch(body, fn, name):
@@ -173,20 +175,22 @@ def d028_split():
     return out
 
 
-def solve(tag, h, hc):
+def solve(tag, h, hc, rigid=()):
     cache = WORK / tag / "result.json"
     key = dict(v="gantry-v1", h=h, hc=hc, tab=P.TAB_T, saddle=P.SADDLE)
+    if rigid:
+        key["rigid"] = sorted(rigid)
     if cache.exists():
         old = json.loads(cache.read_text())
         if old.get("key") == key:
             return old["result"]
     t0 = time.time()
-    m, info, monitor, tip, mass = build(tag, h, hc)
+    m, info, monitor, tip, mass = build(tag, h, hc, rigid)
     disp, _ = m.run(monitor)
     U = {n: np.array(disp[n][tip[0]]) * 1000.0 for n, _, _ in CASES}
     U["FxFz"], U["FyFz"] = U["Fx"] + U["Fz"], U["Fy"] + U["Fz"]
     k = {n: round(f / abs(float(U[n][d])), 3) for n, d, f in (("Fx", 0, 150.0), ("Fy", 1, 150.0), ("Fz", 2, 200.0))}
-    r = dict(tag=tag, h=h, hc=hc, mesh=info, solve_s=m.solve_s, total_s=round(time.time() - t0, 1), mass=mass, k=k,
+    r = dict(tag=tag, h=h, hc=hc, rigid=sorted(rigid), mesh=info, solve_s=m.solve_s, total_s=round(time.time() - t0, 1), mass=mass, k=k,
              tip_um={n: [round(float(v), 2) for v in u] for n, u in U.items()},
              worst_um=round(max(float(np.linalg.norm(U[n])) for n in U), 1))
     cache.parent.mkdir(parents=True, exist_ok=True)
@@ -194,23 +198,39 @@ def solve(tag, h, hc):
     return r
 
 
+DIAG = [  # (nome, corpi rigidi): la cedevolezza tolta misura il peso di ciascun gruppo
+    ("gantry", ("gantry",)),
+    ("carriage", ("carriage",)),
+    ("zgroup", ("struct", "head", "spindle_body", "shaft")),
+]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--h", type=float, default=6.0, help="mesh fine attorno a testa, slitta e carrello")
     ap.add_argument("--coarse", type=float, default=12.0, help="mesh grossa su trave e spalle")
     ap.add_argument("--check", action="store_true", help="solo mesh, senza soluzione")
+    ap.add_argument("--diag", action="store_true", help="diagnostica: gantry, carrello e gruppo Z resi rigidi uno alla volta")
     args = ap.parse_args()
     if args.check:
         m, info, *_ = build("gantry_check", args.h, args.coarse)
         print(info)
         return
-    r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}", args.h, args.coarse)
-    res = dict(stage="gantry", date=time.strftime("%Y-%m-%d"), d028=d028_split(), runs={})
+    res = dict(stage="gantry", date=time.strftime("%Y-%m-%d"), d028=d028_split(), runs={}, diag={})
     old = OUT / "gantry.json"
     if old.exists():
-        res["runs"] = json.loads(old.read_text()).get("runs", {})
-    res["runs"][r["tag"]] = r
-    print(r["tag"], r["k"], r["mesh"], r["solve_s"], "s", flush=True)
+        prev = json.loads(old.read_text())
+        res["runs"], res["diag"] = prev.get("runs", {}), prev.get("diag", {})
+    if args.diag:
+        for name, rig in DIAG:
+            r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}_rigid_{name}", args.h, args.coarse, rig)
+            res["diag"][name] = r
+            print(name, r["k"], r["solve_s"], "s", flush=True)
+            old.write_text(json.dumps(res, indent=2, ensure_ascii=False, default=float))
+    else:
+        r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}", args.h, args.coarse)
+        res["runs"][r["tag"]] = r
+        print(r["tag"], r["k"], r["mesh"], r["solve_s"], "s", flush=True)
     old.write_text(json.dumps(res, indent=2, ensure_ascii=False, default=float))
     import d031_gantry_page
     d031_gantry_page.write(json.loads(old.read_text()))

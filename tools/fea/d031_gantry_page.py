@@ -36,6 +36,18 @@ def write(r):
         for t in ("telaio", "tavola", "guide Y + vite Y", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z",
                   "master ToolDock", "accoppiamento ToolDock", "testa (spindle + utensile)"))
     worst_gap = min(m_ / TARGET for m_ in mach)
+    DN = {"gantry": "Spalle + trave", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa"}
+    base_run = next((v for v in r["runs"].values() if v["h"] == r.get("diag_h", 6.0) and v["hc"] == 12.0), nom)
+    diag_rows = ""
+    for name, v in r.get("diag", {}).items():
+        cells = ""
+        for n in ("Fx", "Fy", "Fz"):
+            c0, c1 = 1.0 / base_run["k"][n], 1.0 / v["k"][n]
+            cells += f'<td>{it(v["k"][n], 2)} · {it((c0 - c1) / c0 * 100, 0)}%</td>'
+        diag_rows += f'<tr><td>{DN.get(name, name)} rigido</td>{cells}</tr>'
+    diag_sec = (f"""<section class="section"><h2>Quale parte del gantry pesa</h2><div class="table-wrap"><table><tr><th>Diagnostica</th><th>X N/µm · quota</th><th>Y N/µm · quota</th><th>Z N/µm · quota</th></tr>
+<tr><td>Gantry FEA (riferimento)</td>{"".join(f'<td>{it(base_run["k"][n], 2)}</td>' for n in ("Fx", "Fy", "Fz"))}</tr>{diag_rows}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:12px">Ogni riga rende infinitamente rigido un gruppo e lascia tutto il resto (molle di pattini, viti e ToolDock comprese): la quota è la cedevolezza che quel gruppo porta via, sulla stessa mesh del riferimento. Il resto sono molle (pattini, viti, ToolDock, cuscinetti) e le parti non rese rigide.</p></section>""" if diag_rows else "")
     verdict = (f'Con il gantry reale la macchina stimata è <b>{" / ".join(it(v, 2) for v in mach)} N/µm</b>: tra {it(min(mach) / TARGET * 100, 0)}% e {it(max(mach) / TARGET * 100, 0)}% del target D014. '
                f'Anche con un gantry infinitamente rigido il resto (telaio, tavola, guide e vite Y, dal modello a travi) limiterebbe a {" / ".join(it(v, 2) for v in lim)} N/µm. '
                f'L\'ordine di grandezza è {"confermato" if max(mach) < 3.0 else "da rileggere"}: 10 N/µm non si raggiunge con ottimizzazioni di questa architettura. '
@@ -55,6 +67,8 @@ def write(r):
 <section class="section"><div class="callout" style="border-color:rgba(255,84,112,.45)"><b>Lettura.</b> {verdict}</div></section>
 
 <section class="section"><p><a class="btn primary" href="viewer-3d.html?m={nom["tag"]}_Fy_u.glb">Deformata del gantry in 3D · 150 N Y</a> <a class="btn" href="viewer-3d.html?m={nom["tag"]}_Fx_u.glb">150 N X</a> <a class="btn" href="viewer-3d.html?m={nom["tag"]}_Fz_u.glb">200 N Z</a></p></section>
+
+{diag_sec}
 
 <section class="section"><h2>Gantry FEA ↔ D028</h2><div class="table-wrap"><table>
 <tr><th>Asse</th><th>Gantry D028</th><th>Gantry FEA</th><th>FEA / D028</th><th>Macchina D028</th><th>Macchina con gantry FEA</th><th>Limite, gantry rigido</th><th>D014</th></tr>
