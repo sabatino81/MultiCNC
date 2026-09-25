@@ -1,0 +1,103 @@
+{
+  "tag": "d032_C3a_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 252667,
+    "elements": 138079,
+    "dof": 758001,
+    "min_sj": 0.378,
+    "poor": 0
+  },
+  "solve_s": 197.8,
+  "total_s": 274.6,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 3.875,
+    "struct": 2.841,
+    "head": 0.835
+  },
+  "k": {
+    "Fx": 0.958,
+    "Fy": 0.783,
+    "Fz": 2.043
+  },
+  "tip_um": {
+    "Fx": [
+      156.6,
+      -3.91,
+      0.58
+    ],
+    "Fy": [
+      -3.91,
+      191.51,
+      -41.05
+    ],
+    "Fz": [
+      0.77,
+      -54.73,
+      97.88
+    ],
+    "FxFz": [
+      157.37,
+      -58.64,
+      98.46
+    ],
+    "FyFz": [
+      -3.14,
+      136.78,
+      56.84
+    ]
+  },
+  "worst_um": 195.9,
+  "energy": {
+    "Fx": {
+      "uprights": 0.371431,
+      "beam": 0.785155,
+      "carriage": 1.286876,
+      "zslide": 0.773153,
+      "head": 4.857679,
+      "xblocks": 0.215803,
+      "xscrew": 0.306162,
+      "zblocks": 0.655164,
+      "zscrew": 0.0,
+      "tooldock": 1.931075,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269206,
+      "beam": 1.652257,
+      "carriage": 2.05849,
+      "zslide": 1.097145,
+      "head": 5.899395,
+      "xblocks": 0.240224,
+      "xscrew": 0.0,
+      "zblocks": 0.652682,
+      "zscrew": 0.0,
+      "tooldock": 1.931075,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.61808,
+      "beam": 5.23451,
+      "carriage": 0.883786,
+      "zslide": 1.467164,
+      "head": 0.313932,
+      "xblocks": 0.199504,
+      "xscrew": 0.0,
+      "zblocks": 0.09039,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 11.745,
+    "Fy": 14.362972,
+    "Fz": 9.788386
+  },
+  "concept": "C3a",
+  "desc": "C3a · C2 + connettore a uscita laterale (braccio ~196 mm)"
+}
