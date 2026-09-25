@@ -43,6 +43,7 @@
       ['Architettura meccanica','base/mechanics.html'],
       ['Cinematica XYZ','base/xyz.html'],
       ['Guide Standard · D015','base/rails.html'],
+      ['CAD Standard · mule','base/cad-standard.html'],
       ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
       ['ToolDock meccanico · D016','base/tooldock-d016.html'],
