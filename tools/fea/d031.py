@@ -43,7 +43,7 @@ S = P.SPINDLE
 BALL_ANGLES = (90.0, 210.0, 330.0)
 BALL_PATCH_R = 6.0
 H_NOM, H_LOCAL = 6.0, 2.5           # mm: globale e locale (D031: 5–8 e 2–3 mm)
-FINE = 0.7                           # mesh di convergenza: dimensioni −30%
+FINE = 0.75                          # mesh di convergenza: dimensioni −25% (−30% supera la memoria del container con SPOOLES)
 CONV_LIMIT = 0.05                    # spostamento alla punta entro 5%
 HOT_EXCL = 6.0                       # mm dai vincoli e dalle patch rigide per la tensione "hotspot"
 
