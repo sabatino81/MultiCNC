@@ -86,8 +86,8 @@ def render(parts, view, size=900):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for cfg in ("HOME", "MAX"):
-        a, _ = A.build(*A.P.CONFIGS[cfg])
+    for cfg in ("HOME", "MAX", "DOCK"):
+        a, _ = A.build(*A.P.CONFIGS[cfg], cfg)
         for view in VIEWS:
             render(a.parts, view).save(OUT / f"{cfg.lower()}_{view}.png", optimize=True)
             print(cfg, view)

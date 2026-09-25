@@ -1,8 +1,12 @@
 """Base Standard · parametri geometrici del "digital mule" (unica fonte di verità CAD).
 
+Mule v1 (D027): pattini Z sulla slitta mobile e guide Z sul carrello X; trave abbassata
+e disaccoppiata dalla zona guide Z; telaio a scala (due longheroni Y + traverse); docking
+unico a X 440 con magazine dietro la spalla destra, nessun volume permanente davanti alla trave.
+
 Sistema di riferimento macchina (fisso al telaio):
 - X lungo la trave (sinistra → destra), Y dal fronte al retro, Z verso l'alto;
-- z = 0 è il piano superiore del basamento (appoggio guide Y);
+- z = 0 è il piano superiore dei longheroni (appoggio guide Y);
 - l'asse utensile sta sempre sul piano y = 0 (ponte fisso, D006): la tavola si muove in Y;
 - x = 0 è la posizione dell'asse utensile con X in HOME.
 
@@ -10,17 +14,19 @@ Coordinate asse (come le vede il controllo): X 0…450, Y 0…350, Z 0…−140 
 Con tavola a Y, un punto della tavola a coordinata locale (xl, yl) sta in (xl, yl − Y):
 l'utensile in (X, Y) tocca sempre il punto (X, Y) della superficie utile.
 
-Valori da decisioni congelate: D006, D015, D016, D018, D019, D021, D022, ICD v4.
-Valori marcati MULE sono scelte di questo primo assieme, da rivedere dopo l'analisi.
+Valori da decisioni congelate: D006, D015, D016, D018, D019, D021, D022, D027, ICD v4.
+Valori marcati MULE sono scelte dell'assieme, da rivedere dopo l'analisi.
 Tutte le quote in mm.
 """
 
 # ------------------------------------------------------------------ corse (D019, TARGET)
 TRAVEL = {"X": 450.0, "Y": 350.0, "Z": 140.0}
+DOCK_X = 440.0             # D027: unica posizione di docking, 10 mm prima del fine corsa X
 CONFIGS = {  # posizioni asse (X, Y, Z_giù) per l'analisi
     "HOME": (0.0, 0.0, 0.0),
     "CENTER": (225.0, 175.0, 70.0),
     "MAX": (450.0, 350.0, 140.0),
+    "DOCK": (DOCK_X, 0.0, 0.0),
 }
 MARGIN = 10.0            # D019: margine per lato su guide e viti
 
@@ -61,27 +67,34 @@ TIP_AT_Z_BOTTOM = 0.0                     # punta a Z = −140 sul piano tavola 
 
 # ------------------------------------------------------------------ strutture custom (MULE)
 AL_DENSITY = 2.70e-6      # kg/mm³
-PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, carriage_below=90.0,
-             slot_w=64.0, slot_from=50.0, tower_w=100.0, slide_w=170.0, slide_ext_top=20.0)
-BASE = dict(x0=25.0, x1=425.0, y0=-350.0, y1=350.0, H=60.0, top=8.0, wall=8.0,
-            channel_w=80.0, pad=3.0,
-            cross_y0=105.0, cross_y1=285.0)
-UPRIGHT = dict(t=15.0, depth=160.0, window=(80.0, 250.0))
-BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=26.0, end=6.0)
+CLEAR_UNDER_BEAM = TRAVEL["Z"] + 10.0     # luce sotto la trave sopra la tavola: pezzo alto quanto la corsa Z
+PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, below_x_blocks=18.0,
+             slot_w=64.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
+LADDER = dict(H=60.0, wall=4.0,                                  # tubi rettangolari Al
+              long_w=40.0, long_y=(-350.0, 350.0),              # longheroni sotto le guide Y
+              front_y=(-350.0, -310.0), bf_y=(-250.0, -210.0),  # traverse
+              end_y=(310.0, 350.0), pocket_w=70.0, pad_t=9.0)
+UPRIGHT = dict(t=15.0, depth=120.0)
+BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=28.0, end=6.0)
 BEAM_X = (-155.0, 605.0)  # estensione trave = larghezza fra le facce esterne delle spalle
 NUT_BRACKET_T = 12.0
-Z_NUT_MIN_ABOVE_ZC = 98.0   # fondo chiocciola Z con Z tutto giù, sopra il centro carrello (MULE)
-X_SCREW_PAD = 2.0          # spessore spessori sotto BK/BF X nel canale della trave (MULE)
-CLEAR_WARN = 3.0          # sotto questo gioco tra parti in moto relativo: avviso
+X_SCREW_PAD = 4.0          # spessori sotto BK/BF X nel canale della trave (MULE)
+SUPPORT_GAP_Z = 5.0        # D027: gioco minimo BK/BF Z ↔ slitta
+TAB_T = 10.0               # piastrina chiocciola Z sulla slitta
+CLEAR_WARN = 5.0           # D027: gioco minimo geometrico tra parti in moto relativo
+MASS_GATE_KG = 42.0        # D027: soglia provvisoria del mule v1 (non più 32,8 kg)
+B_TARGET = (250.0, 300.0)  # D027: braccio b ideale / massimo
 
 # ------------------------------------------------------------------ riserve di volume
-CHAIN_X = dict(w=80.0, h=60.0)                    # sopra la trave
+CHAIN_X = dict(w=75.0, h=60.0, inset=5.0)        # sopra la trave, arretrata dalla faccia guide
 CHAIN_Y = dict(x0=520.0, x1=570.0, h=60.0)        # a destra della tavola
-DOCK = dict(mode="inside", x_inside=450.0, x_outside=580.0, slots=2, pitch=130.0)  # D021
+MAGAZINE = dict(x=(500.0, 680.0), y=(280.0, 460.0), z=(180.0, 620.0))  # dietro la spalla destra (D027)
+TRANSFER_X = (530.0, 640.0)                       # corridoio del trasferitore oltre il carrello
+TRANSFER_TOP = 601.0                              # testa sollevata sopra trave e catena X
 
 
 def derived():
-    """Quote derivate dalla catena di tolleranze. Ritorna un dict."""
+    """Quote derivate dalla catena di quote. Ritorna un dict."""
     import parts
     xb, zb = parts.BLOCKS[X_AXIS["block"]], parts.BLOCKS[Z_AXIS["block"]]
     yb = parts.BLOCKS[Y_AXIS["block"]]
@@ -90,19 +103,22 @@ def derived():
     d["table_top"] = d["table_bottom"] + TABLE["T"]
     # catena in Y dall'asse utensile verso la trave
     d["slide_front"] = HEAD_AXIS_FROM_SLIDE
-    d["slide_back"] = d["slide_front"] + PLATE["slide_t"]           # base rotaie Z
-    d["carriage_front"] = d["slide_back"] + zb["H"]                 # testa pattini Z
+    d["slide_back"] = d["slide_front"] + PLATE["slide_t"]           # testa pattini Z (sulla slitta)
+    d["carriage_front"] = d["slide_back"] + zb["H"]                 # base guide Z (sul carrello)
     d["carriage_back"] = d["carriage_front"] + PLATE["carriage_t"]  # testa pattini X
-    d["beam_face"] = d["carriage_back"] + xb["H"]                   # base rotaie X
+    d["beam_face"] = d["carriage_back"] + xb["H"]                   # base guide X
     d["beam_back"] = d["beam_face"] + BEAM["depth"]
     # catena in Z
-    z_block_half = Z_AXIS["block_pitch"] / 2 + zb["L"] / 2
     d["tip_bottom"] = d["table_top"] + TIP_AT_Z_BOTTOM
-    d["slide_below_blocks"] = z_block_half + MARGIN
-    d["zc"] = (d["tip_bottom"] + HEAD["L"] + MASTER["T"] + d["slide_below_blocks"]
-               + TRAVEL["Z"])                                        # centro guide X e pattini Z
-    d["beam_bottom"] = d["zc"] - BEAM["height"] / 2
-    d["beam_top"] = d["zc"] + BEAM["height"] / 2
+    d["coupling_bottom"] = d["tip_bottom"] + HEAD["L"]              # coupling con Z tutto giù
+    d["coupling_top"] = d["coupling_bottom"] + TRAVEL["Z"]
+    d["slide_bottom_low"] = d["coupling_bottom"] + MASTER["T"]
+    d["z_block_span"] = Z_AXIS["block_pitch"] + zb["L"]
+    d["z_rail_bottom"] = d["slide_bottom_low"] + PLATE["block_offset"] - MARGIN
+    d["beam_bottom"] = d["table_top"] + CLEAR_UNDER_BEAM
+    d["zx"] = d["beam_bottom"] + BEAM["height"] / 2                  # centro guide X
+    d["beam_top"] = d["zx"] + BEAM["height"] / 2
     d["a_tool_to_x_face"] = d["beam_face"]                           # braccio "a" D015
-    d["b_tip_below_x_rails"] = d["zc"] - d["tip_bottom"]             # braccio "b" D015 a Z giù
+    d["b_tip_below_x_rails"] = d["zx"] - d["tip_bottom"]             # braccio "b" D015 a Z giù
+    d["z_lever_low"] = d["slide_bottom_low"] + PLATE["block_offset"] - d["tip_bottom"]  # punta ↔ pattino Z più basso
     return d

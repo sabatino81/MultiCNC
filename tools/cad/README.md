@@ -5,7 +5,7 @@
 ## Digital mule della Standard
 
 - `standard_params.py`: unica fonte di verità geometrica della Standard (corse, componenti, catena di quote, parametri MULE).
-- `standard_assembly.py`: costruisce l'assieme in HOME, CENTER e MAX, controlla collisioni, giochi e margini di fine corsa, calcola ingombri e masse, verifica D015 con i bracci reali; scrive `cad/standard/standard_mule_<config>.step`, `cad/standard/report.json` e la pagina `base/cad-standard.html` (generata: non modificarla a mano).
+- `standard_assembly.py`: costruisce l'assieme in HOME, CENTER, MAX e DOCK (D027), controlla collisioni, giochi e margini di fine corsa, calcola ingombri e masse, verifica D015 con i bracci reali; scrive `cad/standard/standard_mule_<config>.step`, `cad/standard/report.json` e la pagina `base/cad-standard.html` (generata: non modificarla a mano).
 - `render_views.py`: viste ortografiche di controllo in `cad/standard/views/` (richiede Pillow).
 
 ```sh

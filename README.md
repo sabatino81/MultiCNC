@@ -8,7 +8,7 @@ This repository is the engineering source of truth for the project: business cas
 Open `index.html` for the navigable engineering dashboard (works from disk, any web root or GitHub Pages subpath).
 
 ## Current design principles
-- Three bases (Light Core ~18 kg, Standard ~32 kg, Pro ~70 kg) sharing work area, pallets, kinematics and the **common mechanical interface** of the ToolDock (ICD v4).
+- Three bases (Light Core ~18 kg, Standard ~42 kg (mule v1, target 35–37 kg), Pro ~70 kg) sharing work area, pallets, kinematics and the **common mechanical interface** of the ToolDock (ICD v4).
 - Two electrical profiles (ICD v4, D026): **Core** on the Light Core (grblHAL, open-loop, manual ToolDock clamp) and **Platform** on Standard and Pro (Mesa + LinuxCNC, closed-loop, automatic ToolDock, data bus).
 - The **Platform Pack** is a field upgrade that brings the Light Core to the Platform profile, reusing motors, mechanics and cabling (D026).
 - Automatic ToolDock for complete head/module changes on the Platform profile; same master, receiver and pull-stud on every base.

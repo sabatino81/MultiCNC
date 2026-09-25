@@ -10,11 +10,13 @@ EXTERNAL_LABEL = "quadro"
 
 G=[
 ("A · Struttura e riferimenti",[
-("MC-BAS-001","Structure","Basamento lavorato","1",1,"Custom Al 6061 nervato, ottimizzato","Nervature ottimizzate (D008), sedi guide Y lavorate; lunghezza ~corsa Y + tavola",200,3.5,"M","design","TO DESIGN"),
-("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al ~80×140","Ponte fisso (D006), sezione scatolata alta per interasse guide X ≥ 110 mm (D015)",150,3.1,"M","design","TO DESIGN"),
-("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm alleggerito","Spinate al basamento; sede rialzi (D007)",45,1.0,"M","design","TO DESIGN"),
-("MC-Z-001","Structure","Piastra asse Z","1",1,"Custom Al 5083 12–15 mm","Guide Z + ToolDock master",60,0.6,"M","design","TO DESIGN"),
-("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018)",100,2.9,"M","design","TO DESIGN"),
+("MC-BAS-001","Structure","Telaio a scala","1",1,"2 longheroni Y + 4 traverse, tubi Al 40×60 / 120×60 sp. 4, pad lavorati","Telaio di precisione a scala (D027): longheroni sotto le guide Y con sedi lavorate, traverse fronte / BF / posteriore (porta le spalle) / motore; massa dal mule v1",180,6.62,"M","design","TO DESIGN"),
+("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al 80×140, canale vite","Ponte fisso (D006), interasse guide X 110 mm (D015), centro guide a 246 mm (D027); massa dal mule v1, da ridisegnare",150,6.0,"M","design","TO DESIGN"),
+("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al 5083 15 mm","Alte 176 mm sulla traversa posteriore (D027); sede rialzi (D007); massa dal mule v1",45,0.86,"M","design","TO DESIGN"),
+("MC-Z-001","Structure","Slitta Z","1",1,"Custom Al 5083 12 mm, 150 × 160","Porta i 4 pattini HGH15CA Z e la master ToolDock (D027); massa dal mule v1",60,0.78,"M","design","TO DESIGN"),
+("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018); massa confermata dal mule v1",100,2.97,"M","design","TO DESIGN"),
+("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 5083 15 mm, 170 × 530 + torre","Porta i pattini X, le guide Z, vite, supporti e motore Z (D027); massa dal mule v1",80,2.56,"M","design","TO DESIGN"),
+("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z, piastre motore X e Z, spessori BK/BF X (mule v1)",45,0.47,"M","design","TO DESIGN"),
 ("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
 ("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v4, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
