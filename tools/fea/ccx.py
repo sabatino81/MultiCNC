@@ -80,6 +80,14 @@ class Model:
             gmsh.model.mesh.field.setNumber(fid, "VIn", hl)
             gmsh.model.mesh.field.setNumber(fid, "VOut", h)
             fields.append(fid)
+        box = getattr(self, "box_size", None)       # (x0, x1, y0, y1, z0, z1, h): zona a mesh fine, grossa (h globale) fuori
+        if box:
+            fid = gmsh.model.mesh.field.add("Box")
+            for k_, v_ in zip(("XMin", "XMax", "YMin", "YMax", "ZMin", "ZMax", "VIn"), box):
+                gmsh.model.mesh.field.setNumber(fid, k_, v_)
+            gmsh.model.mesh.field.setNumber(fid, "VOut", h)
+            gmsh.model.mesh.field.setNumber(fid, "Thickness", 20.0)
+            fields.append(fid)
         if fields:
             fmin = gmsh.model.mesh.field.add("Min")
             gmsh.model.mesh.field.setNumbers(fmin, "FieldsList", fields)
