@@ -165,8 +165,25 @@ def build_model(tag, h, master_wall=None, clamp_block=None, cases=None):
     return m, info, monitor, pts, patches, masses
 
 
+CACHE_KEY = "pilot-v2-highorder"   # cambia quando cambiano modello o post-processing
+
+
 def solve(tag, h, cases=None, **kw):
+    """Risolve (o riusa build/fea/<tag>/result.json se stessi parametri) e salva subito il risultato."""
     cases = cases or UNIT
+    key = dict(v=CACHE_KEY, h=h, cases=[c[0] for c in cases], kw=kw, E={k: v["E"] for k, v in ccx.MATERIALS.items()})
+    cache = WORK / tag / "result.json"
+    if cache.exists():
+        old = json.loads(cache.read_text())
+        if old.get("key") == key:
+            return old["result"]
+    r = json.loads(json.dumps(_solve(tag, h, cases, **kw), default=lambda o: o.item() if hasattr(o, "item") else str(o)))
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(json.dumps(dict(key=key, result=r)))
+    return r
+
+
+def _solve(tag, h, cases, **kw):
     t0 = time.time()
     m, info, monitor, pts, patches, masses = build_model(tag, h, cases=cases, **kw)
     t_mesh = time.time() - t0
