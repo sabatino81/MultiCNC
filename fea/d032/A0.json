@@ -1,0 +1,103 @@
+{
+  "tag": "d032_A0_h6_c12",
+  "h": 6.0,
+  "hc": 12.0,
+  "rigid": [],
+  "mesh": {
+    "nodes": 241062,
+    "elements": 133062,
+    "dof": 723186,
+    "min_sj": 0.499,
+    "poor": 0
+  },
+  "solve_s": 170.2,
+  "total_s": 255.1,
+  "mass": {
+    "beam": 6.116,
+    "uprights": 1.932,
+    "carriage": 4.118,
+    "struct": 2.27,
+    "head": 0.927
+  },
+  "k": {
+    "Fx": 0.792,
+    "Fy": 0.648,
+    "Fz": 2.03
+  },
+  "tip_um": {
+    "Fx": [
+      189.47,
+      -2.95,
+      0.36
+    ],
+    "Fy": [
+      -2.95,
+      231.41,
+      -49.9
+    ],
+    "Fz": [
+      0.49,
+      -66.53,
+      98.52
+    ],
+    "FxFz": [
+      189.96,
+      -69.48,
+      98.88
+    ],
+    "FyFz": [
+      -2.46,
+      164.88,
+      48.62
+    ]
+  },
+  "worst_um": 236.8,
+  "energy": {
+    "Fx": {
+      "uprights": 0.373931,
+      "beam": 0.829567,
+      "carriage": 1.55382,
+      "zslide": 3.161264,
+      "head": 2.056482,
+      "xblocks": 0.228992,
+      "xscrew": 0.306162,
+      "zblocks": 0.732623,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fy": {
+      "uprights": 0.269289,
+      "beam": 1.651196,
+      "carriage": 2.673222,
+      "zslide": 4.711365,
+      "head": 2.068183,
+      "xblocks": 0.2412,
+      "xscrew": 0.0,
+      "zblocks": 0.774086,
+      "zscrew": 0.0,
+      "tooldock": 4.404985,
+      "bearing": 0.5625
+    },
+    "Fz": {
+      "uprights": 0.618123,
+      "beam": 5.233942,
+      "carriage": 0.972235,
+      "zslide": 1.691,
+      "head": 0.062443,
+      "xblocks": 0.200099,
+      "xscrew": 0.0,
+      "zblocks": 0.092781,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
+      "bearing": 0.166667
+    }
+  },
+  "work": {
+    "Fx": 14.210325,
+    "Fy": 17.356027,
+    "Fz": 9.851642
+  },
+  "concept": "A0",
+  "desc": "A0 · mule v3, riferimento"
+}
