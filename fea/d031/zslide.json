@@ -1,0 +1,106 @@
+{
+  "stage": "zslide",
+  "date": "2026-09-25",
+  "h": 6.0,
+  "clamp": 56.0,
+  "flange_h": 50.0,
+  "cheek_h": 50.0,
+  "d028": {
+    "X": {
+      "k_local": 1.314,
+      "k_machine": 0.907,
+      "rest": 0.34141,
+      "share": {
+        "master ToolDock": 8.4,
+        "accoppiamento ToolDock": 35.5,
+        "testa (spindle + utensile)": 9.8,
+        "slitta Z": 6.8,
+        "guide Z + vite Z": 8.5
+      }
+    },
+    "Y": {
+      "k_local": 1.206,
+      "k_machine": 0.792,
+      "rest": 0.43314,
+      "share": {
+        "master ToolDock": 7.4,
+        "accoppiamento ToolDock": 31.0,
+        "testa (spindle + utensile)": 8.6,
+        "slitta Z": 13.0,
+        "guide Z + vite Z": 5.6
+      }
+    },
+    "Z": {
+      "k_local": 14.623,
+      "k_machine": 1.591,
+      "rest": 0.56016,
+      "share": {
+        "master ToolDock": 0.9,
+        "accoppiamento ToolDock": 1.0,
+        "testa (spindle + utensile)": 1.6,
+        "slitta Z": 1.3,
+        "guide Z + vite Z": 6.1
+      }
+    }
+  },
+  "variants": {
+    "strip": {
+      "tag": "z_strip",
+      "kind": "STRIP",
+      "mesh": {
+        "nodes": 159277,
+        "elements": 93617,
+        "dof": 477831,
+        "min_sj": 0.541,
+        "poor": 0
+      },
+      "solve_s": 213.9,
+      "total_s": 260.4,
+      "mass": {
+        "struct": 2.114,
+        "head_al": 0.927,
+        "master": 0.948
+      },
+      "k": {
+        "Fx": 1.002,
+        "Fy": 0.42,
+        "Fz": 4.25
+      },
+      "tip_um": {
+        "Fx": [
+          149.75,
+          -2.62,
+          0.36
+        ],
+        "Fy": [
+          -2.62,
+          356.91,
+          -54.2
+        ],
+        "Fz": [
+          0.48,
+          -72.27,
+          47.06
+        ],
+        "REL": [
+          0.13,
+          -254.01,
+          153.83
+        ],
+        "FxFz": [
+          150.23,
+          -74.89,
+          47.42
+        ],
+        "FyFz": [
+          -2.14,
+          284.64,
+          -7.14
+        ]
+      },
+      "worst_um": 361.0,
+      "seat_um": 160.95,
+      "desc": "Striscia 12 mm (mule v2)"
+    }
+  }
+}
