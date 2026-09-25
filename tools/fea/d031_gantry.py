@@ -44,7 +44,7 @@ def bb(sh):
     return b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax
 
 
-def build(tag, h, hc, rigid=()):
+def build(tag, h, hc, rigid=(), stiff_springs=()):
     import compliance_d028 as C
     a, sh = parts_center()
     X0 = (bb(sh["tooldock_master"])[0] + bb(sh["tooldock_master"])[1]) / 2
@@ -158,6 +158,8 @@ def build(tag, h, hc, rigid=()):
     tip = m.rigid_body("tip", nose, (X0, 0, z["tip"]))
     for name, _, loads in CASES:
         m.step(name, [(tip[0] if pt_ == "tip" else tip[1], d, v) for pt_, d, v in loads])
+    if stiff_springs:                           # diagnostica: molle con questi prefissi ×1000 (quasi rigide)
+        m.springs = [(n, a_, d1, b_, d2, k * 1000.0 if n.startswith(tuple(stiff_springs)) else k) for n, a_, d1, b_, d2, k in m.springs]
     mass = {b: round(m.body_mass(b), 3) for b in ("gantry", "carriage", "struct", "head")}
     return m, info, [tip[0], tip[1]], tip, mass
 
@@ -175,17 +177,19 @@ def d028_split():
     return out
 
 
-def solve(tag, h, hc, rigid=()):
+def solve(tag, h, hc, rigid=(), stiff_springs=()):
     cache = WORK / tag / "result.json"
     key = dict(v="gantry-v1", h=h, hc=hc, tab=P.TAB_T, saddle=P.SADDLE)
     if rigid:
         key["rigid"] = sorted(rigid)
+    if stiff_springs:
+        key["stiff_springs"] = sorted(stiff_springs)
     if cache.exists():
         old = json.loads(cache.read_text())
         if old.get("key") == key:
             return old["result"]
     t0 = time.time()
-    m, info, monitor, tip, mass = build(tag, h, hc, rigid)
+    m, info, monitor, tip, mass = build(tag, h, hc, rigid, stiff_springs)
     disp, _ = m.run(monitor)
     U = {n: np.array(disp[n][tip[0]]) * 1000.0 for n, _, _ in CASES}
     U["FxFz"], U["FyFz"] = U["Fx"] + U["Fz"], U["Fy"] + U["Fz"]
@@ -202,6 +206,8 @@ DIAG = [  # (nome, corpi rigidi): la cedevolezza tolta misura il peso di ciascun
     ("gantry", ("gantry",)),
     ("carriage", ("carriage",)),
     ("zgroup", ("struct", "head", "spindle_body", "shaft")),
+    ("tooldock", (), ("ball",)),                                        # molle delle tre sfere ×1000
+    ("rails", (), ("x_block", "z_block", "xscrew", "zscrew")),          # pattini e viti X/Z ×1000
 ]
 
 
@@ -222,8 +228,8 @@ def main():
         prev = json.loads(old.read_text())
         res["runs"], res["diag"] = prev.get("runs", {}), prev.get("diag", {})
     if args.diag:
-        for name, rig in DIAG:
-            r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}_rigid_{name}", args.h, args.coarse, rig)
+        for name, rig, *spr in DIAG:
+            r = solve(f"gantry_h{args.h:g}_c{args.coarse:g}_rigid_{name}", args.h, args.coarse, rig, tuple(spr[0]) if spr else ())
             res["diag"][name] = r
             print(name, r["k"], r["solve_s"], "s", flush=True)
             old.write_text(json.dumps(res, indent=2, ensure_ascii=False, default=float))

@@ -36,7 +36,8 @@ def write(r):
         for t in ("telaio", "tavola", "guide Y + vite Y", "spalle", "trave", "guide X + vite X", "carrello X", "guide Z + vite Z", "slitta Z",
                   "master ToolDock", "accoppiamento ToolDock", "testa (spindle + utensile)"))
     worst_gap = min(m_ / TARGET for m_ in mach)
-    DN = {"gantry": "Spalle + trave", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa"}
+    DN = {"gantry": "Spalle + trave", "carriage": "Carrello X", "zgroup": "Slitta Z + master + testa", "tooldock": "Accoppiamento ToolDock (3 sfere)",
+          "rails": "Pattini e viti X / Z"}
     base_run = next((v for v in r["runs"].values() if v["h"] == r.get("diag_h", 6.0) and v["hc"] == 12.0), nom)
     diag_rows = ""
     for name, v in r.get("diag", {}).items():
