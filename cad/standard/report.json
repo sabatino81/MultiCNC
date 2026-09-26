@@ -87,13 +87,13 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 63,
+      "parts": 92,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
-        -60.0,
+        -72.0,
         815.0
       ],
       "margins": {
@@ -166,13 +166,13 @@
         "Y": 175.0,
         "Z": -70.0
       },
-      "parts": 63,
+      "parts": 92,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
-        -60.0,
+        -72.0,
         815.0
       ],
       "margins": {
@@ -245,13 +245,13 @@
         "Y": 350.0,
         "Z": -140.0
       },
-      "parts": 63,
+      "parts": 92,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
-        -60.0,
+        -72.0,
         815.0
       ],
       "margins": {
@@ -324,13 +324,13 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 68,
+      "parts": 97,
       "bbox_mm": [
         -155.0,
         702.0,
         -350.0,
         447.0,
-        -60.0,
+        -72.0,
         815.0
       ],
       "margins": {
@@ -404,73 +404,79 @@
         "bom": "MC-BAS-001",
         "part": "Telaio a scala",
         "bom_kg": 6.65,
-        "mule_kg": 6.65
+        "mule_kg": 8.03
       },
       {
         "bom": "MC-GAN-002",
         "part": "Spalle gantry",
         "bom_kg": 1.94,
-        "mule_kg": 1.94
+        "mule_kg": 2.66
       },
       {
         "bom": "MC-GAN-001",
         "part": "Trave gantry",
         "bom_kg": 6.06,
-        "mule_kg": 6.06
+        "mule_kg": 6.49
       },
       {
         "bom": "MC-BRK-001",
         "part": "Staffe chiocciole, motori e supporti",
         "bom_kg": 0.51,
-        "mule_kg": 0.51
+        "mule_kg": 0.74
       },
       {
         "bom": "MC-TBL-001",
         "part": "Tavola Y / tooling plate",
         "bom_kg": 2.97,
-        "mule_kg": 2.97
+        "mule_kg": 2.96
       },
       {
         "bom": "MC-XC-001",
         "part": "Carrello X",
         "bom_kg": 4.06,
-        "mule_kg": 4.06
+        "mule_kg": 4.04
       },
       {
         "bom": "MC-Z-001",
         "part": "Slitta Z",
         "bom_kg": 1.08,
-        "mule_kg": 1.08
+        "mule_kg": 1.06
       },
       {
         "bom": "MC-TD-001",
         "part": "Master kinematic plate",
         "bom_kg": 1.05,
-        "mule_kg": 1.05
+        "mule_kg": 0.95
       },
       {
         "bom": "MC-TD-002",
         "part": "Base spindle receiver",
         "bom_kg": 0.37,
-        "mule_kg": 0.37
+        "mule_kg": 0.33
       },
       {
         "bom": "MC-SP-003",
         "part": "Mount spindle a tazza con camicia",
         "bom_kg": 0.73,
-        "mule_kg": 0.73
+        "mule_kg": 0.75
+      },
+      {
+        "bom": "MC-TD-003",
+        "part": "Automatic clamp",
+        "bom_kg": 0.4,
+        "mule_kg": 0.39
       }
     ],
     "not_in_bom": [],
     "machine_bom_kg": 44.9,
-    "machine_mule_kg": 44.9
+    "machine_mule_kg": 47.5
   },
   "head": {
-    "mass": 2.7,
-    "cog_below_coupling": 97.0,
+    "mass": 2.67,
+    "cog_below_coupling": 98.0,
     "L": 220.0,
     "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
-    "inertia_moment_Nm": 0.52,
+    "inertia_moment_Nm": 0.53,
     "connector_mode": "RIGHT_ANGLE_ASSUMED",
     "gap": 25.0
   },
@@ -479,14 +485,14 @@
     702.0,
     -350.0,
     447.0,
-    -60.0,
+    -72.0,
     815.0
   ],
   "footprint_mm": [
     857.0,
     797.0
   ],
-  "height_mm": 875.0,
+  "height_mm": 887.0,
   "sweep": {
     "configs": 125,
     "grid": 5,
@@ -494,6 +500,16 @@
     "closest": [
       {
         "pair": "beam ↔ x_nut",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "beam ↔ x_nut_bracket",
         "clearance_mm": 8.0,
         "axes": [
           0.0,
@@ -543,16 +559,6 @@
         "level": "PASS"
       },
       {
-        "pair": "z_bf ↔ z_slide",
-        "clearance_mm": 8.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
         "pair": "z_bf ↔ z_block_00",
         "clearance_mm": 8.0,
         "axes": [
@@ -564,16 +570,6 @@
       },
       {
         "pair": "z_bf ↔ z_block_10",
-        "clearance_mm": 8.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "z_bf ↔ tooldock_master",
         "clearance_mm": 8.0,
         "axes": [
           0.0,
@@ -598,7 +594,7 @@
         "axes": [
           0.0,
           0.0,
-          -140.0
+          -105.0
         ],
         "level": "PASS"
       },
@@ -614,6 +610,16 @@
       },
       {
         "pair": "z_bf ↔ z_nut_tab",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -140.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_nut_tab ↔ z_bf_bridge",
         "clearance_mm": 8.0,
         "axes": [
           0.0,
@@ -648,7 +654,7 @@
         "axes": [
           450.0,
           0.0,
-          -140.0
+          -105.0
         ],
         "level": "PASS"
       },
@@ -657,6 +663,16 @@
         "clearance_mm": 8.56,
         "axes": [
           0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "x_pads ↔ x_nut_bracket",
+        "clearance_mm": 8.56,
+        "axes": [
+          450.0,
           0.0,
           -0.0
         ],
@@ -675,16 +691,6 @@
       {
         "pair": "x_carriage ↔ z_nut_tab",
         "clearance_mm": 9.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "x_carriage ↔ z_slide",
-        "clearance_mm": 10.0,
         "axes": [
           0.0,
           0.0,
@@ -745,7 +751,7 @@
       },
       {
         "part": "z_bf",
-        "clearance_mm": 32.14,
+        "clearance_mm": 32.98,
         "step": 41,
         "level": "PASS"
       },
@@ -895,7 +901,7 @@
       "z_lever": 265.0
     },
     "mass": {
-      "mule": 44.9,
+      "mule": 47.5,
       "bom": 44.9,
       "gate": 42.0,
       "target": 40.0,

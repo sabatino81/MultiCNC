@@ -10,14 +10,14 @@ EXTERNAL_LABEL = "quadro"
 
 G=[
 ("A · Struttura e riferimenti",[
-("MC-BAS-001","Structure","Telaio a scala","1",1,"2 longheroni Y + 4 traverse, tubi Al 40×60 / 120×60 sp. 4, pad lavorati","Telaio di precisione a scala (D027): longheroni sotto le guide Y con sedi lavorate, traverse fronte / BF / posteriore (porta le spalle) / motore; traversa posteriore estesa sotto il BK Y; massa dal mule v2",180,6.65,"M","design","TO DESIGN"),
-("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al 80×140, canale vite","Ponte fisso (D006), interasse guide X 110 mm (D015), centro guide a 246 mm (D027); massa dal mule v1, da ridisegnare",150,6.06,"M","design","TO DESIGN"),
-("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al, scatolate 40 × 120 sp. 6","Alte 176 mm sulla traversa posteriore (D027), scatolate (D029, D030); sede rialzi (D007); massa dal mule v2",60,0.97,"M","design","TO DESIGN"),
-("MC-Z-001","Structure","Slitta Z","1",1,"Custom Al 12 mm, 150 × 160 a canale con ali anteriori 10 × 35","Porta i 4 pattini HGH15CA Z e la master ToolDock (D027); ali sopra il piano del coupling (D030); massa dal mule v2",70,1.08,"M","design","TO DESIGN"),
-("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018); massa confermata dal mule v1",100,2.97,"M","design","TO DESIGN"),
-("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 15 mm, 170 × 530 + torre, a canale con ali anteriori 10 × 45","Porta pattini X, guide Z, vite, supporti e motore Z (D027); ali fuori dalla slitta e dal corridoio di docking (D030); massa dal mule v2",110,4.06,"M","design","TO DESIGN"),
-("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 6 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z 16 mm (D031, mule v3), piastre motore X e Z, spessori BK/BF X",45,0.51,"M","design","TO DESIGN"),
-("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","Viteria, spine rettificate, inserti",40,0.6,"M","source","TO SOURCE"),
+("MC-BAS-001","Structure","Telaio a scala","1",1,"2 longheroni Y + 4 traverse, tubi Al 40×60 / 120×60 sp. 4, pad lavorati","Telaio di precisione a scala (D027): longheroni sotto le guide Y con sedi lavorate, traverse fronte / BF / posteriore (porta le spalle) / motore; traversa posteriore estesa sotto il BK Y; massa dal CAD di dettaglio v1",180,8.03,"M","design","CAD v1"),
+("MC-GAN-001","Structure","Trave gantry","1",1,"Custom box Al 80×140, canale vite","Ponte fisso (D006), interasse guide X 110 mm (D015), centro guide a 246 mm (D027); massa dal CAD di dettaglio v1, da ridisegnare",150,6.49,"M","design","CAD v1"),
+("MC-GAN-002","Structure","Spalle gantry","2",2,"Custom Al, scatolate 40 × 120 sp. 6","Alte 176 mm sulla traversa posteriore (D027), scatolate (D029, D030); sede rialzi (D007); massa dal CAD di dettaglio v1",60,1.33,"M","design","CAD v1"),
+("MC-Z-001","Structure","Slitta Z","1",1,"Custom Al 12 mm, 150 × 160 a canale con ali anteriori 10 × 35","Porta i 4 pattini HGH15CA Z e la master ToolDock (D027); ali sopra il piano del coupling (D030); massa dal CAD di dettaglio v1",70,1.06,"M","design","CAD v1"),
+("MC-TBL-001","Workholding","Tavola Y / tooling plate","1",1,"Al tooling plate 10 mm, tasche e boss pieni","Tavola mobile Y (D006), 450×350 utile; pelle 6 mm, boss Ø16 × 10 mm attorno ai fori M6 e ai riferimenti (D018); massa confermata dal mule v1",100,2.96,"M","design","CAD v1"),
+("MC-XC-001","Structure","Carrello X","1",1,"Custom Al 15 mm, 170 × 530 + torre, a canale con ali anteriori 10 × 45","Porta pattini X, guide Z, vite, supporti e motore Z (D027); ali fuori dalla slitta e dal corridoio di docking (D030); massa dal CAD di dettaglio v1",110,4.04,"M","design","CAD v1"),
+("MC-BRK-001","Structure","Staffe chiocciole, motori e supporti","1 set",1,"Custom Al, 7 pezzi","Staffe chiocciola X e Y, piastrina chiocciola Z 16 mm (D031), staffa motore Z, spessori BK/BF X, 2 piastre ponte BK/BF Z (CAD di dettaglio v1); piastre motore X e Y saldate su trave e telaio",45,0.74,"M","design","CAD v1"),
+("MC-HW-001","Structure","Fasteners + dowel pins","1 set",1,"ISO high-strength","~311 elementi dalla tabella del CAD di dettaglio (base/cad-parts.html): viti ISO 4762, spine ISO 8734, 63 inserti M6, O-ring, molle a tazza",40,0.6,"M","source","TO SOURCE"),
 ("MC-TBL-002","Workholding","Inserti M6 + boccole R1/R2","1 set",1,"63 inserti filettati M6 in acciaio + 2 boccole Ø8 H7","Filetto utile 9 mm nei boss; R1 (50, 50) tonda, R2 (400, 50) asola (ICD v4, D018)",25,0.08,"M","source","TO SOURCE"),
 ]),
 ("B · Cinematica XYZ",[
@@ -41,13 +41,13 @@ G=[
 ("MC-SP-006","Spindle","Contattore uscita spindle","1",1,"Contattore AC-3 con contatto ausiliario","Apre P1–P3 a valle di VFD/driver prima dello sgancio della testa (ICD v4, D020)",25,0.2,"C","design","TO DESIGN"),
 ("MC-SP-007","Spindle","Aria di tenuta spindle","1 set",1,"Filtro-regolatore, elettrovalvola 24 V, flussostato, raccordi Ø6","30 ± 5 l/min sul passaggio Ø6 del ToolDock (ICD v4, D030); aria da rete o compressore esterno, non inclusi; TARGET",45,0.4,"C","design","TO DESIGN"),
 ("MC-SP-008","Spindle","Circuito camicia di raffreddamento","1 set",1,"Pompa 24 V, radiatore con ventola, serbatoio, tubi","Mandata e ritorno sulle 2 porte Ø4 del ToolDock (ICD v4, D030); TARGET",60,0.9,"C","design","TO DESIGN"),
-("MC-SP-003","Spindle","Mount spindle a tazza con camicia","1",1,"Custom Al 60 × 60, collare sul Ø45 h6, camicia di raffreddamento","Dal receiver al collare: tazza chiusa con finestra per il connettore M23 a 90° (D030); massa dal mule v2",60,0.73,"M","design","TO DESIGN"),
+("MC-SP-003","Spindle","Mount spindle a tazza con camicia","1",1,"Custom Al 60 × 60, collare sul Ø45 h6, camicia di raffreddamento","Dal receiver al collare: tazza chiusa con finestra per il connettore M23 a 90° (D030); massa dal CAD di dettaglio v1",60,0.75,"M","design","CAD v1"),
 ("MC-SP-005","Tooling","ER collet starter set","1",1,"Precision collets class","Starter tooling only",25,0.2,"M","source","TO SOURCE"),
 ]),
 ("D · ToolDock (identico sulle tre basi)",[
-("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface, scatolata 120 × 40 sp. 8 con sella a U","Sotto la slitta Z, scatolata (D029, D030); sella a U incollata/bullonata alle ali della slitta (D031, mule v3); massa dal mule v3",150,1.05,"M","critical","CRITICAL DESIGN"),
-("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Custom receiver plate","Receiver della testa spindle Standard, 96 × 96 × 15; massa dal mule v2",80,0.37,"M","design","TO DESIGN"),
-("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v4)","Pacco molle ≥ 1,6 kN (classe S), sgancio passivo con camma 3:1 (D016)",100,0.4,"M","critical","CRITICAL DESIGN"),
+("MC-TD-001","ToolDock","Master kinematic plate","1",1,"Custom 3-point kinematic interface, scatolata 120 × 40 sp. 8 con sella a U","Sotto la slitta Z, scatolata (D029, D030); sella a U incollata/bullonata alle ali della slitta (D031, mule v3); massa dal CAD di dettaglio v1",150,0.95,"M","critical","CAD v1"),
+("MC-TD-002","ToolDock","Base spindle receiver","1",1,"Custom receiver plate","Receiver della testa spindle Standard, 96 × 96 × 15; massa dal CAD di dettaglio v1",80,0.33,"M","design","CAD v1"),
+("MC-TD-003","ToolDock","Automatic clamp","1",1,"Pull-stud comune (ICD v4)","Pacco molle ≥ 1,6 kN (classe S), sgancio passivo con camma 3:1 (D016)",100,0.39,"M","critical","CAD v1"),
 ("MC-TD-004","ToolDock","Hybrid connector set","1",1,"Power + signal + ID","Quick-connect; pneumatica/fluidi predisposti",120,0.3,"M","critical","CRITICAL DESIGN"),
 ("MC-TD-005","ToolDock","Module ID","1",1,"EEPROM / coded ID","Identificazione automatica del modulo",30,0.02,"M","design","TO DESIGN"),
 ("MC-TD-007","ToolDock","Connettore dati","1",1,"Blind-mate a contatti a molla, schermato","Ethernet 1000BASE-T (4 coppie) + CAN FD + encoder RS-422 differenziale (ICD v4, D020)",60,0.05,"M","design","TO SOURCE"),
@@ -72,8 +72,8 @@ G=[
 ("MC-TOOL-001","Metrology","Tool length setter","1",1,"Wired setter class","Tool length reference",55,0.3,"M","design","TO QUALIFY"),
 ]),
 ("G · Accessori (non inclusi nei totali)",[
-("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Stessa cabina della Light Core; agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; variante laser-ready da qualificare per ogni modulo laser (lunghezza d'onda, protezione ottica, interlock, verifica delle fughe); prezzo TARGET a lotto 50 (D025)",280,13.0,"A","design","TO DESIGN"),
-("MC-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +75 mm","Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)",60,1.4,"A","design","TO DESIGN"),
+("MC-ENC-001","Enclosure","Cabina opzionale","1",1,"Telaio indipendente + pannelli PC 4 mm + porta con interlock","Stessa cabina della Light Core; agganciata al basamento, mai al ponte; LED, attacco aspirazione Ø100, vasca trucioli, fonoassorbente; variante laser-ready da qualificare per ogni modulo laser (lunghezza d'onda, protezione ottica, interlock, verifica delle fughe); prezzo TARGET a lotto 50 (D025)",280,40.9,"A","design","TO DESIGN"),
+("MC-RS-001","Clearance","Rialzi spalle spinati","1 set",1,"Custom Al blocks +75 mm","Clearance manuale riferita da spine (D007); accessorio, non montato di serie (D008)",60,2.52,"A","design","CAD v1"),
 ("MC-TD-006","ToolDock","Magazine indicizzato","1",1,"2–4 posti, indicizzazione motorizzata","Sul ponte; presenta la testa in un\'unica posizione di docking; forcelle con sensore di cattura, camma di sgancio 3:1 (D016, D021)",200,2.0,"A","design","TO DESIGN"),
 ]),
 ]

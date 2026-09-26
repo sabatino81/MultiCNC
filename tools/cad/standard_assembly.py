@@ -31,6 +31,7 @@ import standard_params as P  # noqa: E402
 
 OUT = ROOT / "cad" / "standard"
 D = P.derived()
+DETAIL = True          # lavorazioni di dettaglio dei pezzi custom (standard_detail.py); le FEA lo spengono
 ORIGIN = (0, 0, 0)
 
 # ---------------------------------------------------------------- primitive
@@ -280,7 +281,7 @@ def build(X, Y, Zd, cfg=None):
 
     # riserve di volume permanenti (nessuna davanti alla trave, D027)
     a.add("chain_x_volume", box(bx0, bx1, bf + P.CHAIN_X["inset"], bf + P.CHAIN_X["inset"] + P.CHAIN_X["w"], D["beam_top"], D["beam_top"] + P.CHAIN_X["h"]), "FRAME", "volume", None, "orange")
-    a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], L["long_y"][0], L["long_y"][1], 0, P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
+    a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], L["long_y"][0], L["long_y"][1], P.CHAIN_Y.get("z0", 0.0), P.CHAIN_Y.get("z0", 0.0) + P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
     M = P.MAGAZINE
     a.add("magazine_volume", box(*M["x"], *M["y"], *M["z"]), "FRAME", "volume", None, "violet")
     if cfg == "DOCK":   # alcune pose della testa lungo la traiettoria del trasferitore (solo visualizzazione)
@@ -403,6 +404,9 @@ def build(X, Y, Zd, cfg=None):
         "DOCK_POSITION": (P.DOCK_X, 0.0, D["coupling_top"]),
         "TOOL_TIP": (X, 0.0, coupling_z - P.HEAD["L"]),
     }
+    if DETAIL:
+        import standard_detail
+        standard_detail.detail(a, X, Y, Zd)
     return a, datums
 
 
@@ -416,6 +420,8 @@ DESIGNED = [  # coppie in moto relativo che si toccano per progetto (guida-patti
     ("magazine_volume", "transfer_head"), ("head_volume", "head_"), ("transfer_head", "head_"), ("head_spindle", "table"),
     # superficie che porta la rotaia ↔ pattino: luce H1 di catalogo (HGH15 4,3 mm, MGN15 4 mm)
     ("beam", "x_block"), ("frame_longeron", "y_block"), ("x_carriage", "z_block"),
+    # dettaglio (standard_detail.py): pull-stud e metà testa dei connettori stanno nell'inviluppo testa per progetto
+    ("head_volume", "td_"), ("transfer_head", "td_"),
 ]
 
 
@@ -526,7 +532,8 @@ def transfer_check():
     """Testa vera lungo la traiettoria del trasferitore, macchina in DOCK (X 440, Y 0, Z alto)."""
     X, Y, Zd = P.CONFIGS["DOCK"]
     base, _ = build(X, Y, Zd)
-    others = {n: p for n, p in base.parts.items() if not n.startswith("head_") and n != "magazine_volume"}
+    head_side = ("head_", "td_pull_stud", "td_ball_", "td_conn_hybrid_head", "td_conn_data_head")   # testa montata
+    others = {n: p for n, p in base.parts.items() if not n.startswith(head_side) and n != "magazine_volume"}
     bbs = {n: p["shape"].BoundingBox() for n, p in others.items()}
     pts = transfer_path()
     worst, collisions = {}, []
@@ -536,14 +543,15 @@ def transfer_check():
         hb = head_box(cx, cy, cz).val()
         hbb = hb.BoundingBox()
         for n, p in others.items():
-            if n == "tooldock_master" and k == len(pts) - 1:
+            in_master = n == "tooldock_master" or n.startswith("td_")      # rulli, clamp e connettori macchina stanno nella master
+            if in_master and k == len(pts) - 1:
                 continue            # a fine corsa la testa è sotto la master: contatto di progetto
             r = pair_check("head", hb, n, p["shape"], hbb, bbs[n])
             if r is None:
                 continue
             if r[0] == "collision":
                 collisions.append(dict(part=n, step=k, pose=[round(c, 1) for c in (cx, cy, cz)], volume_mm3=round(r[1], 1)))
-            elif n != "tooldock_master" and (n not in worst or r[1] < worst[n][0]):
+            elif not in_master and (n not in worst or r[1] < worst[n][0]):
                 worst[n] = (r[1], k)
     P.CLEAR_PASS = far
     close = sorted(({"part": n, "clearance_mm": round(v[0], 2), "step": v[1], "level": level(v[0])} for n, v in worst.items()),
@@ -592,10 +600,11 @@ def masses(a):
     import data_standard as S
     bom = {r[0]: r for _, rows in S.G for r in rows}
     custom, extra = {}, {}
+    made_steel = ("td_pull_stud", "td_clamp_piston", "td_release_rod", "td_release_lever")   # custom in acciaio (clamp)
     for n, p in a.parts.items():
-        if p["kind"] != AL:
+        if p["kind"] != AL and n not in made_steel:
             continue
-        kg = p["shape"].Volume() * P.AL_DENSITY
+        kg = p["shape"].Volume() * (7.85e-6 if n in made_steel else P.AL_DENSITY)
         (custom if p["bom"] in bom else extra)[n] = (p["bom"], round(kg, 2))
     by_id = {}
     for n, (bid, kg) in custom.items():
@@ -917,7 +926,7 @@ def write_page(report):
 
 <section class="section"><div class="callout"><b>Corsa Z ≠ altezza massima del pezzo.</b> Sotto la trave ci sono {fmt(P.CLEAR_UNDER_BEAM)} mm sopra la tavola. Con un pallet da {fmt(P.PALLET_T)} mm il pezzo più alto che passa sotto la trave è ~{fmt(P.CLEAR_UNDER_BEAM - P.PALLET_T)} mm, meno fixture e utensile; con i rialzi +75 mm (D007) sale di conseguenza. Nelle specifiche commerciali si dichiarano separatamente corsa Z (140 mm) e altezza pezzo per configurazione.</div></section>
 
-<section class="section"><h2>Viste di controllo</h2><p style="margin:-4px 0 14px"><a class="btn primary" href="viewer-3d.html">Apri il mule in 3D</a> <a class="btn" href="viewer-3d.html?m=standard_dock.glb">DOCK in 3D</a></p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
+<section class="section"><h2>Viste di controllo</h2><p style="margin:-4px 0 14px"><a class="btn primary" href="viewer-3d.html">Apri il mule in 3D</a> <a class="btn" href="viewer-3d.html?m=standard_dock.glb">DOCK in 3D</a> <a class="btn" href="cad-parts.html">Pezzi di dettaglio e STEP</a></p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
 
 <section class="section split">
   <div class="panel"><span class="kicker">Datum · HOME</span><h2>Riferimenti.</h2><div class="table-wrap"><table><tr><th>Datum</th><th>x, y, z (mm)</th></tr>{dat_rows}</table></div><p style="color:var(--dim);font-size:13px;margin-top:10px">Sistema macchina: z = 0 sul piano dei longheroni, asse utensile sempre su y = 0 (ponte fisso). PALLET_R1/R2 si muovono con la tavola; TOOLDOCK_MASTER con la slitta Z.</p></div>

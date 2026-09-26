@@ -131,7 +131,7 @@ B_TARGET = (250.0, 300.0)  # D027: braccio b ideale / massimo
 
 # ------------------------------------------------------------------ riserve di volume
 CHAIN_X = dict(w=75.0, h=60.0, inset=5.0)        # sopra la trave, arretrata dalla faccia guide
-CHAIN_Y = dict(x0=513.0, x1=557.0, h=60.0)        # a destra della tavola, fra la testa a X max e la spalla scatolata
+CHAIN_Y = dict(x0=513.0, x1=557.0, h=60.0, z0=12.0)   # a destra della tavola, fra la testa a X max e la spalla scatolata; da z 12, sopra la flangia ICD della spalla
 MAGAZINE = dict(x=(500.0, 680.0), y=(280.0, 460.0), z=(180.0, 620.0))  # dietro la spalla destra (D027)
 TRANSFER_X = (530.0, 640.0)                       # corridoio del trasferitore oltre il carrello
 TRANSFER_TOP = 616.0                              # coupling della testa sopra trave e catena X (fondo testa 20 mm sopra la catena)

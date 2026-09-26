@@ -1,0 +1,968 @@
+{
+  "generated_by": "tools/cad/standard_parts.py",
+  "date": "2026-09-26",
+  "rows": [
+    {
+      "part": "frame_longeron_L",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_longeron_L.step",
+      "view": "cad/standard/parts/views/frame_longeron_L.png",
+      "size_mm": [
+        40.0,
+        700.0,
+        72.0
+      ],
+      "kg": 1.704,
+      "holes": 18,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        55.0,
+        -350.0,
+        -72.0
+      ]
+    },
+    {
+      "part": "frame_longeron_R",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_longeron_R.step",
+      "view": "cad/standard/parts/views/frame_longeron_R.png",
+      "size_mm": [
+        40.0,
+        700.0,
+        72.0
+      ],
+      "kg": 1.704,
+      "holes": 18,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        355.0,
+        -350.0,
+        -72.0
+      ]
+    },
+    {
+      "part": "frame_cross_front",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_cross_front.step",
+      "view": "cad/standard/parts/views/frame_cross_front.png",
+      "size_mm": [
+        260.0,
+        40.0,
+        55.0
+      ],
+      "kg": 0.489,
+      "holes": 0,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        95.0,
+        -350.0,
+        -60.0
+      ]
+    },
+    {
+      "part": "frame_cross_bf",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_cross_bf.step",
+      "view": "cad/standard/parts/views/frame_cross_bf.png",
+      "size_mm": [
+        260.0,
+        40.0,
+        55.0
+      ],
+      "kg": 0.415,
+      "holes": 2,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        95.0,
+        -250.0,
+        -60.0
+      ]
+    },
+    {
+      "part": "frame_cross_rear",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_cross_rear.step",
+      "view": "cad/standard/parts/views/frame_cross_rear.png",
+      "size_mm": [
+        760.0,
+        145.5,
+        55.0
+      ],
+      "kg": 3.209,
+      "holes": 34,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        -155.0,
+        104.0,
+        -60.0
+      ]
+    },
+    {
+      "part": "frame_cross_end",
+      "bom": "MC-BAS-001",
+      "file": "cad/standard/parts/MC-BAS-001_frame_cross_end.step",
+      "view": "cad/standard/parts/views/frame_cross_end.png",
+      "size_mm": [
+        260.0,
+        40.0,
+        67.0
+      ],
+      "kg": 0.51,
+      "holes": 6,
+      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "home_min": [
+        95.0,
+        310.0,
+        -60.0
+      ]
+    },
+    {
+      "part": "upright_L",
+      "bom": "MC-GAN-002",
+      "file": "cad/standard/parts/MC-GAN-002_upright_L.step",
+      "view": "cad/standard/parts/views/upright_L.png",
+      "size_mm": [
+        80.0,
+        140.0,
+        181.0
+      ],
+      "kg": 1.331,
+      "holes": 10,
+      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
+      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "home_min": [
+        -155.0,
+        106.0,
+        -5.0
+      ]
+    },
+    {
+      "part": "upright_R",
+      "bom": "MC-GAN-002",
+      "file": "cad/standard/parts/MC-GAN-002_upright_R.step",
+      "view": "cad/standard/parts/views/upright_R.png",
+      "size_mm": [
+        80.0,
+        140.0,
+        181.0
+      ],
+      "kg": 1.331,
+      "holes": 10,
+      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
+      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "home_min": [
+        525.0,
+        106.0,
+        -5.0
+      ]
+    },
+    {
+      "part": "beam",
+      "bom": "MC-GAN-001",
+      "file": "cad/standard/parts/MC-GAN-001_beam.step",
+      "view": "cad/standard/parts/views/beam.png",
+      "size_mm": [
+        760.0,
+        113.0,
+        140.0
+      ],
+      "kg": 6.486,
+      "holes": 39,
+      "material": "EN AW-6082 T6, piatti 6 + blocchi pieni",
+      "process": "saldato, distensionato, fresato su faccia guide X e canale vite",
+      "home_min": [
+        -155.0,
+        103.0,
+        176.0
+      ]
+    },
+    {
+      "part": "x_pads",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_x_pads.step",
+      "view": "cad/standard/parts/views/x_pads.png",
+      "size_mm": [
+        572.0,
+        7.0,
+        60.0
+      ],
+      "kg": 0.049,
+      "holes": 4,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        -57.5,
+        160.0,
+        216.0
+      ]
+    },
+    {
+      "part": "table",
+      "bom": "MC-TBL-001",
+      "file": "cad/standard/parts/MC-TBL-001_table.step",
+      "view": "cad/standard/parts/views/table.png",
+      "size_mm": [
+        450.0,
+        350.0,
+        10.0
+      ],
+      "kg": 2.962,
+      "holes": 163,
+      "material": "EN AW-5083 piastra rettificata 10",
+      "process": "fresata: tasche fra i boss, sedi inserti M6, boccole R1/R2",
+      "home_min": [
+        0.0,
+        0.0,
+        16.0
+      ]
+    },
+    {
+      "part": "y_nut_bracket",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_y_nut_bracket.step",
+      "view": "cad/standard/parts/views/y_nut_bracket.png",
+      "size_mm": [
+        60.0,
+        10.0,
+        63.0
+      ],
+      "kg": 0.093,
+      "holes": 9,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        195.0,
+        196.0,
+        -47.0
+      ]
+    },
+    {
+      "part": "x_carriage",
+      "bom": "MC-XC-001",
+      "file": "cad/standard/parts/MC-XC-001_x_carriage.step",
+      "view": "cad/standard/parts/views/x_carriage.png",
+      "size_mm": [
+        190.0,
+        60.0,
+        552.0
+      ],
+      "kg": 4.037,
+      "holes": 56,
+      "material": "EN AW-6082 T651, piastra 60",
+      "process": "fresato dal pieno (piastra 15 + ali + torre)",
+      "home_min": [
+        -95.0,
+        48.0,
+        156.0
+      ]
+    },
+    {
+      "part": "x_nut_bracket",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_x_nut_bracket.step",
+      "view": "cad/standard/parts/views/x_nut_bracket.png",
+      "size_mm": [
+        10.0,
+        51.0,
+        56.0
+      ],
+      "kg": 0.068,
+      "holes": 9,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        21.0,
+        108.0,
+        218.0
+      ]
+    },
+    {
+      "part": "z_motor_bracket",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_z_motor_bracket.step",
+      "view": "cad/standard/parts/views/z_motor_bracket.png",
+      "size_mm": [
+        90.0,
+        60.0,
+        10.0
+      ],
+      "kg": 0.105,
+      "holes": 9,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        -45.0,
+        65.0,
+        708.0
+      ]
+    },
+    {
+      "part": "z_slide",
+      "bom": "MC-Z-001",
+      "file": "cad/standard/parts/MC-Z-001_z_slide.step",
+      "view": "cad/standard/parts/views/z_slide.png",
+      "size_mm": [
+        150.0,
+        47.0,
+        160.0
+      ],
+      "kg": 1.061,
+      "holes": 68,
+      "material": "EN AW-6082 T651, piastra 50",
+      "process": "fresato dal pieno",
+      "home_min": [
+        -75.0,
+        18.0,
+        426.0
+      ]
+    },
+    {
+      "part": "z_nut_tab",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_z_nut_tab.step",
+      "view": "cad/standard/parts/views/z_nut_tab.png",
+      "size_mm": [
+        52.0,
+        64.0,
+        16.0
+      ],
+      "kg": 0.132,
+      "holes": 11,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        -26.0,
+        53.0,
+        586.0
+      ]
+    },
+    {
+      "part": "tooldock_master",
+      "bom": "MC-TD-001",
+      "file": "cad/standard/parts/MC-TD-001_tooldock_master.step",
+      "view": "cad/standard/parts/views/tooldock_master.png",
+      "size_mm": [
+        130.0,
+        135.0,
+        90.0
+      ],
+      "kg": 0.948,
+      "holes": 35,
+      "material": "EN AW-7075 T651",
+      "process": "fresato; sedi rulli rettificate, piano di accoppiamento lappato",
+      "home_min": [
+        -65.0,
+        -70.0,
+        386.0
+      ]
+    },
+    {
+      "part": "head_receiver",
+      "bom": "MC-TD-002",
+      "file": "cad/standard/parts/MC-TD-002_head_receiver.step",
+      "view": "cad/standard/parts/views/head_receiver.png",
+      "size_mm": [
+        96.0,
+        96.0,
+        15.0
+      ],
+      "kg": 0.327,
+      "holes": 15,
+      "material": "EN AW-7075 T651",
+      "process": "fresato; sedi sfere e piano di accoppiamento lappati",
+      "home_min": [
+        -48.0,
+        -48.0,
+        371.0
+      ]
+    },
+    {
+      "part": "head_mount",
+      "bom": "MC-SP-003",
+      "file": "cad/standard/parts/MC-SP-003_head_mount.step",
+      "view": "cad/standard/parts/views/head_mount.png",
+      "size_mm": [
+        60.0,
+        72.0,
+        145.0
+      ],
+      "kg": 0.747,
+      "holes": 23,
+      "material": "EN AW-6082 T6",
+      "process": "tornito e fresato; Ø45 H6 alesato, gole O-ring",
+      "home_min": [
+        -30.0,
+        -42.0,
+        226.0
+      ]
+    },
+    {
+      "part": "z_bf_bridge",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_z_bf_bridge.step",
+      "view": "cad/standard/parts/views/z_bf_bridge.png",
+      "size_mm": [
+        130.0,
+        19.0,
+        32.0
+      ],
+      "kg": 0.156,
+      "holes": 10,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        -65.0,
+        108.0,
+        406.0
+      ]
+    },
+    {
+      "part": "z_bk_bridge",
+      "bom": "MC-BRK-001",
+      "file": "cad/standard/parts/MC-BRK-001_z_bk_bridge.step",
+      "view": "cad/standard/parts/views/z_bk_bridge.png",
+      "size_mm": [
+        100.0,
+        19.0,
+        37.0
+      ],
+      "kg": 0.125,
+      "holes": 10,
+      "material": "EN AW-6082 T6",
+      "process": "fresato",
+      "home_min": [
+        -50.0,
+        108.0,
+        645.0
+      ]
+    },
+    {
+      "part": "td_pull_stud",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_pull_stud.step",
+      "view": "cad/standard/parts/views/td_pull_stud.png",
+      "size_mm": [
+        15.0,
+        15.0,
+        44.0
+      ],
+      "kg": 0.034,
+      "holes": 4,
+      "material": "42CrMo4 bonificato",
+      "process": "tornito e rettificato; comune a tutte le teste (ICD v4)",
+      "home_min": [
+        -7.5,
+        -7.5,
+        372.0
+      ]
+    },
+    {
+      "part": "td_clamp_housing",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_clamp_housing.step",
+      "view": "cad/standard/parts/views/td_clamp_housing.png",
+      "size_mm": [
+        64.0,
+        64.0,
+        76.0
+      ],
+      "kg": 0.164,
+      "holes": 6,
+      "material": "EN AW-7075 T651",
+      "process": "tornito",
+      "home_min": [
+        -32.0,
+        -32.0,
+        394.0
+      ]
+    },
+    {
+      "part": "td_clamp_piston",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_clamp_piston.step",
+      "view": "cad/standard/parts/views/td_clamp_piston.png",
+      "size_mm": [
+        33.0,
+        33.0,
+        18.0
+      ],
+      "kg": 0.07,
+      "holes": 2,
+      "material": "100Cr6 temprato 60 HRC",
+      "process": "tornito e rettificato",
+      "home_min": [
+        -16.5,
+        -16.5,
+        396.0
+      ]
+    },
+    {
+      "part": "td_release_rod",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_release_rod.step",
+      "view": "cad/standard/parts/views/td_release_rod.png",
+      "size_mm": [
+        8.0,
+        8.0,
+        69.0
+      ],
+      "kg": 0.027,
+      "holes": 1,
+      "material": "C45",
+      "process": "tornito",
+      "home_min": [
+        -4.0,
+        -4.0,
+        417.0
+      ]
+    },
+    {
+      "part": "td_release_lever",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_release_lever.step",
+      "view": "cad/standard/parts/views/td_release_lever.png",
+      "size_mm": [
+        108.0,
+        12.0,
+        8.0
+      ],
+      "kg": 0.079,
+      "holes": 1,
+      "material": "C45 temprato a induzione sul rullo",
+      "process": "fresato",
+      "home_min": [
+        -12.0,
+        -6.0,
+        488.0
+      ]
+    },
+    {
+      "part": "td_lever_post",
+      "bom": "MC-TD-003",
+      "file": "cad/standard/parts/MC-TD-003_td_lever_post.step",
+      "view": "cad/standard/parts/views/td_lever_post.png",
+      "size_mm": [
+        12.0,
+        24.0,
+        68.0
+      ],
+      "kg": 0.023,
+      "holes": 2,
+      "material": "EN AW-7075 T651",
+      "process": "fresato",
+      "home_min": [
+        24.0,
+        -12.0,
+        432.0
+      ]
+    }
+  ],
+  "bom_files": {
+    "MC-BAS-001": "cad/standard/parts/MC-BAS-001.step",
+    "MC-GAN-002": "cad/standard/parts/MC-GAN-002.step",
+    "MC-GAN-001": "cad/standard/parts/MC-GAN-001.step",
+    "MC-BRK-001": "cad/standard/parts/MC-BRK-001.step",
+    "MC-TBL-001": "cad/standard/parts/MC-TBL-001.step",
+    "MC-XC-001": "cad/standard/parts/MC-XC-001.step",
+    "MC-Z-001": "cad/standard/parts/MC-Z-001.step",
+    "MC-TD-001": "cad/standard/parts/MC-TD-001.step",
+    "MC-TD-002": "cad/standard/parts/MC-TD-002.step",
+    "MC-SP-003": "cad/standard/parts/MC-SP-003.step",
+    "MC-TD-003": "cad/standard/parts/MC-TD-003.step"
+  },
+  "accessories": [
+    {
+      "bom": "MC-RS-001",
+      "title": "Rialzi spalle +75 mm",
+      "note": "Dettaglio: ICD v4 §5 sopra e sotto (2 spine Ø10 H7 + 4 M8 su 120 × 60); fondo filettato, cielo passante con finestra d'accesso.",
+      "part": "MC-RS-001",
+      "file": "cad/standard/parts/MC-RS-001.step",
+      "view": "cad/standard/parts/views/MC-RS-001.png",
+      "kg": 2.52,
+      "size_mm": [
+        760.0,
+        140.0,
+        75.0
+      ],
+      "solids": [
+        "riser_L",
+        "riser_R"
+      ]
+    },
+    {
+      "bom": "MC-TD-006",
+      "title": "Magazine 2 posti + trasferitore",
+      "note": "Layout, non fabbricazione: colonna sulla spalla destra, navetta a 2 posti (passo 130), asse Y del trasferitore sopra la colonna, carro Z, braccio X e forcella fino al dock a X 440; camma di sgancio 3:1 (D016). Guide e motori TARGET.",
+      "part": "MC-TD-006",
+      "file": "cad/standard/parts/MC-TD-006.step",
+      "view": "cad/standard/parts/views/MC-TD-006.png",
+      "kg": null,
+      "size_mm": [
+        330.0,
+        750.0,
+        875.0
+      ],
+      "solids": [
+        "dock_cam",
+        "mag_arm",
+        "mag_column",
+        "mag_fork_0",
+        "mag_fork_1",
+        "mag_motor",
+        "mag_sensor_0",
+        "mag_sensor_1",
+        "mag_shuttle_plate",
+        "mag_shuttle_rail",
+        "xfer_gripper",
+        "xfer_x_arm",
+        "xfer_y_beam",
+        "xfer_y_bracket",
+        "xfer_y_motor",
+        "xfer_y_rail",
+        "xfer_z_carriage",
+        "xfer_z_mast"
+      ]
+    },
+    {
+      "bom": "MC-ENC-001",
+      "title": "Cabina",
+      "note": "Telaio 30 × 30 con piedi propri, agganciato al basamento e mai al ponte (D025); pannelli PC 4 mm, porta con interlock, vasca trucioli sotto i piedi della macchina, aspirazione Ø100; racchiude anche magazine e trasferitore.",
+      "part": "MC-ENC-001",
+      "file": "cad/standard/parts/MC-ENC-001.step",
+      "view": "cad/standard/parts/views/MC-ENC-001.png",
+      "kg": 40.9,
+      "size_mm": [
+        1000.0,
+        1001.0,
+        1169.0
+      ],
+      "solids": [
+        "cab_chip_tray",
+        "cab_door",
+        "cab_extraction",
+        "cab_foot_-215_-415",
+        "cab_foot_-215_525",
+        "cab_foot_745_-415",
+        "cab_foot_745_525",
+        "cab_frame",
+        "cab_interlock",
+        "cab_link_375",
+        "cab_link_75",
+        "cab_panels",
+        "cab_side_fronts"
+      ]
+    }
+  ],
+  "hardware": [
+    {
+      "std": "ISO 4762",
+      "item": "M3×12",
+      "where": "pattini Y",
+      "qty": 16
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M3×12",
+      "where": "rotaie Y → longheroni (filetto nel pad di 8 mm)",
+      "qty": 32
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M4×16",
+      "where": "flangia chiocciola SFU1204 → staffa",
+      "qty": 6
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M4×16",
+      "where": "pattini X",
+      "qty": 16
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M4×16",
+      "where": "pattini Z",
+      "qty": 16
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M4×20",
+      "where": "rotaie X → trave",
+      "qty": 22
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M4×20",
+      "where": "rotaie Z → carrello X",
+      "qty": 10
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×12",
+      "where": "flangia cartuccia clamp → master",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×16",
+      "where": "flangia chiocciola SFU1605 → staffa",
+      "qty": 12
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "BF10 Z → piastra ponte",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "BK10 Z → piastra ponte",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "motore X (con dado M5)",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "motore Y (con dado M5)",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "motore Z (con dado M5)",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×20",
+      "where": "staffa chiocciola Y → tavola (dall'alto)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "collare del mount spindle (orecchia)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "piastra ponte Z → carrello",
+      "qty": 8
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "receiver → mount spindle",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "staffa chiocciola X → carrello (dal fronte)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×30",
+      "where": "piastrina chiocciola Z → slitta",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×40",
+      "where": "BF12 X → spessori → trave",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×40",
+      "where": "BK12 X → spessori → trave",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×45",
+      "where": "BF12 Y → traversa",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×45",
+      "where": "BK12 Y → traversa",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×50",
+      "where": "master → bordo inferiore slitta (dal piano di accoppiamento)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M6×20",
+      "where": "sella master → ala slitta",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M6×25",
+      "where": "staffa motore Z → torre carrello",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M8×40",
+      "where": "spalla L → trave (dalla finestra d'accesso della spalla)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M8×40",
+      "where": "spalla R → trave (dalla finestra d'accesso della spalla)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M8×80",
+      "where": "spalla L → basamento, dal basso attraverso la traversa (ICD §5)",
+      "qty": 4
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M8×80",
+      "where": "spalla R → basamento, dal basso attraverso la traversa (ICD §5)",
+      "qty": 4
+    },
+    {
+      "std": "O-ring NBR 70",
+      "item": "O-ring 45 × 2",
+      "where": "camicia del mount",
+      "qty": 2
+    },
+    {
+      "std": "O-ring NBR 70",
+      "item": "O-ring 8 × 1,5 / 6 × 1,5",
+      "where": "porte aria/fluido ToolDock",
+      "qty": 3
+    },
+    {
+      "std": "boccola di riferimento temprata",
+      "item": "Ø8 H7 × 10",
+      "where": "tavola R1 / R2",
+      "qty": 2
+    },
+    {
+      "std": "cuscinetto rullo inseguitore",
+      "item": "625-2Z",
+      "where": "leva di sgancio",
+      "qty": 1
+    },
+    {
+      "std": "fissaggio connettore",
+      "item": "secondo scheda",
+      "where": "connettore data (metà testa e metà macchina)",
+      "qty": 2
+    },
+    {
+      "std": "fissaggio connettore",
+      "item": "secondo scheda",
+      "where": "connettore hybrid (metà testa e metà macchina)",
+      "qty": 2
+    },
+    {
+      "std": "inserto filettato acciaio (filetto utile 9 mm)",
+      "item": "M6 × 12",
+      "where": "tavola (ICD §4)",
+      "qty": 63
+    },
+    {
+      "std": "molla a tazza DIN 2093 B (pacco in serie-parallelo, ≥ 1,6 kN TARGET)",
+      "item": "31,5 × 16,3 × 1,75",
+      "where": "clamp ToolDock",
+      "qty": 8
+    },
+    {
+      "std": "piede antivibrante M10",
+      "item": "M10",
+      "where": "piedi telaio",
+      "qty": 4
+    },
+    {
+      "std": "sfera 100Cr6",
+      "item": "Ø10 G10",
+      "where": "receiver (incollata / piantata)",
+      "qty": 3
+    },
+    {
+      "std": "sfera 100Cr6",
+      "item": "Ø6 G10",
+      "where": "clamp a sfere",
+      "qty": 6
+    },
+    {
+      "std": "spina ISO 8734",
+      "item": "Ø10 m6×24",
+      "where": "spalla L → basamento (ICD §5)",
+      "qty": 2
+    },
+    {
+      "std": "spina ISO 8734",
+      "item": "Ø10 m6×24",
+      "where": "spalla R → basamento (ICD §5)",
+      "qty": 2
+    },
+    {
+      "std": "spina ISO 8734",
+      "item": "Ø6 m6×20",
+      "where": "master ↔ slitta (riferimento)",
+      "qty": 2
+    },
+    {
+      "std": "spina ISO 8734",
+      "item": "Ø8 m6×24",
+      "where": "spalla L → trave",
+      "qty": 2
+    },
+    {
+      "std": "spina ISO 8734",
+      "item": "Ø8 m6×24",
+      "where": "spalla R → trave",
+      "qty": 2
+    },
+    {
+      "std": "spina ISO 8734 (fulcro)",
+      "item": "Ø6 × 30",
+      "where": "leva di sgancio",
+      "qty": 1
+    },
+    {
+      "std": "spina rettificata DIN 6325 (rullo)",
+      "item": "Ø8 × 12",
+      "where": "master ToolDock",
+      "qty": 6
+    }
+  ],
+  "notes": [
+    "Carrello X: le teste delle viti dei pattini X alti stanno sotto le guide Z (lamature profonde 4,5 mm): si montano prima i pattini X, poi le guide Z.",
+    "Slitta Z: le viti esterne dei pattini Z stanno dietro le ali anteriori; fori d'accesso Ø9 attraverso le ali.",
+    "BK/BF Z girati con la base verso il retro e avvitati a due piastre ponte sul carrello (mancavano nel mule).",
+    "Piastra motore X saldata come testata della trave (8 mm); piastra motore Y saldata sulla traversa di coda (10 mm, fino a z 7).",
+    "Telaio MC-BAS-001: un pezzo saldato (6 tubi + pad), distensionato e poi lavorato su pad, sedi guide Y e facce spalle.",
+    "Trave MC-GAN-001: saldata (piatti 6 mm) con blocchi pieni d'estremità 80 × 80 × 20 per il giunto con le spalle; traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 (2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave resta interno alla spalla (una flangia sopra urterebbe il carrello X in HOME).",
+    "Clamp MC-TD-003: pull-stud M10 comune, 6 sfere Ø6 bloccate da un pistone spinto da 8 molle a tazza DIN 2093; la leva 3:1 (fulcro a 30 mm, rullo a 90 mm dall'asse) solleva l'asta quando lo Z spinge il rullo sulla camma del dock (D016). Forza e corsa del pacco: TARGET da verificare al banco.",
+    "Mount MC-SP-003: collare sul Ø45 h6 con taglio e 2 × M5, camicia di raffreddamento anulare tra due O-ring, alimentata dalle porte Ø4 del receiver."
+  ]
+}

@@ -32,6 +32,7 @@ sys.path.insert(0, str(ROOT / "tools" / "calc"))
 sys.path.insert(0, str(HERE))
 import ccx  # noqa: E402
 import standard_assembly as A  # noqa: E402
+A.DETAIL = False          # la FEA lavora sui volumi pieni del mule (senza fori di dettaglio)
 import standard_params as P  # noqa: E402
 import cadquery as cq  # noqa: E402
 

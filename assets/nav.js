@@ -56,6 +56,7 @@
       ['ToolDock e testa · D029','base/tooldock-d029.html'],
       ['#','CAD'],
       ['Assieme Standard · mule','base/cad-standard.html'],
+      ['Pezzi di dettaglio','base/cad-parts.html'],
       ['Vista 3D','base/viewer-3d.html'],
       ['#','Analisi strutturale'],
       ['Rigidezza · D028','base/compliance-d028.html'],
