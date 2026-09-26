@@ -4,8 +4,9 @@ Si usa con `--base pro` (tools/cad/base_select.py). Pro non è in sviluppo attiv
 - HGR20 / HGH20CA su X e Y, HGR15 / HGH15CA su Z (D019), SFU1605 X/Y con BK12/BF12 e SFU1204 Z, NEMA23 3 Nm,
   spindle 1,5 kW Ø80 ER16 ad acqua (inviluppo classe P in revisione: L 280), tavola piena 12 mm (D018), master e
   receiver comuni (ICD v4), clamp classe P ≥ 3,8 kN.
-- Basamento a scala in tubi 80 × 60 sp. 6 con fondo 8 mm (nervato), trave scatolata 100 × 170.
-- Gantry Lift motorizzato 0–150 mm: montanti a piastra 20 mm dietro le estremità della trave, una guida HGR15 e una
+- Sotto i 70 kg (D037): basamento a scala in tubi 80 × 60 × 4 senza fondo, con 4 sbalzi sotto i montanti del lift;
+  trave scatolata 100 × 170 con pareti 4 e faccia guide 8; carrello e slitta 12 mm.
+- Gantry Lift motorizzato 0–150 mm: montanti a piastra 12 mm finestrati dietro le estremità della trave, una guida HGR15 e una
   vite SFU1605 per montante, sincronizzate da una cinghia HTD con un motore G, bloccaggio a cunei. La trave scorre
   davanti ai montanti: motore X e catene restano liberi. Il magazine si sposta oltre il montante destro.
 """
@@ -19,7 +20,8 @@ BASE, BASE_LABEL, BOM_DATA, FILE_PREFIX = "pro", "Pro", "data_pro", "pro"
 UPRIGHT_MODE = "lift"
 TD_CLAMP = "auto"
 LIFT = dict(stroke=150.0, rail="HGR15", block="HGH15CA", rail_len=350.0, block_pitch=100.0, screw="SFU1605",
-            screw_len=350.0, bk="BK12", bf="BF12", motor="NEMA23_CL_2NM", bracket_t=32.0, plate_w=120.0, spacer=0.0)
+            screw_len=350.0, bk="BK12", bf="BF12", motor="NEMA23_CL_2NM", bracket_t=32.0, plate_w=120.0, spacer=0.0,
+            bracket_pocket=(60.0, 12.0), tie_h=30.0)
 
 X_AXIS = dict(rail="HGR20", block="HGH20CA", rail_len=650.0, block_pitch=110.0, rail_spacing=130.0, screw="SFU1605",
               screw_len=590.0, motor="NEMA23_CL_3NM", bk="BK12", bf="BF12")
@@ -39,15 +41,16 @@ CONNECTOR_ENVELOPES = {"RIGHT_ANGLE_ASSUMED": dict(gap=25.0, side=45.0, plug=25.
 CONNECTOR_MODE = "RIGHT_ANGLE_ASSUMED"
 HEAD_COG_WAIVER = 140.0
 
-CARRIAGE_FLANGE = dict(t=12.0, depth=35.0)
-SLIDE_FLANGE = dict(t=12.0, depth=35.0)
-SADDLE = dict(t=12.0, h=50.0)
-PLATE = dict(carriage_t=16.0, slide_t=15.0, carriage_w=190.0, below_x_blocks=18.0, slot_w=70.0, tower_w=110.0,
+CARRIAGE_FLANGE = dict(t=10.0, depth=35.0)
+SLIDE_FLANGE = dict(t=10.0, depth=35.0)
+SADDLE = dict(t=10.0, h=50.0)
+PLATE = dict(carriage_t=12.0, slide_t=12.0, carriage_w=190.0, below_x_blocks=18.0, slot_w=70.0, tower_w=110.0,
              slide_w=160.0, slide_len=170.0, block_offset=5.0)
-LADDER = dict(H=80.0, wall=5.0, long_w=60.0, long_y=(-350.0, 350.0), front_y=(-350.0, -300.0), bf_y=(-250.0, -200.0),
-              end_y=(300.0, 350.0), pocket_w=80.0, pad_t=14.0, cross_drop=5.0, bottom_plate=5.0)
-UPRIGHT = dict(t=16.0, depth=120.0, wall=None)
-BEAM = dict(depth=100.0, height=170.0, wall=5.0, wall_face=8.0, recess_h=100.0, recess_d=38.0, end=8.0)
+LADDER = dict(H=80.0, wall=4.0, long_w=60.0, long_y=(-330.0, 350.0), front_y=None, bf_y=(-250.0, -200.0),
+              end_y=(300.0, 350.0), pocket_w=80.0, pad_t=14.0, cross_drop=5.0, rear="outrigger", bk_cross=True,
+              flange_window=(40.0, 76.0), flange_pocket=6.0)   # D037: scala 80 × 60 × 4 senza fondo, sbalzi sotto i montanti del lift
+UPRIGHT = dict(t=12.0, depth=120.0, wall=None, windows=((60.0, 280.0), (320.0, 540.0)), window_x=((18.0, 38.0),))
+BEAM = dict(depth=100.0, height=170.0, wall=4.0, wall_face=8.0, recess_h=100.0, recess_d=38.0, end=5.0)
 BEAM_X = (-155.0, 605.0)
 CHAIN_X = dict(w=75.0, h=60.0, inset=5.0)
 CHAIN_Y = dict(x0=513.0, x1=557.0, h=60.0, z0=12.0, y=(-350.0, 270.0))   # catena Y davanti al montante destro del lift
@@ -67,14 +70,23 @@ BOM_MAP = {
     "MC-MOT-001": "MP-MOT-001",
 }
 ACCESSORIES = ("MC-TD-006", "MP-ENC-001")
+PROCESS = {   # materiali e lavorazioni dei pezzi custom (pagina Pezzi Pro) · MULE
+    "frame_": ("EN AW-6082 T6, tubi 80 × 60 × 4", "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti"),
+    "upright_": ("EN AW-6082 T651, piastra 12 finestrata + flangia 12 scaricata", "fresato; sede guida HGR15 rettificata, fori spine Ø10 H7 alesati"),
+    "beam": ("EN AW-6082 T6, scatolato 100 × 170 (faccia 8, pareti 4)", "saldato, distensionato, fresato su faccia guide X, canale vite e appoggi staffe lift"),
+    "x_carriage": ("EN AW-6082 T651, piastra 12 + ali 10 + torre", "fresato"),
+    "z_slide": ("EN AW-6082 T651, piastra 12 + ali 10", "fresato"),
+    "lift_": ("EN AW-6082 T651", "fresato; staffe trave a C con faccia pattini 12 mm"),
+    "table": ("EN AW-5083 piastra rettificata 12", "fresata piena: sedi inserti M6, boccole R1/R2"),
+}
 CAD_NOTES = (
     "Stessa cinematica e stessa ICD v4 (ponte fisso, tavola Y, ToolDock comune); master e clamp come la Standard, pacco molle classe P ≥ 3,8 kN (TARGET).",
-    "HGR20 / HGH20CA su X e Y, HGR15 / HGH15CA su Z, SFU1605 X/Y con BK12/BF12, SFU1204 Z, NEMA23 3 Nm; tavola piena 12 mm.",
+    "HGR20 / HGH20CA su X e Y, HGR15 / HGH15CA su Z, SFU1605 X/Y con BK12/BF12, SFU1204 Z, NEMA23 3 Nm; tavola piena 12 mm (D018).",
     "Spindle 1,5 kW Ø80 ER16 ad acqua (classe): inviluppo testa L 280 (classe P in revisione nella ICD), receiver 110 × 110 per il mount Ø80.",
-    "Basamento a scala in tubi 80 × 60 sp. 5 con fondo 5 mm e piedi sotto il fondo; la traversa posteriore arriva sotto i montanti del lift e contiene il motore Y.",
-    "Gantry Lift: montanti a piastra 16 mm dietro le estremità della trave, una guida HGR15 con 2 pattini e una vite SFU1605 per lato, staffe della trave 32 mm, cinghia HTD di sincronismo, motore G diretto sulla vite sinistra, bloccaggi a cuneo, traversa superiore.",
-    "La trave scorre davanti ai montanti: motore X, catene e ToolDock restano liberi a ogni quota del lift; il magazine si sposta oltre il montante destro (x 730).",
-    "Massa dal CAD sopra i ~70 kg di D011: carrello, basamento e montanti del lift sono i pezzi da ottimizzare quando la Pro entra in sviluppo.",
+    "Basamento a scala in tubi 80 × 60 × 4 senza fondo (D037): longheroni, traversa BF, traversa BK Y, traversa di coda con il motore Y e 4 sbalzi sotto le flange ICD §5 dei montanti del lift; niente traversa anteriore.",
+    "Gantry Lift: montanti a piastra 12 mm con 4 finestre ai lati della guida, una guida HGR15 con 2 pattini e una vite SFU1605 per lato, staffe della trave a C (32 mm, faccia pattini 12), cinghia HTD di sincronismo, motore G diretto sulla vite sinistra, bloccaggi a cuneo, traversa superiore 12 × 30.",
+    "La trave (scatolato 100 × 170, pareti 4, faccia guide 8) scorre davanti ai montanti: motore X, catene e ToolDock restano liberi a ogni quota del lift; il magazine si sposta oltre il montante destro (x 730).",
+    "Massa dal CAD sotto i ~70 kg di D011 (D037); le masse delle viti a sfere sono quelle del CAD (vite piena + chiocciola, limite superiore).",
 )
 
 

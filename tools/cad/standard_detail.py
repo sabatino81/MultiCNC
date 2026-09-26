@@ -218,7 +218,7 @@ def supports(dt):
             dt.cut(n, cyl("y", b.ymin - 1, b.ymax + 1, xc, zc + dz, CLR["M5"] / 2))
         dt.screw("M5", 40, qty=2, where=f"{k} X → spessori → trave")
     # Y: BK/BF sui pad delle traverse (z = −48), viti dall'alto
-    for n, host in (("y_bf", "frame_cross_bf"), ("y_bk", "frame_cross_end" if P.LADDER.get("rear") == "outrigger" else "frame_cross_rear")):
+    for n, host in (("y_bf", "frame_cross_bf"), ("y_bk", "frame_cross_bk" if "frame_cross_bk" in a.parts else "frame_cross_end" if P.LADDER.get("rear") == "outrigger" else "frame_cross_rear")):
         b = dt.bb(n)
         k = P.Y_AXIS["bf"] if n == "y_bf" else P.Y_AXIS["bk"]
         xc, yc = (b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2

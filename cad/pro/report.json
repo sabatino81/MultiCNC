@@ -4,11 +4,11 @@
     "table_bottom": 30,
     "table_top": 42.0,
     "slide_front": 53.0,
-    "slide_back": 68.0,
-    "carriage_front": 96.0,
-    "carriage_back": 112.0,
-    "beam_face": 142.0,
-    "beam_back": 242.0,
+    "slide_back": 65.0,
+    "carriage_front": 93.0,
+    "carriage_back": 105.0,
+    "beam_face": 135.0,
+    "beam_back": 235.0,
     "tip_bottom": 42.0,
     "coupling_bottom": 322.0,
     "coupling_top": 462.0,
@@ -18,7 +18,7 @@
     "beam_bottom": 192.0,
     "zx": 277.0,
     "beam_top": 362.0,
-    "a_tool_to_x_face": 142.0,
+    "a_tool_to_x_face": 135.0,
     "b_tip_below_x_rails": 235.0,
     "z_lever_low": 325.0
   },
@@ -87,13 +87,13 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 121,
+      "parts": 120,
       "bbox_mm": [
         -155.0,
         738.0,
-        -350.0,
+        -330.0,
         483.0,
-        -93.0,
+        -88.0,
         937.0
       ],
       "margins": {
@@ -166,13 +166,13 @@
         "Y": 175.0,
         "Z": -70.0
       },
-      "parts": 121,
+      "parts": 120,
       "bbox_mm": [
         -155.0,
         738.0,
-        -350.0,
+        -330.0,
         483.0,
-        -93.0,
+        -88.0,
         937.0
       ],
       "margins": {
@@ -245,13 +245,13 @@
         "Y": 350.0,
         "Z": -140.0
       },
-      "parts": 121,
+      "parts": 120,
       "bbox_mm": [
         -155.0,
         738.0,
         -350.0,
         483.0,
-        -93.0,
+        -88.0,
         937.0
       ],
       "margins": {
@@ -324,13 +324,13 @@
         "Y": 0.0,
         "Z": 0.0
       },
-      "parts": 126,
+      "parts": 125,
       "bbox_mm": [
         -155.0,
         738.0,
-        -350.0,
+        -330.0,
         483.0,
-        -93.0,
+        -88.0,
         937.0
       ],
       "margins": {
@@ -403,20 +403,26 @@
       {
         "bom": "MP-BAS-001",
         "part": "Basamento lavorato",
-        "bom_kg": 16.08,
-        "mule_kg": 16.08
+        "bom_kg": 8.6,
+        "mule_kg": 8.59
       },
       {
         "bom": "MP-GAN-002",
         "part": "Spalle gantry",
-        "bom_kg": 8.24,
-        "mule_kg": 8.23
+        "bom_kg": 4.6,
+        "mule_kg": 4.6
       },
       {
         "bom": "MP-GAN-001",
         "part": "Trave gantry",
-        "bom_kg": 6.98,
-        "mule_kg": 6.98
+        "bom_kg": 5.78,
+        "mule_kg": 5.78
+      },
+      {
+        "bom": "MP-BRK-001",
+        "part": "Staffe chiocciole, motori e supporti",
+        "bom_kg": 0.88,
+        "mule_kg": 0.88
       },
       {
         "bom": "MP-TBL-001",
@@ -425,16 +431,22 @@
         "mule_kg": 5.01
       },
       {
+        "bom": "MP-XC-001",
+        "part": "Carrello X",
+        "bom_kg": 4.39,
+        "mule_kg": 4.39
+      },
+      {
         "bom": "MP-Z-001",
         "part": "Piastra asse Z",
-        "bom_kg": 1.41,
-        "mule_kg": 1.41
+        "bom_kg": 1.14,
+        "mule_kg": 1.14
       },
       {
         "bom": "MC-TD-001",
         "part": "Master kinematic plate",
-        "bom_kg": 0.99,
-        "mule_kg": 0.99
+        "bom_kg": 0.96,
+        "mule_kg": 0.96
       },
       {
         "bom": "MC-TD-002",
@@ -451,8 +463,8 @@
       {
         "bom": "MP-GL-LOCK",
         "part": "Locking + references",
-        "bom_kg": 2.93,
-        "mule_kg": 2.95
+        "bom_kg": 1.96,
+        "mule_kg": 1.97
       },
       {
         "bom": "MC-TD-003",
@@ -461,42 +473,9 @@
         "mule_kg": 0.39
       }
     ],
-    "not_in_bom": [
-      {
-        "part": "x_pads",
-        "kg": 0.05
-      },
-      {
-        "part": "y_nut_bracket",
-        "kg": 0.14
-      },
-      {
-        "part": "x_carriage",
-        "kg": 5.78
-      },
-      {
-        "part": "x_nut_bracket",
-        "kg": 0.08
-      },
-      {
-        "part": "z_motor_bracket",
-        "kg": 0.11
-      },
-      {
-        "part": "z_nut_tab",
-        "kg": 0.14
-      },
-      {
-        "part": "z_bf_bridge",
-        "kg": 0.18
-      },
-      {
-        "part": "z_bk_bridge",
-        "kg": 0.14
-      }
-    ],
-    "machine_bom_kg": 85.6,
-    "machine_mule_kg": 85.6
+    "not_in_bom": [],
+    "machine_bom_kg": 69.6,
+    "machine_mule_kg": 69.6
   },
   "head": {
     "mass": 6.02,
@@ -512,14 +491,14 @@
     738.0,
     -350.0,
     483.0,
-    -93.0,
+    -88.0,
     937.0
   ],
   "footprint_mm": [
     893.0,
     833.0
   ],
-  "height_mm": 1030.0,
+  "height_mm": 1025.0,
   "sweep": {
     "configs": 125,
     "grid": 5,
@@ -537,6 +516,26 @@
       },
       {
         "pair": "beam ↔ x_nut_bracket",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_0 ↔ head_volume",
+        "clearance_mm": 8.0,
+        "axes": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "level": "PASS"
+      },
+      {
+        "pair": "z_rail_1 ↔ head_volume",
         "clearance_mm": 8.0,
         "axes": [
           0.0,
@@ -586,7 +585,7 @@
         "level": "PASS"
       },
       {
-        "pair": "frame_cross_rear ↔ y_nut_bracket",
+        "pair": "frame_cross_bk ↔ y_nut_bracket",
         "clearance_mm": 8.56,
         "axes": [
           0.0,
@@ -608,16 +607,6 @@
       {
         "pair": "x_carriage ↔ z_nut_tab",
         "clearance_mm": 9.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "frame_cross_rear ↔ y_nut",
-        "clearance_mm": 10.0,
         "axes": [
           0.0,
           0.0,
@@ -677,7 +666,7 @@
       },
       {
         "pair": "x_carriage ↔ head_volume",
-        "clearance_mm": 26.0,
+        "clearance_mm": 23.0,
         "axes": [
           0.0,
           0.0,
@@ -687,7 +676,7 @@
       },
       {
         "pair": "x_carriage ↔ tooldock_master",
-        "clearance_mm": 27.0,
+        "clearance_mm": 25.0,
         "axes": [
           0.0,
           0.0,
@@ -707,17 +696,7 @@
       },
       {
         "pair": "x_carriage ↔ head_receiver",
-        "clearance_mm": 40.0,
-        "axes": [
-          0.0,
-          0.0,
-          -0.0
-        ],
-        "level": "PASS"
-      },
-      {
-        "pair": "x_carriage ↔ head_mount",
-        "clearance_mm": 45.01,
+        "clearance_mm": 38.0,
         "axes": [
           0.0,
           0.0,
@@ -748,19 +727,49 @@
     "closest": [
       {
         "part": "z_rail_0",
-        "clearance_mm": 11.0,
+        "clearance_mm": 8.0,
         "step": 40,
         "level": "PASS"
       },
       {
         "part": "z_rail_1",
-        "clearance_mm": 11.0,
+        "clearance_mm": 8.0,
         "step": 40,
         "level": "PASS"
       },
       {
         "part": "x_carriage",
-        "clearance_mm": 26.0,
+        "clearance_mm": 23.0,
+        "step": 40,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_00",
+        "clearance_mm": 35.0,
+        "step": 40,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_01",
+        "clearance_mm": 35.0,
+        "step": 40,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_10",
+        "clearance_mm": 35.0,
+        "step": 40,
+        "level": "PASS"
+      },
+      {
+        "part": "x_block_11",
+        "clearance_mm": 35.0,
+        "step": 40,
+        "level": "PASS"
+      },
+      {
+        "part": "x_nut_bracket",
+        "clearance_mm": 35.0,
         "step": 40,
         "level": "PASS"
       },
@@ -771,38 +780,8 @@
         "level": "PASS"
       },
       {
-        "part": "x_block_00",
-        "clearance_mm": 42.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
-        "part": "x_block_01",
-        "clearance_mm": 42.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
-        "part": "x_block_10",
-        "clearance_mm": 42.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
-        "part": "x_block_11",
-        "clearance_mm": 42.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
-        "part": "x_nut_bracket",
-        "clearance_mm": 42.0,
-        "step": 40,
-        "level": "PASS"
-      },
-      {
         "part": "z_bf",
-        "clearance_mm": 43.42,
+        "clearance_mm": 42.76,
         "step": 40,
         "level": "PASS"
       }
@@ -811,11 +790,11 @@
   "base": "pro",
   "checks": {
     "mass": {
-      "mule": 85.6,
-      "bom": 85.6,
+      "mule": 69.6,
+      "bom": 84.5,
       "gate": 72.0,
       "target": 70.0,
-      "pass_gate": false
+      "pass_gate": true
     },
     "collisions": {
       "HOME": 0,

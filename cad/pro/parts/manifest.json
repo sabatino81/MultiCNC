@@ -9,17 +9,17 @@
       "view": "cad/pro/parts/views/frame_longeron_L.png",
       "size_mm": [
         60.0,
-        700.0,
-        80.0
+        680.0,
+        88.0
       ],
-      "kg": 2.58,
-      "holes": 11,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 2.162,
+      "holes": 13,
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
       "home_min": [
         45.0,
-        -350.0,
-        -80.0
+        -330.0,
+        -88.0
       ]
     },
     {
@@ -29,37 +29,17 @@
       "view": "cad/pro/parts/views/frame_longeron_R.png",
       "size_mm": [
         60.0,
-        700.0,
-        80.0
+        680.0,
+        88.0
       ],
-      "kg": 2.58,
-      "holes": 11,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 2.162,
+      "holes": 13,
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
       "home_min": [
         345.0,
-        -350.0,
-        -80.0
-      ]
-    },
-    {
-      "part": "frame_cross_front",
-      "bom": "MP-BAS-001",
-      "file": "cad/pro/parts/MP-BAS-001_frame_cross_front.step",
-      "view": "cad/pro/parts/views/frame_cross_front.png",
-      "size_mm": [
-        240.0,
-        50.0,
-        75.0
-      ],
-      "kg": 0.745,
-      "holes": 0,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
-      "home_min": [
-        105.0,
-        -350.0,
-        -80.0
+        -330.0,
+        -88.0
       ]
     },
     {
@@ -72,10 +52,10 @@
         50.0,
         75.0
       ],
-      "kg": 0.599,
+      "kg": 0.501,
       "holes": 2,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
       "home_min": [
         105.0,
         -250.0,
@@ -89,16 +69,36 @@
       "view": "cad/pro/parts/views/frame_cross_rear.png",
       "size_mm": [
         760.0,
-        248.0,
+        180.0,
         75.0
       ],
-      "kg": 5.165,
-      "holes": 26,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 2.589,
+      "holes": 24,
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
       "home_min": [
         -155.0,
-        142.0,
+        211.0,
+        -80.0
+      ]
+    },
+    {
+      "part": "frame_cross_bk",
+      "bom": "MP-BAS-001",
+      "file": "cad/pro/parts/MP-BAS-001_frame_cross_bk.step",
+      "view": "cad/pro/parts/views/frame_cross_bk.png",
+      "size_mm": [
+        240.0,
+        60.0,
+        75.0
+      ],
+      "kg": 0.555,
+      "holes": 2,
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
+      "home_min": [
+        105.0,
+        209.5,
         -80.0
       ]
     },
@@ -112,34 +112,14 @@
         50.0,
         75.0
       ],
-      "kg": 0.755,
+      "kg": 0.633,
       "holes": 6,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "material": "EN AW-6082 T6, tubi 80 × 60 × 4",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange dei montanti",
       "home_min": [
         105.0,
         300.0,
         -80.0
-      ]
-    },
-    {
-      "part": "frame_bottom",
-      "bom": "MP-BAS-001",
-      "file": "cad/pro/parts/MP-BAS-001_frame_bottom.step",
-      "view": "cad/pro/parts/views/frame_bottom.png",
-      "size_mm": [
-        360.0,
-        700.0,
-        13.0
-      ],
-      "kg": 3.653,
-      "holes": 4,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
-      "home_min": [
-        45.0,
-        -350.0,
-        -93.0
       ]
     },
     {
@@ -152,13 +132,13 @@
         140.0,
         607.0
       ],
-      "kg": 3.459,
-      "holes": 6,
-      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
-      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "kg": 1.934,
+      "holes": 16,
+      "material": "EN AW-6082 T651, piastra 12 finestrata + flangia 12 scaricata",
+      "process": "fresato; sede guida HGR15 rettificata, fori spine Ø10 H7 alesati",
       "home_min": [
         -155.0,
-        240.0,
+        231.0,
         -5.0
       ]
     },
@@ -172,13 +152,13 @@
         140.0,
         607.0
       ],
-      "kg": 3.459,
-      "holes": 6,
-      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
-      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "kg": 1.934,
+      "holes": 16,
+      "material": "EN AW-6082 T651, piastra 12 finestrata + flangia 12 scaricata",
+      "process": "fresato; sede guida HGR15 rettificata, fori spine Ø10 H7 alesati",
       "home_min": [
         485.0,
-        240.0,
+        231.0,
         -5.0
       ]
     },
@@ -192,13 +172,13 @@
         126.0,
         170.0
       ],
-      "kg": 6.983,
+      "kg": 5.779,
       "holes": 31,
-      "material": "EN AW-6082 T6, piatti 6 + blocchi pieni",
-      "process": "saldato, distensionato, fresato su faccia guide X e canale vite",
+      "material": "EN AW-6082 T6, scatolato 100 × 170 (faccia 8, pareti 4)",
+      "process": "saldato, distensionato, fresato su faccia guide X, canale vite e appoggi staffe lift",
       "home_min": [
         -155.0,
-        116.0,
+        109.0,
         192.0
       ]
     },
@@ -218,7 +198,7 @@
       "process": "fresato",
       "home_min": [
         -57.5,
-        173.0,
+        166.0,
         247.0
       ]
     },
@@ -234,8 +214,8 @@
       ],
       "kg": 5.012,
       "holes": 102,
-      "material": "EN AW-5083 piastra rettificata 10",
-      "process": "fresata: tasche fra i boss, sedi inserti M6, boccole R1/R2",
+      "material": "EN AW-5083 piastra rettificata 12",
+      "process": "fresata piena: sedi inserti M6, boccole R1/R2",
       "home_min": [
         0.0,
         0.0,
@@ -268,17 +248,17 @@
       "file": "cad/pro/parts/MP-XC-001_x_carriage.step",
       "view": "cad/pro/parts/views/x_carriage.png",
       "size_mm": [
-        214.0,
-        61.0,
+        210.0,
+        57.0,
         622.0
       ],
-      "kg": 5.78,
+      "kg": 4.387,
       "holes": 58,
-      "material": "EN AW-6082 T651, piastra 60",
-      "process": "fresato dal pieno (piastra 15 + ali + torre)",
+      "material": "EN AW-6082 T651, piastra 12 + ali 10 + torre",
+      "process": "fresato",
       "home_min": [
-        -107.0,
-        51.0,
+        -105.0,
+        48.0,
         172.0
       ]
     },
@@ -298,7 +278,7 @@
       "process": "fresato",
       "home_min": [
         21.0,
-        112.0,
+        105.0,
         249.0
       ]
     },
@@ -312,13 +292,13 @@
         60.0,
         10.0
       ],
-      "kg": 0.105,
+      "kg": 0.106,
       "holes": 9,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         -45.0,
-        68.0,
+        65.0,
         794.0
       ]
     },
@@ -329,13 +309,13 @@
       "view": "cad/pro/parts/views/z_slide.png",
       "size_mm": [
         160.0,
-        50.0,
+        47.0,
         170.0
       ],
-      "kg": 1.412,
+      "kg": 1.135,
       "holes": 52,
-      "material": "EN AW-6082 T651, piastra 50",
-      "process": "fresato dal pieno",
+      "material": "EN AW-6082 T651, piastra 12 + ali 10",
+      "process": "fresato",
       "home_min": [
         -80.0,
         18.0,
@@ -349,10 +329,10 @@
       "view": "cad/pro/parts/views/z_nut_tab.png",
       "size_mm": [
         52.0,
-        67.0,
+        64.0,
         16.0
       ],
-      "kg": 0.139,
+      "kg": 0.132,
       "holes": 11,
       "material": "EN AW-6082 T6",
       "process": "fresato",
@@ -368,16 +348,16 @@
       "file": "cad/pro/parts/MC-TD-001_tooldock_master.step",
       "view": "cad/pro/parts/views/tooldock_master.png",
       "size_mm": [
-        136.0,
-        138.0,
+        140.0,
+        135.0,
         90.0
       ],
-      "kg": 0.992,
+      "kg": 0.957,
       "holes": 35,
       "material": "EN AW-7075 T651",
       "process": "fresato; sedi rulli rettificate, piano di accoppiamento lappato",
       "home_min": [
-        -68.0,
+        -70.0,
         -70.0,
         462.0
       ]
@@ -432,13 +412,13 @@
         32.0,
         170.0
       ],
-      "kg": 1.175,
+      "kg": 0.689,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -135.0,
-        242.0,
+        235.0,
         192.0
       ]
     },
@@ -454,11 +434,11 @@
       ],
       "kg": 0.135,
       "holes": 1,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -55.0,
-        242.0,
+        235.0,
         241.0
       ]
     },
@@ -474,11 +454,11 @@
       ],
       "kg": 0.028,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -55.0,
-        297.0,
+        290.0,
         502.0
       ]
     },
@@ -494,11 +474,11 @@
       ],
       "kg": 0.091,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -155.0,
-        274.0,
+        267.0,
         247.0
       ]
     },
@@ -512,13 +492,13 @@
         32.0,
         170.0
       ],
-      "kg": 1.175,
+      "kg": 0.689,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         505.0,
-        242.0,
+        235.0,
         192.0
       ]
     },
@@ -534,11 +514,11 @@
       ],
       "kg": 0.135,
       "holes": 1,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         445.0,
-        242.0,
+        235.0,
         241.0
       ]
     },
@@ -554,11 +534,11 @@
       ],
       "kg": 0.028,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         445.0,
-        297.0,
+        290.0,
         502.0
       ]
     },
@@ -574,11 +554,11 @@
       ],
       "kg": 0.091,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         585.0,
-        274.0,
+        267.0,
         247.0
       ]
     },
@@ -589,16 +569,16 @@
       "view": "cad/pro/parts/views/lift_tie.png",
       "size_mm": [
         760.0,
-        16.0,
-        40.0
+        12.0,
+        30.0
       ],
-      "kg": 1.313,
+      "kg": 0.739,
       "holes": 0,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -155.0,
-        302.0,
+        295.0,
         602.0
       ]
     },
@@ -614,11 +594,11 @@
       ],
       "kg": 0.074,
       "holes": 1,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
+      "material": "EN AW-6082 T651",
+      "process": "fresato; staffe trave a C con faccia pattini 12 mm",
       "home_min": [
         -57.2,
-        239.8,
+        232.8,
         589.0
       ]
     },
@@ -629,16 +609,16 @@
       "view": "cad/pro/parts/views/z_bf_bridge.png",
       "size_mm": [
         150.0,
-        18.0,
+        22.0,
         32.0
       ],
-      "kg": 0.182,
+      "kg": 0.211,
       "holes": 10,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         -75.0,
-        112.0,
+        105.0,
         492.0
       ]
     },
@@ -649,16 +629,16 @@
       "view": "cad/pro/parts/views/z_bk_bridge.png",
       "size_mm": [
         110.0,
-        18.0,
+        22.0,
         37.0
       ],
-      "kg": 0.14,
+      "kg": 0.158,
       "holes": 10,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         -55.0,
-        112.0,
+        105.0,
         731.0
       ]
     },
@@ -839,11 +819,11 @@
       "part": "MP-ENC-001",
       "file": "cad/pro/parts/MP-ENC-001.step",
       "view": "cad/pro/parts/views/MP-ENC-001.png",
-      "kg": 48.54,
+      "kg": 48.44,
       "size_mm": [
         1120.0,
         1081.0,
-        1287.0
+        1282.0
       ],
       "solids": [
         "cab_chip_tray",
@@ -979,6 +959,12 @@
     },
     {
       "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "staffa motore Z → torre carrello",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
       "item": "M5×30",
       "where": "piastrina chiocciola Z → slitta",
       "qty": 2
@@ -1018,12 +1004,6 @@
       "item": "M6×20",
       "where": "sella master → ala slitta",
       "qty": 4
-    },
-    {
-      "std": "ISO 4762",
-      "item": "M6×25",
-      "where": "staffa motore Z → torre carrello",
-      "qty": 2
     },
     {
       "std": "ISO 4762",
@@ -1082,7 +1062,7 @@
     {
       "std": "piede antivibrante M10",
       "item": "M10",
-      "where": "piedi basamento",
+      "where": "piedi telaio",
       "qty": 4
     },
     {

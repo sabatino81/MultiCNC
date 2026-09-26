@@ -236,7 +236,7 @@ def build(X, Y, Zd, cfg=None):
     if outrig:   # Light: due sbalzi 40 × 40 per lato sotto i bulloni ICD §5 della spalla, traversa BK Y a parte
         rear = None
         for x0, x1 in ((FX[0], rails_x[0] - lw / 2), (rails_x[1] + lw / 2, FX[1])):
-            for yy in (yc - 60.0, yc + 60.0):
+            for yy in ((yc_up if mode == "lift" else yc) - 60.0, (yc_up if mode == "lift" else yc) + 60.0):
                 o = box(x0, x1, yy - lw / 2, yy + lw / 2, -H, -dz).cut(box(x0 - 1, x1 + 1, yy - lw / 2 + w, yy + lw / 2 - w, -H + w, -w - dz))
                 rear = o if rear is None else rear.union(o)
         a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
@@ -249,7 +249,11 @@ def build(X, Y, Zd, cfg=None):
         rear = rear.cut(box(inner0, inner1, L["end_y"][0], L["end_y"][1], -H - 1, 1))
     if not outrig:
         a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
-    if outrig:   # Light: traversa di coda 40 × 80 × 40 con il pad del BK Y e la piastra del motore Y
+    if outrig and L.get("bk_cross"):   # Pro: traversa BK Y a parte, traversa di coda normale
+        a.add("frame_cross_bk", rtube_x(inner0, inner1, bk_pad[0] - 5, bk_pad[0] - 5 + lw).cut(pocket)
+              .union(box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"])), "FRAME", AL, "MC-BAS-001", "gray")
+        end = rtube_x(inner0, inner1, *L["end_y"]).cut(cyl("y", L["end_y"][0] - 1, L["end_y"][1] + 1, xtc, z_y_axis, 20))
+    elif outrig:   # Light: traversa di coda 40 × 80 × 40 con il pad del BK Y e la piastra del motore Y
         end = rtube_x(inner0, inner1, bk_pad[0] - 5, L["end_y"][1]).cut(pocket).union(
             box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"]))
     else:
@@ -272,7 +276,12 @@ def build(X, Y, Zd, cfg=None):
     else:                               # Pro: montanti del Gantry Lift dietro le estremità della trave
         top_up = D["beam_top"] + Lf["stroke"] + 90.0
         for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + Lf["plate_w"])), ("R", (P.BEAM_X[1] - Lf["plate_w"], P.BEAM_X[1]))):
-            a.add(f"upright_{side}", box(x0, x1, y_up0, y_up0 + U["t"], -dz, top_up), "FRAME", AL, "MC-GAN-002", "gray")
+            up = box(x0, x1, y_up0, y_up0 + U["t"], -dz, top_up)
+            xc_ = (x0 + x1) / 2
+            for (u0, u1), (w0, w1) in itertools.product(U.get("windows", ()), U.get("window_x", ())):   # finestre ai lati della guida del lift
+                for sg in (-1, 1):
+                    up = up.cut(box(min(xc_ + sg * w0, xc_ + sg * w1), max(xc_ + sg * w0, xc_ + sg * w1), y_up0 - 1, y_up0 + U["t"] + 1, u0, u1))
+            a.add(f"upright_{side}", up, "FRAME", AL, "MC-GAN-002", "gray")
 
     bf, bb = D["beam_face"], D["beam_back"]
     bx0, bx1, t = P.BEAM_X[0], P.BEAM_X[1], BM["wall"]
@@ -501,7 +510,11 @@ def add_lift(a):
         a.add(f"lift_rail_{side}", orient(parts.rail(Lf["rail"], Lf["rail_len"])).translate((xc, y_up0, z_r0)), "FRAME", STEEL, "MP-GL-LIN1", "steelblue")
         for j, dz in enumerate((-Lf["block_pitch"] / 2, Lf["block_pitch"] / 2)):
             a.add(f"lift_block_{side}{j}", orient(parts.block(Lf["block"])).translate((xc, y_up0, zx + dz)), "FRAME", STEEL, "MP-GL-LIN2", "steelblue")
-        a.add(f"lift_bracket_{side}", box(xc - 40, xc + 40, bb, bb + Lf["bracket_t"], D["beam_bottom"], D["beam_top"]), "FRAME", AL, "MP-GL-LOCK", "tomato")
+        brk = box(xc - 40, xc + 40, bb, bb + Lf["bracket_t"], D["beam_bottom"], D["beam_top"])
+        if Lf.get("bracket_pocket"):             # D037: staffa a C, tasca dal lato trave dietro i pattini (faccia pattini 12 mm)
+            pk = Lf["bracket_pocket"]
+            brk = brk.cut(box(xc - pk[0] / 2, xc + pk[0] / 2, bb - 1, bb + Lf["bracket_t"] - pk[1], D["beam_bottom"] + 10, D["beam_top"] - 10))
+        a.add(f"lift_bracket_{side}", brk, "FRAME", AL, "MP-GL-LOCK", "tomato")
         sx = xc + inw * 70.0                       # vite verso l'interno macchina, fuori dalla staffa
         xs[side] = sx
         a.add(f"lift_screw_{side}", screw_shaft(Lf["screw"], Lf["screw_len"]).rotate(ORIGIN, (0, 1, 0), -90).translate((sx, sy, s0)),
@@ -522,7 +535,7 @@ def add_lift(a):
     zp = top - parts.ENDS[Lf["screw"]][0] + q["T"]
     for k, yy in (("a", sy - 24.0), ("b", sy + 22.0)):   # cinghia HTD: i due tratti tangenti alle pulegge
         a.add(f"lift_belt_{k}", box(xs["L"], xs["R"], yy, yy + 2.0, zp + 4, zp + 20), "FRAME", STEEL, "MP-GL-SYNC", "black")
-    a.add("lift_tie", box(P.BEAM_X[0], P.BEAM_X[1], y_up0, y_up0 + U["t"], top_up, top_up + 40), "FRAME", AL, "MP-GAN-002", "gray")
+    a.add("lift_tie", box(P.BEAM_X[0], P.BEAM_X[1], y_up0, y_up0 + U["t"], top_up, top_up + Lf.get("tie_h", 40.0)), "FRAME", AL, "MP-GAN-002", "gray")
     mz = parts.MOTORS[Lf["motor"]]
     a.add("lift_motor_bracket", box(xs["L"] - mz[0] / 2 - 4, xs["L"] + mz[0] / 2 + 4, sy - mz[0] / 2 - 4, y_up0, top + 22, top + 32)
           .cut(cyl("z", top + 21, top + 33, xs["L"], sy, mz[3] / 2 + 1)), "FRAME", AL, "MP-GL-LOCK", "gray")
