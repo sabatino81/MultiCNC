@@ -106,7 +106,7 @@ def magazine():
 def cabin():
     """Telaio 30 × 30, pannelli PC 4 mm, porta, vasca trucioli, aspirazione Ø100; piedi propri, aggancio al basamento."""
     x0, x1, y0, y1 = -230.0, 760.0, -430.0, 540.0
-    z0, z1 = -72.0 - 3.0 - 30.0, 960.0      # la vasca trucioli (3 mm) sta sotto i piedi della macchina
+    z0, z1 = -P.LADDER["H"] - 8.0 - 3.0 - 30.0, 960.0   # la vasca trucioli (3 mm) sta sotto i piedi (pad 8 mm) della macchina
     p = 30.0
     out = {}
     edges = []

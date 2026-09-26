@@ -93,7 +93,7 @@
         702.0,
         -350.0,
         447.0,
-        -72.0,
+        -68.0,
         815.0
       ],
       "margins": {
@@ -172,7 +172,7 @@
         702.0,
         -350.0,
         447.0,
-        -72.0,
+        -68.0,
         815.0
       ],
       "margins": {
@@ -251,7 +251,7 @@
         702.0,
         -350.0,
         447.0,
-        -72.0,
+        -68.0,
         815.0
       ],
       "margins": {
@@ -330,7 +330,7 @@
         702.0,
         -350.0,
         447.0,
-        -72.0,
+        -68.0,
         815.0
       ],
       "margins": {
@@ -403,80 +403,80 @@
       {
         "bom": "MC-BAS-001",
         "part": "Telaio a scala",
-        "bom_kg": 6.65,
-        "mule_kg": 8.03
+        "bom_kg": 5.98,
+        "mule_kg": 5.98
       },
       {
         "bom": "MC-GAN-002",
         "part": "Spalle gantry",
-        "bom_kg": 1.94,
-        "mule_kg": 2.66
+        "bom_kg": 1.96,
+        "mule_kg": 1.96
       },
       {
         "bom": "MC-GAN-001",
         "part": "Trave gantry",
-        "bom_kg": 6.06,
-        "mule_kg": 6.49
+        "bom_kg": 4.66,
+        "mule_kg": 4.66
       },
       {
         "bom": "MC-BRK-001",
         "part": "Staffe chiocciole, motori e supporti",
-        "bom_kg": 0.51,
+        "bom_kg": 0.74,
         "mule_kg": 0.74
       },
       {
         "bom": "MC-TBL-001",
         "part": "Tavola Y / tooling plate",
-        "bom_kg": 2.97,
+        "bom_kg": 2.96,
         "mule_kg": 2.96
       },
       {
         "bom": "MC-XC-001",
         "part": "Carrello X",
-        "bom_kg": 4.06,
-        "mule_kg": 4.04
+        "bom_kg": 3.28,
+        "mule_kg": 3.28
       },
       {
         "bom": "MC-Z-001",
         "part": "Slitta Z",
-        "bom_kg": 1.08,
-        "mule_kg": 1.06
+        "bom_kg": 0.95,
+        "mule_kg": 0.95
       },
       {
         "bom": "MC-TD-001",
         "part": "Master kinematic plate",
-        "bom_kg": 1.05,
+        "bom_kg": 0.95,
         "mule_kg": 0.95
       },
       {
         "bom": "MC-TD-002",
         "part": "Base spindle receiver",
-        "bom_kg": 0.37,
+        "bom_kg": 0.33,
         "mule_kg": 0.33
       },
       {
         "bom": "MC-SP-003",
         "part": "Mount spindle a tazza con camicia",
-        "bom_kg": 0.73,
-        "mule_kg": 0.75
+        "bom_kg": 0.47,
+        "mule_kg": 0.47
       },
       {
         "bom": "MC-TD-003",
         "part": "Automatic clamp",
-        "bom_kg": 0.4,
+        "bom_kg": 0.39,
         "mule_kg": 0.39
       }
     ],
     "not_in_bom": [],
-    "machine_bom_kg": 44.9,
-    "machine_mule_kg": 47.5
+    "machine_bom_kg": 41.8,
+    "machine_mule_kg": 41.8
   },
   "head": {
-    "mass": 2.67,
-    "cog_below_coupling": 98.0,
+    "mass": 2.4,
+    "cog_below_coupling": 99.0,
     "L": 220.0,
     "ref": "SycoTec 5045 AC-ER11 · 2002 5400",
-    "inertia_moment_Nm": 0.53,
+    "inertia_moment_Nm": 0.47,
     "connector_mode": "RIGHT_ANGLE_ASSUMED",
     "gap": 25.0
   },
@@ -485,14 +485,14 @@
     702.0,
     -350.0,
     447.0,
-    -72.0,
+    -68.0,
     815.0
   ],
   "footprint_mm": [
     857.0,
     797.0
   ],
-  "height_mm": 887.0,
+  "height_mm": 883.0,
   "sweep": {
     "configs": 125,
     "grid": 5,
@@ -679,7 +679,7 @@
         "level": "PASS"
       },
       {
-        "pair": "frame_cross_rear ↔ y_nut",
+        "pair": "x_carriage ↔ z_nut_tab",
         "clearance_mm": 9.0,
         "axes": [
           0.0,
@@ -689,8 +689,8 @@
         "level": "PASS"
       },
       {
-        "pair": "x_carriage ↔ z_nut_tab",
-        "clearance_mm": 9.0,
+        "pair": "frame_cross_rear ↔ y_nut",
+        "clearance_mm": 10.0,
         "axes": [
           0.0,
           0.0,
@@ -783,15 +783,15 @@
   },
   "stiffness": {
     "X": {
-      "N_per_um": 0.91,
+      "N_per_um": 0.88,
       "top": [
         [
           "accoppiamento ToolDock",
-          36
+          34
         ],
         [
           "carrello X",
-          18
+          17
         ],
         [
           "testa (spindle + utensile)",
@@ -804,11 +804,11 @@
       ]
     },
     "Y": {
-      "N_per_um": 0.79,
+      "N_per_um": 0.76,
       "top": [
         [
           "accoppiamento ToolDock",
-          31
+          30
         ],
         [
           "slitta Z",
@@ -820,24 +820,24 @@
         ],
         [
           "testa (spindle + utensile)",
-          9
+          8
         ]
       ]
     },
     "Z": {
-      "N_per_um": 1.59,
+      "N_per_um": 1.46,
       "top": [
         [
           "tavola",
-          47
+          44
         ],
         [
           "telaio",
-          18
+          21
         ],
         [
           "trave",
-          7
+          9
         ],
         [
           "guide Y + vite Y",
@@ -856,9 +856,9 @@
       "connector_mode": "RIGHT_ANGLE_ASSUMED",
       "gap": 25.0,
       "k": {
-        "X": 0.91,
-        "Y": 0.79,
-        "Z": 1.59
+        "X": 0.88,
+        "Y": 0.76,
+        "Z": 1.46
       },
       "fits_L": true,
       "z_loss": 0.0,
@@ -875,9 +875,9 @@
       "connector_mode": "AXIAL",
       "gap": 100.0,
       "k": {
-        "X": 0.6,
-        "Y": 0.51,
-        "Z": 1.59
+        "X": 0.59,
+        "Y": 0.5,
+        "Z": 1.45
       },
       "fits_L": false,
       "z_loss": 75.0,
@@ -901,11 +901,11 @@
       "z_lever": 265.0
     },
     "mass": {
-      "mule": 47.5,
-      "bom": 44.9,
+      "mule": 41.8,
+      "bom": 41.8,
       "gate": 42.0,
       "target": 40.0,
-      "pass_gate": false,
+      "pass_gate": true,
       "pass_target": false
     },
     "collisions": {

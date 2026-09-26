@@ -111,12 +111,12 @@ SLIDE_FLANGE = dict(t=10.0, depth=35.0)      # ali anteriori a |x| 65–75, sopr
 SADDLE = dict(t=10.0, h=50.0)             # D031 mule v3: guance della master incollate alle facce interne delle ali della slitta (sella a U)
 PLATE = dict(carriage_t=15.0, slide_t=12.0, carriage_w=170.0, below_x_blocks=18.0,
              slot_w=70.0, tower_w=100.0, slide_w=150.0, slide_len=160.0, block_offset=5.0)
-LADDER = dict(H=60.0, wall=4.0,                                  # tubi rettangolari Al
+LADDER = dict(H=60.0, wall=3.0,                                  # tubi rettangolari Al (D034: 4 → 3 mm, massa)
               long_w=40.0, long_y=(-350.0, 350.0),              # longheroni sotto le guide Y
               front_y=(-350.0, -310.0), bf_y=(-250.0, -210.0),  # traverse
               end_y=(310.0, 350.0), pocket_w=80.0, pad_t=12.0, cross_drop=5.0)
-UPRIGHT = dict(t=40.0, depth=120.0, wall=6.0)   # D030: spalle scatolate 40 × 120 sp. 6
-BEAM = dict(depth=80.0, height=140.0, wall=6.0, recess_h=90.0, recess_d=31.0, end=6.0)
+UPRIGHT = dict(t=40.0, depth=120.0, wall=4.0)   # D030: spalle scatolate 40 × 120; D034: pareti 6 → 4 mm (massa)
+BEAM = dict(depth=80.0, height=140.0, wall=4.0, wall_face=6.0, recess_h=90.0, recess_d=31.0, end=4.0)   # D034: pareti 4, faccia guide X 6 (filetto M4)
 BEAM_X = (-155.0, 605.0)  # estensione trave = larghezza fra le facce esterne delle spalle
 NUT_BRACKET_T = 10.0
 X_SCREW_PAD = 7.0          # spessori sotto BK/BF X nel canale della trave (MULE)

@@ -35,7 +35,7 @@ CLR = {"M3": 3.4, "M4": 4.5, "M5": 5.5, "M6": 6.6, "M8": 9.0, "M10": 11.0}      
 CB = {"M3": (6.5, 3.5), "M4": (8.0, 4.5), "M5": (10.0, 5.5), "M6": (11.0, 6.5), "M8": (14.5, 8.5)}  # lamatura ISO 4762
 SUPPORT_HOLE_PITCH = {"BK12": 46.0, "BF12": 46.0, "BK10": 46.0, "BF10": 46.0}      # 2 fori M5 sulla larghezza (catalogo tipico)
 NEMA23_PITCH, NEMA23_PILOT = 47.14, 38.1
-ICD_UPRIGHT = dict(pins=100.0, pin_d=10.0, bolt="M8", rect=(60.0, 120.0), flange_t=16.0, flange=(80.0, 140.0))  # §5
+ICD_UPRIGHT = dict(pins=100.0, pin_d=10.0, bolt="M8", rect=(60.0, 120.0), flange_t=12.0, flange=(80.0, 140.0))  # §5 (flangia 12: M8 su 1,5 d)
 ROLLER = dict(d=8.0, L=12.0, gap=5.0)         # coppia di rulli (spine rettificate DIN 6325) per sfera Ø10
 BALL_D = 10.0
 PULL_STUD = dict(thread="M10", shank_d=12.0, neck_d=9.0, head_d=15.0, head_h=6.0, L=30.0)   # comune a tutte le teste
@@ -139,7 +139,7 @@ def rails(dt):
     for n, host in (("y_rail_L", "frame_longeron_L"), ("y_rail_R", "frame_longeron_R")):
         b = dt.bb(n)
         xc = (b.xmin + b.xmax) / 2
-        dt.add(host, box(xc - 12, xc + 12, b.ymin, b.ymax, -P.LADDER["wall"] - 4.0, -P.LADDER["wall"] + 0.01))
+        dt.add(host, box(xc - 9, xc + 9, b.ymin, b.ymax, -P.LADDER["wall"] - 4.0, -P.LADDER["wall"] + 0.01))
 
 
 def blocks(dt):
@@ -195,7 +195,7 @@ def supports(dt):
         xc, zc = (b.xmin + b.xmax) / 2, (b.zmin + b.zmax) / 2
         for dz in (-SUPPORT_HOLE_PITCH[k] / 2, SUPPORT_HOLE_PITCH[k] / 2):
             dt.hole("x_pads", "y", b.ymax, +1, xc, zc + dz, "clr", "M5", P.X_SCREW_PAD + 1)
-            dt.hole("beam", "y", b.ymax + P.X_SCREW_PAD, +1, xc, zc + dz, "tap", "M5", 6.0)
+            dt.hole("beam", "y", b.ymax + P.X_SCREW_PAD, +1, xc, zc + dz, "tap", "M5", P.BEAM["wall"] + 6.0)
             dt.cut(n, cyl("y", b.ymin - 1, b.ymax + 1, xc, zc + dz, CLR["M5"] / 2))
         dt.screw("M5", 40, qty=2, where=f"{k} X → spessori → trave")
     # Y: BK/BF sui pad delle traverse (z = −48), viti dall'alto
@@ -337,9 +337,9 @@ def frame(dt):
         b = dt.bb(n)
         for y in (b.ymin + 30, b.ymax - 30):         # 4 piedi: pad 60 × 50 × 12 sotto i longheroni
             xc = (b.xmin + b.xmax) / 2
-            pad = box(xc - 20, xc + 20, y - 30, y + 30, b.zmin - 12, b.zmin + 0.01)
+            pad = box(xc - 20, xc + 20, y - 30, y + 30, b.zmin - 8, b.zmin + 0.01)
             dt.add(n, pad)
-            dt.cut(n, cyl("z", b.zmin - 13, b.zmin + L["wall"] + 1, xc, y, TAP["M10"] / 2))
+            dt.cut(n, cyl("z", b.zmin - 9, b.zmin + L["wall"] + 1, xc, y, TAP["M10"] / 2))
         dt.screw("M10", 0, std="piede antivibrante M10", qty=2, where="piedi telaio")
     dt.notes.append("Telaio MC-BAS-001: un pezzo saldato (6 tubi + pad), distensionato e poi lavorato su pad, sedi guide Y e facce spalle.")
 
@@ -377,23 +377,24 @@ def uprights(dt):
         dt.screw("Ø10 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → basamento (ICD §5)")
         # sopra: giunto interno spalla ↔ trave dentro l'impronta della spalla e sotto la trave (cielo 16 mm, 2 × M8 + 2 spine Ø8)
         top = b.zmax
-        dt.add(n, box(b.xmin, b.xmax, b.ymin, b.ymax, top - 16.0, top))
+        dt.add(n, box(b.xmin, b.xmax, b.ymin, b.ymax, top - 12.0, top))
         bf_, bb_y = P.derived()["beam_face"], P.derived()["beam_back"]
         for y in (bf_ + 10, bb_y - 10):
-            dt.hole(n, "z", top, -1, xc, y, "clr", "M8", 17)
+            dt.hole(n, "z", top, -1, xc, y, "clr", "M8", 13)
             dt.hole("beam", "z", top, +1, xc, y, "tap", "M8", 16)
         for y in (bf_ + 30, bb_y - 30):
             dt.hole(n, "z", top, -1, xc, y, "pin", 8.0, 12)
             dt.hole("beam", "z", top, +1, xc, y, "pin", 8.0, 12)
         wx = b.xmax - P.UPRIGHT["wall"] if side == "L" else b.xmin      # parete verso l'interno macchina
-        dt.cut(n, box(wx - 0.5, wx + P.UPRIGHT["wall"] + 0.5, bf_ + 2, bb_y - 2, top - 16 - 50, top - 16 - 5))
+        dt.cut(n, box(wx - 0.5, wx + P.UPRIGHT["wall"] + 0.5, bf_ + 2, bb_y - 2, top - 12 - 50, top - 12 - 5))
         dt.screw("M8", 40, qty=2, where=f"spalla {side} → trave (dalla finestra d'accesso della spalla)")
         dt.screw("Ø8 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → trave")
     # la traversa posteriore deve portare la flangia (140 in y): si allarga di 12 mm verso il fronte
     b = dt.bb("frame_cross_rear")
     w_, y0 = P.LADDER["wall"], b.ymin - 12
-    ext = [box(P.BEAM_X[0], P.BEAM_X[1], y0, y0 + w_, b.zmin, b.zmax), box(P.BEAM_X[0], P.BEAM_X[1], y0, b.ymin + 0.01, b.zmax - w_, b.zmax),
-           box(P.BEAM_X[0], P.BEAM_X[1], y0, b.ymin + 0.01, b.zmin, b.zmin + w_)]
+    ext = []
+    for xa_, xb_ in ((P.BEAM_X[0], P.BEAM_X[0] + I["flange"][0] + 5), (P.BEAM_X[1] - I["flange"][0] - 5, P.BEAM_X[1])):   # solo sotto le flange
+        ext += [box(xa_, xb_, y0, b.ymin + 0.01, b.zmin, b.zmax).cut(box(xa_ + w_, xb_ - w_, y0 + w_, b.ymin + 1, b.zmin + w_, b.zmax - w_))]
     for n in ("frame_longeron_L", "frame_longeron_R"):
         lb = dt.bb(n)
         ext = [e.cut(box(lb.xmin, lb.xmax, y0 - 1, b.ymin + 1, b.zmin - 1, b.zmax + 1)) for e in ext]
@@ -403,9 +404,14 @@ def uprights(dt):
         dt.add("frame_cross_rear", e)
     # trave: blocchi pieni d'estremità saldati sotto la trave (sede delle viti M8 e delle spine)
     Dd = P.derived()
-    for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + I["flange"][0])), ("R", (P.BEAM_X[1] - I["flange"][0], P.BEAM_X[1]))):
+    for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + 50)), ("R", (P.BEAM_X[1] - 50, P.BEAM_X[1]))):
         dt.add("beam", box(x0, x1, Dd["beam_face"], Dd["beam_back"], Dd["beam_bottom"], Dd["beam_bottom"] + 20))
-    dt.notes.append("Trave MC-GAN-001: saldata (piatti 6 mm) con blocchi pieni d'estremità 80 × 80 × 20 per il giunto con le spalle; "
+    # dietro BK/BF X: rinforzo interno 6 mm della parete del canale (pareti trave 4 mm, filetto M5 su 10 mm)
+    for n in ("x_bf", "x_bk"):
+        sb = dt.bb(n)
+        dt.add("beam", box(sb.xmin - 5, sb.xmax + 5, Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] - 0.01,
+                           Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] + 6, sb.zmin, sb.zmax))
+    dt.notes.append("Trave MC-GAN-001: saldata (faccia guide 6 mm, altre pareti 4 mm, D034) con blocchi pieni d'estremità 50 × 80 × 20 per il giunto con le spalle e rinforzi dietro BK/BF X; "
                     "traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 "
                     "(2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave "
                     "resta interno alla spalla (una flangia sopra urterebbe il carrello X in HOME).")
@@ -552,6 +558,44 @@ def table(dt):
     dt.screw("Ø8 H7 × 10", 0, std="boccola di riferimento temprata", qty=2, where="tavola R1 / R2")
 
 
+def lighten(dt, X):
+    """D034 · alleggerimenti fuori dal percorso dei carichi: tasche sul retro del carrello X (7 mm, fondo 8 mm),
+    tasca centrale nella slitta Z, mount spindle tondo sotto la testata."""
+    D = P.derived()
+    cb_, t_ = D["carriage_back"], 7.0
+    xn = dt.bb("x_nut_bracket")
+    zx, hx = D["zx"], P.X_AXIS["rail_spacing"] / 2
+    kb = parts.BLOCKS[P.X_AXIS["block"]]
+    z_top_blk, z_bot_blk = zx + hx + kb["W"] / 2, zx - hx - kb["W"] / 2
+    bf_ = dt.bb("z_bf_bridge")
+    pockets = [
+        (X - 80, X + 80, z_top_blk + 8, bf_.zmin - 8),                         # fra pattini X alti e ponte BF
+        (X - 80, xn.xmin - 8, z_bot_blk + kb["W"] + 8, z_top_blk - kb["W"] - 8), # fra le due file di pattini X, lato −x
+        (xn.xmax + 8, X + 80, z_bot_blk + kb["W"] + 8, z_top_blk - kb["W"] - 8),
+    ]
+    zr1 = dt.bb("z_rail_0").zmax
+    for s_ in (-1, 1):                                                         # fianchi della fessura sopra il ponte BF
+        x0, x1 = sorted((X + s_ * (P.PLATE["slot_w"] / 2 + 6), X + s_ * 80))
+        pockets.append((x0, x1, bf_.zmax + 8, min(zr1, dt.bb("z_bk_bridge").zmin) - 8))
+    for (x0, x1, z0, z1) in pockets:
+        if x1 - x0 > 15 and z1 - z0 > 15:
+            dt.cut("x_carriage", box(x0, x1, cb_ - t_, cb_ + 0.5, z0, z1))
+    cf_ = D["carriage_front"]                                                   # fasce sul fronte fuori dalle guide Z
+    car = dt.bb("x_carriage")
+    for s_ in (-1, 1):
+        x0, x1 = sorted((X + s_ * 69.0, X + s_ * 81.0))
+        dt.cut("x_carriage", box(x0, x1, cf_ - 0.5, cf_ + 7.0, car.zmin + 12, zr1 - 12))
+    sl = dt.bb("z_slide")
+    dt.cut("z_slide", box(X - 28, X + 28, D["slide_front"] - 0.5, D["slide_front"] + 6, sl.zmin + 20, sl.zmax - 20))
+    # mount spindle: corpo tondo Ø60 sotto una testata quadra 60 × 60 × 12 (viti del receiver agli spigoli)
+    mb = dt.bb("head_mount")
+    mx = (mb.xmin + mb.xmax) / 2
+    keep = cyl("z", mb.zmin - 1, mb.zmax + 1, mx, 0.0, 30.0).fuse(box(mb.xmin - 1, mb.xmax + 1, mb.ymin - 1, mb.ymax + 1, mb.zmax - 12, mb.zmax + 1))
+    dt.a.parts["head_mount"]["shape"] = dt.a.parts["head_mount"]["shape"].intersect(keep).clean()
+    dt.notes.append("D034 · alleggerimenti: tubi del telaio 3 mm, spalle 4 mm, trave 4 mm con faccia guide 6, tasche sul retro del carrello X "
+                    "fra i pattini e sopra il ponte BF, tasca centrale nella slitta Z, mount spindle tondo, piedi 8 mm.")
+
+
 def detail(a, X, Y, Zd):
     """Applica le lavorazioni di dettaglio all'assieme costruito in (X, Y, Zd)."""
     dt = Detail(a)
@@ -563,6 +607,7 @@ def detail(a, X, Y, Zd):
     motors(dt)
     frame(dt)
     uprights(dt)
+    lighten(dt, X)
     tooldock(dt, X, cz)
     master_to_slide(dt, X, cz)
     table(dt)

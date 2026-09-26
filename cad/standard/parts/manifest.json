@@ -10,16 +10,16 @@
       "size_mm": [
         40.0,
         700.0,
-        72.0
+        68.0
       ],
-      "kg": 1.704,
+      "kg": 1.287,
       "holes": 18,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
       "home_min": [
         55.0,
         -350.0,
-        -72.0
+        -68.0
       ]
     },
     {
@@ -30,16 +30,16 @@
       "size_mm": [
         40.0,
         700.0,
-        72.0
+        68.0
       ],
-      "kg": 1.704,
+      "kg": 1.287,
       "holes": 18,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
       "home_min": [
         355.0,
         -350.0,
-        -72.0
+        -68.0
       ]
     },
     {
@@ -52,7 +52,7 @@
         40.0,
         55.0
       ],
-      "kg": 0.489,
+      "kg": 0.375,
       "holes": 0,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
@@ -72,7 +72,7 @@
         40.0,
         55.0
       ],
-      "kg": 0.415,
+      "kg": 0.333,
       "holes": 2,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
@@ -92,7 +92,7 @@
         145.5,
         55.0
       ],
-      "kg": 3.209,
+      "kg": 2.295,
       "holes": 34,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
@@ -112,7 +112,7 @@
         40.0,
         67.0
       ],
-      "kg": 0.51,
+      "kg": 0.411,
       "holes": 6,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
@@ -132,7 +132,7 @@
         140.0,
         181.0
       ],
-      "kg": 1.331,
+      "kg": 0.981,
       "holes": 10,
       "material": "EN AW-6082 T6, piatti 6 + flangia 16",
       "process": "saldato e fresato; fori spine Ø10 H7 alesati",
@@ -152,7 +152,7 @@
         140.0,
         181.0
       ],
-      "kg": 1.331,
+      "kg": 0.981,
       "holes": 10,
       "material": "EN AW-6082 T6, piatti 6 + flangia 16",
       "process": "saldato e fresato; fori spine Ø10 H7 alesati",
@@ -172,7 +172,7 @@
         113.0,
         140.0
       ],
-      "kg": 6.486,
+      "kg": 4.661,
       "holes": 39,
       "material": "EN AW-6082 T6, piatti 6 + blocchi pieni",
       "process": "saldato, distensionato, fresato su faccia guide X e canale vite",
@@ -252,7 +252,7 @@
         60.0,
         552.0
       ],
-      "kg": 4.037,
+      "kg": 3.279,
       "holes": 56,
       "material": "EN AW-6082 T651, piastra 60",
       "process": "fresato dal pieno (piastra 15 + ali + torre)",
@@ -312,7 +312,7 @@
         47.0,
         160.0
       ],
-      "kg": 1.061,
+      "kg": 0.951,
       "holes": 68,
       "material": "EN AW-6082 T651, piastra 50",
       "process": "fresato dal pieno",
@@ -392,8 +392,8 @@
         72.0,
         145.0
       ],
-      "kg": 0.747,
-      "holes": 23,
+      "kg": 0.472,
+      "holes": 24,
       "material": "EN AW-6082 T6",
       "process": "tornito e fresato; Ø45 H6 alesato, gole O-ring",
       "home_min": [
@@ -606,7 +606,7 @@
       "size_mm": [
         330.0,
         750.0,
-        875.0
+        879.0
       ],
       "solids": [
         "dock_cam",
@@ -636,11 +636,11 @@
       "part": "MC-ENC-001",
       "file": "cad/standard/parts/MC-ENC-001.step",
       "view": "cad/standard/parts/views/MC-ENC-001.png",
-      "kg": 40.9,
+      "kg": 40.8,
       "size_mm": [
         1000.0,
         1001.0,
-        1169.0
+        1165.0
       ],
       "solids": [
         "cab_chip_tray",
@@ -961,7 +961,8 @@
     "BK/BF Z girati con la base verso il retro e avvitati a due piastre ponte sul carrello (mancavano nel mule).",
     "Piastra motore X saldata come testata della trave (8 mm); piastra motore Y saldata sulla traversa di coda (10 mm, fino a z 7).",
     "Telaio MC-BAS-001: un pezzo saldato (6 tubi + pad), distensionato e poi lavorato su pad, sedi guide Y e facce spalle.",
-    "Trave MC-GAN-001: saldata (piatti 6 mm) con blocchi pieni d'estremità 80 × 80 × 20 per il giunto con le spalle; traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 (2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave resta interno alla spalla (una flangia sopra urterebbe il carrello X in HOME).",
+    "Trave MC-GAN-001: saldata (faccia guide 6 mm, altre pareti 4 mm, D034) con blocchi pieni d'estremità 50 × 80 × 20 per il giunto con le spalle e rinforzi dietro BK/BF X; traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 (2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave resta interno alla spalla (una flangia sopra urterebbe il carrello X in HOME).",
+    "D034 · alleggerimenti: tubi del telaio 3 mm, spalle 4 mm, trave 4 mm con faccia guide 6, tasche sul retro del carrello X fra i pattini e sopra il ponte BF, tasca centrale nella slitta Z, mount spindle tondo, piedi 8 mm.",
     "Clamp MC-TD-003: pull-stud M10 comune, 6 sfere Ø6 bloccate da un pistone spinto da 8 molle a tazza DIN 2093; la leva 3:1 (fulcro a 30 mm, rullo a 90 mm dall'asse) solleva l'asta quando lo Z spinge il rullo sulla camma del dock (D016). Forza e corsa del pacco: TARGET da verificare al banco.",
     "Mount MC-SP-003: collare sul Ø45 h6 con taglio e 2 × M5, camicia di raffreddamento anulare tra due O-ring, alimentata dalle porte Ø4 del receiver."
   ]

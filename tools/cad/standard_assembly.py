@@ -234,8 +234,9 @@ def build(X, Y, Zd, cfg=None):
     bf, bb = D["beam_face"], D["beam_back"]
     bx0, bx1, t = P.BEAM_X[0], P.BEAM_X[1], BM["wall"]
     rh, rd = BM["recess_h"] / 2, BM["recess_d"]
+    tf = BM.get("wall_face", t)          # faccia guide X più spessa delle altre pareti (filetto delle viti delle rotaie)
     beam = box(bx0, bx1, bf, bb, D["beam_bottom"], D["beam_top"]).cut(
-        box(bx0 + BM["end"], bx1 - BM["end"], bf + t, bb - t, D["beam_bottom"] + t, D["beam_top"] - t))
+        box(bx0 + BM["end"], bx1 - BM["end"], bf + tf, bb - t, D["beam_bottom"] + t, D["beam_top"] - t))
     beam = beam.cut(box(bx0 - 1, bx1 + 1, bf - 1, bf + rd, zx - rh, zx + rh))
     beam = (beam.union(box(bx0, bx1, bf + rd, bf + rd + t, zx - rh - t, zx + rh + t))
             .union(box(bx0, bx1, bf, bf + rd + t, zx + rh, zx + rh + t))
