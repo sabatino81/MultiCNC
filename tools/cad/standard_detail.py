@@ -35,7 +35,7 @@ CLR = {"M3": 3.4, "M4": 4.5, "M5": 5.5, "M6": 6.6, "M8": 9.0, "M10": 11.0}      
 CB = {"M3": (6.5, 3.5), "M4": (8.0, 4.5), "M5": (10.0, 5.5), "M6": (11.0, 6.5), "M8": (14.5, 8.5)}  # lamatura ISO 4762
 SUPPORT_HOLE_PITCH = {"BK12": 46.0, "BF12": 46.0, "BK10": 46.0, "BF10": 46.0}      # 2 fori M5 sulla larghezza (catalogo tipico)
 RAIL_BOLT = {"MGN12": ("M3", 6), "MGN15": ("M3", 6), "HGR15": ("M4", 10), "HGR20": ("M5", 12)}   # vite rotaia, filetto
-ICD_UPRIGHT = dict(pins=100.0, pin_d=10.0, bolt="M8", rect=(60.0, 120.0), flange_t=12.0, flange=(80.0, 140.0))  # §5 (flangia 12: M8 su 1,5 d)
+ICD_UPRIGHT = dict(pins=100.0, pin_d=10.0, bolt="M8", rect=(60.0, 120.0), flange_t=getattr(P, "ICD_FLANGE_T", 12.0), flange=(80.0, 140.0))  # §5 (flangia 12: M8 su 1,5 d)
 ROLLER = dict(d=8.0, L=12.0, gap=5.0)         # coppia di rulli (spine rettificate DIN 6325) per sfera Ø10
 BALL_D = 10.0
 PULL_STUD = dict(thread="M10", shank_d=12.0, neck_d=9.0, head_d=15.0, head_h=6.0, L=30.0)   # comune a tutte le teste
@@ -141,7 +141,7 @@ def rails(dt):
     for n, host in (("y_rail_L", "frame_longeron_L"), ("y_rail_R", "frame_longeron_R")):
         b = dt.bb(n)
         xc = (b.xmin + b.xmax) / 2
-        dt.add(host, box(xc - 9, xc + 9, b.ymin, b.ymax, -P.LADDER["wall"] - 4.0, -P.LADDER["wall"] + 0.01))
+        dt.add(host, box(xc - 9, xc + 9, b.ymin, b.ymax, -P.LADDER["wall"] - P.LADDER.get("rail_pad", 4.0), -P.LADDER["wall"] + 0.01))
 
 
 def blocks(dt):
@@ -190,8 +190,25 @@ def a_X(dt):
 def supports(dt):
     a = dt.a
     D = P.derived()
+    top = getattr(P, "X_DRIVE", "face") == "top"
+    # Light a piastre: BK/BF sul cielo della trave, 2 × M5 dall'alto filettati negli spessori; spessori → trave con 2 × M5
+    # fuori dall'impronta del supporto, filettati nel rinforzo interno del cielo trave (uprights())
+    for n in (("x_bf", "x_bk") if top else ()):
+        b = dt.bb(n)
+        k = P.X_AXIS["bf"] if n == "x_bf" else P.X_AXIS["bk"]
+        xc, yc = (b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2
+        for dy in (-SUPPORT_HOLE_PITCH[k] / 2, SUPPORT_HOLE_PITCH[k] / 2):
+            dt.cut(n, cyl("z", b.zmin - 1, b.zmax + 1, xc, yc + dy, CLR["M5"] / 2))
+            dt.hole("x_pads", "z", b.zmin, -1, xc, yc + dy, "tap", "M5", P.X_SCREW_PAD)
+        pb = dt.bb("x_pads")
+        xo = (b.xmin - 7.0) if n == "x_bf" else (b.xmax + 7.0)
+        for yy in (D["beam_face"] + 10.0, D["beam_back"] - 10.0):
+            dt.hole("x_pads", "z", b.zmin, -1, xo, yy, "clr", "M5", P.X_SCREW_PAD + 1, cbore=True)
+            dt.hole("beam", "z", D["beam_top"], -1, xo, yy, "tap", "M5", P.BEAM["wall"] + 8.0)
+        dt.screw("M5", 25, qty=2, where=f"{k} X → spessore (dall'alto)")
+        dt.screw("M5", 16, qty=2, where="spessore → cielo trave")
     # X: BK/BF sulla faccia +y (y = 160) degli spessori, viti M5 negli spessori e nella parete del canale trave
-    for n in ("x_bf", "x_bk"):
+    for n in (() if top else ("x_bf", "x_bk")):
         b = dt.bb(n)
         k = P.X_AXIS["bf"] if n == "x_bf" else P.X_AXIS["bk"]
         xc, zc = (b.xmin + b.xmax) / 2, (b.zmin + b.zmax) / 2
@@ -201,7 +218,7 @@ def supports(dt):
             dt.cut(n, cyl("y", b.ymin - 1, b.ymax + 1, xc, zc + dz, CLR["M5"] / 2))
         dt.screw("M5", 40, qty=2, where=f"{k} X → spessori → trave")
     # Y: BK/BF sui pad delle traverse (z = −48), viti dall'alto
-    for n, host in (("y_bf", "frame_cross_bf"), ("y_bk", "frame_cross_rear")):
+    for n, host in (("y_bf", "frame_cross_bf"), ("y_bk", "frame_cross_end" if P.LADDER.get("rear") == "outrigger" else "frame_cross_rear")):
         b = dt.bb(n)
         k = P.Y_AXIS["bf"] if n == "y_bf" else P.Y_AXIS["bk"]
         xc, yc = (b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2
@@ -215,6 +232,8 @@ def supports(dt):
     y_ax = D["slide_back"] + P.SUPPORT_GAP_Z + P.SUPPORTS[P.Z_AXIS["bk"]]["h"]
     cb_ = D["carriage_back"]
     for n, k in (("z_bf", P.Z_AXIS["bf"]), ("z_bk", P.Z_AXIS["bk"])):
+        if n not in a.parts:             # Light: vite Z fissa-libera
+            continue
         q = P.SUPPORTS[k]
         b = dt.bb(n)
         xc = (b.xmin + b.xmax) / 2
@@ -360,9 +379,10 @@ def frame(dt):
             continue
         for y in (b.ymin + 30, b.ymax - 30):         # 4 piedi: pad 60 × 50 × 12 sotto i longheroni
             xc = (b.xmin + b.xmax) / 2
-            pad = box(xc - 20, xc + 20, y - 30, y + 30, b.zmin - 8, b.zmin + 0.01)
+            fw_, fl_, ft_ = L.get("foot", (40.0, 60.0, 8.0))
+            pad = box(xc - fw_ / 2, xc + fw_ / 2, y - fl_ / 2, y + fl_ / 2, b.zmin - ft_, b.zmin + 0.01)
             dt.add(n, pad)
-            dt.cut(n, cyl("z", b.zmin - 9, b.zmin + L["wall"] + 1, xc, y, TAP["M10"] / 2))
+            dt.cut(n, cyl("z", b.zmin - L.get("foot", (0, 0, 8.0))[2] - 1, b.zmin + L["wall"] + 1, xc, y, TAP["M10"] / 2))
         dt.screw("M10", 0, std="piede antivibrante M10", qty=2, where="piedi telaio")
     dt.notes.append("Telaio MC-BAS-001: un pezzo saldato (6 tubi + pad), distensionato e poi lavorato su pad, sedi guide Y e facce spalle.")
 
@@ -389,13 +409,28 @@ def uprights(dt):
             for sy in (-1, 1):
                 x, y = fxc + sx * I["rect"][0] / 2, yc + sy * I["rect"][1] / 2
                 dt.hole(n, "z", face, +1, x, y, "tap", I["bolt"], I["flange_t"] - 2)
-                dt.add("frame_cross_rear", cyl("z", cr.zmin, face, x, y, 10.0))
+                dt.add("frame_cross_rear", cyl("z", cr.zmin, face, x, y, P.LADDER.get("boss_d", 20.0) / 2))
                 dt.cut("frame_cross_rear", cyl("z", cr.zmin - 1, face + 0.5, x, y, CLR['M8'] / 2))
         for sy in (-1, 1):
             y = yc + sy * I["pins"] / 2
             dt.hole(n, "z", face, +1, fxc, y, "pin", I["pin_d"], 12)
             dt.add("frame_cross_rear", cyl("z", face - 20, face, fxc, y, 10.0))
             dt.hole("frame_cross_rear", "z", face, -1, fxc, y, "pin", I["pin_d"], 14)
+        fp = P.LADDER.get("flange_pocket")
+        if fp:                             # Light: flangia 10 mm solo attorno a M8 e spine (boccole Ø20), il resto scaricato a 10 − fp
+            px0, px1 = (fx0 + P.UPRIGHT["t"] + 2, fx1) if side == "L" else (fx0, fx1 - P.UPRIGHT["t"] - 2)
+            cutter = box(px0, px1, fy0 - 1, fy1 + 1, z1 - fp, z1 + 1)
+            for sx in (-1, 1):
+                for sy in (-1, 1):
+                    cutter = cutter.cut(cyl("z", z1 - fp - 1, z1 + 2, fxc + sx * I["rect"][0] / 2, yc + sy * I["rect"][1] / 2, 10.0))
+            for sy in (-1, 1):
+                cutter = cutter.cut(cyl("z", z1 - fp - 1, z1 + 2, fxc, yc + sy * I["pins"] / 2, 10.0))
+            dt.cut(n, cutter)
+        fw = P.LADDER.get("flange_window")
+        if fw:                             # Light: finestra al centro della flangia, fra le 4 M8 e le 2 spine (pattern §5 invariato)
+            wx0 = fxc - fw[0] / 2
+            dt.cut(n, box(max(wx0, fx0 + P.UPRIGHT["t"] + 3) if side == "L" else wx0, min(fxc + fw[0] / 2, fx1 - P.UPRIGHT["t"] - 3) if side == "R" else fxc + fw[0] / 2,
+                          yc - fw[1] / 2, yc + fw[1] / 2, z0 - 1, z1 + 1))
         dt.screw("M8", 80, qty=4, where=f"spalla {side} → basamento, dal basso attraverso la traversa (ICD §5)")
         dt.screw("Ø10 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → basamento (ICD §5)")
         if P.UPRIGHT_MODE == "plate":      # Light: trave avvitata fra le piastre (4 × M6 per lato nella testata della trave)
@@ -403,8 +438,8 @@ def uprights(dt):
             xe = P.BEAM_X[0] if side == "L" else P.BEAM_X[1]
             for yy in (Dd_["beam_face"] + 10, Dd_["beam_back"] - 10):
                 for zz in (Dd_["beam_bottom"] + 12, Dd_["beam_top"] - 12):
-                    dt.hole(n, "x", b.xmin if side == "L" else b.xmax, inward, yy, zz, "clr", "M6", P.UPRIGHT["t"] + 1, cbore=True)
-                    dt.hole("beam", "x", xe, inward, yy, zz, "tap", "M6", 12)
+                    dt.hole(n, "x", b.xmin if side == "L" else b.xmax, inward, yy, zz, "clr", "M6", P.UPRIGHT["t"] + 1, cbore=P.UPRIGHT["t"] >= 8)
+                    dt.hole("beam", "x", xe, inward, yy, zz, "tap", "M6", P.BEAM.get("cap", 12.0))
             dt.screw("M6", 20, qty=4, where=f"spalla {side} → testata trave")
             continue
         if P.UPRIGHT_MODE == "lift":
@@ -424,15 +459,31 @@ def uprights(dt):
         dt.screw("M8", 40, qty=2, where=f"spalla {side} → trave (dalla finestra d'accesso della spalla)")
         dt.screw("Ø8 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → trave")
     Dd = P.derived()
-    for n in ("x_bf", "x_bk"):          # dietro BK/BF X: rinforzo interno 6 mm della parete del canale (filetto M5 su 10 mm)
+    top_x = getattr(P, "X_DRIVE", "face") == "top"
+    for n in (("x_bf", "x_bk") if top_x else ()):   # sotto gli spessori X: rinforzo interno 8 mm del cielo trave (filetto M5)
+        pb, sb = dt.bb("x_pads"), dt.bb(n)
+        x0, x1 = (sb.xmin - 14.0, sb.xmax) if n == "x_bf" else (sb.xmin, sb.xmax + 14.0)
+        dt.add("beam", box(x0, x1, Dd["beam_face"] + P.BEAM.get("wall_face", P.BEAM["wall"]) - 0.01, Dd["beam_back"] - P.BEAM["wall"] + 0.01,
+                           Dd["beam_top"] - P.BEAM["wall"] - 8.0, Dd["beam_top"] - P.BEAM["wall"] + 0.01))
+    for n in (() if top_x else ("x_bf", "x_bk")):   # dietro BK/BF X: rinforzo interno 6 mm della parete del canale (filetto M5 su 10 mm)
         sb = dt.bb(n)
         dt.add("beam", box(sb.xmin - 5, sb.xmax + 5, Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] - 0.01,
                            Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] + 6, sb.zmin, sb.zmax))
     if P.UPRIGHT_MODE != "box":
         if P.UPRIGHT_MODE == "plate":   # testate piene 12 mm della trave per le viti delle piastre
-            for x0, x1 in ((P.BEAM_X[0], P.BEAM_X[0] + 12), (P.BEAM_X[1] - 12, P.BEAM_X[1])):
-                cap = box(x0, x1, Dd["beam_face"], Dd["beam_back"], Dd["beam_bottom"], Dd["beam_top"]).cut(
-                    box(x0 - 1, x1 + 1, Dd["beam_face"] - 1, Dd["beam_face"] + P.BEAM["recess_d"], Dd["zx"] - P.BEAM["recess_h"] / 2, Dd["zx"] + P.BEAM["recess_h"] / 2))
+            ct = P.BEAM.get("cap", 12.0)
+            for x0, x1 in ((P.BEAM_X[0], P.BEAM_X[0] + ct), (P.BEAM_X[1] - ct, P.BEAM_X[1])):
+                cap = box(x0, x1, Dd["beam_face"], Dd["beam_back"], Dd["beam_bottom"], Dd["beam_top"])
+                if P.BEAM.get("cap_bosses"):   # Light: 4 blocchetti d'angolo 12 mm saldati nel tubo, uno per M6
+                    tf_, tw_ = P.BEAM.get("wall_face", P.BEAM["wall"]), P.BEAM["wall"]
+                    cap = None
+                    for yy, (ya_, yb_) in ((Dd["beam_face"] + 10, (Dd["beam_face"] + tf_ - 0.01, Dd["beam_face"] + 17)),
+                                           (Dd["beam_back"] - 10, (Dd["beam_back"] - 17, Dd["beam_back"] - tw_ + 0.01))):
+                        for za_, zb_ in ((Dd["beam_bottom"] + tw_ - 0.01, Dd["beam_bottom"] + 19), (Dd["beam_top"] - 19, Dd["beam_top"] - tw_ + 0.01)):
+                            bx_ = box(x0, x1, ya_, yb_, za_, zb_)
+                            cap = bx_ if cap is None else cap.fuse(bx_)
+                if P.BEAM["recess_d"] > 0:
+                    cap = cap.cut(box(x0 - 1, x1 + 1, Dd["beam_face"] - 1, Dd["beam_face"] + P.BEAM["recess_d"], Dd["zx"] - P.BEAM["recess_h"] / 2, Dd["zx"] + P.BEAM["recess_h"] / 2))
                 dt.add("beam", cap)
         cr = dt.bb("frame_cross_rear")
         for side in ("L", "R"):

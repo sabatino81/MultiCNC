@@ -49,7 +49,8 @@ PROCESS = [  # (prefisso, materiale, lavorazione) · MULE: da confermare con il 
 
 
 def process(name):
-    return next((m, pr) for k, m, pr in PROCESS if name.startswith(k))
+    over = getattr(P, "PROCESS", {})          # materiali e lavorazioni della base (light_params.py, pro_params.py)
+    return next((m, pr) for k, m, pr in [(k, *v) for k, v in over.items()] + PROCESS if name.startswith(k))
 
 
 def custom_parts(a):

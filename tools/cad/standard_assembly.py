@@ -188,7 +188,13 @@ def build(X, Y, Zd, cfg=None):
     xcen = P.TRAVEL["X"] / 2
     ytc = T["D"] / 2                    # centro tavola (locale)
     xtc = T["W"] / 2
-    y_x_axis = D["beam_face"] + BM["recess_d"] - P.X_SCREW_PAD - P.SUPPORTS[xa["bk"]]["h"]
+    top_drive = getattr(P, "X_DRIVE", "face") == "top"      # Light a piastre: vite X sopra la trave, BK/BF sul cielo
+    if top_drive:
+        y_x_axis = D["beam_face"] + P.X_TOP["dy"]
+        zxs = D["beam_top"] + P.X_SCREW_PAD + P.SUPPORTS[xa["bk"]]["h"]
+    else:
+        y_x_axis = D["beam_face"] + BM["recess_d"] - P.X_SCREW_PAD - P.SUPPORTS[xa["bk"]]["h"]
+        zxs = zx
     y_z_axis = D["slide_back"] + P.SUPPORT_GAP_Z + P.SUPPORTS[za["bk"]]["h"]
     z_y_axis = -L["H"] + L["pad_t"] + P.SUPPORTS[ya["bk"]]["h"]      # vite Y fra i longheroni
 
@@ -218,13 +224,22 @@ def build(X, Y, Zd, cfg=None):
         rear_y = (D["beam_face"], yc_up + 70.0 + 10.0)
     pw = L["pocket_w"]
     pocket = box(xtc - pw / 2, xtc + pw / 2, -400, 400, -H + w, 1)        # passaggio chiocciola Y fino al fondo del tubo
-    a.add("frame_cross_front", rtube_x(inner0, inner1, *L["front_y"]), "FRAME", AL, "MC-BAS-001", "gray")
+    if L.get("front_y"):                # Light: niente traversa anteriore (longheroni a sbalzo davanti alla traversa BF)
+        a.add("frame_cross_front", rtube_x(inner0, inner1, *L["front_y"]), "FRAME", AL, "MC-BAS-001", "gray")
     sy_th = ya["screw_len"] - sum(parts.ENDS[ya["screw"]])
     bf_pad = (-sy_th / 2 - P.SUPPORTS[ya["bf"]]["T"] - 5, -sy_th / 2)
     bk_pad = (sy_th / 2 + 2, sy_th / 2 + 2 + P.SUPPORTS[ya["bk"]]["T"] + 5)
     a.add("frame_cross_bf", rtube_x(inner0, inner1, *L["bf_y"]).cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, bf_pad[0], bf_pad[1], -H, -H + L["pad_t"])),
           "FRAME", AL, "MC-BAS-001", "gray")
     ry1 = max(rear_y[1], bk_pad[1] + 5)       # la traversa posteriore arriva sotto il supporto BK Y
+    outrig = L.get("rear") == "outrigger"
+    if outrig:   # Light: due sbalzi 40 × 40 per lato sotto i bulloni ICD §5 della spalla, traversa BK Y a parte
+        rear = None
+        for x0, x1 in ((FX[0], rails_x[0] - lw / 2), (rails_x[1] + lw / 2, FX[1])):
+            for yy in (yc - 60.0, yc + 60.0):
+                o = box(x0, x1, yy - lw / 2, yy + lw / 2, -H, -dz).cut(box(x0 - 1, x1 + 1, yy - lw / 2 + w, yy + lw / 2 - w, -H + w, -w - dz))
+                rear = o if rear is None else rear.union(o)
+        a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
     rear = box(FX[0], FX[1], rear_y[0], ry1, -H, -dz).cut(box(FX[0] - 1, FX[1] + 1, rear_y[0] + w, ry1 - w, -H + w, -w - dz))
     for xr in rails_x:   # i longheroni attraversano la traversa posteriore
         rear = rear.cut(box(xr - lw / 2, xr + lw / 2, rear_y[0] - 1, ry1 + 1, -H - 1, 1))
@@ -232,8 +247,13 @@ def build(X, Y, Zd, cfg=None):
         box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"]))
     if mode == "lift":                  # la traversa lunga della Pro ingloba la zona della traversa di coda
         rear = rear.cut(box(inner0, inner1, L["end_y"][0], L["end_y"][1], -H - 1, 1))
-    a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
-    end = rtube_x(inner0, inner1, *L["end_y"]).cut(cyl("y", L["end_y"][0] - 1, L["end_y"][1] + 1, xtc, z_y_axis, 20))
+    if not outrig:
+        a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
+    if outrig:   # Light: traversa di coda 40 × 80 × 40 con il pad del BK Y e la piastra del motore Y
+        end = rtube_x(inner0, inner1, bk_pad[0] - 5, L["end_y"][1]).cut(pocket).union(
+            box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"]))
+    else:
+        end = rtube_x(inner0, inner1, *L["end_y"]).cut(cyl("y", L["end_y"][0] - 1, L["end_y"][1] + 1, xtc, z_y_axis, 20))
     a.add("frame_cross_end", end, "FRAME", AL, "MC-BAS-001", "gray")
     if L.get("bottom_plate"):          # Pro: fondo del basamento (nervato = scala + fondo)
         a.add("frame_bottom", box(rails_x[0] - lw / 2, rails_x[1] + lw / 2, L["long_y"][0], L["long_y"][1], -H - L["bottom_plate"], -H),
@@ -245,8 +265,10 @@ def build(X, Y, Zd, cfg=None):
             up = box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]).cut(box(x0 + uw, x1 - uw, rear_y[0] + uw, rear_y[1] - uw, -dz + uw, D["beam_bottom"] - uw))
             a.add(f"upright_{side}", up, "FRAME", AL, "MC-GAN-002", "gray")
     elif mode == "plate":               # Light: piastre ai lati della trave, fino al cielo della trave
+        mx_ = parts.MOTORS[xa["motor"]]
         for side, (x0, x1) in (("L", (FX[0], P.BEAM_X[0])), ("R", (P.BEAM_X[1], FX[1]))):
-            a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_top"]), "FRAME", AL, "MC-GAN-002", "gray")
+            ztop = zxs + mx_[0] / 2 + 8.0 if (top_drive and side == "R") else D["beam_top"]   # la spalla destra porta il motore X
+            a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], -dz, ztop), "FRAME", AL, "MC-GAN-002", "gray")
     else:                               # Pro: montanti del Gantry Lift dietro le estremità della trave
         top_up = D["beam_top"] + Lf["stroke"] + 90.0
         for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + Lf["plate_w"])), ("R", (P.BEAM_X[1] - Lf["plate_w"], P.BEAM_X[1]))):
@@ -258,10 +280,11 @@ def build(X, Y, Zd, cfg=None):
     tf = BM.get("wall_face", t)          # faccia guide X più spessa delle altre pareti (filetto delle viti delle rotaie)
     beam = box(bx0, bx1, bf, bb, D["beam_bottom"], D["beam_top"]).cut(
         box(bx0 + BM["end"], bx1 - BM["end"], bf + tf, bb - t, D["beam_bottom"] + t, D["beam_top"] - t))
-    beam = beam.cut(box(bx0 - 1, bx1 + 1, bf - 1, bf + rd, zx - rh, zx + rh))
-    beam = (beam.union(box(bx0, bx1, bf + rd, bf + rd + t, zx - rh - t, zx + rh + t))
-            .union(box(bx0, bx1, bf, bf + rd + t, zx + rh, zx + rh + t))
-            .union(box(bx0, bx1, bf, bf + rd + t, zx - rh - t, zx - rh)))
+    if rd > 0:                           # canale vite sulla faccia guide (Standard, Pro)
+        beam = beam.cut(box(bx0 - 1, bx1 + 1, bf - 1, bf + rd, zx - rh, zx + rh))
+        beam = (beam.union(box(bx0, bx1, bf + rd, bf + rd + t, zx - rh - t, zx + rh + t))
+                .union(box(bx0, bx1, bf, bf + rd + t, zx + rh, zx + rh + t))
+                .union(box(bx0, bx1, bf, bf + rd + t, zx - rh - t, zx - rh)))
     a.add("beam", beam, "FRAME", AL, "MC-GAN-001", "gray")
 
     x_rail0 = xcen - xa["rail_len"] / 2
@@ -271,23 +294,31 @@ def build(X, Y, Zd, cfg=None):
 
     bkx, bfx, thx = screw_ends(xa)
     sx0 = xcen - thx / 2 - bfx
-    a.add("x_screw", screw_shaft(xa["screw"], xa["screw_len"]).translate((sx0, y_x_axis, zx)), "FRAME", STEEL, "MC-BS-1605X", "silver")
-    rot_face = lambda wp: wp.rotate(ORIGIN, (1, 0, 0), 90)  # noqa: E731  normale di montaggio → −Y
-    a.add("x_bf", rot_face(support(xa["bf"], sx0 + bfx - P.SUPPORTS[xa["bf"]]["T"])).translate((0, y_x_axis, zx)), "FRAME", STEEL, "MC-BKBF-001", "dimgray")
-    a.add("x_bk", rot_face(support(xa["bk"], sx0 + bfx + thx + 2)).translate((0, y_x_axis, zx)), "FRAME", STEEL, "MC-BKBF-001", "dimgray")
-    a.add("x_pads", box(sx0 - 10, sx0 + bfx, bf + rd - P.X_SCREW_PAD, bf + rd, zx - 30, zx + 30)
-          .union(box(sx0 + bfx + thx + 2, sx0 + bfx + thx + 27, bf + rd - P.X_SCREW_PAD, bf + rd, zx - 30, zx + 30)),
-          "FRAME", AL, "MC-BRK-001", "gray")
+    a.add("x_screw", screw_shaft(xa["screw"], xa["screw_len"]).translate((sx0, y_x_axis, zxs)), "FRAME", STEEL, "MC-BS-1605X", "silver")
+    rot_face = (lambda wp: wp) if top_drive else (lambda wp: wp.rotate(ORIGIN, (1, 0, 0), 90))  # noqa: E731  normale di montaggio → −Z / −Y
+    a.add("x_bf", rot_face(support(xa["bf"], sx0 + bfx - P.SUPPORTS[xa["bf"]]["T"])).translate((0, y_x_axis, zxs)), "FRAME", STEEL, "MC-BKBF-001", "dimgray")
+    a.add("x_bk", rot_face(support(xa["bk"], sx0 + bfx + thx + 2)).translate((0, y_x_axis, zxs)), "FRAME", STEEL, "MC-BKBF-001", "dimgray")
+    if top_drive:                    # spessori sul cielo della trave, larghi quanto i supporti (60) a sbalzo sul retro
+        qy = P.SUPPORTS[xa["bk"]]["W"] / 2
+        zt = D["beam_top"]
+        ex = 14.0                     # 14 mm oltre il supporto, verso l'esterno: 2 × M5 spessore → trave
+        a.add("x_pads", box(sx0 - 10 - ex, sx0 + bfx, y_x_axis - qy, y_x_axis + qy, zt, zt + P.X_SCREW_PAD)
+              .union(box(sx0 + bfx + thx + 2, sx0 + bfx + thx + 27 + ex, y_x_axis - qy, y_x_axis + qy, zt, zt + P.X_SCREW_PAD)),
+              "FRAME", AL, "MC-BRK-001", "gray")
+    else:
+        a.add("x_pads", box(sx0 - 10, sx0 + bfx, bf + rd - P.X_SCREW_PAD, bf + rd, zx - 30, zx + 30)
+              .union(box(sx0 + bfx + thx + 2, sx0 + bfx + thx + 27, bf + rd - P.X_SCREW_PAD, bf + rd, zx - 30, zx + 30)),
+              "FRAME", AL, "MC-BRK-001", "gray")
     mx = parts.MOTORS[xa["motor"]]
     cplx = P.COUPLING[xa["screw"]]
     mfx = FX[1] if mode == "plate" else bx1     # Light: motore X sulla faccia esterna della spalla destra
-    a.add("x_coupling", tube("x", sx0 + xa["screw_len"] - 10, mfx - mx[8] + 10, y_x_axis, zx, cplx["D"] / 2, parts.SCREWS[xa["screw"]]["d"] / 2 - 2 + 0.3),
+    a.add("x_coupling", tube("x", sx0 + xa["screw_len"] - 10, mfx - mx[8] + 10, y_x_axis, zxs, cplx["D"] / 2, parts.SCREWS[xa["screw"]]["d"] / 2 - 2 + 0.3),
           "FRAME", STEEL, "MC-CPL-001", "gold")
     if mode != "plate":
         hy, hz, rp = (32.0, 35.0, 20.0) if mx[0] > 50 else (mx[0] / 2 + 4, mx[0] / 2 + 4, mx[3] / 2 + 1)   # NEMA23: quote del mule v3
         a.add("x_motor_plate", box(bx1 - BM["end"], bx1, y_x_axis - hy, bf + rd, zx - hz, zx + hz).cut(cyl("x", bx1 - 10, bx1 + 1, y_x_axis, zx, rp)),
               "FRAME", AL, "MC-BRK-001", "gray")
-    a.add("x_motor", parts.motor(xa["motor"]).rotate(ORIGIN, (0, 1, 0), 90).translate((mfx, y_x_axis, zx)), "FRAME", STEEL, "MC-MOT-001", "black")
+    a.add("x_motor", parts.motor(xa["motor"]).rotate(ORIGIN, (0, 1, 0), 90).translate((mfx, y_x_axis, zxs)), "FRAME", STEEL, "MC-MOT-001", "black")
 
     yr0 = -ya["rail_len"] / 2
     for tag, x in zip("LR", rails_x):
@@ -305,7 +336,8 @@ def build(X, Y, Zd, cfg=None):
     a.add("y_motor", parts.motor(ya["motor"]).rotate(ORIGIN, (1, 0, 0), -90).translate((xtc, L["end_y"][1], z_y_axis)), "FRAME", STEEL, "MC-MOT-001", "black")
 
     # riserve di volume permanenti (nessuna davanti alla trave, D027)
-    a.add("chain_x_volume", box(bx0, bx1, bf + P.CHAIN_X["inset"], bf + P.CHAIN_X["inset"] + P.CHAIN_X["w"], D["beam_top"], D["beam_top"] + P.CHAIN_X["h"]), "FRAME", "volume", None, "orange")
+    cy0 = (y_x_axis + P.SUPPORTS[xa["bk"]]["W"] / 2 + P.CHAIN_X["inset"]) if top_drive else bf + P.CHAIN_X["inset"]   # dietro i supporti X
+    a.add("chain_x_volume", box(bx0, bx1, cy0, cy0 + P.CHAIN_X["w"], D["beam_top"], D["beam_top"] + P.CHAIN_X["h"]), "FRAME", "volume", None, "orange")
     a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], *P.CHAIN_Y.get("y", L["long_y"]), P.CHAIN_Y.get("z0", 0.0), P.CHAIN_Y.get("z0", 0.0) + P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
     M = P.MAGAZINE
     a.add("magazine_volume", box(*M["x"], *M["y"], *M["z"]), "FRAME", "volume", None, "violet")
@@ -354,10 +386,14 @@ def build(X, Y, Zd, cfg=None):
     tower_top = z_screw_top + 20
     car_bot = zx - xa["rail_spacing"] / 2 - parts.BLOCKS[xa["block"]]["W"] / 2 - C["below_x_blocks"]
     car = box(X - C["carriage_w"] / 2, X + C["carriage_w"] / 2, cf, cb, car_bot, z_rail1)
+    if C.get("upper_w"):              # Light: sopra i pattini X la piastra si stringe sulle guide Z
+        z_up = zx + xa["rail_spacing"] / 2 + parts.BLOCKS[xa["block"]]["W"] / 2 + C["below_x_blocks"]
+        car = box(X - C["carriage_w"] / 2, X + C["carriage_w"] / 2, cf, cb, car_bot, z_up).union(
+            box(X - C["upper_w"] / 2, X + C["upper_w"] / 2, cf, cb, z_up - 1, z_rail1))
     car = car.union(box(X - C["tower_w"] / 2, X + C["tower_w"] / 2, cf, cb, z_rail1 - 1, tower_top))
     car = car.cut(box(X - C["slot_w"] / 2, X + C["slot_w"] / 2, cf - 1, cb + 1, zs0 - 10, tower_top + 1))
     cfl = P.CARRIAGE_FLANGE           # D030: ali in avanti ai lati, fuori dalla slitta e dal corridoio di docking (+Y)
-    for sgn in (-1, 1):
+    for sgn in ((-1, 1) if cfl else ()):
         x_in, x_out = X + sgn * (C["carriage_w"] / 2), X + sgn * (C["carriage_w"] / 2 + cfl["t"])
         car = car.union(box(min(x_in, x_out), max(x_in, x_out), cf - cfl["depth"] - 10, cb, car_bot, z_rail1))
     cbx = getattr(P, "CARRIAGE_BOX", None)     # D032 A2: zaino scatolato dietro la piastra, sopra trave e catena X
@@ -378,23 +414,27 @@ def build(X, Y, Zd, cfg=None):
         a.add(f"z_rail_{i}", to_z_minus_y(parts.rail(za["rail"], za["rail_len"])).translate((X + dx, cf, z_rail0)), "XCAR", STEEL, "MC-LIN-153", "steelblue")
     nx_ = parts.SCREWS[xa["screw"]]
     nut_x0 = X - nx_["L"] / 2
-    a.add("x_nut", screw_nut(xa["screw"], flange_end=True).translate((nut_x0, y_x_axis, zx)), "XCAR", STEEL, "MC-BS-1605X", "silver")
+    a.add("x_nut", screw_nut(xa["screw"], flange_end=True).translate((nut_x0, y_x_axis, zxs)), "XCAR", STEEL, "MC-BS-1605X", "silver")
     nx1 = nut_x0 + nx_["L"]
-    a.add("x_nut_bracket", box(nx1, nx1 + P.NUT_BRACKET_T, cb, y_x_axis + 18, zx - 28, zx + 28)
-          .cut(cyl("x", nx1 - 1, nx1 + P.NUT_BRACKET_T + 1, y_x_axis, zx, nx_["d"] / 2 + 0.5)), "XCAR", AL, "MC-BRK-001", "gray")
+    nb_z = (D["beam_top"] + P.CLEAR_PASS, zxs + 28) if top_drive else (zx - 28, zx + 28)   # sopra la trave: 8 mm dal cielo
+    nb_y1 = y_x_axis + (24 if top_drive else 18)
+    a.add("x_nut_bracket", box(nx1, nx1 + P.NUT_BRACKET_T, cb, nb_y1, *nb_z)
+          .cut(cyl("x", nx1 - 1, nx1 + P.NUT_BRACKET_T + 1, y_x_axis, zxs, nx_["d"] / 2 + 0.5)), "XCAR", AL, "MC-BRK-001", "gray")
     rot_z = lambda wp: wp.rotate(ORIGIN, (0, 1, 0), -90).rotate(ORIGIN, (0, 0, 1), -90)  # noqa: E731
     a.add("z_screw", screw_shaft(za["screw"], za["screw_len"]).rotate(ORIGIN, (0, 1, 0), -90).translate((X, y_z_axis, zs0)), "XCAR", STEEL, "MC-BS-1204Z", "silver")
 
     def z_support(kind, z0):
         return rot_z(support(kind, z0)).translate((X, y_z_axis, 0))
-    a.add("z_bf", z_support(za["bf"], zs0 + bfz - P.SUPPORTS[za["bf"]]["T"]), "XCAR", STEEL, "MC-BKBF-001", "dimgray")
+    if za["bf"]:                          # Light: vite Z fissa-libera (solo BK in alto)
+        a.add("z_bf", z_support(za["bf"], zs0 + bfz - P.SUPPORTS[za["bf"]]["T"]), "XCAR", STEEL, "MC-BKBF-001", "dimgray")
     a.add("z_bk", z_support(za["bk"], zs0 + bfz + thz + 2), "XCAR", STEEL, "MC-BKBF-001", "dimgray")
     mz = parts.MOTORS[za["motor"]]
     cplz = P.COUPLING[za["screw"]]
     z_motor_face = tower_top + 10
     a.add("z_coupling", tube("z", z_screw_top - 10, z_motor_face - mz[8] + 10, X, y_z_axis, cplz["D"] / 2, parts.SCREWS[za["screw"]]["d"] / 2 - 2 + 0.3),
           "XCAR", STEEL, "MC-CPL-001", "gold")
-    a.add("z_motor_bracket", box(X - 45, X + 45, y_z_axis - 30, y_z_axis + 30, tower_top, z_motor_face).cut(cyl("z", tower_top - 1, z_motor_face + 1, X, y_z_axis, 20)),
+    zmw = C.get("z_motor_w", 90.0) / 2
+    a.add("z_motor_bracket", box(X - zmw, X + zmw, y_z_axis - 30, y_z_axis + 30, tower_top, z_motor_face).cut(cyl("z", tower_top - 1, z_motor_face + 1, X, y_z_axis, 20)),
           "XCAR", AL, "MC-BRK-001", "gray")
     a.add("z_motor", parts.motor(za["motor"]).translate((X, y_z_axis, z_motor_face)), "XCAR", STEEL, "MC-MOT-001", "black")
 
@@ -666,7 +706,7 @@ def travel_margins(a):
     out["nut_to_supports_mm"] = {
         "X": [dist(a, "x_nut", "x_bf"), dist(a, "x_nut_bracket", "x_bk")],
         "Y": [dist(a, "y_nut_bracket", "y_bk"), dist(a, "y_nut", "y_bf")],
-        "Z": [dist(a, "z_nut", "z_bk"), dist(a, "z_nut_tab", "z_bf")],
+        "Z": [dist(a, "z_nut", "z_bk")] + ([dist(a, "z_nut_tab", "z_bf")] if "z_bf" in a.parts else []),
     }
     return out
 

@@ -9,17 +9,17 @@
       "view": "cad/light/parts/views/frame_longeron_L.png",
       "size_mm": [
         40.0,
-        700.0,
-        68.0
+        585.0,
+        46.0
       ],
-      "kg": 1.117,
-      "holes": 27,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 0.498,
+      "holes": 25,
+      "material": "EN AW-6060 T66, tubi 40 × 40 × 1,5 (coda 40 × 80 × 1,5)",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange spalle",
       "home_min": [
         55.0,
-        -350.0,
-        -68.0
+        -295.0,
+        -46.0
       ]
     },
     {
@@ -29,37 +29,17 @@
       "view": "cad/light/parts/views/frame_longeron_R.png",
       "size_mm": [
         40.0,
-        700.0,
-        68.0
+        585.0,
+        46.0
       ],
-      "kg": 1.117,
-      "holes": 27,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 0.498,
+      "holes": 25,
+      "material": "EN AW-6060 T66, tubi 40 × 40 × 1,5 (coda 40 × 80 × 1,5)",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange spalle",
       "home_min": [
         355.0,
-        -350.0,
-        -68.0
-      ]
-    },
-    {
-      "part": "frame_cross_front",
-      "bom": "ML-BAS-001",
-      "file": "cad/light/parts/ML-BAS-001_frame_cross_front.step",
-      "view": "cad/light/parts/views/frame_cross_front.png",
-      "size_mm": [
-        260.0,
-        40.0,
-        55.0
-      ],
-      "kg": 0.316,
-      "holes": 0,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
-      "home_min": [
-        95.0,
-        -350.0,
-        -60.0
+        -295.0,
+        -46.0
       ]
     },
     {
@@ -70,16 +50,16 @@
       "size_mm": [
         260.0,
         40.0,
-        55.0
+        35.0
       ],
-      "kg": 0.296,
+      "kg": 0.118,
       "holes": 2,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "material": "EN AW-6060 T66, tubi 40 × 40 × 1,5 (coda 40 × 80 × 1,5)",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange spalle",
       "home_min": [
         95.0,
         -250.0,
-        -60.0
+        -40.0
       ]
     },
     {
@@ -88,18 +68,18 @@
       "file": "cad/light/parts/ML-BAS-001_frame_cross_rear.step",
       "view": "cad/light/parts/views/frame_cross_rear.png",
       "size_mm": [
-        672.0,
-        187.5,
-        55.0
+        668.0,
+        160.0,
+        35.0
       ],
-      "kg": 2.033,
-      "holes": 30,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "kg": 0.49,
+      "holes": 24,
+      "material": "EN AW-6060 T66, tubi 40 × 40 × 1,5 (coda 40 × 80 × 1,5)",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange spalle",
       "home_min": [
-        -116.0,
-        62.0,
-        -60.0
+        -114.0,
+        45.0,
+        -40.0
       ]
     },
     {
@@ -109,17 +89,17 @@
       "view": "cad/light/parts/views/frame_cross_end.png",
       "size_mm": [
         260.0,
-        40.0,
-        55.5
+        80.5,
+        44.0
       ],
-      "kg": 0.346,
+      "kg": 0.236,
       "holes": 7,
-      "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
-      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
+      "material": "EN AW-6060 T66, tubi 40 × 40 × 1,5 (coda 40 × 80 × 1,5)",
+      "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e appoggi flange spalle",
       "home_min": [
         95.0,
-        310.0,
-        -60.0
+        209.5,
+        -40.0
       ]
     },
     {
@@ -130,15 +110,15 @@
       "size_mm": [
         80.0,
         140.0,
-        297.0
+        257.0
       ],
-      "kg": 0.902,
-      "holes": 10,
-      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
-      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "kg": 0.349,
+      "holes": 22,
+      "material": "EN AW-5083, piatto 4 + flangia 10 scaricata",
+      "process": "tagliato laser, saldato e fresato; fori spine Ø10 H7 alesati",
       "home_min": [
-        -116.0,
-        62.0,
+        -114.0,
+        55.0,
         -5.0
       ]
     },
@@ -150,15 +130,15 @@
       "size_mm": [
         80.0,
         140.0,
-        297.0
+        316.1
       ],
-      "kg": 0.895,
-      "holes": 15,
-      "material": "EN AW-6082 T6, piatti 6 + flangia 16",
-      "process": "saldato e fresato; fori spine Ø10 H7 alesati",
+      "kg": 0.396,
+      "holes": 27,
+      "material": "EN AW-5083, piatto 4 + flangia 10 scaricata",
+      "process": "tagliato laser, saldato e fresato; fori spine Ø10 H7 alesati",
       "home_min": [
-        476.0,
-        62.0,
+        474.0,
+        55.0,
         -5.0
       ]
     },
@@ -169,16 +149,16 @@
       "view": "cad/light/parts/views/beam.png",
       "size_mm": [
         660.0,
-        50.0,
-        120.0
+        40.0,
+        80.0
       ],
-      "kg": 2.376,
+      "kg": 1.221,
       "holes": 62,
-      "material": "EN AW-6082 T6, piatti 6 + blocchi pieni",
-      "process": "saldato, distensionato, fresato su faccia guide X e canale vite",
+      "material": "EN AW-6060 T66, tubo 40 × 80 (faccia 4, pareti 2) + blocchetti d'angolo",
+      "process": "saldato, fresato su faccia guide X e cielo (spessori BK/BF)",
       "home_min": [
         -110.0,
-        107.0,
+        105.0,
         172.0
       ]
     },
@@ -188,18 +168,18 @@
       "file": "cad/light/parts/ML-BRK-001_x_pads.step",
       "view": "cad/light/parts/views/x_pads.png",
       "size_mm": [
-        562.0,
-        7.0,
-        60.0
+        590.0,
+        60.0,
+        8.0
       ],
-      "kg": 0.049,
-      "holes": 4,
+      "kg": 0.089,
+      "holes": 16,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
-        -52.5,
-        141.0,
-        202.0
+        -66.5,
+        113.0,
+        252.0
       ]
     },
     {
@@ -212,10 +192,10 @@
         350.0,
         9.0
       ],
-      "kg": 2.184,
-      "holes": 163,
-      "material": "EN AW-5083 piastra rettificata 10",
-      "process": "fresata: tasche fra i boss, sedi inserti M6, boccole R1/R2",
+      "kg": 2.182,
+      "holes": 167,
+      "material": "EN AW-5083 piastra rettificata 9",
+      "process": "fresata: pelle 4, tasche fra i boss, sedi inserti M6, boccole R1/R2",
       "home_min": [
         0.0,
         0.0,
@@ -230,16 +210,16 @@
       "size_mm": [
         60.0,
         8.0,
-        62.0
+        53.5
       ],
-      "kg": 0.076,
+      "kg": 0.065,
       "holes": 9,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         195.0,
         192.5,
-        -49.0
+        -40.5
       ]
     },
     {
@@ -248,18 +228,18 @@
       "file": "cad/light/parts/ML-XC-001_x_carriage.step",
       "view": "cad/light/parts/views/x_carriage.png",
       "size_mm": [
-        168.0,
-        46.0,
-        509.5
+        124.0,
+        6.0,
+        497.5
       ],
-      "kg": 1.856,
-      "holes": 69,
-      "material": "EN AW-6082 T651, piastra 60",
-      "process": "fresato dal pieno (piastra 15 + ali + torre)",
+      "kg": 0.528,
+      "holes": 66,
+      "material": "EN AW-6082 T651, piastra 6 + torre",
+      "process": "fresato",
       "home_min": [
-        -84.0,
-        48.0,
-        154.5
+        -62.0,
+        86.0,
+        166.5
       ]
     },
     {
@@ -269,17 +249,17 @@
       "view": "cad/light/parts/views/x_nut_bracket.png",
       "size_mm": [
         8.0,
-        46.0,
-        56.0
+        75.0,
+        50.0
       ],
-      "kg": 0.051,
+      "kg": 0.076,
       "holes": 9,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         17.5,
-        94.0,
-        204.0
+        92.0,
+        260.0
       ]
     },
     {
@@ -288,16 +268,16 @@
       "file": "cad/light/parts/ML-BRK-001_z_motor_bracket.step",
       "view": "cad/light/parts/views/z_motor_bracket.png",
       "size_mm": [
-        90.0,
+        70.0,
         60.0,
         10.0
       ],
-      "kg": 0.108,
+      "kg": 0.075,
       "holes": 9,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
-        -45.0,
+        -35.0,
         73.0,
         664.0
       ]
@@ -308,17 +288,17 @@
       "file": "cad/light/parts/ML-Z-001_z_slide.step",
       "view": "cad/light/parts/views/z_slide.png",
       "size_mm": [
-        136.0,
-        36.0,
+        120.0,
+        31.0,
         130.0
       ],
-      "kg": 0.494,
-      "holes": 52,
-      "material": "EN AW-6082 T651, piastra 50",
-      "process": "fresato dal pieno",
+      "kg": 0.311,
+      "holes": 48,
+      "material": "EN AW-6082 T651, piastra 6 + ali 5",
+      "process": "fresato",
       "home_min": [
-        -68.0,
-        37.0,
+        -60.0,
+        42.0,
         412.0
       ]
     },
@@ -329,16 +309,16 @@
       "view": "cad/light/parts/views/z_nut_tab.png",
       "size_mm": [
         52.0,
-        60.0,
-        12.0
+        58.0,
+        10.0
       ],
-      "kg": 0.092,
+      "kg": 0.074,
       "holes": 13,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
         -26.0,
-        65.0,
+        67.0,
         542.0
       ]
     },
@@ -350,10 +330,10 @@
       "size_mm": [
         120.0,
         143.0,
-        70.0
+        60.0
       ],
-      "kg": 0.606,
-      "holes": 34,
+      "kg": 0.375,
+      "holes": 28,
       "material": "EN AW-7075 T651",
       "process": "fresato; sedi rulli rettificate, piano di accoppiamento lappato",
       "home_min": [
@@ -372,7 +352,7 @@
         96.0,
         12.0
       ],
-      "kg": 0.261,
+      "kg": 0.26,
       "holes": 17,
       "material": "EN AW-7075 T651",
       "process": "fresato; sedi sfere e piano di accoppiamento lappati",
@@ -388,38 +368,18 @@
       "file": "cad/light/parts/ML-SP-003_head_mount.step",
       "view": "cad/light/parts/views/head_mount.png",
       "size_mm": [
-        66.0,
-        78.0,
+        62.0,
+        74.0,
         92.0
       ],
-      "kg": 0.327,
+      "kg": 0.229,
       "holes": 14,
       "material": "EN AW-6082 T6",
       "process": "tornito e fresato; Ø45 H6 alesato, gole O-ring",
       "home_min": [
-        -33.0,
-        -45.0,
+        -31.0,
+        -43.0,
         278.0
-      ]
-    },
-    {
-      "part": "z_bf_bridge",
-      "bom": "ML-BRK-001",
-      "file": "cad/light/parts/ML-BRK-001_z_bf_bridge.step",
-      "view": "cad/light/parts/views/z_bf_bridge.png",
-      "size_mm": [
-        112.0,
-        41.0,
-        32.0
-      ],
-      "kg": 0.219,
-      "holes": 10,
-      "material": "EN AW-6082 T6",
-      "process": "fresato",
-      "home_min": [
-        -56.0,
-        94.0,
-        362.0
       ]
     },
     {
@@ -428,17 +388,17 @@
       "file": "cad/light/parts/ML-BRK-001_z_bk_bridge.step",
       "view": "cad/light/parts/views/z_bk_bridge.png",
       "size_mm": [
-        100.0,
-        41.0,
+        84.0,
+        43.0,
         37.0
       ],
-      "kg": 0.206,
+      "kg": 0.145,
       "holes": 10,
       "material": "EN AW-6082 T6",
       "process": "fresato",
       "home_min": [
-        -50.0,
-        94.0,
+        -42.0,
+        92.0,
         601.0
       ]
     },
@@ -526,7 +486,7 @@
       "view": "cad/light/parts/views/ML-RS-001.png",
       "kg": 2.15,
       "size_mm": [
-        672.0,
+        668.0,
         140.0,
         50.0
       ],
@@ -544,9 +504,9 @@
       "view": "cad/light/parts/views/MC-TD-006.png",
       "kg": null,
       "size_mm": [
-        364.0,
+        366.0,
         750.0,
-        879.0
+        881.0
       ],
       "solids": [
         "dock_cam",
@@ -576,18 +536,18 @@
       "part": "MC-ENC-001",
       "file": "cad/light/parts/MC-ENC-001.step",
       "view": "cad/light/parts/views/MC-ENC-001.png",
-      "kg": 37.25,
+      "kg": 36.84,
       "size_mm": [
-        941.0,
+        939.0,
         1001.0,
-        1068.0
+        1048.0
       ],
       "solids": [
         "cab_chip_tray",
         "cab_door",
         "cab_extraction",
-        "cab_foot_-176_-415",
-        "cab_foot_-176_525",
+        "cab_foot_-174_-415",
+        "cab_foot_-174_525",
         "cab_foot_725_-415",
         "cab_foot_725_525",
         "cab_frame",
@@ -610,7 +570,7 @@
       "std": "ISO 4762",
       "item": "M3×12",
       "where": "rotaie Y → longheroni (filetto nel pad)",
-      "qty": 50
+      "qty": 46
     },
     {
       "std": "ISO 4762",
@@ -662,9 +622,9 @@
     },
     {
       "std": "ISO 4762",
-      "item": "M5×20",
-      "where": "BF10 Z → piastra ponte",
-      "qty": 2
+      "item": "M5×16",
+      "where": "spessore → cielo trave",
+      "qty": 4
     },
     {
       "std": "ISO 4762",
@@ -681,6 +641,18 @@
     {
       "std": "ISO 4762",
       "item": "M5×25",
+      "where": "BF10 X → spessore (dall'alto)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
+      "where": "BK10 X → spessore (dall'alto)",
+      "qty": 2
+    },
+    {
+      "std": "ISO 4762",
+      "item": "M5×25",
       "where": "collare del mount spindle (orecchia)",
       "qty": 2
     },
@@ -688,7 +660,7 @@
       "std": "ISO 4762",
       "item": "M5×25",
       "where": "piastra ponte Z → carrello",
-      "qty": 8
+      "qty": 4
     },
     {
       "std": "ISO 4762",
@@ -712,18 +684,6 @@
       "std": "ISO 4762",
       "item": "M5×30",
       "where": "piastrina chiocciola Z → slitta",
-      "qty": 2
-    },
-    {
-      "std": "ISO 4762",
-      "item": "M5×40",
-      "where": "BF10 X → spessori → trave",
-      "qty": 2
-    },
-    {
-      "std": "ISO 4762",
-      "item": "M5×40",
-      "where": "BK10 X → spessori → trave",
       "qty": 2
     },
     {
