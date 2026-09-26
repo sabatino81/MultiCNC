@@ -1,0 +1,171 @@
+{
+  "arch": "C",
+  "desc": "B0-C · tavola XY (sella Y + tavola X) + testa solo Z su ponte fisso lungo Y a due colonne",
+  "tag": "d032_b0_C_h8_c18",
+  "h": 8.0,
+  "hc": 18.0,
+  "mesh": {
+    "nodes": 289777,
+    "elements": 152100,
+    "dof": 869331,
+    "min_sj": 0.707,
+    "poor": 0
+  },
+  "solve_s": 216.9,
+  "total_s": 568.5,
+  "k": {
+    "Fx": 1.059,
+    "Fy": 0.975,
+    "Fz": 4.066
+  },
+  "du_um": {
+    "Fx": [
+      94.425,
+      -0.129,
+      0.764
+    ],
+    "Fy": [
+      -0.129,
+      102.577,
+      -0.208
+    ],
+    "Fz": [
+      0.764,
+      -0.208,
+      24.595
+    ]
+  },
+  "work": {
+    "Fx": 4.721236,
+    "Fy": 5.128833,
+    "Fz": 1.229758
+  },
+  "balance": {
+    "Fx": 1.0,
+    "Fy": 1.0,
+    "Fz": 1.0
+  },
+  "energy_balance_ok": true,
+  "balance_attempts": 1,
+  "energy": {
+    "Fx": {
+      "lands": 0.249085,
+      "base": 0.606279,
+      "post": 0.280396,
+      "bridge": 0.704052,
+      "bridge_tower": 0.012474,
+      "saddle": 0.091932,
+      "table": 0.136769,
+      "ram": 0.298763,
+      "head": 0.925915,
+      "yblocks": 0.015252,
+      "xblocks": 0.009762,
+      "zblocks": 0.088384,
+      "yscrew": 0.0,
+      "xscrew": 0.136072,
+      "zscrew": 0.0,
+      "tooldock": 0.9161,
+      "bearing": 0.25
+    },
+    "Fy": {
+      "lands": 0.240262,
+      "base": 0.616244,
+      "post": 0.637084,
+      "bridge": 0.562866,
+      "bridge_tower": 0.002673,
+      "saddle": 0.09207,
+      "table": 0.146588,
+      "ram": 0.381689,
+      "head": 0.940596,
+      "yblocks": 0.037679,
+      "xblocks": 0.025308,
+      "zblocks": 0.154081,
+      "yscrew": 0.125593,
+      "xscrew": 0.0,
+      "zscrew": 0.0,
+      "tooldock": 0.9161,
+      "bearing": 0.25
+    },
+    "Fz": {
+      "lands": 0.107007,
+      "base": 0.344063,
+      "post": 0.153186,
+      "bridge": 0.12562,
+      "bridge_tower": 0.019412,
+      "saddle": 0.017371,
+      "table": 0.083158,
+      "ram": 0.106379,
+      "head": 0.025452,
+      "yblocks": 0.008282,
+      "xblocks": 0.014466,
+      "zblocks": 0.002376,
+      "yscrew": 0.0,
+      "xscrew": 0.0,
+      "zscrew": 0.149994,
+      "tooldock": 0.031324,
+      "bearing": 0.041667
+    }
+  },
+  "mass": {
+    "parts": {
+      "pad_zblk_00_rail": 0.082,
+      "pad_zblk_01_rail": 0.082,
+      "pad_zblk_10_rail": 0.06,
+      "pad_zblk_11_rail": 0.06,
+      "pad_yblk_00_rail": 0.15,
+      "pad_yblk_01_rail": 0.15,
+      "pad_yblk_10_rail": 0.167,
+      "pad_yblk_11_rail": 0.167,
+      "pad_zscr_b": 0.039,
+      "pad_yscr_b": 0.032,
+      "base": 5.08,
+      "post_F": 0.711,
+      "post_R": 0.711,
+      "bridge": 5.807,
+      "bridge_tower": 0.478,
+      "pad_yblk_00": 0.051,
+      "pad_yblk_01": 0.051,
+      "pad_yblk_10": 0.051,
+      "pad_yblk_11": 0.051,
+      "pad_xblk_00_rail": 0.207,
+      "pad_xblk_01_rail": 0.207,
+      "pad_xblk_10_rail": 0.207,
+      "pad_xblk_11_rail": 0.207,
+      "pad_xscr_b": 0.032,
+      "pad_yscr_a": 0.041,
+      "saddle": 2.763,
+      "pad_xblk_00": 0.051,
+      "pad_xblk_01": 0.051,
+      "pad_xblk_10": 0.051,
+      "pad_xblk_11": 0.051,
+      "pad_xscr_a": 0.041,
+      "pad_workpiece": 0.196,
+      "table": 3.375,
+      "pad_zblk_00": 0.046,
+      "pad_zblk_01": 0.046,
+      "pad_zblk_10": 0.046,
+      "pad_zblk_11": 0.046,
+      "pad_zscr_a": 0.036,
+      "ram": 2.673
+    },
+    "head_al": 1.134,
+    "struct": 24.0,
+    "allowance": 20.0,
+    "extra": 0.0,
+    "machine": 44.0,
+    "machine_exact": 44.00235343274444,
+    "wall_scale": 0.687,
+    "walls": {
+      "base": 2.06,
+      "post_F": 2.06,
+      "post_R": 2.06,
+      "bridge": 2.06,
+      "bridge_tower": 2.06,
+      "saddle": 2.06,
+      "table": 2.06,
+      "ram": 5
+    },
+    "lands": 2.75
+  },
+  "date": "2026-09-26"
+}

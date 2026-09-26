@@ -1,0 +1,163 @@
+{
+  "arch": "B",
+  "desc": "B0-B · tavola fissa (cielo della base scatolata) + gantry mobile Y su guide laterali, due viti Y",
+  "tag": "d032_b0_B_h8_c18",
+  "h": 8.0,
+  "hc": 18.0,
+  "mesh": {
+    "nodes": 269157,
+    "elements": 141383,
+    "dof": 807471,
+    "min_sj": 0.706,
+    "poor": 0
+  },
+  "solve_s": 201.3,
+  "total_s": 400.9,
+  "k": {
+    "Fx": 1.062,
+    "Fy": 1.028,
+    "Fz": 4.665
+  },
+  "du_um": {
+    "Fx": [
+      94.128,
+      -1.537,
+      0.278
+    ],
+    "Fy": [
+      -1.537,
+      97.315,
+      -9.11
+    ],
+    "Fz": [
+      0.278,
+      -9.11,
+      21.436
+    ]
+  },
+  "work": {
+    "Fx": 4.70642,
+    "Fy": 4.865742,
+    "Fz": 1.071818
+  },
+  "balance": {
+    "Fx": 1.0,
+    "Fy": 1.0,
+    "Fz": 1.0
+  },
+  "energy_balance_ok": true,
+  "balance_attempts": 1,
+  "energy": {
+    "Fx": {
+      "lands": 0.409728,
+      "base": 0.191483,
+      "uprights": 0.306548,
+      "beam": 0.464758,
+      "carriage": 0.261996,
+      "ram": 0.449288,
+      "head": 0.926056,
+      "yblocks": 0.027294,
+      "xblocks": 0.180601,
+      "zblocks": 0.164996,
+      "yscrew": 0.0215,
+      "xscrew": 0.136072,
+      "zscrew": 0.0,
+      "tooldock": 0.9161,
+      "bearing": 0.25
+    },
+    "Fy": {
+      "lands": 0.710092,
+      "base": 0.207755,
+      "uprights": 0.043449,
+      "beam": 0.238942,
+      "carriage": 1.027092,
+      "ram": 0.305841,
+      "head": 0.940429,
+      "yblocks": 0.01729,
+      "xblocks": 0.064629,
+      "zblocks": 0.081323,
+      "yscrew": 0.0628,
+      "xscrew": 0.0,
+      "zscrew": 0.0,
+      "tooldock": 0.9161,
+      "bearing": 0.25
+    },
+    "Fz": {
+      "lands": 0.120315,
+      "base": 0.306713,
+      "uprights": 0.074762,
+      "beam": 0.118823,
+      "carriage": 0.045919,
+      "ram": 0.112818,
+      "head": 0.02545,
+      "yblocks": 0.03416,
+      "xblocks": 0.005724,
+      "zblocks": 0.004147,
+      "yscrew": 2e-06,
+      "xscrew": 0.0,
+      "zscrew": 0.149994,
+      "tooldock": 0.031324,
+      "bearing": 0.041667
+    }
+  },
+  "mass": {
+    "parts": {
+      "pad_yblk_00_rail": 0.167,
+      "pad_yblk_01_rail": 0.166,
+      "pad_yblk_10_rail": 0.167,
+      "pad_yblk_11_rail": 0.166,
+      "pad_yscr_0_b": 0.025,
+      "pad_yscr_1_b": 0.025,
+      "pad_workpiece": 0.196,
+      "base": 8.488,
+      "pad_yblk_00": 0.047,
+      "pad_yblk_01": 0.047,
+      "pad_yblk_10": 0.047,
+      "pad_yblk_11": 0.047,
+      "pad_xblk_00_rail": 0.207,
+      "pad_xblk_01_rail": 0.207,
+      "pad_xblk_10_rail": 0.207,
+      "pad_xblk_11_rail": 0.207,
+      "pad_yscr_0_a": 0.025,
+      "pad_yscr_1_a": 0.025,
+      "pad_xscr_b": 0.026,
+      "uprights_L": 0.527,
+      "uprights_R": 0.527,
+      "beam": 5.671,
+      "pad_zblk_00_rail": 0.082,
+      "pad_zblk_01_rail": 0.082,
+      "pad_zblk_10_rail": 0.082,
+      "pad_zblk_11_rail": 0.082,
+      "pad_xblk_00": 0.051,
+      "pad_xblk_01": 0.051,
+      "pad_xblk_10": 0.051,
+      "pad_xblk_11": 0.051,
+      "pad_zscr_b": 0.039,
+      "pad_xscr_a": 0.032,
+      "carriage": 1.614,
+      "pad_zblk_00": 0.046,
+      "pad_zblk_01": 0.046,
+      "pad_zblk_10": 0.046,
+      "pad_zblk_11": 0.046,
+      "pad_zscr_a": 0.036,
+      "ram": 2.673
+    },
+    "head_al": 1.134,
+    "struct": 21.71,
+    "allowance": 20.0,
+    "extra": 2.3,
+    "machine": 44.0,
+    "machine_exact": 44.006980186014246,
+    "wall_scale": 0.641,
+    "walls": {
+      "base": 1.92,
+      "uprights_L": 2.56,
+      "uprights_R": 2.56,
+      "beam": 2.56,
+      "carriage": 2.56,
+      "ram": 5
+    },
+    "lands": 2.82
+  },
+  "date": "2026-09-26"
+}

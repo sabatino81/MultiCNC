@@ -93,6 +93,8 @@ def main():
 
 <section class="section"><div class="callout"><b>Cosa deve ottenere un vero concept B.</b> Circa ×{it(fw_gate, 1)} della rigidezza complessiva per il gate e ×{it(fw_des, 1)} per il target di progetto, sul gantry e sul resto della macchina insieme, scendendo da {it(mass, 1) if mass else "~45,7"} a ≤ 42 kg. In alluminio a massa costante questo non viene da pareti più spesse: serve cambiare sezioni (altezza delle travi, interassi di pattini e guide), topologia (catena punta → pezzo più corta) e forse cinematica. La trave ad alta inerzia (A3) entra lì, non su un'architettura già fermata.</div></section>
 
+<section class="section"><p><a class="btn primary" href="fea-d032-b0.html">B0 architecture screen · tre architetture a 44 kg</a></p></section>
+
 <section class="section"><h2>Rigenerare</h2><p><code>python tools/fea/d032_lim.py</code> dai risultati di C3c; la verifica FEA con E e k ×4 si ottiene lanciando C3c con i moduli e le molle moltiplicati (<code>fea/d032/LIM4_check.json</code>).</p></section>
 </main><script src="../assets/nav.js"></script></body></html>
 """

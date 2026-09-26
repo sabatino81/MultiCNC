@@ -52,6 +52,7 @@
       ['FEA gantry · D031','base/fea-d031-gantry.html'],
       ['Concept · D032','base/fea-d032.html'],
       ['Stiffness envelope · D032-LIM','base/fea-d032-lim.html'],
+      ['Architecture screen · D032-B0','base/fea-d032-b0.html'],
       ['Clearance & lift','base/gantry-lift.html'],
       ['ToolDock','mechanics/tooldock.html'],
       ['ToolDock meccanico · D016','base/tooldock-d016.html'],
