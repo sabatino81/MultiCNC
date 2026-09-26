@@ -10,8 +10,8 @@
     "min_sj": 0.587,
     "poor": 0
   },
-  "solve_s": 211.7,
-  "total_s": 295.4,
+  "solve_s": 232.0,
+  "total_s": 320.1,
   "mass": {
     "beam": 6.116,
     "uprights": 1.932,
@@ -22,7 +22,7 @@
   "k": {
     "Fx": 1.215,
     "Fy": 1.024,
-    "Fz": 2.198
+    "Fz": 2.083
   },
   "tip_um": {
     "Fx": [
@@ -36,22 +36,22 @@
       -42.86
     ],
     "Fz": [
-      0.71,
-      -54.29,
-      91.01
+      0.41,
+      -57.15,
+      96.01
     ],
     "FxFz": [
-      124.21,
-      -56.53,
-      91.32
+      123.91,
+      -59.39,
+      96.32
     ],
     "FyFz": [
-      -1.53,
-      92.14,
-      48.15
+      -1.83,
+      89.28,
+      53.15
     ]
   },
-  "worst_um": 164.2,
+  "worst_um": 167.8,
   "energy": {
     "Fx": {
       "uprights": 0.371996,
@@ -80,24 +80,24 @@
       "bearing": 0.5625
     },
     "Fz": {
-      "uprights": 0.554163,
-      "beam": 4.693145,
-      "carriage": 0.816098,
-      "zslide": 1.313194,
-      "head": 0.093855,
-      "xblocks": 0.179935,
-      "xscrew": 1e-06,
-      "zblocks": 0.081715,
-      "zscrew": 0.616506,
-      "tooldock": 0.112131,
+      "uprights": 0.618101,
+      "beam": 5.233947,
+      "carriage": 0.908248,
+      "zslide": 1.467204,
+      "head": 0.101891,
+      "xblocks": 0.200288,
+      "xscrew": 0.0,
+      "zblocks": 0.090611,
+      "zscrew": 0.689055,
+      "tooldock": 0.125297,
       "bearing": 0.166667
     }
   },
   "work": {
     "Fx": 9.262733,
     "Fy": 10.98216,
-    "Fz": 9.101007
+    "Fz": 9.60131
   },
   "concept": "C3c",
-  "desc": "C3c · C1b + connettore a uscita laterale, receiver 15 (braccio ~203 mm)"
+  "desc": "C3c · C1b + connettore a uscita laterale, receiver 15 (braccio ~203 mm) · structural reference only, requires ICD v5 packaging resolution"
 }
