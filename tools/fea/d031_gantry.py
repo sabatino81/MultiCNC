@@ -209,6 +209,22 @@ def solve(tag, h, hc, rigid=(), stiff_springs=(), energy=False):
         old = json.loads(cache.read_text())
         if old.get("key") == key:
             return old["result"]
+    for attempt in (1, 2):                      # D032: soluzione valida solo se il bilancio energetico chiude (±2%)
+        r = _solve_once(tag, h, hc, rigid, stiff_springs)
+        bad = [n for n in r["work"] if r["energy"].get(n) and abs(sum(r["energy"][n].values()) / r["work"][n] - 1.0) > 0.02]
+        r["energy_balance_ok"] = not bad
+        if not bad:
+            break
+        print(f"{tag}: bilancio energetico fuori dal 2% in {bad}, nuova soluzione (tentativo {attempt})", flush=True)
+        for f in (WORK / tag).glob("*.frd"):
+            f.unlink()                          # la cache di ccx.run non deve riusare la soluzione sospetta
+    r["balance_attempts"] = attempt
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(json.dumps(dict(key=key, result=r)))
+    return r
+
+
+def _solve_once(tag, h, hc, rigid, stiff_springs):
     t0 = time.time()
     m, info, monitor, tip, mass = build(tag, h, hc, rigid, stiff_springs)
     disp, _ = m.run(monitor)
@@ -221,8 +237,6 @@ def solve(tag, h, hc, rigid=(), stiff_springs=(), energy=False):
              worst_um=round(max(float(np.linalg.norm(U[n])) for n in U), 1),
              energy={n: {g: round(e, 6) for g, e in energy.get(n, {}).items()} for n, _, _ in CASES},
              work={n: round(0.5 * f * abs(float(U[n][d])) / 1000.0, 6) for n, d, f in (("Fx", 0, 150.0), ("Fy", 1, 150.0), ("Fz", 2, 200.0))})
-    cache.parent.mkdir(parents=True, exist_ok=True)
-    cache.write_text(json.dumps(dict(key=key, result=r)))
     return r
 
 
