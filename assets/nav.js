@@ -35,37 +35,45 @@
       ['Decision log','docs/decisions.html']
     ],['general/','docs/']],
     ['02','Basi · Standard',[
+      ['#','Panoramica'],
       ['Overview','base/index.html'],
       ['Tre basi','base/lineup.html'],
       ['Interfacce comuni · ICD','base/icd.html'],
-      ['Load case · D014','base/loads.html'],
-      ['Funzionalità','base/functions.html'],
       ['Architettura meccanica','base/mechanics.html'],
       ['Cinematica XYZ','base/xyz.html'],
-      ['Guide Standard · D015','base/rails.html'],
-      ['CAD Standard · mule','base/cad-standard.html'],
-      ['Vista 3D · mule e FEA','base/viewer-3d.html'],
-      ['Rigidezza · D028','base/compliance-d028.html'],
+      ['Funzionalità','base/functions.html'],
+      ['Interfacce moduli','base/interfaces.html'],
+      ['#','Requisiti'],
+      ['Carichi · D014','base/loads.html'],
+      ['Target Standard','base/performance.html'],
+      ['Vincoli Standard','base/constraints.html'],
+      ['Sicurezza','base/safety.html'],
+      ['#','Progetto meccanico'],
+      ['Guide · D015','base/rails.html'],
+      ['Luce e rialzi','base/gantry-lift.html'],
+      ['ToolDock','mechanics/tooldock.html'],
+      ['ToolDock meccanico · D016','base/tooldock-d016.html'],
       ['ToolDock e testa · D029','base/tooldock-d029.html'],
-      ['FEA a solidi · D031','base/fea-d031.html'],
+      ['#','CAD'],
+      ['Assieme Standard · mule','base/cad-standard.html'],
+      ['Vista 3D','base/viewer-3d.html'],
+      ['#','Analisi strutturale'],
+      ['Rigidezza · D028','base/compliance-d028.html'],
+      ['FEA master e testa · D031','base/fea-d031.html'],
       ['FEA slitta Z · D031','base/fea-d031-z.html'],
       ['FEA gantry · D031','base/fea-d031-gantry.html'],
       ['Concept · D032','base/fea-d032.html'],
-      ['Stiffness envelope · D032-LIM','base/fea-d032-lim.html'],
-      ['Architecture screen · D032-B0','base/fea-d032-b0.html'],
-      ['Clearance & lift','base/gantry-lift.html'],
-      ['ToolDock','mechanics/tooldock.html'],
-      ['ToolDock meccanico · D016','base/tooldock-d016.html'],
-      ['Elettronica & controllo','base/control.html'],
-      ['Sicurezza','base/safety.html'],
-      ['Interfacce moduli','base/interfaces.html'],
-      ['Target prestazionali','base/performance.html'],
-      ['Vincoli','base/constraints.html'],
+      ['Limite di rigidezza · D032','base/fea-d032-lim.html'],
+      ['Confronto architetture · D032','base/fea-d032-b0.html'],
+      ['#','Elettronica'],
+      ['Elettronica e controllo','base/control.html'],
+      ['#','BOM'],
       ['BOM Standard','bom/base.html'],
       ['BOM Light Core','bom/base-light.html'],
       ['BOM Platform Pack','bom/platform-pack.html'],
       ['BOM Pro','bom/base-pro.html'],
-      ['Test & validazione','base/validation.html']
+      ['#','Verifica'],
+      ['Test e validazione','base/validation.html']
     ],['base/','bom/base','mechanics/']],
     ['03','PCB Kit',[
       ['Overview','pcb/index.html'],
@@ -148,14 +156,18 @@
   ];
   window.MULTICNC={VERSION,TREE,url};
 
-  const link=([t,h,b])=>b
+  const isHead=(i)=>i[0]==='#';
+  const link=([t,h,b])=>t==='#'
+    ? `<div class="tree-sub">${h}</div>`
+    : b
     ? `<span class="tree-link is-${b.toLowerCase()}" aria-disabled="true"><span>${t}</span><em>${b}</em></span>`
     : `<a class="tree-link ${active(h)?'active':''}" href="${url(h)}"${active(h)?' aria-current="page"':''}><span>${t}</span></a>`;
   const group=([n,label,items,prefixes])=>{
-    const ready=items.filter(i=>!i[2]).length;
-    const open=items.some(([,h,b])=>!b&&active(h))||prefixes.some(under);
-    const state=ready===items.length?'done':ready?'wip':'planned';
-    return `<details class="tree-group is-${state}" ${open?'open':''}><summary><b>${n}</b><span>${label}</span><i title="${ready}/${items.length} capitoli pronti">${ready}/${items.length}</i></summary><div class="tree-children">${items.map(link).join('')}</div></details>`;
+    const pages=items.filter(i=>!isHead(i));
+    const ready=pages.filter(i=>!i[2]).length;
+    const open=pages.some(([,h,b])=>!b&&active(h))||prefixes.some(under);
+    const state=ready===pages.length?'done':ready?'wip':'planned';
+    return `<details class="tree-group is-${state}" ${open?'open':''}><summary><b>${n}</b><span>${label}</span><i title="${ready}/${pages.length} capitoli pronti">${ready}/${pages.length}</i></summary><div class="tree-children">${items.map(link).join('')}</div></details>`;
   };
 
   const html=`
@@ -188,6 +200,7 @@
     side.querySelectorAll('.tree-group').forEach(g=>{
       let hit=false;
       g.querySelectorAll('.tree-link').forEach(l=>{const m=!s||l.textContent.toLowerCase().includes(s)||g.querySelector('summary').textContent.toLowerCase().includes(s);l.hidden=!m;hit=hit||m});
+      g.querySelectorAll('.tree-sub').forEach(h=>h.hidden=!!s);
       g.hidden=!hit; if(s) g.open=hit;
     });
   });
@@ -201,7 +214,7 @@
   if(cur) cur.scrollIntoView({block:'center'});
 
   // Prev / next pager across the chapters that exist
-  const flat=[['Dashboard','index.html'],...TREE.flatMap(g=>g[2].filter(i=>!i[2]))];
+  const flat=[['Dashboard','index.html'],...TREE.flatMap(g=>g[2].filter(i=>!isHead(i)&&!i[2]))];
   const i=flat.findIndex(([,h])=>active(h));
   const main=document.querySelector('main');
   if(main&&i>=0){

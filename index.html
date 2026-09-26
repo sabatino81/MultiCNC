@@ -113,7 +113,8 @@
 <script src="assets/nav.js"></script>
 <script>
 (()=>{const M=window.MULTICNC;if(!M)return;
- document.getElementById('roadmap').innerHTML=M.TREE.map(([n,label,items])=>{
+ document.getElementById('roadmap').innerHTML=M.TREE.map(([n,label,all])=>{
+  const items=all.filter(i=>i[0]!=='#');
   const ready=items.filter(i=>!i[2]).length,pct=Math.round(ready/items.length*100);
   const st=ready===items.length?'done':ready?'wip':'planned';
   const first=items.find(i=>!i[2]);
