@@ -34,7 +34,7 @@ TAP = {"M3": 2.5, "M4": 3.3, "M5": 4.2, "M6": 5.0, "M8": 6.8, "M10": 8.5}       
 CLR = {"M3": 3.4, "M4": 4.5, "M5": 5.5, "M6": 6.6, "M8": 9.0, "M10": 11.0}         # passante medio ISO 273
 CB = {"M3": (6.5, 3.5), "M4": (8.0, 4.5), "M5": (10.0, 5.5), "M6": (11.0, 6.5), "M8": (14.5, 8.5)}  # lamatura ISO 4762
 SUPPORT_HOLE_PITCH = {"BK12": 46.0, "BF12": 46.0, "BK10": 46.0, "BF10": 46.0}      # 2 fori M5 sulla larghezza (catalogo tipico)
-NEMA23_PITCH, NEMA23_PILOT = 47.14, 38.1
+RAIL_BOLT = {"MGN12": ("M3", 6), "MGN15": ("M3", 6), "HGR15": ("M4", 10), "HGR20": ("M5", 12)}   # vite rotaia, filetto
 ICD_UPRIGHT = dict(pins=100.0, pin_d=10.0, bolt="M8", rect=(60.0, 120.0), flange_t=12.0, flange=(80.0, 140.0))  # §5 (flangia 12: M8 su 1,5 d)
 ROLLER = dict(d=8.0, L=12.0, gap=5.0)         # coppia di rulli (spine rettificate DIN 6325) per sfera Ø10
 BALL_D = 10.0
@@ -98,10 +98,12 @@ class Detail:
             s = p["shape"]
             if n in self.adds:
                 s = s.fuse(*self.adds[n]).clean()
-            if n in self.cuts:                     # utensili sovrapposti: un compound per gruppo di tagli disgiunti
+            if n in self.cuts:                     # utensili sovrapposti (foro + lamatura): fusi a gruppi, poi un taglio per gruppo
                 tools = self.cuts[n]
-                for i in range(0, len(tools), 1 if len(tools) < 40 else 8):
-                    s = s.cut(compound(tools[i:i + (1 if len(tools) < 40 else 8)]))
+                step = 1 if len(tools) < 40 else 10
+                for i in range(0, len(tools), step):
+                    grp = tools[i:i + step]
+                    s = s.cut(grp[0] if len(grp) == 1 else grp[0].fuse(*grp[1:]).clean())
             p["shape"] = s
 
 
@@ -121,20 +123,20 @@ def rails(dt):
         b = dt.bb(n)
         zc = (b.zmin + b.zmax) / 2
         for s in rail_holes(xa["rail"], xa["rail_len"]):
-            dt.hole("beam", "y", b.ymax, +1, b.xmin + s, zc, "tap", "M4", 10)
-        dt.screw("M4", 20, where="rotaie X → trave", qty=len(rail_holes(xa["rail"], xa["rail_len"])))
+            dt.hole("beam", "y", b.ymax, +1, b.xmin + s, zc, "tap", *RAIL_BOLT[xa["rail"]])
+        dt.screw(RAIL_BOLT[xa["rail"]][0], 20, where="rotaie X → trave", qty=len(rail_holes(xa["rail"], xa["rail_len"])))
     for n, host in (("y_rail_L", "frame_longeron_L"), ("y_rail_R", "frame_longeron_R")):
         b = dt.bb(n)
         xc = (b.xmin + b.xmax) / 2
         for s in rail_holes(ya["rail"], ya["rail_len"]):
-            dt.hole(host, "z", b.zmin, -1, xc, b.ymin + s, "tap", "M3", 6)
-        dt.screw("M3", 12, where="rotaie Y → longheroni (filetto nel pad di 8 mm)", qty=len(rail_holes(ya["rail"], ya["rail_len"])))
+            dt.hole(host, "z", b.zmin, -1, xc, b.ymin + s, "tap", *RAIL_BOLT[ya["rail"]])
+        dt.screw(RAIL_BOLT[ya["rail"]][0], 12, where="rotaie Y → longheroni (filetto nel pad)", qty=len(rail_holes(ya["rail"], ya["rail_len"])))
     for n in ("z_rail_0", "z_rail_1"):
         b = dt.bb(n)
         xc = (b.xmin + b.xmax) / 2
         for s in rail_holes(za["rail"], za["rail_len"]):
-            dt.hole("x_carriage", "y", b.ymax, +1, xc, b.zmin + s, "tap", "M4", 10)
-        dt.screw("M4", 20, where="rotaie Z → carrello X", qty=len(rail_holes(za["rail"], za["rail_len"])))
+            dt.hole("x_carriage", "y", b.ymax, +1, xc, b.zmin + s, "tap", *RAIL_BOLT[za["rail"]])
+        dt.screw(RAIL_BOLT[za["rail"]][0], 20, where="rotaie Z → carrello X", qty=len(rail_holes(za["rail"], za["rail_len"])))
     # rotaie Y: pad lavorati di 8 mm sotto la rotaia (parete del tubo 4 mm troppo corta per l'M3)
     for n, host in (("y_rail_L", "frame_longeron_L"), ("y_rail_R", "frame_longeron_R")):
         b = dt.bb(n)
@@ -191,7 +193,7 @@ def supports(dt):
     # X: BK/BF sulla faccia +y (y = 160) degli spessori, viti M5 negli spessori e nella parete del canale trave
     for n in ("x_bf", "x_bk"):
         b = dt.bb(n)
-        k = "BF12" if n == "x_bf" else "BK12"
+        k = P.X_AXIS["bf"] if n == "x_bf" else P.X_AXIS["bk"]
         xc, zc = (b.xmin + b.xmax) / 2, (b.zmin + b.zmax) / 2
         for dz in (-SUPPORT_HOLE_PITCH[k] / 2, SUPPORT_HOLE_PITCH[k] / 2):
             dt.hole("x_pads", "y", b.ymax, +1, xc, zc + dz, "clr", "M5", P.X_SCREW_PAD + 1)
@@ -201,7 +203,7 @@ def supports(dt):
     # Y: BK/BF sui pad delle traverse (z = −48), viti dall'alto
     for n, host in (("y_bf", "frame_cross_bf"), ("y_bk", "frame_cross_rear")):
         b = dt.bb(n)
-        k = "BF12" if n == "y_bf" else "BK12"
+        k = P.Y_AXIS["bf"] if n == "y_bf" else P.Y_AXIS["bk"]
         xc, yc = (b.xmin + b.xmax) / 2, (b.ymin + b.ymax) / 2
         for dx in (-SUPPORT_HOLE_PITCH[k] / 2, SUPPORT_HOLE_PITCH[k] / 2):
             dt.hole(host, "z", b.zmin, -1, xc + dx, yc, "tap", "M5", 10)
@@ -246,7 +248,9 @@ def nuts(dt):
     a = dt.a
     D = P.derived()
     b = dt.bb("x_nut_bracket")                     # staffa X fino a y 159: la flangia Ø48 della chiocciola sta tutta sulla staffa
-    dt.a.parts["x_nut_bracket"]["shape"] = dt.a.parts["x_nut_bracket"]["shape"].fuse(box(b.xmin, b.xmax, b.ymax - 0.01, b.ymax + 6.0, b.zmin, b.zmax)).clean()
+    rb = P.derived()["beam_face"] + P.BEAM["recess_d"] - P.CLEAR_PASS           # non oltre 8 mm dal fondo del canale
+    if rb > b.ymax + 0.5:
+        dt.a.parts["x_nut_bracket"]["shape"] = dt.a.parts["x_nut_bracket"]["shape"].fuse(box(b.xmin, b.xmax, b.ymax - 0.01, min(b.ymax + 6.0, rb), b.zmin, b.zmax)).clean()
     for nut, brk, host, axis, sname in (("x_nut", "x_nut_bracket", "x_carriage", "x", P.X_AXIS["screw"]),
                                         ("y_nut", "y_nut_bracket", "table", "y", P.Y_AXIS["screw"]),
                                         ("z_nut", "z_nut_tab", "z_slide", "z", P.Z_AXIS["screw"])):
@@ -294,38 +298,49 @@ def nuts(dt):
 def motors(dt):
     a = dt.a
     D = P.derived()
-    # X: la piastra motore diventa la testata destra della trave saldata (8 mm, dentro il canale della vite)
-    b = dt.bb("x_motor_plate")
-    plate = box(b.xmax - 8.0, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)
-    a.parts["beam"]["shape"] = a.parts["beam"]["shape"].fuse(plate).clean()
-    del a.parts["x_motor_plate"]
-    # Y: piastra motore saldata sulla traversa di coda, 10 mm, sale fino a z 7 per i fori alti del NEMA23
+    specs = []
+    if "x_motor_plate" in a.parts:      # la piastra motore X diventa la testata destra della trave saldata (8 mm)
+        b = dt.bb("x_motor_plate")
+        plate = box(b.xmax - 8.0, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)
+        a.parts["beam"]["shape"] = a.parts["beam"]["shape"].fuse(plate).clean()
+        del a.parts["x_motor_plate"]
+        specs.append(("x_motor", "beam", "x", (b.xmax - 8.0, b.xmax), ((b.ymin + b.ymax) / 2, (b.zmin + b.zmax) / 2), P.X_AXIS["motor"]))
+    else:                               # Light: motore X sulla faccia esterna della spalla destra (piastra 8 mm)
+        u = dt.bb("upright_R")
+        m = dt.bb("x_motor")
+        specs.append(("x_motor", "upright_R", "x", (u.xmin, u.xmax), ((m.ymin + m.ymax) / 2, (m.zmin + m.zmax) / 2), P.X_AXIS["motor"]))
+    # Y: piastra motore saldata sulla traversa di coda, 10 mm, alta quanto serve per i fori del motore
+    my = parts.MOTORS[P.Y_AXIS["motor"]]
     m = dt.bb("y_motor")
-    c0, zc = (m.xmin + m.xmax) / 2, (m.zmin + m.zmax) / 2 + 0.0
+    c0 = (m.xmin + m.xmax) / 2
     zc = -P.LADDER["H"] + P.LADDER["pad_t"] + P.SUPPORTS[P.Y_AXIS["bk"]]["h"]
     hb = dt.bb("frame_cross_end")
-    dt.add("frame_cross_end", box(c0 - 35, c0 + 35, hb.ymax - 10, hb.ymax, hb.zmin + 5, 7.0))
-    specs = (("x_motor", "beam", "x", (b.xmax - 8.0, b.xmax), ((b.ymin + b.ymax) / 2, (b.zmin + b.zmax) / 2)),
-             ("y_motor", "frame_cross_end", "y", (hb.ymax - 10, hb.ymax), (c0, zc)),
-             ("z_motor", "z_motor_bracket", "z", (dt.bb("z_motor_bracket").zmin, dt.bb("z_motor_bracket").zmax), None))
-    for mot, host, axis, (lo, hi), cc in specs:
+    ztop = max(zc + my[5] / 2 + 5.0, hb.zmax)
+    dt.add("frame_cross_end", box(c0 - my[0] / 2 - 6, c0 + my[0] / 2 + 6, hb.ymax - 10, hb.ymax, hb.zmin + 5, ztop))
+    specs += [("y_motor", "frame_cross_end", "y", (hb.ymax - 10, hb.ymax), (c0, zc), P.Y_AXIS["motor"]),
+              ("z_motor", "z_motor_bracket", "z", (dt.bb("z_motor_bracket").zmin, dt.bb("z_motor_bracket").zmax), None, P.Z_AXIS["motor"])]
+    for mot, host, axis, (lo, hi), cc, kind in specs:
+        mm = parts.MOTORS[kind]
+        pitch, pilot, hd = mm[5], mm[3], mm[6]
         mb = dt.bb(mot)
         if cc is None:
             cc = ((mb.xmin + mb.xmax) / 2, (mb.ymin + mb.ymax) / 2)
         c1, c2 = cc
         for su in (-1, 1):
             for sv in (-1, 1):
-                dt.cut(host, cyl(axis, lo - 1, hi + 1, c1 + su * NEMA23_PITCH / 2, c2 + sv * NEMA23_PITCH / 2, 5.5 / 2))
-        dt.cut(host, cyl(axis, lo - 1, hi + 1, c1, c2, NEMA23_PILOT / 2 + 0.02))
-        dt.screw("M5", 20, qty=4, where=f"motore {axis.upper()} (con dado M5)")
-    # staffa motore Z sul cielo della torre: 2 × M6 nel bordo della torre
+                dt.cut(host, cyl(axis, lo - 1, hi + 1, c1 + su * pitch / 2, c2 + sv * pitch / 2, (hd + 0.4) / 2))
+        dt.cut(host, cyl(axis, lo - 1, hi + 1, c1, c2, pilot / 2 + 0.02))
+        size = "M5" if hd > 4 else "M3"
+        dt.screw(size, 20, qty=4, where=f"motore {axis.upper()} (con dado)")
+    # staffa motore Z sul cielo della torre: 2 viti nel bordo della torre
     b = dt.bb("z_motor_bracket")
     xc = (b.xmin + b.xmax) / 2
-    for dx in (-38.0, 38.0):
-        dt.hole("z_motor_bracket", "z", b.zmax, -1, xc + dx, (D["carriage_front"] + D["carriage_back"]) / 2, "clr", "M6", 11, cbore=True)
-        dt.hole("x_carriage", "z", b.zmin, -1, xc + dx, (D["carriage_front"] + D["carriage_back"]) / 2, "tap", "M6", 14)
-    dt.screw("M6", 25, qty=2, where="staffa motore Z → torre carrello")
-    dt.notes.append("Piastra motore X saldata come testata della trave (8 mm); piastra motore Y saldata sulla traversa di coda (10 mm, fino a z 7).")
+    sz = "M6" if P.PLATE["carriage_t"] >= 14 else "M5"
+    for dx in (-(b.xmax - b.xmin) / 2 + 7, (b.xmax - b.xmin) / 2 - 7):
+        dt.hole("z_motor_bracket", "z", b.zmax, -1, xc + dx, (D["carriage_front"] + D["carriage_back"]) / 2, "clr", sz, 11, cbore=True)
+        dt.hole("x_carriage", "z", b.zmin, -1, xc + dx, (D["carriage_front"] + D["carriage_back"]) / 2, "tap", sz, 12)
+    dt.screw(sz, 25, qty=2, where="staffa motore Z → torre carrello")
+    dt.notes.append("Motore X sulla testata della trave (o sulla spalla destra a piastra); piastra motore Y saldata sulla traversa di coda (10 mm).")
 
 
 # ---------------------------------------------------------------- telaio, spalle, trave
@@ -335,6 +350,14 @@ def frame(dt):
     L = P.LADDER
     for n in ("frame_longeron_L", "frame_longeron_R"):
         b = dt.bb(n)
+        if L.get("bottom_plate"):                     # Pro: piedi sotto il fondo del basamento
+            fb = dt.bb("frame_bottom")
+            xc = (b.xmin + b.xmax) / 2
+            for y in (b.ymin + 30, b.ymax - 30):
+                dt.add("frame_bottom", box(xc - 25, xc + 25, y - 30, y + 30, fb.zmin - 8, fb.zmin + 0.01))
+                dt.cut("frame_bottom", cyl("z", fb.zmin - 9, fb.zmax + 1, xc, y, TAP["M10"] / 2))
+            dt.screw("M10", 0, std="piede antivibrante M10", qty=2, where="piedi basamento")
+            continue
         for y in (b.ymin + 30, b.ymax - 30):         # 4 piedi: pad 60 × 50 × 12 sotto i longheroni
             xc = (b.xmin + b.xmax) / 2
             pad = box(xc - 20, xc + 20, y - 30, y + 30, b.zmin - 8, b.zmin + 0.01)
@@ -375,6 +398,17 @@ def uprights(dt):
             dt.hole("frame_cross_rear", "z", face, -1, fxc, y, "pin", I["pin_d"], 14)
         dt.screw("M8", 80, qty=4, where=f"spalla {side} → basamento, dal basso attraverso la traversa (ICD §5)")
         dt.screw("Ø10 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → basamento (ICD §5)")
+        if P.UPRIGHT_MODE == "plate":      # Light: trave avvitata fra le piastre (4 × M6 per lato nella testata della trave)
+            Dd_ = P.derived()
+            xe = P.BEAM_X[0] if side == "L" else P.BEAM_X[1]
+            for yy in (Dd_["beam_face"] + 10, Dd_["beam_back"] - 10):
+                for zz in (Dd_["beam_bottom"] + 12, Dd_["beam_top"] - 12):
+                    dt.hole(n, "x", b.xmin if side == "L" else b.xmax, inward, yy, zz, "clr", "M6", P.UPRIGHT["t"] + 1, cbore=True)
+                    dt.hole("beam", "x", xe, inward, yy, zz, "tap", "M6", 12)
+            dt.screw("M6", 20, qty=4, where=f"spalla {side} → testata trave")
+            continue
+        if P.UPRIGHT_MODE == "lift":
+            continue
         # sopra: giunto interno spalla ↔ trave dentro l'impronta della spalla e sotto la trave (cielo 16 mm, 2 × M8 + 2 spine Ø8)
         top = b.zmax
         dt.add(n, box(b.xmin, b.xmax, b.ymin, b.ymax, top - 12.0, top))
@@ -389,6 +423,25 @@ def uprights(dt):
         dt.cut(n, box(wx - 0.5, wx + P.UPRIGHT["wall"] + 0.5, bf_ + 2, bb_y - 2, top - 12 - 50, top - 12 - 5))
         dt.screw("M8", 40, qty=2, where=f"spalla {side} → trave (dalla finestra d'accesso della spalla)")
         dt.screw("Ø8 m6", 24, std="spina ISO 8734", qty=2, where=f"spalla {side} → trave")
+    Dd = P.derived()
+    for n in ("x_bf", "x_bk"):          # dietro BK/BF X: rinforzo interno 6 mm della parete del canale (filetto M5 su 10 mm)
+        sb = dt.bb(n)
+        dt.add("beam", box(sb.xmin - 5, sb.xmax + 5, Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] - 0.01,
+                           Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] + 6, sb.zmin, sb.zmax))
+    if P.UPRIGHT_MODE != "box":
+        if P.UPRIGHT_MODE == "plate":   # testate piene 12 mm della trave per le viti delle piastre
+            for x0, x1 in ((P.BEAM_X[0], P.BEAM_X[0] + 12), (P.BEAM_X[1] - 12, P.BEAM_X[1])):
+                cap = box(x0, x1, Dd["beam_face"], Dd["beam_back"], Dd["beam_bottom"], Dd["beam_top"]).cut(
+                    box(x0 - 1, x1 + 1, Dd["beam_face"] - 1, Dd["beam_face"] + P.BEAM["recess_d"], Dd["zx"] - P.BEAM["recess_h"] / 2, Dd["zx"] + P.BEAM["recess_h"] / 2))
+                dt.add("beam", cap)
+        cr = dt.bb("frame_cross_rear")
+        for side in ("L", "R"):
+            ub = dt.bb(f"upright_{side}")
+            yc = (ub.ymin + ub.ymax) / 2
+            if yc - I["flange"][1] / 2 < cr.ymin:
+                dt.add("frame_cross_rear", box(ub.xmin if side == "L" else ub.xmax - I["flange"][0], ub.xmin + I["flange"][0] if side == "L" else ub.xmax,
+                                               yc - I["flange"][1] / 2, cr.ymin + 0.01, cr.zmax - P.LADDER["wall"], cr.zmax))
+        return
     # la traversa posteriore deve portare la flangia (140 in y): si allarga di 12 mm verso il fronte
     b = dt.bb("frame_cross_rear")
     w_, y0 = P.LADDER["wall"], b.ymin - 12
@@ -403,14 +456,8 @@ def uprights(dt):
     for e in ext:
         dt.add("frame_cross_rear", e)
     # trave: blocchi pieni d'estremità saldati sotto la trave (sede delle viti M8 e delle spine)
-    Dd = P.derived()
     for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + 50)), ("R", (P.BEAM_X[1] - 50, P.BEAM_X[1]))):
         dt.add("beam", box(x0, x1, Dd["beam_face"], Dd["beam_back"], Dd["beam_bottom"], Dd["beam_bottom"] + 20))
-    # dietro BK/BF X: rinforzo interno 6 mm della parete del canale (pareti trave 4 mm, filetto M5 su 10 mm)
-    for n in ("x_bf", "x_bk"):
-        sb = dt.bb(n)
-        dt.add("beam", box(sb.xmin - 5, sb.xmax + 5, Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] - 0.01,
-                           Dd["beam_face"] + P.BEAM["recess_d"] + P.BEAM["wall"] + 6, sb.zmin, sb.zmax))
     dt.notes.append("Trave MC-GAN-001: saldata (faccia guide 6 mm, altre pareti 4 mm, D034) con blocchi pieni d'estremità 50 × 80 × 20 per il giunto con le spalle e rinforzi dietro BK/BF X; "
                     "traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 "
                     "(2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave "
@@ -421,8 +468,8 @@ def uprights(dt):
 def tooldock(dt, X, cz):
     """Master: sedi rulli, clamp a sfere, leva di sgancio, sedi connettori e porte; receiver: sfere, pull-stud, porte."""
     a = dt.a
-    import compliance_d028 as C
-    R = C.COUPLING_R
+    C = sys.modules.get("compliance_d028")      # D032: i concept possono allargare il coupling; ICD v4 = Ø80
+    R = C.COUPLING_R if C is not None else 40.0
     M = P.MASTER
     angles = (90.0, 210.0, 330.0)
     rt = P.SPINDLE["receiver_t"]
@@ -455,8 +502,59 @@ def tooldock(dt, X, cz):
             .fuse(cyl("z", cz + ps["L"] - ps["head_h"], cz + ps["L"], X, 0, ps["head_d"] / 2)))
     a.add("td_pull_stud", cq.Workplane().add(stud), "ZSLIDE", STEEL, "MC-TD-003", "silver")
     dt.hole("head_receiver", "z", cz, -1, X, 0, "tap", "M10", rt - 1)
-    # clamp a sfere nella master: foro Ø36 nel fondo, cartuccia Ø50 che sale oltre il cielo della master
     top = cz + M["T"]
+    if P.TD_CLAMP == "manual":
+        manual_clamp(dt, X, cz, top, ps)
+    else:
+        auto_clamp(dt, X, cz, top, ps)
+    # porte aria e fluido: fori passanti nel receiver e nel fondo della master, sede O-ring sul piano di accoppiamento
+    for name, (px, py), d in PORTS:
+        dt.cut("head_receiver", cyl("z", cz - rt - 1, cz + 1, X + px, py, d / 2))
+        dt.cut("tooldock_master", cyl("z", cz - 1, cz + M["wall"] + 1, X + px, py, d / 2))
+        dt.cut("tooldock_master", cyl("z", cz - 0.1, cz + 1.4, X + px, py, d / 2 + 2.5).cut(cyl("z", cz - 1, cz + 2, X + px, py, d / 2 + 1.0)))
+    dt.screw("O-ring 8 × 1,5 / 6 × 1,5", 0, std="O-ring NBR 70", qty=3, where="porte aria/fluido ToolDock")
+    # connettori: tasca nel receiver (metà testa) e finestra nel fondo della master (metà macchina)
+    for name, c in CONNECTORS.items():
+        cx_, cy_ = X + c["c"][0], c["c"][1]
+        dt.cut("head_receiver", box(cx_ - c["w"] / 2, cx_ + c["w"] / 2, cy_ - c["d"] / 2, cy_ + c["d"] / 2, cz - rt - 1, cz + 1))
+        dt.cut("tooldock_master", box(cx_ - c["w"] / 2, cx_ + c["w"] / 2, cy_ - c["d"] / 2, cy_ + c["d"] / 2, cz - 1, cz + M["wall"] + 1))
+        a.add(f"td_conn_{name}_machine", cq.Workplane().add(box(cx_ - c["w"] / 2 + 1, cx_ + c["w"] / 2 - 1, cy_ - c["d"] / 2 + 1, cy_ + c["d"] / 2 - 1, cz + 0.5, cz + c["h"] / 2)),
+              "ZSLIDE", STEEL, c["bom"], "black")
+        a.add(f"td_conn_{name}_head", cq.Workplane().add(box(cx_ - c["w"] / 2 + 1, cx_ + c["w"] / 2 - 1, cy_ - c["d"] / 2 + 1, cy_ + c["d"] / 2 - 1, cz - c["h"] / 2, cz - 0.5)),
+              "ZSLIDE", STEEL, c["bom"], "black")
+        dt.screw("secondo scheda", 0, std="fissaggio connettore", qty=2, where=f"connettore {name} (metà testa e metà macchina)")
+    # receiver ↔ mount: 4 × M5 dal receiver nel mount; mount: collare a serraggio (taglio + 2 × M5) e camicia
+    mb = dt.bb("head_mount")
+    mx = (mb.xmin + mb.xmax) / 2
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            off = P.SPINDLE["clamp_block"] / 2 - 6.0
+            dt.hole("head_receiver", "z", cz, -1, mx + sx * off, sy * off, "clr", "M5", rt + 1, cbore=True)
+            dt.hole("head_mount", "z", mb.zmax, -1, mx + sx * off, sy * off, "tap", "M5", 12)
+    dt.screw("M5", 25, qty=4, where="receiver → mount spindle")
+    S = P.SPINDLE
+    zc0 = mb.zmin
+    a.parts["head_mount"]["shape"] = a.parts["head_mount"]["shape"].fuse(box(mx - 12, mx + 12, mb.ymin - 12, mb.ymin + 0.01, zc0, zc0 + S["clamp_len"])).clean()
+    dt.cut("head_mount", box(mx - 1.0, mx + 1.0, mb.ymin - 13, -S["d"] / 2 + 0.5, zc0 - 1, zc0 + S["clamp_len"]))
+    for zz in (zc0 + 20, zc0 + S["clamp_len"] - 20):
+        dt.cut("head_mount", cyl("x", mx - 13, mx + 13, mb.ymin - 6, zz, CLR["M5"] / 2))
+    dt.screw("M5", 25, qty=2, where="collare del mount spindle (orecchia)")
+    if not S.get("jacket", True):
+        dt.notes.append(f"Mount spindle: collare sul Ø{S['d']:g} con taglio e 2 × M5 (spindle {'ad aria' if S['mass'] < 2 else 'raffreddato ad acqua nel corpo'}, niente camicia).")
+        return
+    for zz in (zc0 + 15, zc0 + S["clamp_len"] - 15):          # gole O-ring della camicia
+        dt.cut("head_mount", cyl("z", zz - 1.2, zz + 1.2, mx, 0, S["d"] / 2 + 1.6).cut(cyl("z", zz - 2, zz + 2, mx, 0, S["d"] / 2)))
+    dt.cut("head_mount", cyl("z", zc0 + 22, zc0 + S["clamp_len"] - 22, mx, 0, S["d"] / 2 + 2.0).cut(cyl("z", zc0, zc0 + S["clamp_len"], mx, 0, S["d"] / 2)))
+    dt.screw("O-ring 45 × 2", 0, std="O-ring NBR 70", qty=2, where="camicia del mount")
+    dt.notes.append("Mount MC-SP-003: collare sul Ø45 h6 con taglio e 2 × M5, camicia di raffreddamento anulare tra due O-ring, "
+                    "alimentata dalle porte Ø4 del receiver.")
+
+
+def auto_clamp(dt, X, cz, top, ps):
+    """Clamp automatico (D016): cartuccia a 6 sfere, pacco molle a tazza, leva di sgancio 3:1 con rullo inseguitore."""
+    a = dt.a
+    M = P.MASTER
+    # clamp a sfere nella master: foro Ø36 nel fondo, cartuccia Ø50 che sale oltre il cielo della master
     dt.cut("tooldock_master", cyl("z", cz - 1, cz + M["wall"] + 0.5, X, 0, 17.5))
     dt.cut("tooldock_master", cyl("z", cz + M["wall"], top + 1, X, 0, 25.05))
     cart = cyl("z", cz + M["wall"], top, X, 0, 25.0).fuse(cyl("z", top, top + 44, X, 0, 20.0)).cut(cyl("z", cz + M["wall"] - 1, top + 45, X, 0, 17.0))
@@ -492,43 +590,26 @@ def tooldock(dt, X, cz):
     dt.notes.append("Clamp MC-TD-003: pull-stud M10 comune, 6 sfere Ø6 bloccate da un pistone spinto da 8 molle a tazza DIN 2093; "
                     "la leva 3:1 (fulcro a 30 mm, rullo a 90 mm dall'asse) solleva l'asta quando lo Z spinge il rullo sulla camma del "
                     "dock (D016). Forza e corsa del pacco: TARGET da verificare al banco.")
-    # porte aria e fluido: fori passanti nel receiver e nel fondo della master, sede O-ring sul piano di accoppiamento
-    for name, (px, py), d in PORTS:
-        dt.cut("head_receiver", cyl("z", cz - rt - 1, cz + 1, X + px, py, d / 2))
-        dt.cut("tooldock_master", cyl("z", cz - 1, cz + M["wall"] + 1, X + px, py, d / 2))
-        dt.cut("tooldock_master", cyl("z", cz - 0.1, cz + 1.4, X + px, py, d / 2 + 2.5).cut(cyl("z", cz - 1, cz + 2, X + px, py, d / 2 + 1.0)))
-    dt.screw("O-ring 8 × 1,5 / 6 × 1,5", 0, std="O-ring NBR 70", qty=3, where="porte aria/fluido ToolDock")
-    # connettori: tasca nel receiver (metà testa) e finestra nel fondo della master (metà macchina)
-    for name, c in CONNECTORS.items():
-        cx_, cy_ = X + c["c"][0], c["c"][1]
-        dt.cut("head_receiver", box(cx_ - c["w"] / 2, cx_ + c["w"] / 2, cy_ - c["d"] / 2, cy_ + c["d"] / 2, cz - rt - 1, cz + 1))
-        dt.cut("tooldock_master", box(cx_ - c["w"] / 2, cx_ + c["w"] / 2, cy_ - c["d"] / 2, cy_ + c["d"] / 2, cz - 1, cz + M["wall"] + 1))
-        a.add(f"td_conn_{name}_machine", cq.Workplane().add(box(cx_ - c["w"] / 2 + 1, cx_ + c["w"] / 2 - 1, cy_ - c["d"] / 2 + 1, cy_ + c["d"] / 2 - 1, cz + 0.5, cz + c["h"] / 2)),
-              "ZSLIDE", STEEL, c["bom"], "black")
-        a.add(f"td_conn_{name}_head", cq.Workplane().add(box(cx_ - c["w"] / 2 + 1, cx_ + c["w"] / 2 - 1, cy_ - c["d"] / 2 + 1, cy_ + c["d"] / 2 - 1, cz - c["h"] / 2, cz - 0.5)),
-              "ZSLIDE", STEEL, c["bom"], "black")
-        dt.screw("secondo scheda", 0, std="fissaggio connettore", qty=2, where=f"connettore {name} (metà testa e metà macchina)")
-    # receiver ↔ mount: 4 × M5 dal receiver nel mount; mount: collare a serraggio (taglio + 2 × M5) e camicia
-    mb = dt.bb("head_mount")
-    mx = (mb.xmin + mb.xmax) / 2
-    for sx in (-1, 1):
-        for sy in (-1, 1):
-            dt.hole("head_receiver", "z", cz, -1, mx + sx * 24, sy * 24, "clr", "M5", rt + 1, cbore=True)
-            dt.hole("head_mount", "z", mb.zmax, -1, mx + sx * 24, sy * 24, "tap", "M5", 12)
-    dt.screw("M5", 25, qty=4, where="receiver → mount spindle")
-    S = P.SPINDLE
-    zc0 = mb.zmin
-    a.parts["head_mount"]["shape"] = a.parts["head_mount"]["shape"].fuse(box(mx - 12, mx + 12, mb.ymin - 12, mb.ymin + 0.01, zc0, zc0 + S["clamp_len"])).clean()
-    dt.cut("head_mount", box(mx - 1.0, mx + 1.0, mb.ymin - 13, -S["d"] / 2 + 0.5, zc0 - 1, zc0 + S["clamp_len"]))
-    for zz in (zc0 + 20, zc0 + S["clamp_len"] - 20):
-        dt.cut("head_mount", cyl("x", mx - 13, mx + 13, mb.ymin - 6, zz, CLR["M5"] / 2))
-    dt.screw("M5", 25, qty=2, where="collare del mount spindle (orecchia)")
-    for zz in (zc0 + 15, zc0 + S["clamp_len"] - 15):          # gole O-ring della camicia
-        dt.cut("head_mount", cyl("z", zz - 1.2, zz + 1.2, mx, 0, S["d"] / 2 + 1.6).cut(cyl("z", zz - 2, zz + 2, mx, 0, S["d"] / 2)))
-    dt.cut("head_mount", cyl("z", zc0 + 22, zc0 + S["clamp_len"] - 22, mx, 0, S["d"] / 2 + 2.0).cut(cyl("z", zc0, zc0 + S["clamp_len"], mx, 0, S["d"] / 2)))
-    dt.screw("O-ring 45 × 2", 0, std="O-ring NBR 70", qty=2, where="camicia del mount")
-    dt.notes.append("Mount MC-SP-003: collare sul Ø45 h6 con taglio e 2 × M5, camicia di raffreddamento anulare tra due O-ring, "
-                    "alimentata dalle porte Ø4 del receiver.")
+
+
+def manual_clamp(dt, X, cz, top, ps):
+    """Light Core: clamp manuale a camma sul pull-stud comune (≥ 0,5 kN, classe L). Le sedi della cartuccia automatica
+    restano lavorate nella master: il Platform Pack monta il clamp automatico senza cambiare pezzo (D026)."""
+    a = dt.a
+    M = P.MASTER
+    dt.cut("tooldock_master", cyl("z", cz - 1, cz + M["wall"] + 0.5, X, 0, 17.5))
+    dt.cut("tooldock_master", cyl("z", top - M["wall"] - 0.5, top + 1, X, 0, 9.0))      # passaggio della testa del pull-stud
+    zc_ = cz + ps["L"] - ps["head_h"] - 6.5          # sotto la testa del pull-stud, accanto al collo
+    xs = X + ps["shank_d"] / 2 + 6.5
+    dt.cut("tooldock_master", cyl("y", -P.HEAD["D"] / 2 - 1, 20.0, xs, zc_, 6.05))
+    shaft = cyl("y", -P.HEAD["D"] / 2 - 12, 20.0, xs, zc_, 6.0)
+    a.add("td_cam_shaft", cq.Workplane().add(shaft), "ZSLIDE", STEEL, "MC-TD-003", "silver")
+    lever = box(xs - 6, xs + 70, -P.HEAD["D"] / 2 - 20, -P.HEAD["D"] / 2 - 12, zc_ - 5, zc_ + 5)
+    a.add("td_cam_lever", cq.Workplane().add(lever), "ZSLIDE", STEEL, "MC-TD-003", "silver")
+    dt.screw("Ø12 × 110", 0, std="albero a camma rettificato", qty=1, where="clamp manuale ToolDock")
+    dt.screw("M6 × 10", 0, std="grano di arresto leva", qty=1, where="clamp manuale ToolDock")
+    dt.notes.append("Clamp manuale ML-TD-003: albero a camma Ø12 trasversale nella master che tira la testa del pull-stud comune "
+                    "(≥ 0,5 kN, classe L, D016), leva sul fronte; le sedi del clamp automatico restano per il Platform Pack.")
 
 
 def master_to_slide(dt, X, cz):
@@ -539,7 +620,7 @@ def master_to_slide(dt, X, cz):
     for s in (-1, 1):
         xf = X + s * P.PLATE["slide_w"] / 2
         for yy in (D["slide_front"] - 12,):
-            for zz in (top + 12, top + 38):
+            for zz in (top + P.SADDLE["h"] * 0.25, top + P.SADDLE["h"] * 0.75):
                 dt.hole("z_slide", "x", xf, -s, yy, zz, "clr", "M6", P.SLIDE_FLANGE["t"] + 1, cbore=True)
                 dt.hole("tooldock_master", "x", X + s * w_in, -s, yy, zz, "tap", "M6", 9)
         dt.screw("M6", 20, qty=2, where="sella master → ala slitta")
@@ -587,13 +668,17 @@ def lighten(dt, X):
         dt.cut("x_carriage", box(x0, x1, cf_ - 0.5, cf_ + 7.0, car.zmin + 12, zr1 - 12))
     sl = dt.bb("z_slide")
     dt.cut("z_slide", box(X - 28, X + 28, D["slide_front"] - 0.5, D["slide_front"] + 6, sl.zmin + 20, sl.zmax - 20))
-    # mount spindle: corpo tondo Ø60 sotto una testata quadra 60 × 60 × 12 (viti del receiver agli spigoli)
-    mb = dt.bb("head_mount")
-    mx = (mb.xmin + mb.xmax) / 2
-    keep = cyl("z", mb.zmin - 1, mb.zmax + 1, mx, 0.0, 30.0).fuse(box(mb.xmin - 1, mb.xmax + 1, mb.ymin - 1, mb.ymax + 1, mb.zmax - 12, mb.zmax + 1))
-    dt.a.parts["head_mount"]["shape"] = dt.a.parts["head_mount"]["shape"].intersect(keep).clean()
     dt.notes.append("D034 · alleggerimenti: tubi del telaio 3 mm, spalle 4 mm, trave 4 mm con faccia guide 6, tasche sul retro del carrello X "
                     "fra i pattini e sopra il ponte BF, tasca centrale nella slitta Z, mount spindle tondo, piedi 8 mm.")
+
+
+def round_mount(dt):
+    """Mount spindle: corpo tondo sotto una testata quadra da 12 mm (viti del receiver agli spigoli), D034."""
+    mb = dt.bb("head_mount")
+    mx = (mb.xmin + mb.xmax) / 2
+    r = P.SPINDLE["clamp_block"] / 2
+    keep = cyl("z", mb.zmin - 1, mb.zmax + 1, mx, 0.0, r).fuse(box(mb.xmin - 1, mb.xmax + 1, mb.ymin - 1, mb.ymax + 1, mb.zmax - 12, mb.zmax + 1))
+    dt.a.parts["head_mount"]["shape"] = dt.a.parts["head_mount"]["shape"].intersect(keep).clean()
 
 
 def detail(a, X, Y, Zd):
@@ -607,7 +692,9 @@ def detail(a, X, Y, Zd):
     motors(dt)
     frame(dt)
     uprights(dt)
-    lighten(dt, X)
+    if P.BASE == "standard":
+        lighten(dt, X)
+    round_mount(dt)
     tooldock(dt, X, cz)
     master_to_slide(dt, X, cz)
     table(dt)

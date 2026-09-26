@@ -26,10 +26,11 @@ sys.path.insert(0, str(ROOT / "tools" / "bom"))
 import cadquery as cq  # noqa: E402
 from OCP.BRepExtrema import BRepExtrema_DistShapeShape  # noqa: E402
 
+import base_select  # noqa: E402,F401  (--base light|standard|pro)
 import parts  # noqa: E402
 import standard_params as P  # noqa: E402
 
-OUT = ROOT / "cad" / "standard"
+OUT = ROOT / "cad" / P.FILE_PREFIX
 D = P.derived()
 DETAIL = True          # lavorazioni di dettaglio dei pezzi custom (standard_detail.py); le FEA lo spengono
 ORIGIN = (0, 0, 0)
@@ -208,6 +209,13 @@ def build(X, Y, Zd, cfg=None):
     inner0, inner1 = rails_x[0] + lw / 2, rails_x[1] - lw / 2
     yc = (D["beam_face"] + D["beam_back"]) / 2
     rear_y = (yc - U["depth"] / 2, yc + U["depth"] / 2)
+    mode = P.UPRIGHT_MODE
+    FX = (P.BEAM_X[0] - U["t"], P.BEAM_X[1] + U["t"]) if mode == "plate" else P.BEAM_X   # estensione della traversa posteriore
+    if mode == "lift":                  # montanti dietro la trave: la traversa posteriore arriva fin sotto la loro flangia
+        Lf = P.LIFT
+        y_up0 = D["beam_back"] + Lf["bracket_t"] + parts.BLOCKS[Lf["block"]]["H"] + Lf["spacer"]
+        yc_up = y_up0 + U["t"] / 2
+        rear_y = (D["beam_face"], yc_up + 70.0 + 10.0)
     pw = L["pocket_w"]
     pocket = box(xtc - pw / 2, xtc + pw / 2, -400, 400, -H + w, 1)        # passaggio chiocciola Y fino al fondo del tubo
     a.add("frame_cross_front", rtube_x(inner0, inner1, *L["front_y"]), "FRAME", AL, "MC-BAS-001", "gray")
@@ -217,19 +225,32 @@ def build(X, Y, Zd, cfg=None):
     a.add("frame_cross_bf", rtube_x(inner0, inner1, *L["bf_y"]).cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, bf_pad[0], bf_pad[1], -H, -H + L["pad_t"])),
           "FRAME", AL, "MC-BAS-001", "gray")
     ry1 = max(rear_y[1], bk_pad[1] + 5)       # la traversa posteriore arriva sotto il supporto BK Y
-    rear = box(P.BEAM_X[0], P.BEAM_X[1], rear_y[0], ry1, -H, -dz).cut(box(P.BEAM_X[0] - 1, P.BEAM_X[1] + 1, rear_y[0] + w, ry1 - w, -H + w, -w - dz))
+    rear = box(FX[0], FX[1], rear_y[0], ry1, -H, -dz).cut(box(FX[0] - 1, FX[1] + 1, rear_y[0] + w, ry1 - w, -H + w, -w - dz))
     for xr in rails_x:   # i longheroni attraversano la traversa posteriore
         rear = rear.cut(box(xr - lw / 2, xr + lw / 2, rear_y[0] - 1, ry1 + 1, -H - 1, 1))
     rear = rear.cut(pocket).union(box(xtc - pw / 2, xtc + pw / 2, rear_y[0], ry1, -H, -H + w)).union(
         box(xtc - pw / 2, xtc + pw / 2, bk_pad[0], bk_pad[1], -H, -H + L["pad_t"]))
+    if mode == "lift":                  # la traversa lunga della Pro ingloba la zona della traversa di coda
+        rear = rear.cut(box(inner0, inner1, L["end_y"][0], L["end_y"][1], -H - 1, 1))
     a.add("frame_cross_rear", rear, "FRAME", AL, "MC-BAS-001", "gray")
     end = rtube_x(inner0, inner1, *L["end_y"]).cut(cyl("y", L["end_y"][0] - 1, L["end_y"][1] + 1, xtc, z_y_axis, 20))
     a.add("frame_cross_end", end, "FRAME", AL, "MC-BAS-001", "gray")
+    if L.get("bottom_plate"):          # Pro: fondo del basamento (nervato = scala + fondo)
+        a.add("frame_bottom", box(rails_x[0] - lw / 2, rails_x[1] + lw / 2, L["long_y"][0], L["long_y"][1], -H - L["bottom_plate"], -H),
+              "FRAME", AL, "MC-BAS-001", "gray")
 
-    for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + U["t"])), ("R", (P.BEAM_X[1] - U["t"], P.BEAM_X[1]))):
-        uw = U["wall"]
-        up = box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]).cut(box(x0 + uw, x1 - uw, rear_y[0] + uw, rear_y[1] - uw, -dz + uw, D["beam_bottom"] - uw))
-        a.add(f"upright_{side}", up, "FRAME", AL, "MC-GAN-002", "gray")
+    if mode == "box":                   # Standard: spalle scatolate sotto le estremità della trave
+        for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + U["t"])), ("R", (P.BEAM_X[1] - U["t"], P.BEAM_X[1]))):
+            uw = U["wall"]
+            up = box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_bottom"]).cut(box(x0 + uw, x1 - uw, rear_y[0] + uw, rear_y[1] - uw, -dz + uw, D["beam_bottom"] - uw))
+            a.add(f"upright_{side}", up, "FRAME", AL, "MC-GAN-002", "gray")
+    elif mode == "plate":               # Light: piastre ai lati della trave, fino al cielo della trave
+        for side, (x0, x1) in (("L", (FX[0], P.BEAM_X[0])), ("R", (P.BEAM_X[1], FX[1]))):
+            a.add(f"upright_{side}", box(x0, x1, rear_y[0], rear_y[1], -dz, D["beam_top"]), "FRAME", AL, "MC-GAN-002", "gray")
+    else:                               # Pro: montanti del Gantry Lift dietro le estremità della trave
+        top_up = D["beam_top"] + Lf["stroke"] + 90.0
+        for side, (x0, x1) in (("L", (P.BEAM_X[0], P.BEAM_X[0] + Lf["plate_w"])), ("R", (P.BEAM_X[1] - Lf["plate_w"], P.BEAM_X[1]))):
+            a.add(f"upright_{side}", box(x0, x1, y_up0, y_up0 + U["t"], -dz, top_up), "FRAME", AL, "MC-GAN-002", "gray")
 
     bf, bb = D["beam_face"], D["beam_back"]
     bx0, bx1, t = P.BEAM_X[0], P.BEAM_X[1], BM["wall"]
@@ -259,11 +280,14 @@ def build(X, Y, Zd, cfg=None):
           "FRAME", AL, "MC-BRK-001", "gray")
     mx = parts.MOTORS[xa["motor"]]
     cplx = P.COUPLING[xa["screw"]]
-    a.add("x_coupling", tube("x", sx0 + xa["screw_len"] - 10, bx1 - mx[8] + 10, y_x_axis, zx, cplx["D"] / 2, parts.SCREWS[xa["screw"]]["d"] / 2 - 2 + 0.3),
+    mfx = FX[1] if mode == "plate" else bx1     # Light: motore X sulla faccia esterna della spalla destra
+    a.add("x_coupling", tube("x", sx0 + xa["screw_len"] - 10, mfx - mx[8] + 10, y_x_axis, zx, cplx["D"] / 2, parts.SCREWS[xa["screw"]]["d"] / 2 - 2 + 0.3),
           "FRAME", STEEL, "MC-CPL-001", "gold")
-    a.add("x_motor_plate", box(bx1 - BM["end"], bx1, y_x_axis - 32, bf + rd, zx - 35, zx + 35).cut(cyl("x", bx1 - 10, bx1 + 1, y_x_axis, zx, 20)),
-          "FRAME", AL, "MC-BRK-001", "gray")
-    a.add("x_motor", parts.motor(xa["motor"]).rotate(ORIGIN, (0, 1, 0), 90).translate((bx1, y_x_axis, zx)), "FRAME", STEEL, "MC-MOT-001", "black")
+    if mode != "plate":
+        hy, hz, rp = (32.0, 35.0, 20.0) if mx[0] > 50 else (mx[0] / 2 + 4, mx[0] / 2 + 4, mx[3] / 2 + 1)   # NEMA23: quote del mule v3
+        a.add("x_motor_plate", box(bx1 - BM["end"], bx1, y_x_axis - hy, bf + rd, zx - hz, zx + hz).cut(cyl("x", bx1 - 10, bx1 + 1, y_x_axis, zx, rp)),
+              "FRAME", AL, "MC-BRK-001", "gray")
+    a.add("x_motor", parts.motor(xa["motor"]).rotate(ORIGIN, (0, 1, 0), 90).translate((mfx, y_x_axis, zx)), "FRAME", STEEL, "MC-MOT-001", "black")
 
     yr0 = -ya["rail_len"] / 2
     for tag, x in zip("LR", rails_x):
@@ -282,7 +306,7 @@ def build(X, Y, Zd, cfg=None):
 
     # riserve di volume permanenti (nessuna davanti alla trave, D027)
     a.add("chain_x_volume", box(bx0, bx1, bf + P.CHAIN_X["inset"], bf + P.CHAIN_X["inset"] + P.CHAIN_X["w"], D["beam_top"], D["beam_top"] + P.CHAIN_X["h"]), "FRAME", "volume", None, "orange")
-    a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], L["long_y"][0], L["long_y"][1], P.CHAIN_Y.get("z0", 0.0), P.CHAIN_Y.get("z0", 0.0) + P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
+    a.add("chain_y_volume", box(P.CHAIN_Y["x0"], P.CHAIN_Y["x1"], *P.CHAIN_Y.get("y", L["long_y"]), P.CHAIN_Y.get("z0", 0.0), P.CHAIN_Y.get("z0", 0.0) + P.CHAIN_Y["h"]), "FRAME", "volume", None, "orange")
     M = P.MAGAZINE
     a.add("magazine_volume", box(*M["x"], *M["y"], *M["z"]), "FRAME", "volume", None, "violet")
     if cfg == "DOCK":   # alcune pose della testa lungo la traiettoria del trasferitore (solo visualizzazione)
@@ -405,10 +429,65 @@ def build(X, Y, Zd, cfg=None):
         "DOCK_POSITION": (P.DOCK_X, 0.0, D["coupling_top"]),
         "TOOL_TIP": (X, 0.0, coupling_z - P.HEAD["L"]),
     }
+    if P.LIFT:
+        add_lift(a)
     if DETAIL:
         import standard_detail
         standard_detail.detail(a, X, Y, Zd)
+    for p_ in a.parts.values():             # codici BOM della base (Light ML-*, Pro MP-*)
+        p_["bom"] = P.BOM_MAP.get(p_["bom"], p_["bom"])
     return a, datums
+
+
+def add_lift(a):
+    """Pro · Gantry Lift (posizione 0): guida HGR15 e vite SFU1605 per montante, staffe sul retro della trave, cinghia HTD
+    di sincronismo fra le due viti, motore G diretto sulla vite sinistra, traversa sopra i montanti, bloccaggi a cuneo.
+    Gruppo FRAME: il lift è un asse di setup, fermo durante il taglio (lo sweep lo tiene a 0)."""
+    Lf, U = P.LIFT, P.UPRIGHT
+    bb, zx = D["beam_back"], D["zx"]
+    kb = parts.BLOCKS[Lf["block"]]
+    y_up0 = bb + Lf["bracket_t"] + kb["H"] + Lf["spacer"]
+    top_up = D["beam_top"] + Lf["stroke"] + 90.0
+    orient = lambda wp: wp.rotate(ORIGIN, (0, 1, 0), -90).rotate(ORIGIN, (0, 0, 1), 90)  # noqa: E731  lunghezza → z, altezza → −y
+    sy = y_up0 - 30.0
+    s0 = zx - 60.0
+    top = s0 + Lf["screw_len"]
+    ns = parts.SCREWS[Lf["screw"]]
+    q = P.SUPPORTS[Lf["bk"]]
+    xs = {}
+    for side, xc in (("L", P.BEAM_X[0] + Lf["plate_w"] / 2), ("R", P.BEAM_X[1] - Lf["plate_w"] / 2)):
+        inw = 1.0 if side == "L" else -1.0
+        z_r0 = zx - Lf["block_pitch"] / 2 - kb["L"] / 2 - 10.0
+        a.add(f"lift_rail_{side}", orient(parts.rail(Lf["rail"], Lf["rail_len"])).translate((xc, y_up0, z_r0)), "FRAME", STEEL, "MP-GL-LIN1", "steelblue")
+        for j, dz in enumerate((-Lf["block_pitch"] / 2, Lf["block_pitch"] / 2)):
+            a.add(f"lift_block_{side}{j}", orient(parts.block(Lf["block"])).translate((xc, y_up0, zx + dz)), "FRAME", STEEL, "MP-GL-LIN2", "steelblue")
+        a.add(f"lift_bracket_{side}", box(xc - 40, xc + 40, bb, bb + Lf["bracket_t"], D["beam_bottom"], D["beam_top"]), "FRAME", AL, "MP-GL-LOCK", "tomato")
+        sx = xc + inw * 70.0                       # vite verso l'interno macchina, fuori dalla staffa
+        xs[side] = sx
+        a.add(f"lift_screw_{side}", screw_shaft(Lf["screw"], Lf["screw_len"]).rotate(ORIGIN, (0, 1, 0), -90).translate((sx, sy, s0)),
+              "FRAME", STEEL, "MP-GL-BS", "silver")
+        a.add(f"lift_nut_{side}", screw_nut(Lf["screw"]).rotate(ORIGIN, (0, 1, 0), -90).translate((sx, sy, zx - 20.0)), "FRAME", STEEL, "MP-GL-BS", "silver")
+        x0, x1 = sorted((xc + inw * 40.0, sx + inw * 30.0))
+        tab = box(x0, x1, bb, sy + 26.0, zx - 36, zx - 20).cut(cyl("z", zx - 37, zx - 19, sx, sy, ns["d"] / 2 + 0.5))
+        a.add(f"lift_nut_tab_{side}", tab, "FRAME", AL, "MP-GL-LOCK", "gray")
+        bke = parts.ENDS[Lf["screw"]][0]           # codolo lato BK: BK + puleggia stanno sul codolo, non sul filetto
+        zb0 = top - bke
+        a.add(f"lift_bk_{side}", box(sx - q["W"] / 2, sx + q["W"] / 2, sy - (q["H"] - q["h"]), sy + q["h"], zb0, zb0 + q["T"]).cut(cyl("z", zb0 - 1, zb0 + q["T"] + 1, sx, sy, q["bore"] / 2 + 0.1)),
+              "FRAME", STEEL, "MP-GL-BK", "dimgray")
+        a.add(f"lift_bk_bracket_{side}", box(sx - q["W"] / 2, sx + q["W"] / 2, sy + q["h"], y_up0, zb0 - 10, zb0 + q["T"]), "FRAME", AL, "MP-GL-LOCK", "gray")
+        a.add(f"lift_pulley_{side}", cyl("z", zb0 + q["T"] + 2, zb0 + q["T"] + 22, sx, sy, 22.0).cut(cyl("z", zb0 + q["T"] + 1, zb0 + q["T"] + 23, sx, sy, ns["d"] / 2 - 2 + 0.3)),
+              "FRAME", STEEL, "MP-GL-SYNC", "gold")
+        lx0, lx1 = sorted((xc - inw * 40.0, xc - inw * 60.0))
+        a.add(f"lift_lock_{side}", box(lx0, lx1, bb + Lf["bracket_t"], y_up0, zx - 30, zx + 30), "FRAME", AL, "MP-GL-LOCK", "tomato")
+    zp = top - parts.ENDS[Lf["screw"]][0] + q["T"]
+    for k, yy in (("a", sy - 24.0), ("b", sy + 22.0)):   # cinghia HTD: i due tratti tangenti alle pulegge
+        a.add(f"lift_belt_{k}", box(xs["L"], xs["R"], yy, yy + 2.0, zp + 4, zp + 20), "FRAME", STEEL, "MP-GL-SYNC", "black")
+    a.add("lift_tie", box(P.BEAM_X[0], P.BEAM_X[1], y_up0, y_up0 + U["t"], top_up, top_up + 40), "FRAME", AL, "MP-GAN-002", "gray")
+    mz = parts.MOTORS[Lf["motor"]]
+    a.add("lift_motor_bracket", box(xs["L"] - mz[0] / 2 - 4, xs["L"] + mz[0] / 2 + 4, sy - mz[0] / 2 - 4, y_up0, top + 22, top + 32)
+          .cut(cyl("z", top + 21, top + 33, xs["L"], sy, mz[3] / 2 + 1)), "FRAME", AL, "MP-GL-LOCK", "gray")
+    a.add("lift_coupling", tube("z", top - 6, top + 30, xs["L"], sy, 16.0, ns["d"] / 2 - 2 + 0.3), "FRAME", STEEL, "MP-GL-SYNC", "gold")
+    a.add("lift_motor", parts.motor(Lf["motor"]).translate((xs["L"], sy, top + 32)), "FRAME", STEEL, "MP-GL-MOT", "black")
 
 
 # ---------------------------------------------------------------- analisi
@@ -423,6 +502,11 @@ DESIGNED = [  # coppie in moto relativo che si toccano per progetto (guida-patti
     ("beam", "x_block"), ("frame_longeron", "y_block"), ("x_carriage", "z_block"),
     # dettaglio (standard_detail.py): pull-stud e metà testa dei connettori stanno nell'inviluppo testa per progetto
     ("head_volume", "td_"), ("transfer_head", "td_"),
+    # luce di catalogo pattino ↔ rotaia sul pezzo mobile (MGN12H: H 13 − rotaia 8 = 5 mm)
+    ("x_rail", "x_carriage"), ("z_rail", "z_slide"), ("z_rail", "tooldock_master"),
+    # Gantry Lift (Pro)
+    ("lift_rail", "lift_block"), ("lift_screw", "lift_nut"), ("lift_screw", "lift_bk"), ("lift_screw", "lift_pulley"),
+    ("lift_screw", "lift_coupling"), ("lift_motor", "lift_coupling"), ("lift_screw", "lift_nut_tab"),
 ]
 
 
@@ -598,10 +682,11 @@ def bbox_of(a, only=None):
 
 
 def masses(a):
-    import data_standard as S
+    import importlib
+    S = importlib.import_module(P.BOM_DATA)
     bom = {r[0]: r for _, rows in S.G for r in rows}
     custom, extra = {}, {}
-    made_steel = ("td_pull_stud", "td_clamp_piston", "td_release_rod", "td_release_lever")   # custom in acciaio (clamp)
+    made_steel = ("td_pull_stud", "td_clamp_piston", "td_release_rod", "td_release_lever", "td_cam_shaft", "td_cam_lever")   # custom in acciaio (clamp)
     for n, p in a.parts.items():
         if p["kind"] != AL and n not in made_steel:
             continue
@@ -656,9 +741,9 @@ def main():
                      collisions=col, clearance_warnings=warn,
                      datums={k: [round(c, 1) for c in v] for k, v in datums.items()})
         if write_step:
-            path = OUT / f"standard_mule_{cfg.lower()}.step"
+            path = OUT / f"{P.FILE_PREFIX}_mule_{cfg.lower()}.step"
             export_step(a, datums, path)
-            entry["step"] = f"cad/standard/{path.name}"
+            entry["step"] = f"cad/{P.FILE_PREFIX}/{path.name}"
         report["configs"][cfg] = entry
         print(f"{cfg:6} parti {len(a.parts)} · collisioni {len(col)} · avvisi gioco {len(warn)} · bbox {bb}")
         for c in col:
@@ -682,6 +767,17 @@ def main():
     report["transfer"] = transfer_check()
     tr = report["transfer"]
     print(f"trasferitore {tr['steps']} pose · collisioni {len(tr['collisions'])} · più vicini {tr['closest'][:4]}")
+    if P.BASE != "standard":                   # Light / Pro: niente modello D028 né varianti del connettore
+        report["base"] = P.BASE
+        report["checks"] = dict(mass=dict(mule=report["mass"]["machine_mule_kg"], bom=report["mass"]["machine_bom_kg"], gate=P.MASS_GATE_KG,
+                                          target=P.MASS_TARGET_KG, pass_gate=report["mass"]["machine_mule_kg"] <= P.MASS_GATE_KG + 0.05),
+                                collisions={c: len(v["collisions"]) for c, v in report["configs"].items()},
+                                warnings={c: len(v["clearance_warnings"]) for c, v in report["configs"].items()})
+        (OUT / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=float), encoding="utf-8")
+        write_base_page(report)
+        print("massa", report["mass"]["machine_mule_kg"], "kg (BOM", report["mass"]["machine_bom_kg"], ")", "footprint", report["footprint_mm"],
+              "altezza", report["height_mm"], f"· {time.time() - t0:.0f} s")
+        return
     report["stiffness"] = stiffness_report()
     if concept:
         report["concept"] = concept
@@ -936,6 +1032,38 @@ def write_page(report):
 </main><script src="../assets/nav.js"></script></body></html>
 """
     (ROOT / "base" / "cad-standard.html").write_text(html, encoding="utf-8")
+
+def write_base_page(report):
+    """Pagina CAD di Light Core e Pro (generata): controlli, masse, viste, STEP e 3D."""
+    pre, lab = P.FILE_PREFIX, P.BASE_LABEL
+    c = report["checks"]
+    m = report["mass"]
+    rows = "".join(f'<tr><td>{r["bom"]}</td><td>{r["part"]}</td><td>{fmt(r["bom_kg"])}</td><td>{fmt(r["mule_kg"])}</td></tr>' for r in m["custom"])
+    cfg = "".join(f'<tr><td>{k}</td><td>{v["axes"]["X"]:g} / {v["axes"]["Y"]:g} / {v["axes"]["Z"]:g}</td><td class="{"status-ok" if not v["collisions"] else "status-critical"}">{len(v["collisions"])}</td>'
+                  f'<td class="{"status-ok" if not v["clearance_warnings"] else "status-target"}">{len(v["clearance_warnings"])}</td>'
+                  f'<td><a href="../{v["step"]}" download>STEP ↓</a></td><td><a href="viewer-3d.html?m={pre}_{k.lower()}.glb">3D</a></td></tr>' for k, v in report["configs"].items())
+    sw, tr = report["sweep"], report["transfer"]
+    views = "".join(f'<figure style="margin:0"><img src="../cad/{pre}/views/{v}" alt="{v}" loading="lazy" style="width:100%;height:auto;border-radius:12px;background:#fff"><figcaption style="color:var(--dim);font-size:13px;margin-top:6px">{v[:-4].replace("_", " · ")}</figcaption></figure>'
+                    for v in ("home_iso.png", "max_iso.png", "home_front.png", "home_side.png"))
+    notes = "".join(f"<li>{n}</li>" for n in getattr(P, "CAD_NOTES", ()))
+    lift = ""
+    if P.LIFT:
+        lift = f'<li>Gantry Lift: corsa {fmt(P.LIFT["stroke"])} mm (posizione 0 nelle analisi: asse di setup, fermo in lavoro).</li>'
+    html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD {lab}</title><link rel="stylesheet" href="../assets/styles.css"><style>.split>.panel{{min-width:0}}</style></head><body><main class="shell page">
+<!-- Pagina generata da tools/cad/standard_assembly.py --base {P.BASE}: non modificare a mano. -->
+<a class="back" href="lineup.html">← Tre basi</a>
+<div class="pagehead"><div class="eyebrow">02 · Base {lab} · CAD</div><h1>{lab}<br>in CAD.</h1><p class="lead">Assieme parametrico della base {lab} con le lavorazioni di dettaglio, costruito dalla stessa pipeline della Standard (<code>tools/cad/standard_assembly.py --base {P.BASE}</code>, parametri in <code>tools/cad/{P.BASE}_params.py</code>): controlli di collisione in HOME, CENTER, MAX e DOCK, sweep di {sw["configs"]} pose, traiettoria del trasferitore, masse contro la BOM. Valori MULE / TARGET.</p><div class="badges"><span class="badge ok">{lab}</span><span class="badge">{fmt(m["machine_mule_kg"])} kg dal CAD</span><span class="badge">Soglia {fmt(float(P.MASS_GATE_KG))} kg</span><span class="badge">ICD v4</span></div></div>
+<section class="section"><p><a class="btn primary" href="viewer-3d.html?m={pre}_center.glb">Apri in 3D</a> <a class="btn" href="cad-{pre}-parts.html">Pezzi di dettaglio e STEP</a></p></section>
+<section class="section split"><div class="panel"><span class="kicker">Controlli</span><h2>{sum(c["collisions"].values())} collisioni.</h2><div class="table-wrap"><table><tr><th>Config</th><th>X / Y / Z</th><th>Collisioni</th><th>Giochi &lt; 8</th><th>STEP</th><th>3D</th></tr>{cfg}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:10px">Sweep {sw["configs"]} pose: {len(sw["collisions"])} collisioni, {len(sw["fails"])} FAIL, {len(sw["warnings"])} WARNING. Trasferitore {tr["steps"]} pose: {len(tr["collisions"])} collisioni.</p></div>
+<div class="panel"><span class="kicker">Masse</span><h2>{fmt(m["machine_mule_kg"])} kg.</h2><div class="table-wrap"><table><tr><th>Riga BOM</th><th>Pezzo</th><th>BOM kg</th><th>CAD kg</th></tr>{rows}</table></div>
+<p style="color:var(--dim);font-size:13px;margin-top:10px">Macchina: {fmt(m["machine_mule_kg"])} kg dal CAD (commerciali dalla BOM) contro {fmt(m["machine_bom_kg"])} kg della BOM; soglia {fmt(float(P.MASS_GATE_KG))} kg: <b class="{"status-ok" if c["mass"]["pass_gate"] else "status-critical"}">{"PASSA" if c["mass"]["pass_gate"] else "NON PASSA"}</b>. Ingombro {fmt(report["footprint_mm"][0])} × {fmt(report["footprint_mm"][1])} × {fmt(report["height_mm"])} mm.</p></div></section>
+<section class="section"><h2>Scelte</h2><ul>{notes}{lift}</ul></section>
+<section class="section"><h2>Viste di controllo</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px">{views}</div></section>
+<section class="section"><h2>Rigenerare</h2><p><code>python tools/cad/standard_assembly.py --base {P.BASE}</code>, poi <code>standard_parts.py</code>, <code>export_glb.py</code> e <code>render_views.py</code> con lo stesso <code>--base {P.BASE}</code>.</p></section>
+</main><script src="../assets/nav.js"></script></body></html>
+"""
+    (ROOT / "base" / f"cad-{pre}.html").write_text(html, encoding="utf-8")
 
 
 if __name__ == "__main__":

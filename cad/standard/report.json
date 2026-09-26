@@ -421,7 +421,7 @@
       {
         "bom": "MC-BRK-001",
         "part": "Staffe chiocciole, motori e supporti",
-        "bom_kg": 0.74,
+        "bom_kg": 0.73,
         "mule_kg": 0.74
       },
       {
@@ -433,14 +433,14 @@
       {
         "bom": "MC-XC-001",
         "part": "Carrello X",
-        "bom_kg": 3.28,
-        "mule_kg": 3.28
+        "bom_kg": 3.27,
+        "mule_kg": 3.27
       },
       {
         "bom": "MC-Z-001",
         "part": "Slitta Z",
-        "bom_kg": 0.95,
-        "mule_kg": 0.95
+        "bom_kg": 0.9,
+        "mule_kg": 0.9
       },
       {
         "bom": "MC-TD-001",
@@ -463,13 +463,13 @@
       {
         "bom": "MC-TD-003",
         "part": "Automatic clamp",
-        "bom_kg": 0.39,
+        "bom_kg": 0.4,
         "mule_kg": 0.39
       }
     ],
     "not_in_bom": [],
-    "machine_bom_kg": 41.8,
-    "machine_mule_kg": 41.8
+    "machine_bom_kg": 41.7,
+    "machine_mule_kg": 41.7
   },
   "head": {
     "mass": 2.4,
@@ -901,8 +901,8 @@
       "z_lever": 265.0
     },
     "mass": {
-      "mule": 41.8,
-      "bom": 41.8,
+      "mule": 41.7,
+      "bom": 41.7,
       "gate": 42.0,
       "target": 40.0,
       "pass_gate": true,
@@ -920,5 +920,22 @@
       "MAX": 0,
       "DOCK": 0
     }
+  },
+  "fea_v3": {
+    "k": [
+      1.077,
+      0.904,
+      7.171
+    ],
+    "mach": [
+      0.7874542122245547,
+      0.6496313026165424,
+      1.429366636740129
+    ],
+    "mach2": [
+      0.7454842292811296,
+      0.3553543610610137,
+      1.257143533253665
+    ]
   }
 }

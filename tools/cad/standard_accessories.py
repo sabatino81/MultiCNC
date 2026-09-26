@@ -31,14 +31,16 @@ def fused(solids):
 
 
 # ---------------------------------------------------------------- rialzi spalle (ICD v4 §5)
-def riser(side, h=75.0):
+def riser(side, h=None):
+    h = h or P.RISER_H
     """Blocco scatolato 80 × 140 × h: fondo e cielo 16 mm, pareti 8; fondo filettato M8 (viti dal basso attraverso la
     traversa, come la spalla), cielo passante (viti dalla finestra frontale nella flangia della spalla), spine Ø10 H7
     su entrambe le facce. Si monta fra traversa posteriore e spalla."""
     I = SD.ICD_UPRIGHT
     D = P.derived()
     yc = (D["beam_face"] + D["beam_back"]) / 2
-    x0 = P.BEAM_X[0] if side == "L" else P.BEAM_X[1] - I["flange"][0]
+    fx = (P.BEAM_X[0] - P.UPRIGHT["t"], P.BEAM_X[1] + P.UPRIGHT["t"]) if P.UPRIGHT_MODE == "plate" else P.BEAM_X
+    x0 = fx[0] if side == "L" else fx[1] - I["flange"][0]
     x1 = x0 + I["flange"][0]
     xc = (x0 + x1) / 2
     y0, y1 = yc - I["flange"][1] / 2, yc + I["flange"][1] / 2
@@ -67,8 +69,12 @@ def magazine():
     sx, sy = P.STORE_POSE
     top = P.TRANSFER_TOP
     hd = P.HEAD
-    ux1 = P.BEAM_X[1]
-    yu1 = (D["beam_face"] + D["beam_back"]) / 2 + P.UPRIGHT["depth"] / 2      # faccia posteriore della spalla destra
+    ux1 = P.BEAM_X[1] + (P.UPRIGHT["t"] if P.UPRIGHT_MODE == "plate" else 0.0)
+    if P.UPRIGHT_MODE == "lift":        # Pro: faccia posteriore del montante destro del Gantry Lift
+        import parts as _pt
+        yu1 = D["beam_back"] + P.LIFT["bracket_t"] + _pt.BLOCKS[P.LIFT["block"]]["H"] + P.LIFT["spacer"] + P.UPRIGHT["t"]
+    else:
+        yu1 = (D["beam_face"] + D["beam_back"]) / 2 + P.UPRIGHT["depth"] / 2      # faccia posteriore della spalla destra
     # colonna scatolata 60 × 60 × 4 sulla faccia posteriore della spalla destra, fino all'asse Y del trasferitore
     zt = top + 170.0
     z_fl = -P.LADDER["cross_drop"] + SD.ICD_UPRIGHT["flange_t"]      # sopra la flangia ICD della spalla
@@ -104,9 +110,17 @@ def magazine():
 
 # ---------------------------------------------------------------- cabina
 def cabin():
-    """Telaio 30 × 30, pannelli PC 4 mm, porta, vasca trucioli, aspirazione Ø100; piedi propri, aggancio al basamento."""
-    x0, x1, y0, y1 = -230.0, 760.0, -430.0, 540.0
-    z0, z1 = -P.LADDER["H"] - 8.0 - 3.0 - 30.0, 960.0   # la vasca trucioli (3 mm) sta sotto i piedi (pad 8 mm) della macchina
+    """Telaio 30 × 30, pannelli PC, porta, vasca trucioli, aspirazione Ø100; piedi propri, aggancio al basamento.
+    Ingombro dalla macchina (report dell'assieme) più magazine, con 60 mm di luce per lato."""
+    import json
+    import pathlib
+    rep_ = pathlib.Path(__file__).resolve().parents[2] / "cad" / P.FILE_PREFIX / "report.json"
+    env = json.loads(rep_.read_text())["envelope_mm"] if rep_.exists() else [-155.0, 702.0, -350.0, 447.0, -68.0, 815.0]
+    M = P.MAGAZINE
+    x0, x1 = min(env[0], M["x"][0]) - 75.0, max(env[1], M["x"][1]) + 60.0
+    y0, y1 = env[2] - 80.0, max(env[3], M["y"][1]) + 80.0
+    z0 = -P.LADDER["H"] - 8.0 - 3.0 - 30.0 - P.LADDER.get("bottom_plate", 0.0)   # vasca trucioli (3 mm) sotto i piedi (pad 8 mm)
+    z1 = max(env[5], M["z"][1]) + 120.0
     p = 30.0
     out = {}
     edges = []
@@ -133,13 +147,13 @@ def cabin():
     for (x, y) in ((x0 + 15, y0 + 15), (x1 - 15, y0 + 15), (x0 + 15, y1 - 15), (x1 - 15, y1 - 15)):
         out[f"cab_foot_{int(x)}_{int(y)}"] = cyl("z", z0 - 20, z0, x, y, 20.0)
     # aggancio al basamento (mai al ponte): 2 staffe dal telaio cabina ai longheroni, lato fronte
-    for xr in (75.0, 375.0):
-        out[f"cab_link_{int(xr)}"] = box(xr - 15, xr + 15, y0 + p, -350.0, -40.0, -30.0)
+    for xr in (P.TABLE["W"] / 2 - P.Y_AXIS["rail_spacing"] / 2, P.TABLE["W"] / 2 + P.Y_AXIS["rail_spacing"] / 2):
+        out[f"cab_link_{int(xr)}"] = box(xr - 15, xr + 15, y0 + p, P.LADDER["long_y"][0], -P.LADDER["H"] + 20.0, -P.LADDER["H"] + 30.0)
     return out
 
 
 ITEMS = [  # (bom, titolo, nota, funzione, densità per nome)
-    ("MC-RS-001", "Rialzi spalle +75 mm", "Dettaglio: ICD v4 §5 sopra e sotto (2 spine Ø10 H7 + 4 M8 su 120 × 60); fondo filettato, cielo passante con finestra d'accesso.",
+    ("RS", "Rialzi spalle", "Dettaglio: ICD v4 §5 sopra e sotto (2 spine Ø10 H7 + 4 M8 su 120 × 60); fondo filettato, cielo passante con finestra d'accesso.",
      lambda: {"riser_L": riser("L"), "riser_R": riser("R")}),
     ("MC-TD-006", "Magazine 2 posti + trasferitore", "Layout, non fabbricazione: colonna sulla spalla destra, navetta a 2 posti (passo 130), "
      "asse Y del trasferitore sopra la colonna, carro Z, braccio X e forcella fino al dock a X 440; camma di sgancio 3:1 (D016). Guide e motori TARGET.",
@@ -159,12 +173,23 @@ def density(name):
     return AL_RHO
 
 
+def items():
+    """Accessori della base scelta (P.ACCESSORIES): codici BOM della base."""
+    out = []
+    for bom, title, note, fn in ITEMS:
+        for code in P.ACCESSORIES:
+            if (bom == "RS" and code.endswith("RS-001")) or code == bom or (bom == "MC-ENC-001" and code.endswith("ENC-001")):
+                t = f"{title} +{P.RISER_H:g} mm" if bom == "RS" else title
+                out.append((code, t, note, fn))
+    return out
+
+
 def export(out_dir):
     import render_views as R
     from PIL import Image
     R.VIEWS.setdefault("iso_back", ((1.0, -1.3, -0.9), (0, 0, 1)))
     rows = []
-    for bom, title, note, fn in ITEMS:
+    for bom, title, note, fn in items():
         solids = fn()
         asm = cq.Assembly(name=bom)
         for n, s in solids.items():
@@ -172,6 +197,7 @@ def export(out_dir):
         f = out_dir / f"{bom}.step"
         asm.save(str(f))
         kg = sum(s.Volume() * density(n) for n, s in solids.items())
+        print(bom, "massa", round(kg, 2), flush=True)
         comp = cq.Compound.makeCompound(list(solids.values()))
         b = comp.BoundingBox()
         parts = {n: dict(shape=s, kind="volume" if n.startswith(("cab_panels", "cab_door", "cab_side")) else "custom", color="gray") for n, s in solids.items()}
@@ -183,8 +209,9 @@ def export(out_dir):
             img.paste(i, (x, (h - i.height) // 2))
             x += i.width + 20
         img.save(out_dir / "views" / f"{bom}.png", optimize=True)
-        rows.append(dict(bom=bom, title=title, note=note, part=bom, file=f"cad/standard/parts/{bom}.step",
-                         view=f"cad/standard/parts/views/{bom}.png", kg=None if bom == "MC-TD-006" else round(kg, 2),
+        rel = f"cad/{P.FILE_PREFIX}/parts"
+        rows.append(dict(bom=bom, title=title, note=note, part=bom, file=f"{rel}/{bom}.step",
+                         view=f"{rel}/views/{bom}.png", kg=None if bom == "MC-TD-006" else round(kg, 2),
                          size_mm=[round(b.xlen, 0), round(b.ylen, 0), round(b.zlen, 0)], solids=sorted(solids)))
         print(bom, title, rows[-1]["size_mm"], rows[-1]["kg"], "kg", flush=True)
     return rows

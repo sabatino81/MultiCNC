@@ -11,9 +11,10 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 import cadquery as cq  # noqa: E402
+import base_select  # noqa: E402,F401  (--base light|standard|pro)
 import standard_assembly as A  # noqa: E402
 
-OUT = ROOT / "cad" / "standard" / "glb"
+OUT = ROOT / "cad" / A.P.FILE_PREFIX / "glb"
 
 
 def export(cfg):
@@ -25,7 +26,7 @@ def export(cfg):
         r, g, b = A.COLORS[p["color"]]
         asm.add(cq.Workplane().add(p["shape"]), name=name, color=cq.Color(r, g, b, 1.0))
     OUT.mkdir(parents=True, exist_ok=True)
-    f = OUT / f"standard_{cfg.lower()}.glb"
+    f = OUT / f"{A.P.FILE_PREFIX}_{cfg.lower()}.glb"
     asm.save(str(f), exportType="GLTF", tolerance=0.4, angularTolerance=0.35)
     return f
 

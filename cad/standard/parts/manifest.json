@@ -110,9 +110,9 @@
       "size_mm": [
         260.0,
         40.0,
-        67.0
+        65.6
       ],
-      "kg": 0.411,
+      "kg": 0.407,
       "holes": 6,
       "material": "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4",
       "process": "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle",
@@ -252,7 +252,7 @@
         60.0,
         552.0
       ],
-      "kg": 3.279,
+      "kg": 3.271,
       "holes": 56,
       "material": "EN AW-6082 T651, piastra 60",
       "process": "fresato dal pieno (piastra 15 + ali + torre)",
@@ -312,8 +312,8 @@
         47.0,
         160.0
       ],
-      "kg": 0.951,
-      "holes": 68,
+      "kg": 0.904,
+      "holes": 52,
       "material": "EN AW-6082 T651, piastra 50",
       "process": "fresato dal pieno",
       "home_min": [
@@ -636,11 +636,11 @@
       "part": "MC-ENC-001",
       "file": "cad/standard/parts/MC-ENC-001.step",
       "view": "cad/standard/parts/views/MC-ENC-001.png",
-      "kg": 40.8,
+      "kg": 40.26,
       "size_mm": [
-        1000.0,
+        1002.0,
         1001.0,
-        1165.0
+        1140.0
       ],
       "solids": [
         "cab_chip_tray",
@@ -648,8 +648,8 @@
         "cab_extraction",
         "cab_foot_-215_-415",
         "cab_foot_-215_525",
-        "cab_foot_745_-415",
-        "cab_foot_745_525",
+        "cab_foot_747_-415",
+        "cab_foot_747_525",
         "cab_frame",
         "cab_interlock",
         "cab_link_375",
@@ -669,7 +669,7 @@
     {
       "std": "ISO 4762",
       "item": "M3×12",
-      "where": "rotaie Y → longheroni (filetto nel pad di 8 mm)",
+      "where": "rotaie Y → longheroni (filetto nel pad)",
       "qty": 32
     },
     {
@@ -729,19 +729,19 @@
     {
       "std": "ISO 4762",
       "item": "M5×20",
-      "where": "motore X (con dado M5)",
+      "where": "motore X (con dado)",
       "qty": 4
     },
     {
       "std": "ISO 4762",
       "item": "M5×20",
-      "where": "motore Y (con dado M5)",
+      "where": "motore Y (con dado)",
       "qty": 4
     },
     {
       "std": "ISO 4762",
       "item": "M5×20",
-      "where": "motore Z (con dado M5)",
+      "where": "motore Z (con dado)",
       "qty": 4
     },
     {
@@ -959,7 +959,7 @@
     "Carrello X: le teste delle viti dei pattini X alti stanno sotto le guide Z (lamature profonde 4,5 mm): si montano prima i pattini X, poi le guide Z.",
     "Slitta Z: le viti esterne dei pattini Z stanno dietro le ali anteriori; fori d'accesso Ø9 attraverso le ali.",
     "BK/BF Z girati con la base verso il retro e avvitati a due piastre ponte sul carrello (mancavano nel mule).",
-    "Piastra motore X saldata come testata della trave (8 mm); piastra motore Y saldata sulla traversa di coda (10 mm, fino a z 7).",
+    "Motore X sulla testata della trave (o sulla spalla destra a piastra); piastra motore Y saldata sulla traversa di coda (10 mm).",
     "Telaio MC-BAS-001: un pezzo saldato (6 tubi + pad), distensionato e poi lavorato su pad, sedi guide Y e facce spalle.",
     "Trave MC-GAN-001: saldata (faccia guide 6 mm, altre pareti 4 mm, D034) con blocchi pieni d'estremità 50 × 80 × 20 per il giunto con le spalle e rinforzi dietro BK/BF X; traversa posteriore allargata di 12 mm verso il fronte per portare la flangia ICD §5 delle spalle. L'interfaccia ICD §5 (2 spine Ø10 + 4 M8 su 120 × 60) è solo fra spalla e basamento, dove si impilano i rialzi: il giunto spalla ↔ trave resta interno alla spalla (una flangia sopra urterebbe il carrello X in HOME).",
     "D034 · alleggerimenti: tubi del telaio 3 mm, spalle 4 mm, trave 4 mm con faccia guide 6, tasche sul retro del carrello X fra i pattini e sopra il ponte BF, tasca centrale nella slitta Z, mount spindle tondo, piedi 8 mm.",

@@ -12,7 +12,7 @@
 .v3d-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#aab4c2;font-size:14px;pointer-events:none}
 </style></head><body><main class="shell page">
 <a class="back" href="cad-standard.html">← CAD Standard · mule</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard · Vista 3D</div><h1>Mule e FEA<br>in 3D.</h1><p class="lead">Il digital mule della Standard e i risultati FEA D031 navigabili nel browser: trascina per ruotare, rotella o pizzico per lo zoom, tasto destro o due dita per spostare. I modelli CAD vengono da <code>tools/cad/export_glb.py</code>, i risultati FEA da <code>tools/fea/export_results.py</code>: stessi dati delle pagine <a href="cad-standard.html" style="color:var(--accent-2)">CAD mule</a>, <a href="fea-d031.html" style="color:var(--accent-2)">FEA pilota</a> e <a href="fea-d031-z.html" style="color:var(--accent-2)">FEA slitta Z</a>. Valori di progetto, non misure.</p><div class="badges"><span class="badge ok">glTF · three.js</span><span class="badge">Deformata amplificata</span><span class="badge">three.js r160 incluso nel sito</span></div></div>
+<div class="pagehead"><div class="eyebrow">02 · Basi · Vista 3D</div><h1>Basi e FEA<br>in 3D.</h1><p class="lead">Le tre basi (Light Core, Standard, Pro con Gantry Lift) e i risultati FEA D031 navigabili nel browser: trascina per ruotare, rotella o pizzico per lo zoom, tasto destro o due dita per spostare. I modelli CAD vengono da <code>tools/cad/export_glb.py</code>, i risultati FEA da <code>tools/fea/export_results.py</code>: stessi dati delle pagine <a href="cad-light.html" style="color:var(--accent-2)">CAD Light</a>, <a href="cad-standard.html" style="color:var(--accent-2)">CAD Standard</a>, <a href="cad-pro.html" style="color:var(--accent-2)">CAD Pro</a>, <a href="fea-d031.html" style="color:var(--accent-2)">FEA pilota</a> e <a href="fea-d031-z.html" style="color:var(--accent-2)">FEA slitta Z</a>. Valori di progetto, non misure.</p><div class="badges"><span class="badge ok">glTF · three.js</span><span class="badge">Deformata amplificata</span><span class="badge">three.js r160 incluso nel sito</span></div></div>
 
 <section class="section">
   <div class="v3d-bar"><select id="pick" aria-label="Modello da visualizzare"></select><label><input type="checkbox" id="wire"> spigoli</label><label><input type="checkbox" id="spin"> rotazione</label></div>
@@ -33,10 +33,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const CAD = [
-  ['cad', 'CAD · mule v3 · CENTER', '../cad/standard/glb/standard_center.glb'],
-  ['cad', 'CAD · mule v3 · HOME', '../cad/standard/glb/standard_home.glb'],
-  ['cad', 'CAD · mule v3 · MAX', '../cad/standard/glb/standard_max.glb'],
-  ['cad', 'CAD · mule v3 · DOCK (testa al cambio)', '../cad/standard/glb/standard_dock.glb'],
+  ['cad', 'CAD · Standard · mule v3 · CENTER', '../cad/standard/glb/standard_center.glb'],
+  ['cad', 'CAD · Standard · mule v3 · HOME', '../cad/standard/glb/standard_home.glb'],
+  ['cad', 'CAD · Standard · mule v3 · MAX', '../cad/standard/glb/standard_max.glb'],
+  ['cad', 'CAD · Standard · mule v3 · DOCK (testa al cambio)', '../cad/standard/glb/standard_dock.glb'],
+  ['cad', 'CAD · Light Core · CENTER', '../cad/light/glb/light_center.glb'],
+  ['cad', 'CAD · Light Core · HOME', '../cad/light/glb/light_home.glb'],
+  ['cad', 'CAD · Light Core · MAX', '../cad/light/glb/light_max.glb'],
+  ['cad', 'CAD · Pro con Gantry Lift · CENTER', '../cad/pro/glb/pro_center.glb'],
+  ['cad', 'CAD · Pro con Gantry Lift · HOME', '../cad/pro/glb/pro_home.glb'],
+  ['cad', 'CAD · Pro con Gantry Lift · MAX', '../cad/pro/glb/pro_max.glb'],
   ['cad', 'CAD · concept D032 A1 · monoscocca h 100 · CENTER', '../cad/concepts/A1/A1_center.glb'],
   ['cad', 'CAD · concept D032 A1s · monoscocca h 60 · CENTER', '../cad/concepts/A1s/A1s_center.glb'],
   ['cad', 'CAD · concept D032 A2 · A1s + carrello a cassone · CENTER', '../cad/concepts/A2/A2_center.glb'],
@@ -118,7 +124,7 @@ async function init() {
   } catch (err) { /* senza indice FEA restano i modelli CAD */ }
   const groups = { CAD: [], FEA: [] };
   entries.forEach((e, i) => groups[e.fea ? 'FEA' : 'CAD'].push(`<option value="${i}">${e.label}</option>`));
-  pick.innerHTML = `<optgroup label="CAD mule">${groups.CAD.join('')}</optgroup>` + (groups.FEA.length ? `<optgroup label="FEA D031">${groups.FEA.join('')}</optgroup>` : '');
+  pick.innerHTML = `<optgroup label="CAD">${groups.CAD.join('')}</optgroup>` + (groups.FEA.length ? `<optgroup label="FEA D031">${groups.FEA.join('')}</optgroup>` : '');
   const want = new URLSearchParams(location.search).get('m');
   const start = want ? Math.max(0, entries.findIndex(e => e.url.endsWith(want))) : 0;
   pick.value = start; load(start);

@@ -12,10 +12,11 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
+import base_select  # noqa: E402,F401  (--base light|standard|pro)
 import standard_assembly as A  # noqa: E402
 from PIL import Image, ImageDraw  # noqa: E402
 
-OUT = ROOT / "cad" / "standard" / "views"
+OUT = ROOT / "cad" / A.P.FILE_PREFIX / "views"
 VIEWS = {  # direzione di vista (dall'osservatore verso la macchina) e "su"
     "iso": ((-1.0, 1.3, -0.9), (0, 0, 1)),
     "front": ((0, 1, 0), (0, 0, 1)),

@@ -23,6 +23,15 @@ Valori marcati MULE sono scelte dell'assieme, da rivedere dopo l'analisi.
 Tutte le quote in mm.
 """
 
+# ------------------------------------------------------------------ base (tools/cad/base_select.py)
+BASE, BASE_LABEL, BOM_DATA, BOM_MAP = "standard", "Standard", "data_standard", {}
+FILE_PREFIX = "standard"          # cad/<prefix>/, <prefix>_<config>.glb
+UPRIGHT_MODE = "box"              # "box": spalle scatolate sotto la trave · "plate": piastre ai lati della trave
+LIFT = None                       # Gantry Lift motorizzato (solo Pro)
+TD_CLAMP = "auto"                 # clamp ToolDock: "auto" (D016) o "manual" (Light Core)
+RISER_H = 75.0                    # rialzi spalle di serie (D007)
+ACCESSORIES = ("MC-RS-001", "MC-TD-006", "MC-ENC-001")   # CAD accessori (standard_accessories.py)
+
 # ------------------------------------------------------------------ corse (D019, TARGET)
 TRAVEL = {"X": 450.0, "Y": 350.0, "Z": 140.0}
 DOCK_X = 440.0             # D027: unica posizione di docking, 10 mm prima del fine corsa X
@@ -89,11 +98,12 @@ CONNECTOR_ENVELOPES = {
 CONNECTOR_MODE = "RIGHT_ANGLE_ASSUMED"   # configurazione del mule per sweep e STEP; AXIAL si confronta sulla sola testa
 
 
-def spindle(mode=None):
-    """Spindle di riferimento con il service envelope del connettore scelto (D031)."""
-    mode = mode or CONNECTOR_MODE
-    return {**SPINDLE_BASE, "connector": CONNECTOR_ENVELOPES[mode]["gap"], "connector_mode": mode,
-            "connector_side": CONNECTOR_ENVELOPES[mode]["side"]}
+def spindle(mode=None, g=None):
+    """Spindle di riferimento con il service envelope del connettore scelto (D031). g: globali di un modulo base."""
+    g = g or globals()
+    mode = mode or g["CONNECTOR_MODE"]
+    env = g["CONNECTOR_ENVELOPES"][mode]
+    return {**g["SPINDLE_BASE"], "connector": env["gap"], "connector_mode": mode, "connector_side": env["side"]}
 
 
 SPINDLE = spindle()
@@ -141,32 +151,33 @@ TRANSFER_STEPS = 40                               # campioni lungo la traiettori
 SWEEP_N = 5                                       # griglia 5 × 5 × 5 del workspace (vertici compresi)
 
 
-def derived():
-    """Quote derivate dalla catena di quote. Ritorna un dict."""
+def derived(g=None):
+    """Quote derivate dalla catena di quote. Ritorna un dict. g: globali di un modulo base (default: la Standard)."""
+    g = g or globals()
     import parts
-    xb, zb = parts.BLOCKS[X_AXIS["block"]], parts.BLOCKS[Z_AXIS["block"]]
-    yb = parts.BLOCKS[Y_AXIS["block"]]
+    xb, zb = parts.BLOCKS[g["X_AXIS"]["block"]], parts.BLOCKS[g["Z_AXIS"]["block"]]
+    yb = parts.BLOCKS[g["Y_AXIS"]["block"]]
     d = {}
     d["table_bottom"] = yb["H"]                           # tavola sui pattini Y
-    d["table_top"] = d["table_bottom"] + TABLE["T"]
+    d["table_top"] = d["table_bottom"] + g["TABLE"]["T"]
     # catena in Y dall'asse utensile verso la trave
-    d["slide_front"] = HEAD_AXIS_FROM_SLIDE
-    d["slide_back"] = d["slide_front"] + PLATE["slide_t"]           # testa pattini Z (sulla slitta)
+    d["slide_front"] = g["HEAD_AXIS_FROM_SLIDE"]
+    d["slide_back"] = d["slide_front"] + g["PLATE"]["slide_t"]           # testa pattini Z (sulla slitta)
     d["carriage_front"] = d["slide_back"] + zb["H"]                 # base guide Z (sul carrello)
-    d["carriage_back"] = d["carriage_front"] + PLATE["carriage_t"]  # testa pattini X
+    d["carriage_back"] = d["carriage_front"] + g["PLATE"]["carriage_t"]  # testa pattini X
     d["beam_face"] = d["carriage_back"] + xb["H"]                   # base guide X
-    d["beam_back"] = d["beam_face"] + BEAM["depth"]
+    d["beam_back"] = d["beam_face"] + g["BEAM"]["depth"]
     # catena in Z
-    d["tip_bottom"] = d["table_top"] + TIP_AT_Z_BOTTOM
-    d["coupling_bottom"] = d["tip_bottom"] + HEAD["L"]              # coupling con Z tutto giù
-    d["coupling_top"] = d["coupling_bottom"] + TRAVEL["Z"]
-    d["slide_bottom_low"] = d["coupling_bottom"] + MASTER["T"]
-    d["z_block_span"] = Z_AXIS["block_pitch"] + zb["L"]
-    d["z_rail_bottom"] = d["slide_bottom_low"] + PLATE["block_offset"] - MARGIN
-    d["beam_bottom"] = d["table_top"] + CLEAR_UNDER_BEAM
-    d["zx"] = d["beam_bottom"] + BEAM["height"] / 2                  # centro guide X
-    d["beam_top"] = d["zx"] + BEAM["height"] / 2
+    d["tip_bottom"] = d["table_top"] + g["TIP_AT_Z_BOTTOM"]
+    d["coupling_bottom"] = d["tip_bottom"] + g["HEAD"]["L"]              # coupling con Z tutto giù
+    d["coupling_top"] = d["coupling_bottom"] + g["TRAVEL"]["Z"]
+    d["slide_bottom_low"] = d["coupling_bottom"] + g["MASTER"]["T"]
+    d["z_block_span"] = g["Z_AXIS"]["block_pitch"] + zb["L"]
+    d["z_rail_bottom"] = d["slide_bottom_low"] + g["PLATE"]["block_offset"] - g["MARGIN"]
+    d["beam_bottom"] = d["table_top"] + g["CLEAR_UNDER_BEAM"]
+    d["zx"] = d["beam_bottom"] + g["BEAM"]["height"] / 2                  # centro guide X
+    d["beam_top"] = d["zx"] + g["BEAM"]["height"] / 2
     d["a_tool_to_x_face"] = d["beam_face"]                           # braccio "a" D015
     d["b_tip_below_x_rails"] = d["zx"] - d["tip_bottom"]             # braccio "b" D015 a Z giù
-    d["z_lever_low"] = d["slide_bottom_low"] + PLATE["block_offset"] - d["tip_bottom"]  # punta ↔ pattino Z più basso
+    d["z_lever_low"] = d["slide_bottom_low"] + g["PLATE"]["block_offset"] - d["tip_bottom"]  # punta ↔ pattino Z più basso
     return d

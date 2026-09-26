@@ -62,12 +62,14 @@ def _parts():
     """STEP di dettaglio dei pezzi custom (cad/standard/parts/, da tools/cad/standard_parts.py): id → file."""
     import json
     import pathlib
-    f = pathlib.Path(__file__).resolve().parents[2] / "cad" / "standard" / "parts" / "manifest.json"
-    if not f.exists():
-        return {}
-    m = json.loads(f.read_text(encoding="utf-8"))
-    out = dict(m.get("bom_files", {}))
-    out.update({r["bom"]: r["file"] for r in m.get("accessories", [])})
+    out = {}
+    for base in ("light", "pro", "standard"):          # la Standard per ultima: le righe MC-* condivise puntano alla Standard
+        f = pathlib.Path(__file__).resolve().parents[2] / "cad" / base / "parts" / "manifest.json"
+        if not f.exists():
+            continue
+        m = json.loads(f.read_text(encoding="utf-8"))
+        out.update(m.get("bom_files", {}))
+        out.update({r["bom"]: r["file"] for r in m.get("accessories", [])})
     return out
 
 
@@ -77,7 +79,7 @@ PARTS = _parts()
 def cell(part_id):
     if part_id in PARTS:
         return (f'<a class="cad-own" href="../{PARTS[part_id]}" download>STEP pezzo ↓</a>'
-                f'<small><a href="../base/cad-parts.html">CAD di dettaglio</a></small>')
+                f'<small>CAD di dettaglio</small>')
     mine = ""
     if part_id in OWN:
         mine = (f'<a class="cad-own" href="../cad/step/{OWN[part_id]}.step" download>STEP MultiCNC ↓</a>'

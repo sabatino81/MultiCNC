@@ -19,14 +19,15 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 import cadquery as cq  # noqa: E402
 
+import base_select  # noqa: E402,F401  (--base light|standard|pro)
 import standard_assembly as A  # noqa: E402
 import standard_params as P  # noqa: E402
 
-OUT = ROOT / "cad" / "standard" / "parts"
-PAGE = ROOT / "base" / "cad-parts.html"
+OUT = ROOT / "cad" / P.FILE_PREFIX / "parts"
+PAGE = ROOT / "base" / ("cad-parts.html" if P.BASE == "standard" else f"cad-{P.FILE_PREFIX}-parts.html")
 STEEL_RHO = 7.85e-6
 # pezzi custom in acciaio (nell'assieme hanno kind "commercial" perché la loro massa sta nella riga BOM del clamp)
-MADE_STEEL = ("td_pull_stud", "td_clamp_piston", "td_release_rod", "td_release_lever")
+MADE_STEEL = ("td_pull_stud", "td_clamp_piston", "td_release_rod", "td_release_lever", "td_cam_shaft", "td_cam_lever")
 PROCESS = [  # (prefisso, materiale, lavorazione) · MULE: da confermare con il fornitore
     ("frame_", "EN AW-6082 T6, tubi 40 × 60 / 120 × 60 sp. 4", "saldato TIG, distensionato, fresato su pad, sedi guide Y e facce spalle"),
     ("upright_", "EN AW-6082 T6, piatti 6 + flangia 16", "saldato e fresato; fori spine Ø10 H7 alesati"),
@@ -89,10 +90,11 @@ def main():
         rho = STEEL_RHO if n in MADE_STEEL else P.AL_DENSITY
         loc, b = local(sh)
         f = f"{p['bom']}_{n}.step"
+        rel = f"cad/{P.FILE_PREFIX}/parts"
         cq.exporters.export(cq.Workplane().add(loc), str(OUT / f))
         view(dict(p, shape=sh), OUT / "views" / f"{n}.png")
         mat, pr = process(n)
-        rows.append(dict(part=n, bom=p["bom"], file=f"cad/standard/parts/{f}", view=f"cad/standard/parts/views/{n}.png",
+        rows.append(dict(part=n, bom=p["bom"], file=f"{rel}/{f}", view=f"{rel}/views/{n}.png",
                          size_mm=[round(b.xlen, 1), round(b.ylen, 1), round(b.zlen, 1)], kg=round(sh.Volume() * rho, 3),
                          holes=count_holes(sh), material=mat, process=pr, home_min=[round(b.xmin, 1), round(b.ymin, 1), round(b.zmin, 1)]))
         by_bom.setdefault(p["bom"], []).append(n)
@@ -103,7 +105,7 @@ def main():
         for n in names:
             asm.add(cq.Workplane().add(a.parts[n]["shape"]), name=n, color=cq.Color(*A.COLORS[a.parts[n]["color"]], 1.0))
         asm.save(str(OUT / f"{bom}.step"))
-        files[bom] = f"cad/standard/parts/{bom}.step"
+        files[bom] = f"cad/{P.FILE_PREFIX}/parts/{bom}.step"
     acc = []
     try:
         import standard_accessories as ACC
@@ -122,7 +124,8 @@ def it(x, d=1):
 
 
 def write_page(m):
-    import data_standard as S
+    import importlib
+    S = importlib.import_module(P.BOM_DATA)
     bom = {r[0]: r for _, rows in S.G for r in rows}
     groups = {}
     for r in m["rows"]:
@@ -152,14 +155,14 @@ def write_page(m):
     hw = "".join(f'<tr><td>{h["std"]}</td><td>{h["item"]}</td><td>{h["qty"]}</td><td>{h["where"]}</td></tr>' for h in m["hardware"])
     n_hw = sum(h["qty"] for h in m["hardware"])
     notes = "".join(f"<li>{n}</li>" for n in m["notes"])
-    html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD pezzi · Standard</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
+    html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>MultiCNC — CAD pezzi · {P.BASE_LABEL}</title><link rel="stylesheet" href="../assets/styles.css"></head><body><main class="shell page">
 <!-- Pagina generata da tools/cad/standard_parts.py: non modificare a mano. -->
-<a class="back" href="cad-standard.html">← CAD Standard</a>
-<div class="pagehead"><div class="eyebrow">02 · Base Standard · CAD di dettaglio</div><h1>I pezzi<br>della Standard.</h1><p class="lead">Ogni pezzo custom del mule v3 con le lavorazioni che lo collegano ai vicini: fori delle guide e dei pattini, supporti delle viti, flange delle chiocciole, motori, interfaccia spalla ICD v4, ToolDock (rulli, sfere, pull-stud, clamp, porte e connettori). Le quote vengono dagli stessi parametri del mule e dalle posizioni reali dei componenti commerciali: un pezzo cambia solo cambiando <code>standard_params.py</code> o <code>standard_detail.py</code>.</p><div class="badges"><span class="badge ok">{len(m["rows"])} pezzi</span><span class="badge">{n_hw} elementi di viteria</span><span class="badge">Mule v3 · ICD v4</span><span class="badge">MULE · TARGET</span></div></div>
+<a class="back" href="cad-{P.FILE_PREFIX}.html">← CAD {P.BASE_LABEL}</a>
+<div class="pagehead"><div class="eyebrow">02 · Base {P.BASE_LABEL} · CAD di dettaglio</div><h1>I pezzi<br>della {P.BASE_LABEL}.</h1><p class="lead">Ogni pezzo custom della {P.BASE_LABEL} con le lavorazioni che lo collegano ai vicini: fori delle guide e dei pattini, supporti delle viti, flange delle chiocciole, motori, interfaccia spalla ICD v4, ToolDock (rulli, sfere, pull-stud, clamp, porte e connettori). Le quote vengono dagli stessi parametri del mule e dalle posizioni reali dei componenti commerciali: un pezzo cambia solo cambiando <code>{P.BASE}_params.py</code> o <code>standard_detail.py</code>.</p><div class="badges"><span class="badge ok">{len(m["rows"])} pezzi</span><span class="badge">{n_hw} elementi di viteria</span><span class="badge">{P.BASE_LABEL} · ICD v4</span><span class="badge">MULE · TARGET</span></div></div>
 <section class="section"><div class="callout"><b>Scelte di dettaglio.</b><ul style="margin:8px 0 0">{notes}</ul></div></section>
 {sec}{acc}
 <section class="section"><h2>Viteria e minuteria</h2><p style="color:var(--dim);font-size:13px">Compilata dalle lavorazioni (riga BOM MC-HW-001). Lunghezze MULE, da verificare in assieme reale.</p><div class="table-wrap"><table><tr><th>Norma</th><th>Articolo</th><th>Q.tà</th><th>Dove</th></tr>{hw}</table></div></section>
-<section class="section"><h2>Rigenerare</h2><p><code>python tools/cad/standard_parts.py</code> (poi <code>python tools/cad/standard_assembly.py</code> per assieme, controlli e pagina CAD Standard). STEP in coordinate locali: angolo minimo del pezzo nell'origine; lo STEP di ogni riga BOM tiene le coordinate macchina in HOME.</p></section>
+<section class="section"><h2>Rigenerare</h2><p><code>python tools/cad/standard_parts.py{"" if P.BASE == "standard" else " --base " + P.BASE}</code> (poi <code>standard_assembly.py</code> per assieme, controlli e pagina CAD). STEP in coordinate locali: angolo minimo del pezzo nell'origine; lo STEP di ogni riga BOM tiene le coordinate macchina in HOME.</p></section>
 </main><script src="../assets/nav.js"></script></body></html>
 """
     PAGE.write_text(html, encoding="utf-8")
